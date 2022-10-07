@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dasoops.dasq.image.mapper.ImageInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.dasoops.dasq.image.entity.ImageInfo">
+            <id property="id" column="ID" jdbcType="BIGINT"/>
+            <result property="keywords" column="KEYWORDS" jdbcType="VARCHAR"/>
+            <result property="typeId" column="TYPE_ID" jdbcType="BIGINT"/>
+            <result property="groupId" column="GROUP_ID" jdbcType="BIGINT"/>
+            <result property="authorId" column="AUTHOR_ID" jdbcType="BIGINT"/>
+            <result property="desc" column="DESC" jdbcType="VARCHAR"/>
+            <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
+            <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+            <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,KEYWORDS,TYPE_ID,
+        GROUP_ID,AUTHOR_ID,DESC,
+        IS_DELETE,CREATE_USER,CREATE_TIME,
+        UPDATE_USER,UPDATE_TIME
+    </sql>
+</mapper>

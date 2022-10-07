@@ -1,0 +1,16 @@
+server:
+  port: 4701
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.13.5.29:3307/DASQ?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&useSSL=true&allowMultiQueries=true
+    username: root
+    password: root
+  redis:
+    host: 106.13.5.29
+    port: 6379
+    database: 3
+    password: dasoops
+logging:
+  level:
+    root: info
