@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dasoops.dasq.cq.mapper.PassListMapper">
+<mapper namespace="com.dasoops.dasq.core.cq.mapper.PassListMapper">
 
-    <resultMap id="BaseResultMap" type="com.dasoops.dasq.cq.entity.PassList">
+    <resultMap id="BaseResultMap" type="com.dasoops.dasq.core.cq.entity.PassList">
             <id property="id" column="ID" jdbcType="BIGINT"/>
             <result property="type" column="TYPE" jdbcType="TINYINT"/>
             <result property="passId" column="PASS_ID" jdbcType="BIGINT"/>

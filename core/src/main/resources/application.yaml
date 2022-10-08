@@ -14,3 +14,13 @@ spring:
 logging:
   level:
     root: info
+minio:
+  enable: true
+  url: 106.13.5.29
+  port: 9000
+  bucket: dasqserver
+  accessKey: aaaaa
+  secretKey: aaaaaaaa
+  tempDownloadPath: D:\temp
+dasq:
+  metaEventPass: true
