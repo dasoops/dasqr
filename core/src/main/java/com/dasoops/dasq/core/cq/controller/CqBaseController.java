@@ -24,6 +24,7 @@ public class CqBaseController {
 //        CqMethodStrategyContext context = new CqMethodStrategyContextFactory().getContext();
 //        context.invokeMethod();
 
+
         String postType = (String) getJson.get("post_type");
         log.info(postType);
         log.info(JSON.toJSONString(getJson));

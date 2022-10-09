@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.dasoops.dasq.core.image.entity.pojo.ImageInfo">
             <id property="id" column="ID" jdbcType="BIGINT"/>
-            <result property="keywords" column="KEYWORDS" jdbcType="VARCHAR"/>
+            <result property="keyword" column="KEYWORDS" jdbcType="VARCHAR"/>
             <result property="typeId" column="TYPE_ID" jdbcType="BIGINT"/>
             <result property="groupId" column="GROUP_ID" jdbcType="BIGINT"/>
             <result property="authorId" column="AUTHOR_ID" jdbcType="BIGINT"/>

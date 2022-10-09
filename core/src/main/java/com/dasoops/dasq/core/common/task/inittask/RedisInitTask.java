@@ -49,7 +49,7 @@ public class RedisInitTask {
      * -初始化/更新 DictFatherDictCodeMap 数据至redis
      * -初始化/更新 MethodType Id-EntityJson 数据至redis
      * -初始化/更新 MethodInfo Id-EntityJson 数据至redis
-     * -初始化/更新 PassListJsonSet 数据至redis
+     * -初始化/更新 PassListTypeGetEntityJsonSetMap 数据至redis
      */
     @PostConstruct
     void init() {
@@ -65,8 +65,8 @@ public class RedisInitTask {
         methodTypeService.initOrUpdateMethodTypeIdEntityJson2Redis();
 //     * -初始化/更新 MethodInfo Id-EntityJson 数据至redis
         methodInfoService.initOrUpdateMethodInfoIdEntityJson2Redis();
-//     * -初始化/更新 PassListJsonSet 数据至redis
-        passListService.initOrUpdatePassListJsonSet2Redis();
+//     * -初始化/更新 PassListTypeGetEntityJsonSetMap 数据至redis
+        passListService.initOrUpdatePassListTypeGetEntityJsonSetMap2Redis();
 
 
     }

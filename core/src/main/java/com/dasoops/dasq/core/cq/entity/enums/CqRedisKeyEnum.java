@@ -26,11 +26,11 @@ public enum CqRedisKeyEnum {
     METHOD_INFO_ID_GET_ENTITY_JSON_MAP("key_cq_method_info_id_get_entity_json_hash"),
 
     /**
-     * 通过methodInfoId获取实体json对象
+     * 通过passObjectType获取实体jsonSet集合
      * Map<String>
      * Set<PassObject>
      */
-    PASS_LIST_JSON_SET("key_cq_pass_list_json_set"),
+    PASS_LIST_TYPE_GET_ENTITY_JSON_SET_MAP("key_cq_pass_list_type_get_entity_json_set_hash"),
 
 
     ;

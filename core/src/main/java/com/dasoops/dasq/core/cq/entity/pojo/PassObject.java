@@ -35,9 +35,9 @@ public class PassObject implements Serializable {
     private Integer type;
 
     /**
-     * 放行用户id
+     * 放行关键词
      */
-    private Long passId;
+    private String passKeyword;
 
     /**
      * 执行方法ID(可为集合,以','分割)
@@ -96,14 +96,14 @@ public class PassObject implements Serializable {
         }
         PassObject other = (PassObject) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
-            && (this.getPassId() == null ? other.getPassId() == null : this.getPassId().equals(other.getPassId()))
-            && (this.getMethodIdList() == null ? other.getMethodIdList() == null : this.getMethodIdList().equals(other.getMethodIdList()))
-            && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
-            && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateUser() == null ? other.getUpdateUser() == null : this.getUpdateUser().equals(other.getUpdateUser()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+                && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
+                && (this.getPassKeyword() == null ? other.getPassKeyword() == null : this.getPassKeyword().equals(other.getPassKeyword()))
+                && (this.getMethodIdList() == null ? other.getMethodIdList() == null : this.getMethodIdList().equals(other.getMethodIdList()))
+                && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
+                && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+                && (this.getUpdateUser() == null ? other.getUpdateUser() == null : this.getUpdateUser().equals(other.getUpdateUser()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -112,7 +112,7 @@ public class PassObject implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
-        result = prime * result + ((getPassId() == null) ? 0 : getPassId().hashCode());
+        result = prime * result + ((this.getPassKeyword() == null) ? 0 : this.getPassKeyword().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
         result = prime * result + ((getMethodIdList() == null) ? 0 : getMethodIdList().hashCode());
         result = prime * result + ((getCreateUser() == null) ? 0 : getCreateUser().hashCode());
@@ -129,7 +129,7 @@ public class PassObject implements Serializable {
                 "Hash = " + hashCode() +
                 ", id=" + id +
                 ", type=" + type +
-                ", passId=" + passId +
+                ", passKeyword=" + passKeyword +
                 ", methodInfoIdList=" + methodIdList +
                 ", isDelete=" + isDelete +
                 ", createUser=" + createUser +

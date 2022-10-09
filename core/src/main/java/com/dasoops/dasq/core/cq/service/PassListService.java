@@ -3,6 +3,9 @@ package com.dasoops.dasq.core.cq.service;
 import com.dasoops.dasq.core.cq.entity.pojo.PassObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * @author Administrator
  * @description 针对表【TB_SYS_PASS_LIST(过滤白名单)】的数据库操作Service
@@ -11,7 +14,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface PassListService extends IService<PassObject> {
 
     /**
-     * 初始化/更新 PassListJsonSet 数据至redis
+     * 初始化/更新 PassListTypeGetEntityJsonSetMap 数据至redis
      */
-    void initOrUpdatePassListJsonSet2Redis();
+    void initOrUpdatePassListTypeGetEntityJsonSetMap2Redis();
+
+    Optional<List<PassObject>> getPassListByType(Integer type);
 }

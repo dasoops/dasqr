@@ -7,7 +7,7 @@
     <resultMap id="BaseResultMap" type="com.dasoops.dasq.core.cq.entity.pojo.PassObject">
             <id property="id" column="ID" jdbcType="BIGINT"/>
             <result property="type" column="TYPE" jdbcType="TINYINT"/>
-            <result property="passId" column="PASS_ID" jdbcType="BIGINT"/>
+            <result property="passKeyword" column="PASS_KEYWORD" jdbcType="BIGINT"/>
             <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
             <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
             <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
@@ -16,7 +16,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID,TYPE,PASS_ID,
+        ID
+        ,TYPE,PASS_KEYWORD,
         IS_DELETE,CREATE_USER,CREATE_TIME,
         UPDATE_USER,UPDATE_TIME
     </sql>

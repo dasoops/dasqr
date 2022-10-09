@@ -18,7 +18,7 @@
     <sql id="Base_Column_List">
         ID
         ,KEYWORD,
-        DESC,
+        DESCRIPTION,
             IS_DELETE,CREATE_USER,CREATE_TIME,
             UPDATE_USER,UPDATE_TIME
     </sql>
