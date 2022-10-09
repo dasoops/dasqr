@@ -30,28 +30,42 @@ public class ImageTypeServiceImpl extends ServiceImpl<ImageTypeMapper, ImageType
     private StringRedisTemplate redisTemplate;
 
     @Override
-    public void initOrUpdateImageType2Redis() {
-        log.info("初始化/更新 ImageType 数据至redis");
+    public void initOrUpdateImageTypeInnerCodeGetEntityJson2Redis() {
+        log.info("初始化/更新 ImageType InnerCode-entityJson 数据至redis");
 
         //清除旧数据
-        redisTemplate.delete(ImageRedisKeyEnum.IMAGE_INNER_CODE_GET_IMAGE_JSON.name());
-        redisTemplate.delete(ImageRedisKeyEnum.IMAGE_ID_GET_IMAGE_JSON.name());
+        redisTemplate.delete(ImageRedisKeyEnum.IMAGE_INNER_CODE_GET_IMAGE_JSON_MAP.getRedisKey());
 
         //查询数据库,构建集合
         List<ImageType> list = super.lambdaQuery().list();
         Map<String, String> innerCodeRes = list.stream().collect(Collectors.toMap(ImageType::getInnerCode, JSON::toJSONString));
+
+        //存入
+        redisTemplate.opsForHash().putAll(ImageRedisKeyEnum.IMAGE_INNER_CODE_GET_IMAGE_JSON_MAP.getRedisKey(), innerCodeRes);
+
+        log.info("完成: 初始化/更新 ImageType InnerCode-entityJson 数据至redis,innerCodeData:{}", JSON.toJSONString(innerCodeRes));
+    }
+
+    @Override
+    public void initOrUpdateImageTypeIdGetEntityJson2Redis() {
+        log.info("初始化/更新 ImageType id-entityJson 数据至redis");
+
+        //清除旧数据
+        redisTemplate.delete(ImageRedisKeyEnum.IMAGE_ID_GET_IMAGE_JSON_MAP.getRedisKey());
+
+        //查询数据库,构建集合
+        List<ImageType> list = super.lambdaQuery().list();
         Map<String, String> idRes = list.stream().collect(Collectors.toMap(res -> String.valueOf(res.getId()), JSON::toJSONString));
 
         //存入
-        redisTemplate.opsForHash().putAll(ImageRedisKeyEnum.IMAGE_INNER_CODE_GET_IMAGE_JSON.name(), innerCodeRes);
-        redisTemplate.opsForHash().putAll(ImageRedisKeyEnum.IMAGE_ID_GET_IMAGE_JSON.name(), idRes);
+        redisTemplate.opsForHash().putAll(ImageRedisKeyEnum.IMAGE_ID_GET_IMAGE_JSON_MAP.getRedisKey(), idRes);
 
-        log.info("完成: 初始化/更新 ImageType 数据至redis,innerCodeData:{},idData:{}", JSON.toJSONString(innerCodeRes), JSON.toJSONString(idRes));
+        log.info("完成: 初始化/更新 ImageType id-entityJson 数据至redis,idData:{}", JSON.toJSONString(idRes));
     }
 
     @Override
     public Optional<Long> getTypeIdByTypeInnerCode(String innerCode) {
-        String resJson = (String) redisTemplate.opsForHash().get(ImageRedisKeyEnum.IMAGE_INNER_CODE_GET_IMAGE_JSON.name(), innerCode);
+        String resJson = (String) redisTemplate.opsForHash().get(ImageRedisKeyEnum.IMAGE_INNER_CODE_GET_IMAGE_JSON_MAP.getRedisKey(), innerCode);
         ImageType imageType = JSON.parseObject(resJson, ImageType.class);
         if (imageType == null) {
             return Optional.empty();

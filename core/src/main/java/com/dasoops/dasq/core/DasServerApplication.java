@@ -1,8 +1,10 @@
 package com.dasoops.dasq.core;
 
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.annotation.MapperScans;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -15,8 +17,9 @@ import org.springframework.context.annotation.ComponentScan;
  */
 
 @SpringBootApplication
-@MapperScan(value="com.dasoops.dasq.*.mapper")
+@MapperScan(value = "com.dasoops.dasq.core.*.mapper")
 @ComponentScan(value = "com.dasoops.*")
+@ServletComponentScan
 public class DasServerApplication {
 
     // todo cq消息接受 按关键词分发处理

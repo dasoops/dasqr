@@ -23,7 +23,6 @@ minio:
   secretKey: aaaaaaaa
   tempDownloadPath: D:\temp
 dasq:
-  # 元事件过滤(预计迁移至mysql)
-  metaEventPass: true
   # 控制台打印异常堆栈信息
   consolePrintStack: true
+  token: dasKi

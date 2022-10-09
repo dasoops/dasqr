@@ -47,9 +47,9 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
     public void logicExceptionHandler(LogicException e) {
         Long id = e.getId();
         log.error("LogicException:errorId:{}, errorCode:{}", id, e.getCode());
-        ExceptionHandlerReinforced reinforcedBean;
+        ExceptionHandlerWrapper reinforcedBean;
         try {
-            reinforcedBean = applicationContext.getBean(ExceptionHandlerReinforced.class);
+            reinforcedBean = applicationContext.getBean(ExceptionHandlerWrapper.class);
         } catch (BeansException ex) {
             reinforcedBean = null;
         }
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
 
         //执行redis存储
         String message = ExceptionUtil.stacktraceToString(e);
-        redisTemplate.opsForHash().put(RedisKeyEnum.CORE_ID_GET_EXCEPTION_INFO_JSON.name(), e.getId(), message);
+        redisTemplate.opsForHash().put(RedisKeyEnum.CORE_ID_GET_EXCEPTION_INFO_JSON_MAP.getRedisKey(), e.getId(), message);
         if (consolePrintStack){
             e.printStackTrace();
         }

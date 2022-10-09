@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.cq.MethodStrategy;
+package com.dasoops.dasq.core.cq.methodstrategy;
 
 /**
  * @Title: defaultOutputStrategy

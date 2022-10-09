@@ -19,12 +19,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping
 @Slf4j
 public class CqBaseController {
-
     @PostMapping
     public String onMessage(@RequestBody JSONObject getJson) {
-
-        CqMethodStrategyContext context = new CqMethodStrategyContextFactory().getContext();
-        context.invokeMethod();
+//        CqMethodStrategyContext context = new CqMethodStrategyContextFactory().getContext();
+//        context.invokeMethod();
 
         String postType = (String) getJson.get("post_type");
         log.info(postType);
@@ -32,8 +30,4 @@ public class CqBaseController {
         return "null";
     }
 
-    @GetMapping
-    public void test1(String json){
-        log.info("get");
-    }
 }

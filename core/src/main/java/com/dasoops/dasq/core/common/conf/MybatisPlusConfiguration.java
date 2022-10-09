@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.conf;
+package com.dasoops.dasq.core.common.conf;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;

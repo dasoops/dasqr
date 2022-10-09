@@ -8,14 +8,14 @@ package com.dasoops.common.exception.handler;
  * @Version 1.0.0
  * @Description: 异常处理程序增强
  */
-public interface ExceptionHandlerReinforced {
+public interface ExceptionHandlerWrapper {
 
     /**
      * 处理前执行
      *
      * @param id id
      */
-    default void before(Long id){
+    default void before(Long id) {
 
     }
 

@@ -6,18 +6,23 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.Optional;
 
 /**
-* @author Administrator
-* @description 针对表【TB_SYS_IMAGE_TYPE】的数据库操作Service
-* @createDate 2022-10-07 21:46:50
-*/
+ * @author Administrator
+ * @description 针对表【TB_SYS_IMAGE_TYPE】的数据库操作Service
+ * @createDate 2022-10-07 21:46:50
+ */
 public interface ImageTypeService extends IService<ImageType> {
 
     /**
-     * 初始化/更新 ImageType 数据至redis
+     * 初始化/更新 ImageType innerCode-entityJson 数据至redis
      * - innerCode对应ImageType
+     */
+    void initOrUpdateImageTypeInnerCodeGetEntityJson2Redis();
+
+    /**
+     * 初始化/更新 ImageType id-entityJson 数据至redis
      * - id对应ImageType
      */
-    void initOrUpdateImageType2Redis();
+    void initOrUpdateImageTypeIdGetEntityJson2Redis();
 
     /**
      * 根据内部软编码从redis获取类型id

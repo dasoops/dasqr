@@ -1,6 +1,6 @@
 package com.dasoops.dasq.core.cq.entity.strategycontext;
 
-import com.dasoops.dasq.core.cq.MethodStrategy.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.BaseCqMethodStrategy;
 
 import java.util.List;
 import java.util.Map;

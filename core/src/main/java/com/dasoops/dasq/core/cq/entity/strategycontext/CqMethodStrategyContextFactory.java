@@ -1,12 +1,13 @@
 package com.dasoops.dasq.core.cq.entity.strategycontext;
 
-import com.dasoops.dasq.core.cq.MethodStrategy.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.BaseCqMethodStrategy;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.lang.NonNull;
 
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * @Title: CqMethodStrategyContextFactory
@@ -20,10 +21,17 @@ import java.util.LinkedList;
 public class CqMethodStrategyContextFactory implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
+    private CqMethodStrategyContext context;
 
     @Override
     public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+
+        Map<String, BaseCqMethodStrategy> strategyMap = applicationContext.getBeansOfType(BaseCqMethodStrategy.class);
+        if (!strategyMap.isEmpty()) {
+            context.setStrategyMap(new LinkedList<>(strategyMap.values()));
+        }
+        context = new CqMethodStrategyContext();
     }
 
     /**
@@ -31,9 +39,7 @@ public class CqMethodStrategyContextFactory implements ApplicationContextAware {
      *
      * @return {@link CqMethodStrategyContext}
      */
-    public CqMethodStrategyContext getContext(){
-        CqMethodStrategyContext context = new CqMethodStrategyContext();
-        context.setStrategyMap(new LinkedList<>(applicationContext.getBeansOfType(BaseCqMethodStrategy.class).values()));
+    public CqMethodStrategyContext getContext() {
         return context;
     }
 }
