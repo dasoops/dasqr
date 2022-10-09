@@ -1,6 +1,6 @@
 package com.dasoops.dasq.core.image.service;
 
-import com.dasoops.dasq.core.image.entity.ImageInfo;
+import com.dasoops.dasq.core.image.entity.pojo.ImageInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

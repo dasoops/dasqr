@@ -5,6 +5,7 @@ import com.dasoops.common.entity.enums.RedisKeyEnum;
 import com.dasoops.common.exception.entity.LogicException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -26,6 +27,9 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
 
     @Resource(name = "stringRedisTemplate", type = StringRedisTemplate.class)
     StringRedisTemplate redisTemplate;
+
+    @Value("dasq.consolePrintStack")
+    private boolean consolePrintStack;
 
     private ApplicationContext applicationContext;
 
@@ -58,6 +62,10 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
         //执行redis存储
         String message = ExceptionUtil.stacktraceToString(e);
         redisTemplate.opsForHash().put(RedisKeyEnum.CORE_ID_GET_EXCEPTION_INFO_JSON.name(), e.getId(), message);
+        if (consolePrintStack){
+            e.printStackTrace();
+        }
+
 
         if (reinforcedBean != null) {
             //执行后方法

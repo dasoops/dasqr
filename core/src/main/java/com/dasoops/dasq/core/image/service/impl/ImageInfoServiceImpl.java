@@ -1,7 +1,7 @@
 package com.dasoops.dasq.core.image.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dasoops.dasq.core.image.entity.ImageInfo;
+import com.dasoops.dasq.core.image.entity.pojo.ImageInfo;
 import com.dasoops.dasq.core.image.service.ImageTypeService;
 import com.dasoops.dasq.core.image.service.ImageInfoService;
 import com.dasoops.dasq.core.image.mapper.ImageInfoMapper;

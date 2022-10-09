@@ -2,7 +2,7 @@ package com.dasoops.dasq.core.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.dasq.core.cq.service.PassListService;
-import com.dasoops.dasq.core.cq.entity.PassList;
+import com.dasoops.dasq.core.cq.entity.pojo.PassObject;
 import com.dasoops.dasq.core.cq.mapper.PassListMapper;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 * @createDate 2022-10-07 16:40:31
 */
 @Service
-public class PassListServiceImpl extends ServiceImpl<PassListMapper, PassList>
+public class PassListServiceImpl extends ServiceImpl<PassListMapper, PassObject>
     implements PassListService {
 
 }

@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.image.entity;
+package com.dasoops.dasq.core.image.entity.pojo;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;

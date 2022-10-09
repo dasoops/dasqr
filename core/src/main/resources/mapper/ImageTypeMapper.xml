@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dasoops.dasq.core.image.mapper.ImageTypeMapper">
 
-    <resultMap id="BaseResultMap" type="com.dasoops.dasq.core.image.entity.ImageType">
+    <resultMap id="BaseResultMap" type="com.dasoops.dasq.core.image.entity.pojo.ImageType">
             <id property="id" column="ID" jdbcType="BIGINT"/>
             <result property="innerCode" column="INNER_CODE" jdbcType="VARCHAR"/>
             <result property="desc" column="DESC" jdbcType="VARCHAR"/>

@@ -1,6 +1,6 @@
 package com.dasoops.dasq.core.cq.mapper;
 
-import com.dasoops.dasq.core.cq.entity.PassList;
+import com.dasoops.dasq.core.cq.entity.pojo.PassObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2022-10-07 16:40:31
 * @Entity com.dasoops.dasq.entify.PassList
 */
-public interface PassListMapper extends BaseMapper<PassList> {
+public interface PassListMapper extends BaseMapper<PassObject> {
 
 }
 
