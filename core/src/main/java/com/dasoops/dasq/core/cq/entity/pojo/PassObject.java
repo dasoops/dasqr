@@ -20,7 +20,7 @@ import lombok.Data;
  * @Description: 过滤白名单
  * @see Serializable
  */
-@TableName(value ="TB_SYS_PASS_LIST")
+@TableName(value = "TB_CQ_PASS_LIST")
 @Data
 public class PassObject implements Serializable {
     /**
@@ -124,21 +124,19 @@ public class PassObject implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", type=").append(type);
-        sb.append(", passId=").append(passId);
-        sb.append(", methodInfoIdList=").append(methodIdList);
-        sb.append(", isDelete=").append(isDelete);
-        sb.append(", createUser=").append(createUser);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateUser=").append(updateUser);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return getClass().getSimpleName() +
+                " [" +
+                "Hash = " + hashCode() +
+                ", id=" + id +
+                ", type=" + type +
+                ", passId=" + passId +
+                ", methodInfoIdList=" + methodIdList +
+                ", isDelete=" + isDelete +
+                ", createUser=" + createUser +
+                ", createTime=" + createTime +
+                ", updateUser=" + updateUser +
+                ", updateTime=" + updateTime +
+                ", serialVersionUID=" + serialVersionUID +
+                "]";
     }
 }

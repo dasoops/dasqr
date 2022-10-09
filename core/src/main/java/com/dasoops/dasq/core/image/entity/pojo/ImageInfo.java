@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
  * @Description: 图片信息
  * @see Serializable
  */
-@TableName(value ="TB_SYS_IMAGE_INFO")
+@TableName(value = "TB_IMAGE_IMAGE_INFO")
 @Data
 @Builder
 @NoArgsConstructor
@@ -141,23 +141,21 @@ public class ImageInfo implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", keywords=").append(keyword);
-        sb.append(", typeId=").append(typeId);
-        sb.append(", groupId=").append(groupId);
-        sb.append(", authorId=").append(authorId);
-        sb.append(", desc=").append(desc);
-        sb.append(", isDelete=").append(isDelete);
-        sb.append(", createUser=").append(createUser);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateUser=").append(updateUser);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return getClass().getSimpleName() +
+                " [" +
+                "Hash = " + hashCode() +
+                ", id=" + id +
+                ", keywords=" + keyword +
+                ", typeId=" + typeId +
+                ", groupId=" + groupId +
+                ", authorId=" + authorId +
+                ", desc=" + desc +
+                ", isDelete=" + isDelete +
+                ", createUser=" + createUser +
+                ", createTime=" + createTime +
+                ", updateUser=" + updateUser +
+                ", updateTime=" + updateTime +
+                ", serialVersionUID=" + serialVersionUID +
+                "]";
     }
 }

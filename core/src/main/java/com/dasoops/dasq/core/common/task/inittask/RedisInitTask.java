@@ -1,6 +1,10 @@
 package com.dasoops.dasq.core.common.task.inittask;
 
 import com.dasoops.dasq.core.common.service.DictionaryService;
+import com.dasoops.dasq.core.cq.service.MethodInfoService;
+import com.dasoops.dasq.core.cq.service.MethodTypeService;
+import com.dasoops.dasq.core.cq.service.PassListService;
+import com.dasoops.dasq.core.image.service.ImageInfoService;
 import com.dasoops.dasq.core.image.service.ImageTypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -25,9 +29,17 @@ public class RedisInitTask {
     @Resource(name = "stringRedisTemplate", type = StringRedisTemplate.class)
     private StringRedisTemplate redisTemplate;
     @Resource
+    private DictionaryService dictionaryService;
+    @Resource
     private ImageTypeService imageTypeService;
     @Resource
-    private DictionaryService dictionaryService;
+    private ImageInfoService imageInfoService;
+    @Resource
+    private MethodTypeService methodTypeService;
+    @Resource
+    private MethodInfoService methodInfoService;
+    @Resource
+    private PassListService passListService;
 
     /**
      * 初始化
@@ -35,6 +47,9 @@ public class RedisInitTask {
      * -初始化/更新 ImageType id-entityJson 数据至redis
      * -初始化/更新 DictionaryTreeData 数据至redis
      * -初始化/更新 DictFatherDictCodeMap 数据至redis
+     * -初始化/更新 MethodType Id-EntityJson 数据至redis
+     * -初始化/更新 MethodInfo Id-EntityJson 数据至redis
+     * -初始化/更新 PassListJsonSet 数据至redis
      */
     @PostConstruct
     void init() {
@@ -46,10 +61,15 @@ public class RedisInitTask {
         dictionaryService.initOrUpdateDictTreeData2Redis();
 //     * -初始化/更新 DictFatherDictCodeMap 数据至redis
         dictionaryService.initOrUpdateDictFatherDictCodeMap2Redis();
+//     * -初始化/更新 MethodType Id-EntityJson 数据至redis
+        methodTypeService.initOrUpdateMethodTypeIdEntityJson2Redis();
+//     * -初始化/更新 MethodInfo Id-EntityJson 数据至redis
+        methodInfoService.initOrUpdateMethodInfoIdEntityJson2Redis();
+//     * -初始化/更新 PassListJsonSet 数据至redis
+        passListService.initOrUpdatePassListJsonSet2Redis();
+
+
     }
-
-
-
 
 
 }

@@ -15,14 +15,14 @@ public enum ImageRedisKeyEnum {
      * Map<String,String>
      * Hash<innerCode,ImageJson>
      */
-    IMAGE_INNER_CODE_GET_IMAGE_JSON_MAP("key_image_inner_code_get_image_json_hash"),
+    TYPE_INNER_CODE_GET_ENTITY_JSON_MAP("key_image_type_inner_code_get_entity_json_hash"),
 
     /**
      * 根据图片类型id获取图片类型json
-     * Map<Long,String>
+     * Map<String,String>
      * Hash<id,ImageJson>
      */
-    IMAGE_ID_GET_IMAGE_JSON_MAP("key_image_id_get_image_Json_hash");
+    TYPE_ID_GET_ENTITY_JSON_MAP("key_image_type_id_get_entity_Json_hash");
 
     /**
      * redisKey

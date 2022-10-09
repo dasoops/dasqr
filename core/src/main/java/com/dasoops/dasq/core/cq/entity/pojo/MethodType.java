@@ -1,26 +1,27 @@
-package com.dasoops.dasq.core.image.entity.pojo;
+package com.dasoops.dasq.core.cq.entity.pojo;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
+import lombok.Data;
+
 /**
- * @Title: ImageType
- * @ClassPath com.dasoops.dasq.image.entity.ImageType
+ * @Title: MethodType
+ * @ClassPath com.dasoops.dasq.core.cq.entity.pojo.MethodType
  * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/07
+ * @Date 2022/10/09
  * @Version 1.0.0
- * @Description: 图像类型
+ * @Description: 方法类型
  * @see Serializable
  */
-@TableName(value = "TB_IMAGE_IMAGE_TYPE")
+@TableName(value = "TB_CQ_METHOD_TYPE")
 @Data
-public class ImageType implements Serializable {
+public class MethodType implements Serializable {
     /**
      * ID
      */
@@ -28,12 +29,12 @@ public class ImageType implements Serializable {
     private Long id;
 
     /**
-     * 软编码
+     * 方法关键词
      */
-    private String innerCode;
+    private String keyword;
 
     /**
-     * 图片类型描述
+     * 方法描述
      */
     private String description;
 
@@ -81,15 +82,15 @@ public class ImageType implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ImageType other = (ImageType) that;
+        MethodType other = (MethodType) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getInnerCode() == null ? other.getInnerCode() == null : this.getInnerCode().equals(other.getInnerCode()))
-            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
-            && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
-            && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateUser() == null ? other.getUpdateUser() == null : this.getUpdateUser().equals(other.getUpdateUser()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+                && (this.getKeyword() == null ? other.getKeyword() == null : this.getKeyword().equals(other.getKeyword()))
+                && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
+                && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
+                && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+                && (this.getUpdateUser() == null ? other.getUpdateUser() == null : this.getUpdateUser().equals(other.getUpdateUser()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -97,8 +98,8 @@ public class ImageType implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getInnerCode() == null) ? 0 : getInnerCode().hashCode());
-        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
+        result = prime * result + ((getKeyword() == null) ? 0 : getKeyword().hashCode());
+        result = prime * result + ((this.getDescription() == null) ? 0 : this.getDescription().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
         result = prime * result + ((getCreateUser() == null) ? 0 : getCreateUser().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
@@ -113,8 +114,8 @@ public class ImageType implements Serializable {
                 " [" +
                 "Hash = " + hashCode() +
                 ", id=" + id +
-                ", innerCode=" + innerCode +
-                ", description=" + description +
+                ", keyword=" + keyword +
+                ", desc=" + description +
                 ", isDelete=" + isDelete +
                 ", createUser=" + createUser +
                 ", createTime=" + createTime +
