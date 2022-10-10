@@ -2,9 +2,11 @@ package com.dasoops.dasq.core.cq.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dasoops.dasq.core.cq.entity.bo.PassKeywordGetMethodInfoIdBo;
+import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.enums.CqRedisKeyEnum;
 import com.dasoops.dasq.core.cq.service.PassListService;
-import com.dasoops.dasq.core.cq.entity.pojo.PassObject;
+import com.dasoops.dasq.core.cq.entity.po.PassObject;
 import com.dasoops.dasq.core.cq.mapper.PassListMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -28,6 +30,9 @@ public class PassListServiceImpl extends ServiceImpl<PassListMapper, PassObject>
 
     @Resource(name = "stringRedisTemplate", type = StringRedisTemplate.class)
     private StringRedisTemplate redisTemplate;
+
+    @Resource
+    private PassListMapper passListMapper;
 
     @Override
     public void initOrUpdatePassListTypeGetEntityJsonSetMap2Redis() {
@@ -54,11 +59,25 @@ public class PassListServiceImpl extends ServiceImpl<PassListMapper, PassObject>
     }
 
     @Override
+    public void initOrUpdatePassListKeywordGetMethodInfoMap2Redis() {
+        log.info("初始化/更新 白名单关键词-方法info id映射集合 数据至redis");
+        List<PassKeywordGetMethodInfoIdBo> boList = getPassListKeywordGetMethodInfoList();
+        Map<String, String> resMap = boList.stream().collect(Collectors.toMap(PassKeywordGetMethodInfoIdBo::getKeyword, res -> String.valueOf(res.getId())));
+        redisTemplate.opsForHash().putAll(CqRedisKeyEnum.PASS_LIST_KEYWORD_GET_METHOD_INFO_ID_MAP.getRedisKey(), resMap);
+        log.info("完成: 初始化/更新 白名单关键词-方法info id映射集合 数据至redis,Data:{}", JSON.toJSONString(resMap));
+    }
+
+    @Override
     public Optional<List<PassObject>> getPassListByType(Integer type) {
         String jsonStr = (String) redisTemplate.opsForHash().get(CqRedisKeyEnum.PASS_LIST_TYPE_GET_ENTITY_JSON_SET_MAP.getRedisKey(), String.valueOf(type));
         if (jsonStr == null) {
             return Optional.empty();
         }
         return Optional.of(JSON.parseArray(jsonStr).toList(PassObject.class));
+    }
+
+    @Override
+    public List<PassKeywordGetMethodInfoIdBo> getPassListKeywordGetMethodInfoList() {
+        return passListMapper.selectPassKeywordGetMethodInfoMap();
     }
 }

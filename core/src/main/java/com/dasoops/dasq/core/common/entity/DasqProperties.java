@@ -14,4 +14,5 @@ import lombok.Data;
 public class DasqProperties {
     private Boolean consolePrintStack;
     private String token;
+    private String cqHttpUrl;
 }

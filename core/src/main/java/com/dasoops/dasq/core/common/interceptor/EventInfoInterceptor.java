@@ -7,6 +7,7 @@ import com.dasoops.dasq.core.common.util.EventUtil;
 import com.dasoops.dasq.core.common.util.WebUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -35,7 +36,7 @@ public class EventInfoInterceptor implements HandlerInterceptor, Ordered {
     private DictionaryService dictionaryService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
         //获取消息对象
         JSONObject paramObj = WebUtil.getParameters(request);
 
@@ -45,14 +46,14 @@ public class EventInfoInterceptor implements HandlerInterceptor, Ordered {
         //构建事件对象
         EventInfo eventInfo = EventUtil.buildEventInfo(paramObj, dict);
         EventUtil.set(eventInfo);
-        //存入本地线程变量threadLocal
 
+        //存入本地线程变量threadLocal
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler, ModelAndView modelAndView) throws Exception {
         EventUtil.remove();
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }

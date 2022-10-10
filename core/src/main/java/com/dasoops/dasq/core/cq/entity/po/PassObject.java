@@ -1,42 +1,53 @@
-package com.dasoops.dasq.core.cq.entity.pojo;
+package com.dasoops.dasq.core.cq.entity.po;
 
 import com.alibaba.fastjson2.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
 /**
- * @Title: MethodType
- * @ClassPath com.dasoops.dasq.core.cq.entity.pojo.MethodType
+ * @Title: PassList
+ * @ClassPath com.dasoops.dasq.cq.entity.PassList
  * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/09
+ * @Date 2022/10/07
  * @Version 1.0.0
- * @Description: 方法类型
+ * @Description: 过滤白名单
  * @see Serializable
  */
-@TableName(value = "TB_CQ_METHOD_TYPE")
+@TableName(value = "TB_CQ_PASS_LIST")
 @Data
-public class MethodType implements Serializable {
+public class PassObject implements Serializable {
     /**
-     * ID
+     * 主键id
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
-     * 方法关键词
+     * 放行类型(0:群组;1:用户)
      */
-    private String keyword;
+    private Integer type;
 
     /**
-     * 方法描述
+     * 放行关键词
      */
-    private String description;
+    private String passKeyword;
+
+    /**
+     * 执行方法ID
+     */
+    private Long methodInfoId;
+
+    /**
+     * 是否启用(0:禁用;1:启用)
+     */
+    private Integer enable;
 
     /**
      * 逻辑删除(0:未删除;1:删除)
@@ -68,6 +79,12 @@ public class MethodType implements Serializable {
     @JSONField(serialize = false)
     private Date updateTime;
 
+    /**
+     * 解析methodIds后获取的方法id列表
+     */
+    @TableField(exist = false)
+    private List<Long> methodIdList;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
@@ -82,10 +99,11 @@ public class MethodType implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        MethodType other = (MethodType) that;
+        PassObject other = (PassObject) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getKeyword() == null ? other.getKeyword() == null : this.getKeyword().equals(other.getKeyword()))
-                && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
+                && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
+                && (this.getPassKeyword() == null ? other.getPassKeyword() == null : this.getPassKeyword().equals(other.getPassKeyword()))
+                && (this.getMethodIdList() == null ? other.getMethodIdList() == null : this.getMethodIdList().equals(other.getMethodIdList()))
                 && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
                 && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
                 && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
@@ -98,9 +116,10 @@ public class MethodType implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getKeyword() == null) ? 0 : getKeyword().hashCode());
-        result = prime * result + ((this.getDescription() == null) ? 0 : this.getDescription().hashCode());
+        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
+        result = prime * result + ((this.getPassKeyword() == null) ? 0 : this.getPassKeyword().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
+        result = prime * result + ((getMethodIdList() == null) ? 0 : getMethodIdList().hashCode());
         result = prime * result + ((getCreateUser() == null) ? 0 : getCreateUser().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateUser() == null) ? 0 : getUpdateUser().hashCode());
@@ -114,8 +133,9 @@ public class MethodType implements Serializable {
                 " [" +
                 "Hash = " + hashCode() +
                 ", id=" + id +
-                ", keyword=" + keyword +
-                ", desc=" + description +
+                ", type=" + type +
+                ", passKeyword=" + passKeyword +
+                ", methodInfoIdList=" + methodIdList +
                 ", isDelete=" + isDelete +
                 ", createUser=" + createUser +
                 ", createTime=" + createTime +

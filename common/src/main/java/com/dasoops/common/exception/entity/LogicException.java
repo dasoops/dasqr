@@ -16,4 +16,16 @@ public class LogicException extends BaseCustomException {
     public LogicException(ExceptionCodeEnum exceptionCodeEnum) {
         super(exceptionCodeEnum);
     }
+
+    public LogicException(Long id, ExceptionCodeEnum exceptionCodeEnum) {
+        super(id, exceptionCodeEnum);
+    }
+
+    public LogicException(ExceptionCodeEnum exceptionCodeEnum, String msg) {
+        super(exceptionCodeEnum, msg);
+    }
+
+    public LogicException(Long id, ExceptionCodeEnum exceptionCodeEnum, String msg) {
+        super(id, exceptionCodeEnum, msg);
+    }
 }

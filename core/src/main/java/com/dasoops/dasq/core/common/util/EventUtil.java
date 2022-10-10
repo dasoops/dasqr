@@ -60,7 +60,7 @@ public final class EventUtil {
         messageTypeDict.entrySet().stream()
                 .filter(res -> res.getValue().equals(messageTypeStr))
                 .findFirst()
-                .ifPresent(res -> eventInfo.setMessageId(res.getKey()));
+                .ifPresent(res -> eventInfo.setMessageType(Integer.parseInt(res.getKey())));
 
         return eventInfo;
     }

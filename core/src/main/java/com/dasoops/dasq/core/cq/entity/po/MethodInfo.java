@@ -1,53 +1,52 @@
-package com.dasoops.dasq.core.cq.entity.pojo;
+package com.dasoops.dasq.core.cq.entity.po;
 
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
 
 /**
- * @Title: PassList
- * @ClassPath com.dasoops.dasq.cq.entity.PassList
+ * @Title: MethodInfo
+ * @ClassPath com.dasoops.dasq.core.cq.entity.po.MethodInfo
  * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/07
+ * @Date 2022/10/09
  * @Version 1.0.0
- * @Description: 过滤白名单
+ * @Description: 方法信息
  * @see Serializable
  */
-@TableName(value = "TB_CQ_PASS_LIST")
+@TableName(value = "TB_CQ_METHOD_INFO")
 @Data
-public class PassObject implements Serializable {
+public class MethodInfo implements Serializable {
     /**
-     * 主键id
+     * ID
      */
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Long id;
 
     /**
-     * 放行类型(0:群组;1:用户)
+     * 方法类型id
      */
-    private Integer type;
+    private Long typeId;
 
     /**
-     * 放行关键词
+     * 方法参数(可为集合,以','分割,影响先后顺序)
      */
-    private String passKeyword;
+    private String parameters;
 
     /**
-     * 执行方法ID(可为集合,以','分割)
-     */
-    private String methodInfoIds;
-
-    /**
-     * 是否启用(0:禁用;1:启用)
+     * 是否启用(0:fasle;1:true)
      */
     private Integer enable;
+
+    /**
+     * 描述
+     */
+    private String description;
 
     /**
      * 逻辑删除(0:未删除;1:删除)
@@ -79,12 +78,6 @@ public class PassObject implements Serializable {
     @JSONField(serialize = false)
     private Date updateTime;
 
-    /**
-     * 解析methodIds后获取的方法id列表
-     */
-    @TableField(exist = false)
-    private List<Long> methodIdList;
-
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
@@ -99,11 +92,12 @@ public class PassObject implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        PassObject other = (PassObject) that;
+        MethodInfo other = (MethodInfo) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
-                && (this.getPassKeyword() == null ? other.getPassKeyword() == null : this.getPassKeyword().equals(other.getPassKeyword()))
-                && (this.getMethodIdList() == null ? other.getMethodIdList() == null : this.getMethodIdList().equals(other.getMethodIdList()))
+                && (this.getTypeId() == null ? other.getTypeId() == null : this.getTypeId().equals(other.getTypeId()))
+                && (this.getParameters() == null ? other.getParameters() == null : this.getParameters().equals(other.getParameters()))
+                && (this.getEnable() == null ? other.getEnable() == null : this.getEnable().equals(other.getEnable()))
+                && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
                 && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
                 && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
                 && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
@@ -116,10 +110,11 @@ public class PassObject implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
-        result = prime * result + ((this.getPassKeyword() == null) ? 0 : this.getPassKeyword().hashCode());
+        result = prime * result + ((getTypeId() == null) ? 0 : getTypeId().hashCode());
+        result = prime * result + ((getParameters() == null) ? 0 : getParameters().hashCode());
+        result = prime * result + ((getEnable() == null) ? 0 : getEnable().hashCode());
+        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
-        result = prime * result + ((getMethodIdList() == null) ? 0 : getMethodIdList().hashCode());
         result = prime * result + ((getCreateUser() == null) ? 0 : getCreateUser().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateUser() == null) ? 0 : getUpdateUser().hashCode());
@@ -129,13 +124,14 @@ public class PassObject implements Serializable {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() +
+        String sb = getClass().getSimpleName() +
                 " [" +
                 "Hash = " + hashCode() +
                 ", id=" + id +
-                ", type=" + type +
-                ", passKeyword=" + passKeyword +
-                ", methodInfoIdList=" + methodIdList +
+                ", typeId=" + typeId +
+                ", parameters=" + parameters +
+                ", enable=" + enable +
+                ", description=" + description +
                 ", isDelete=" + isDelete +
                 ", createUser=" + createUser +
                 ", createTime=" + createTime +
@@ -143,5 +139,6 @@ public class PassObject implements Serializable {
                 ", updateTime=" + updateTime +
                 ", serialVersionUID=" + serialVersionUID +
                 "]";
+        return sb;
     }
 }

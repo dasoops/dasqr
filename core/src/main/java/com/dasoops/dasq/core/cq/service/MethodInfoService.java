@@ -1,6 +1,6 @@
 package com.dasoops.dasq.core.cq.service;
 
-import com.dasoops.dasq.core.cq.entity.pojo.MethodInfo;
+import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -14,4 +14,12 @@ public interface MethodInfoService extends IService<MethodInfo> {
      * 初始化/更新 MethodInfo Id-EntityJson 数据至redis
      */
     void initOrUpdateMethodInfoIdEntityJson2Redis();
+
+    /**
+     * 通过passList关键词获取MethodInfo
+     *
+     * @param keyword 关键字
+     * @return {@link MethodInfo}
+     */
+    MethodInfo getMethodInfoIdByKeyWord(String keyword);
 }

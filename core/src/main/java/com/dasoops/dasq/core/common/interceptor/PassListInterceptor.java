@@ -1,12 +1,14 @@
 package com.dasoops.dasq.core.common.interceptor;
 
 import cn.hutool.core.convert.Convert;
+import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.dasq.core.common.service.DictionaryService;
 import com.dasoops.dasq.core.common.util.WebUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
-import com.dasoops.dasq.core.cq.entity.pojo.PassObject;
+import com.dasoops.dasq.core.cq.entity.po.PassObject;
 import com.dasoops.dasq.core.cq.service.PassListService;
+import com.dasoops.dasq.core.cq.util.CqKeywordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.Ordered;
@@ -36,8 +38,6 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
 
     @Resource
     private PassListService passListService;
-    @Resource
-    private DictionaryService dictionaryService;
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
@@ -49,9 +49,15 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
             return false;
         }
 
+        //是否为命令
+        if (!this.isCommon(paramObj)) {
+            return false;
+        }
+
         if (!this.authorIsMatch(paramObj)) {
             return false;
         }
+
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
@@ -74,7 +80,7 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
      */
     private boolean postTypeIsMatch(JSONObject paramObj) {
         //获取消息类型id
-        String postType = paramObj.getString(CqKeywordEnum.POST_TYPE.getHumpName());
+        String postType = paramObj.getString(CqKeywordEnum.POST_TYPE.getOtherName());
 
         //消息类型
         final Integer messageTypeCode = 2;
@@ -89,7 +95,7 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
      */
     private boolean authorIsMatch(JSONObject paramObj) {
 
-        String messageType = paramObj.getString(CqKeywordEnum.MESSAGE_TYPE.getHumpName());
+        String messageType = paramObj.getString(CqKeywordEnum.MESSAGE_TYPE.getOtherName());
 
         if (messageType.equals(CqKeywordEnum.MESSAGE_TYPE_GROUP.getSimpleName())) {
             //群聊消息
@@ -109,7 +115,7 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
      * @return boolean
      */
     private boolean groupIdIsMatch(JSONObject paramObj) {
-        String groupId = paramObj.getString(CqKeywordEnum.GROUP_ID.getHumpName());
+        String groupId = paramObj.getString(CqKeywordEnum.GROUP_ID.getOtherName());
 
         //消息类型
         final Integer messageTypeCode = 0;
@@ -124,7 +130,7 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
      * @return boolean
      */
     private boolean userIdIsMatch(JSONObject paramObj) {
-        String userId = paramObj.getString(CqKeywordEnum.USER_ID.getHumpName());
+        String userId = paramObj.getString(CqKeywordEnum.USER_ID.getOtherName());
 
         //消息类型
         final Integer messageTypeCode = 1;
@@ -152,6 +158,17 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
             }
         }
         return false;
+    }
+
+    /**
+     * 是否为命令
+     *
+     * @param paramObj param obj
+     * @return boolean
+     */
+    public boolean isCommon(JSONObject paramObj) {
+        String message = paramObj.getString(CqKeywordEnum.MESSAGE.getOtherName());
+        return message.startsWith(".");
     }
 
 

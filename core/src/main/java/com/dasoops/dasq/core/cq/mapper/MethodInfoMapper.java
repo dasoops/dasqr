@@ -1,6 +1,6 @@
 package com.dasoops.dasq.core.cq.mapper;
 
-import com.dasoops.dasq.core.cq.entity.pojo.MethodInfo;
+import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

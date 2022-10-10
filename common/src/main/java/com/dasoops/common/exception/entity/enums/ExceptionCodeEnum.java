@@ -14,8 +14,9 @@ public enum ExceptionCodeEnum {
     /**
      * 参数应不为空,获取异常
      */
-    PARAMETER_GET_ERROR(1601,"参数获取异常"),
-    NO_REGISTER_CODE_ERROR(1602,"未注册的识别码"),
+    PARAMETER_GET_ERROR(1601, "参数获取异常"),
+    NO_REGISTER_CODE_ERROR(1602, "未注册的识别码"),
+    CQ_HTTP_ERROR(1603, "cqHttp访问异常"),
     ;
 
     /**

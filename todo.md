@@ -6,3 +6,4 @@
 4. PassListInterceptor authorMatch 硬编码改为策略模式,暂未启动
 5. cq消息接受 按关键词分发处理 分发部分框架完善
 6. ExceptionHandlerWrapperImpl 向用户/群组 发送错误id
+7. getParameterMap dq码转换

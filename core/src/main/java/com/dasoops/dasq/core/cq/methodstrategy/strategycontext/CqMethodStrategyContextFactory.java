@@ -1,10 +1,10 @@
-package com.dasoops.dasq.core.cq.entity.strategycontext;
+package com.dasoops.dasq.core.cq.methodstrategy.strategycontext;
 
-import com.dasoops.dasq.core.cq.methodstrategy.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.StratepyEntity.BaseCqMethodStrategy;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -18,20 +18,22 @@ import java.util.Map;
  * @Description: cq白名单方法策略抉择上下文对象 工厂
  * @see ApplicationContextAware
  */
+@Component
 public class CqMethodStrategyContextFactory implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
     private CqMethodStrategyContext context;
 
     @Override
-    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
-
-        Map<String, BaseCqMethodStrategy> strategyMap = applicationContext.getBeansOfType(BaseCqMethodStrategy.class);
-        if (!strategyMap.isEmpty()) {
-            context.setStrategyMap(new LinkedList<>(strategyMap.values()));
+        if (context == null) {
+            context = new CqMethodStrategyContext();
+            Map<String, BaseCqMethodStrategy> strategyMap = applicationContext.getBeansOfType(BaseCqMethodStrategy.class);
+            if (!strategyMap.isEmpty()) {
+                context.setStrategyMap(new LinkedList<>(strategyMap.values()));
+            }
         }
-        context = new CqMethodStrategyContext();
     }
 
     /**

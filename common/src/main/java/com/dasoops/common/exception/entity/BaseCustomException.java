@@ -43,4 +43,19 @@ public abstract class BaseCustomException extends RuntimeException {
         this.msg = exceptionCodeEnum.getDescription();
         this.id = id;
     }
+
+    public BaseCustomException(ExceptionCodeEnum exceptionCodeEnum, String msg) {
+        this.exceptionCodeEnum = exceptionCodeEnum;
+        this.code = exceptionCodeEnum.getCode();
+        this.msg = exceptionCodeEnum.getDescription() + "\r\n\t Stack at \r\n" + msg;
+        this.id = System.currentTimeMillis();
+    }
+
+    public BaseCustomException(Long id, ExceptionCodeEnum exceptionCodeEnum, String msg) {
+        this.exceptionCodeEnum = exceptionCodeEnum;
+        this.code = exceptionCodeEnum.getCode();
+        this.msg = exceptionCodeEnum.getDescription() + "Stack at \r\n" + msg;
+        this.id = id;
+    }
+
 }

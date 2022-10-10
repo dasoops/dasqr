@@ -1,6 +1,6 @@
 package com.dasoops.dasq.core.cq.service;
 
-import com.dasoops.dasq.core.cq.entity.pojo.MethodType;
+import com.dasoops.dasq.core.cq.entity.po.MethodType;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

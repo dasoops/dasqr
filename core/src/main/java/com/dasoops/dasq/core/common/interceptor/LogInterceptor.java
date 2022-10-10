@@ -1,5 +1,8 @@
 package com.dasoops.dasq.core.common.interceptor;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.dasoops.dasq.core.common.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.Ordered;
@@ -27,7 +30,9 @@ public class LogInterceptor implements HandlerInterceptor, Ordered {
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
+        JSONObject paramObj = WebUtil.getParameters(request);
 
+        log.info("接收到消息:{}", JSON.toJSONString(paramObj));
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 

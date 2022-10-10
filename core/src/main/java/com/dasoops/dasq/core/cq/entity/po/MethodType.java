@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.cq.entity.pojo;
+package com.dasoops.dasq.core.cq.entity.po;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -11,17 +11,17 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * @Title: MethodInfo
- * @ClassPath com.dasoops.dasq.core.cq.entity.pojo.MethodInfo
+ * @Title: MethodType
+ * @ClassPath com.dasoops.dasq.core.cq.entity.po.MethodType
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/10/09
  * @Version 1.0.0
- * @Description: 方法信息
+ * @Description: 方法类型
  * @see Serializable
  */
-@TableName(value = "TB_CQ_METHOD_INFO")
+@TableName(value = "TB_CQ_METHOD_TYPE")
 @Data
-public class MethodInfo implements Serializable {
+public class MethodType implements Serializable {
     /**
      * ID
      */
@@ -29,22 +29,12 @@ public class MethodInfo implements Serializable {
     private Long id;
 
     /**
-     * 方法类型id
+     * 方法关键词
      */
-    private Long typeId;
+    private String keyword;
 
     /**
-     * 方法参数(可为集合,以','分割,影响先后顺序)
-     */
-    private String parameters;
-
-    /**
-     * 是否启用(0:fasle;1:true)
-     */
-    private Integer enable;
-
-    /**
-     * 描述
+     * 方法描述
      */
     private String description;
 
@@ -92,11 +82,9 @@ public class MethodInfo implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        MethodInfo other = (MethodInfo) that;
+        MethodType other = (MethodType) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getTypeId() == null ? other.getTypeId() == null : this.getTypeId().equals(other.getTypeId()))
-                && (this.getParameters() == null ? other.getParameters() == null : this.getParameters().equals(other.getParameters()))
-                && (this.getEnable() == null ? other.getEnable() == null : this.getEnable().equals(other.getEnable()))
+                && (this.getKeyword() == null ? other.getKeyword() == null : this.getKeyword().equals(other.getKeyword()))
                 && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
                 && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
                 && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
@@ -110,10 +98,8 @@ public class MethodInfo implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getTypeId() == null) ? 0 : getTypeId().hashCode());
-        result = prime * result + ((getParameters() == null) ? 0 : getParameters().hashCode());
-        result = prime * result + ((getEnable() == null) ? 0 : getEnable().hashCode());
-        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
+        result = prime * result + ((getKeyword() == null) ? 0 : getKeyword().hashCode());
+        result = prime * result + ((this.getDescription() == null) ? 0 : this.getDescription().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
         result = prime * result + ((getCreateUser() == null) ? 0 : getCreateUser().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
@@ -128,10 +114,8 @@ public class MethodInfo implements Serializable {
                 " [" +
                 "Hash = " + hashCode() +
                 ", id=" + id +
-                ", typeId=" + typeId +
-                ", parameters=" + parameters +
-                ", enable=" + enable +
-                ", description=" + description +
+                ", keyword=" + keyword +
+                ", desc=" + description +
                 ", isDelete=" + isDelete +
                 ", createUser=" + createUser +
                 ", createTime=" + createTime +

@@ -28,36 +28,107 @@ public enum CqKeywordEnum {
     /**
      * 群聊消息
      */
-    MESSAGE_TYPE_GROUP("group", "group"),
+    MESSAGE_TYPE_GROUP("group", "0"),
 
     /**
      * 私聊消息
      */
-    MESSAGE_TYPE_PRIVATE("private", "private"),
+    MESSAGE_TYPE_PRIVATE("private", "1"),
 
     /**
-     * 私聊消息
+     * 消息类型消息后缀
+     */
+    MESSAGE_TYPE_MESSAGE_PREFIX("messageTypeMessagePrefix", "3"),
+
+    /**
+     * 群聊id
      */
     GROUP_ID("groupId", "group_id"),
 
     /**
-     * 私聊消息
+     * 私聊id
      */
     USER_ID("userId", "user_id"),
 
+    /**
+     * 消息
+     */
+    MESSAGE("message", "message"),
+
+    /**
+     * 分隔符
+     */
+    URL_SEPARATOR("/", "/"),
+
+    /**
+     * 发送私聊消息
+     */
+    SEND_PRIVATE_MSG("sendPrivateMsg", "send_private_msg"),
+
+    /**
+     * 发送群聊消息
+     */
+    SEND_GROUP_MSG("sendGroupMsg", "send_group_msg"),
+
+    /**
+     * URL传参前缀
+     */
+    URL_PARAMETER_PREFIX("?", "?"),
+
+    /**
+     * URL传参前缀
+     */
+    URL_PARAMETER_SEPARATOR("&", "&"),
+
+    /**
+     * url参数键值分隔符
+     */
+    URL_PARAMETER_KEY_VALUE_SEPARATOR("=", "="),
+
+    /**
+     * url参数值前缀
+     */
+    URL_PARAMETER_VALUE_PREFIX("{", "{"),
+
+    /**
+     * url参数值后缀
+     */
+    URL_PARAMETER_VALUE_SUFFIX("}", "}"),
+
+    /**
+     * cq res data
+     */
+    CQ_RES_DATA("data", "data"),
+
+    /**
+     * cq res message id
+     */
+    CQ_RES_MESSAGE_ID("messageId", "message_id"),
+
+    /**
+     * cq res failed
+     */
+    CQ_RES_STATUS_FAILED("failed", "failed"),
+
+    /**
+     * cq res ok
+     */
+    CQ_RES_STATUS_OK("ok", "ok"),
+
+    COMMON_SUFFIX(".", "."),
 
     ;
 
     final String simpleName;
-    final String humpName;
+    final String otherName;
 
-    CqKeywordEnum(String simpleName, String humpName) {
+    CqKeywordEnum(String simpleName, String otherName) {
         this.simpleName = simpleName;
-        this.humpName = humpName;
+        this.otherName = otherName;
     }
 
-    public String getHumpName() {
-        return humpName;
+    public String getOtherName() {
+        return otherName;
     }
 
     public String getSimpleName() {

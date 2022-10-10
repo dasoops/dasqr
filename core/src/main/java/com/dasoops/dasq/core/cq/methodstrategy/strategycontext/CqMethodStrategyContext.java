@@ -1,6 +1,8 @@
-package com.dasoops.dasq.core.cq.entity.strategycontext;
+package com.dasoops.dasq.core.cq.methodstrategy.strategycontext;
 
-import com.dasoops.dasq.core.cq.methodstrategy.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
+import com.dasoops.dasq.core.cq.methodstrategy.StratepyEntity.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.util.CqMethodUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,7 @@ import java.util.stream.Collectors;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/10/09
  * @Version 1.0.0
- * @Description: cq白名单方法策略抉择上下文对象
+ * @Description: cq白名单方法类型策略抉择上下文对象
  */
 public class CqMethodStrategyContext {
     /**
@@ -35,7 +37,17 @@ public class CqMethodStrategyContext {
      * @param id     方法id
      * @param params 参数
      */
-    public void invokeMethod(Long id, Object... params) {
+    public void invoke(Long id, List<String> params) {
         strategyMap.get(id).invoke(params);
     }
+
+    /**
+     * 调用方法
+     *
+     * @param methodInfo 方法信息
+     */
+    public void invoke(MethodInfo methodInfo) {
+        invoke(methodInfo.getTypeId(), CqMethodUtil.getParameterMap(methodInfo.getParameters()));
+    }
+
 }

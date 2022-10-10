@@ -4,15 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dasoops.dasq.core.cq.mapper.PassListMapper">
 
-    <resultMap id="BaseResultMap" type="com.dasoops.dasq.core.cq.entity.pojo.PassObject">
-            <id property="id" column="ID" jdbcType="BIGINT"/>
-            <result property="type" column="TYPE" jdbcType="TINYINT"/>
-            <result property="passKeyword" column="PASS_KEYWORD" jdbcType="BIGINT"/>
-            <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
-            <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
-            <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
-            <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
-            <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+    <resultMap id="BaseResultMap" type="com.dasoops.dasq.core.cq.entity.po.PassObject">
+        <id property="id" column="ID" jdbcType="BIGINT"/>
+        <result property="type" column="TYPE" jdbcType="TINYINT"/>
+        <result property="passKeyword" column="PASS_KEYWORD" jdbcType="BIGINT"/>
+        <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
+        <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -21,4 +21,12 @@
         IS_DELETE,CREATE_USER,CREATE_TIME,
         UPDATE_USER,UPDATE_TIME
     </sql>
+    <select id="selectPassKeywordGetMethodInfoMap"
+            resultType="com.dasoops.dasq.core.cq.entity.bo.PassKeywordGetMethodInfoIdBo">
+        SELECT P.PASS_KEYWORD AS keyword,
+               F.ID           AS id
+        FROM `TB_CQ_PASS_LIST` P
+                 INNER JOIN TB_CQ_METHOD_INFO F ON P.METHOD_INFO_ID = F.ID
+            AND P.TYPE = 3
+    </select>
 </mapper>

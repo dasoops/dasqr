@@ -32,8 +32,12 @@ public enum CqRedisKeyEnum {
      */
     PASS_LIST_TYPE_GET_ENTITY_JSON_SET_MAP("key_cq_pass_list_type_get_entity_json_set_hash"),
 
-
-    ;
+    /**
+     * 通过白名单关键词获取方法info id映射集合
+     * Map<String,String>
+     * Map<PassKeyword,MethodInfoId>
+     */
+    PASS_LIST_KEYWORD_GET_METHOD_INFO_ID_MAP("key_cq_pass_list_keyword_get_method_info_id_hash");
 
     /**
      * redisKey

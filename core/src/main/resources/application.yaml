@@ -26,3 +26,5 @@ dasq:
   # 控制台打印异常堆栈信息
   consolePrintStack: true
   token: dasKi
+  cqHttpUrl: http://127.0.0.1:4700
+  cqToken: dasKi

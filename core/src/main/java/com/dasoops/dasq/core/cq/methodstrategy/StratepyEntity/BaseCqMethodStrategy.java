@@ -1,4 +1,6 @@
-package com.dasoops.dasq.core.cq.methodstrategy;
+package com.dasoops.dasq.core.cq.methodstrategy.StratepyEntity;
+
+import java.util.List;
 
 /**
  * @Title: BaseCqMethodStrategy
@@ -23,6 +25,6 @@ public interface BaseCqMethodStrategy {
      *
      * @param params 参数
      */
-    void invoke(Object... params);
+    void invoke(List<String> params);
 
 }

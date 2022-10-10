@@ -3,7 +3,7 @@ package com.dasoops.dasq.core.cq.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.dasq.core.cq.entity.enums.CqRedisKeyEnum;
-import com.dasoops.dasq.core.cq.entity.pojo.MethodInfo;
+import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
 import com.dasoops.dasq.core.cq.service.MethodInfoService;
 import com.dasoops.dasq.core.cq.mapper.MethodInfoMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +47,18 @@ public class MethodInfoServiceImpl extends ServiceImpl<MethodInfoMapper, MethodI
 
         log.info("完成: 初始化/更新 MethodInfo Id-EntityJson 数据至redis,Data:{}", JSON.toJSONString(resMap));
     }
+
+
+    @Override
+    public MethodInfo getMethodInfoIdByKeyWord(String keyword) {
+        String id = (String) redisTemplate.opsForHash().get(CqRedisKeyEnum.PASS_LIST_KEYWORD_GET_METHOD_INFO_ID_MAP.getRedisKey(), keyword);
+        if (id == null) {
+            return null;
+        }
+        String jsonStr = (String) redisTemplate.opsForHash().get(CqRedisKeyEnum.METHOD_INFO_ID_GET_ENTITY_JSON_MAP.getRedisKey(), id);
+        return JSON.parseObject(jsonStr, MethodInfo.class);
+    }
+
 }
 
 
