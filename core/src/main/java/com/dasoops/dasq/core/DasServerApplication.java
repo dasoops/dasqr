@@ -22,8 +22,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ServletComponentScan
 public class DasServerApplication {
 
-    // todo cq消息接受 按关键词分发处理
-    // todo 自定白名单消息过滤
 
     public static void main(String[] args) {
         SpringApplication.run(DasServerApplication.class, args);

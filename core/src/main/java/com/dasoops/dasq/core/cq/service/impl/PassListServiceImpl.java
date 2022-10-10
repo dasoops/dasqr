@@ -37,7 +37,7 @@ public class PassListServiceImpl extends ServiceImpl<PassListMapper, PassObject>
         redisTemplate.delete(CqRedisKeyEnum.PASS_LIST_TYPE_GET_ENTITY_JSON_SET_MAP.getRedisKey());
 
         //查询数据库,构建集合
-        List<PassObject> list = super.lambdaQuery().list();
+        List<PassObject> list = super.lambdaQuery().ne(PassObject::getEnable, 0).list();
 
         Map<String, String> resMap = list.stream()
                 .collect(Collectors.groupingBy(PassObject::getType))

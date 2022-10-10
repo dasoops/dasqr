@@ -43,26 +43,18 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
         //获取消息对象
         JSONObject paramObj = WebUtil.getParameters(request);
-        //获取消息类型id
-        String postType = paramObj.getString(CqKeywordEnum.POST_TYPE.getHumpName());
 
-        //消息类型
-        final Integer messageTypeCode = 2;
-        Optional<List<PassObject>> passListOpt = passListService.getPassListByType(messageTypeCode);
-        //在匹配列表中放行
-        if (passListOpt.isPresent()) {
-            //消息类型匹配,忽略大小写,忽略全半角
-            boolean isMatch = passListOpt.get().stream().anyMatch(passObj ->
-                    Convert.toDBC(passObj.getPassKeyword()).equalsIgnoreCase(Convert.toDBC(postType))
-            );
-            if (isMatch) {
-                return HandlerInterceptor.super.preHandle(request, response, handler);
-            }
+        //go_cqhttp消息类型匹配
+        if (!this.postTypeIsMatch(paramObj)) {
+            return false;
         }
 
-        return false;
-    }
+        if (!this.authorIsMatch(paramObj)) {
+            return false;
+        }
 
+        return HandlerInterceptor.super.preHandle(request, response, handler);
+    }
 
     @Override
     public void postHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler, ModelAndView modelAndView) throws Exception {
@@ -73,5 +65,94 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
     public int getOrder() {
         return 1;
     }
+
+    /**
+     * go_cqhttp消息类型匹配
+     *
+     * @param paramObj param obj
+     * @return boolean
+     */
+    private boolean postTypeIsMatch(JSONObject paramObj) {
+        //获取消息类型id
+        String postType = paramObj.getString(CqKeywordEnum.POST_TYPE.getHumpName());
+
+        //消息类型
+        final Integer messageTypeCode = 2;
+        return isMatch(postType, messageTypeCode);
+    }
+
+    /**
+     * 作者是否匹配
+     *
+     * @param paramObj param obj
+     * @return boolean
+     */
+    private boolean authorIsMatch(JSONObject paramObj) {
+
+        String messageType = paramObj.getString(CqKeywordEnum.MESSAGE_TYPE.getHumpName());
+
+        if (messageType.equals(CqKeywordEnum.MESSAGE_TYPE_GROUP.getSimpleName())) {
+            //群聊消息
+            return groupIdIsMatch(paramObj);
+        } else if (messageType.equals(CqKeywordEnum.MESSAGE_TYPE_PRIVATE.getSimpleName())) {
+            //私聊消息
+            return userIdIsMatch(paramObj);
+        }
+
+        return false;
+    }
+
+    /**
+     * 组id是否匹配
+     *
+     * @param paramObj param obj
+     * @return boolean
+     */
+    private boolean groupIdIsMatch(JSONObject paramObj) {
+        String groupId = paramObj.getString(CqKeywordEnum.GROUP_ID.getHumpName());
+
+        //消息类型
+        final Integer messageTypeCode = 0;
+        return isMatch(groupId, messageTypeCode);
+    }
+
+
+    /**
+     * 用户id是否匹配
+     *
+     * @param paramObj param obj
+     * @return boolean
+     */
+    private boolean userIdIsMatch(JSONObject paramObj) {
+        String userId = paramObj.getString(CqKeywordEnum.USER_ID.getHumpName());
+
+        //消息类型
+        final Integer messageTypeCode = 1;
+        return isMatch(userId, messageTypeCode);
+    }
+
+    /**
+     * 是否匹配
+     *
+     * @param keyword         关键字
+     * @param messageTypeCode 消息类型编号
+     * @return boolean
+     */
+    private boolean isMatch(String keyword, Integer messageTypeCode) {
+        Optional<List<PassObject>> passListOpt = passListService.getPassListByType(messageTypeCode);
+
+        //在匹配列表中放行
+        if (passListOpt.isPresent()) {
+            //消息类型匹配,忽略大小写,忽略全半角
+            boolean isMatch = passListOpt.get().stream().anyMatch(passObj ->
+                    Convert.toDBC(passObj.getPassKeyword()).equalsIgnoreCase(Convert.toDBC(keyword))
+            );
+            if (isMatch) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

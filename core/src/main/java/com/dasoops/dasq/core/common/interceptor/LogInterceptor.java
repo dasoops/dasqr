@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class LogInterceptor implements HandlerInterceptor, Ordered {
 
-    //todo 待完善
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {

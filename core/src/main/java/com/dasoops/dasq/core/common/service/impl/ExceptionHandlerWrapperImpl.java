@@ -14,6 +14,5 @@ import com.dasoops.common.exception.handler.ExceptionHandlerWrapper;
 public class ExceptionHandlerWrapperImpl implements ExceptionHandlerWrapper {
     @Override
     public void after(Long id) {
-        //todo 向用户/群组 发送错误id
     }
 }

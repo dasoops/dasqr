@@ -49,8 +49,6 @@ public class EventInfoInterceptor implements HandlerInterceptor, Ordered {
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
-    //todo 拦截器日志保存(暂定mongo)
-    //todo 对非cq_http消息进行token校验
 
 
     @Override

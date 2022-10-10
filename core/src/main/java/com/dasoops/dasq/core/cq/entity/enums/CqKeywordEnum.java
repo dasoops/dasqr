@@ -25,6 +25,26 @@ public enum CqKeywordEnum {
      */
     POST_TYPE("postType", "post_type"),
 
+    /**
+     * 群聊消息
+     */
+    MESSAGE_TYPE_GROUP("group", "group"),
+
+    /**
+     * 私聊消息
+     */
+    MESSAGE_TYPE_PRIVATE("private", "private"),
+
+    /**
+     * 私聊消息
+     */
+    GROUP_ID("groupId", "group_id"),
+
+    /**
+     * 私聊消息
+     */
+    USER_ID("userId", "user_id"),
+
 
     ;
 

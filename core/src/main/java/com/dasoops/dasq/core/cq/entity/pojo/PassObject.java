@@ -45,6 +45,11 @@ public class PassObject implements Serializable {
     private String methodInfoIds;
 
     /**
+     * 是否启用(0:禁用;1:启用)
+     */
+    private Integer enable;
+
+    /**
      * 逻辑删除(0:未删除;1:删除)
      */
     @JSONField(serialize = false)

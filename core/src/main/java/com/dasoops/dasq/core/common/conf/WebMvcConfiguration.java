@@ -34,7 +34,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //拦截器顺序 tokenVerify(token验证) passList(白名单) eventInfo(事件信息) log(日志打印)
+        //拦截器顺序 tokenVerify(token验证) heartBeat(心跳检测-暂未开启) passList(白名单) eventInfo(事件信息) log(日志打印)
         registry.addInterceptor(eventInfoInterceptor).addPathPatterns("/*").excludePathPatterns("/setting");
         registry.addInterceptor(passListInterceptor).addPathPatterns("/*").excludePathPatterns("/setting");
         registry.addInterceptor(tokenVerifyInterceptor).addPathPatterns("/setting");
