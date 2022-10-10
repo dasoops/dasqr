@@ -32,5 +32,6 @@ public class DefaultOutputStrategy implements BaseCqMethodStrategy {
     @Override
     public void invoke(List<String> params) {
         cqService.sendMsg(params.get(0));
+
     }
 }
