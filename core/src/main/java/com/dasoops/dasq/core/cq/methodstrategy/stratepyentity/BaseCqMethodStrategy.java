@@ -13,7 +13,7 @@ import java.util.List;
 public interface BaseCqMethodStrategy {
 
     /**
-     * 得到id
+     * 方法typeId
      *
      * @return {@link Long}
      */

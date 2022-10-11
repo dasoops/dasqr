@@ -2,6 +2,7 @@ package com.dasoops.dasq.core.cq.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dasoops.dasq.core.cq.entity.bo.MethodTypeAndInfoBo;
 import com.dasoops.dasq.core.cq.entity.bo.PassKeywordGetMethodInfoIdBo;
 import com.dasoops.dasq.core.cq.entity.enums.CqRedisKeyEnum;
 import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
@@ -86,7 +87,7 @@ public class PassListServiceImpl extends ServiceImpl<PassListMapper, PassObject>
     }
 
     @Override
-    public MethodInfo getMethodInfoByPassKeyword(String keyword) {
-        return passListMapper.selectMethodInfoByPassKeyword(keyword);
+    public MethodTypeAndInfoBo getMethodInfoByPassKeyword(String keyword) {
+        return passListMapper.selectMethodInfoAndTypeByPassKeyword(keyword);
     }
 }

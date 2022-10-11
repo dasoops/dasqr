@@ -1,5 +1,6 @@
 package com.dasoops.dasq.core.cq.service;
 
+import com.dasoops.dasq.core.cq.entity.bo.MethodTypeAndInfoBo;
 import com.dasoops.dasq.core.cq.entity.bo.PassKeywordGetMethodInfoIdBo;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
@@ -43,5 +44,6 @@ public interface PassListService extends IService<PassObject> {
      * @param keyword 关键字
      * @return {@link MethodInfo}
      */
-    MethodInfo getMethodInfoByPassKeyword(String keyword);
+
+    MethodTypeAndInfoBo getMethodInfoByPassKeyword(String keyword);
 }

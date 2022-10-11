@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -75,8 +76,18 @@ public class MethodInfoServiceImpl extends ServiceImpl<MethodInfoMapper, MethodI
     private void initOrUpdateHelpDoc() {
         log.info("初始化/更新 HelpDoc 数据至redis");
         List<HelpBo> boList = methodInfoMapper.selectHelpBoList();
-        StringBuilder sb = new StringBuilder("帮助文档").append(" Ver.").append(dasqProperties.getVersion());
-        boList.forEach(res -> sb.append(res.getKeyword()).append("   ").append(res.getDescription()).append("\r\n"));
+        StringBuilder sb = new StringBuilder("帮助文档").append(" Ver").append(".").append(dasqProperties.getVersion()).append("\r\n");
+
+        for (int i = 0; i < boList.size(); i++) {
+            HelpBo res = boList.get(i);
+            sb.append(i + 1)
+                    .append(".")
+                    .append(res.getKeyword())
+                    .append("   ")
+                    .append(res.getDescription())
+                    .append("\r\n");
+        }
+
         redisTemplate.opsForValue().set(CqRedisKeyEnum.HELP_DOC_STRING.getRedisKey(), sb.toString());
         log.info("完成: 初始化/更新 HelpDoc 数据至redis,Data:{}", sb);
     }
@@ -124,7 +135,6 @@ public class MethodInfoServiceImpl extends ServiceImpl<MethodInfoMapper, MethodI
     public String getHelpDoc() {
         return redisTemplate.opsForValue().get(CqRedisKeyEnum.HELP_DOC_STRING.getRedisKey());
     }
-
 
 }
 

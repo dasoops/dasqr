@@ -1,5 +1,7 @@
 package com.dasoops.dasq.core.cq.methodstrategy.strategycontext;
 
+import com.dasoops.common.exception.entity.LogicException;
+import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
 import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.cq.util.CqMethodUtil;
@@ -37,7 +39,7 @@ public class CqMethodStrategyContext {
      * @param id     方法id
      * @param params 参数
      */
-    public void invoke(Long id, List<String> params) {
+    private void invoke(Long id, List<String> params) {
         BaseCqMethodStrategy strategy = strategyMap.get(id);
         if (strategy == null) {
             return;
@@ -52,6 +54,10 @@ public class CqMethodStrategyContext {
      * @param message    消息
      */
     public void invoke(MethodInfo methodInfo, String message) {
-        invoke(methodInfo.getTypeId(), CqMethodUtil.getParameterMap(methodInfo.getParameters(), message));
+        try {
+            invoke(methodInfo.getTypeId(), CqMethodUtil.getParameterMap(methodInfo.getParameters(), message));
+        } catch (NullPointerException e) {
+            throw new LogicException(ExceptionCodeEnum.PARAMETER_GET_ERROR);
+        }
     }
 }

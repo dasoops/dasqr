@@ -31,6 +31,7 @@ public abstract class BaseCustomException extends RuntimeException {
     private String msg;
 
     public BaseCustomException(ExceptionCodeEnum exceptionCodeEnum) {
+        super(exceptionCodeEnum.getDescription());
         this.exceptionCodeEnum = exceptionCodeEnum;
         this.code = exceptionCodeEnum.getCode();
         this.msg = exceptionCodeEnum.getDescription();
@@ -38,6 +39,7 @@ public abstract class BaseCustomException extends RuntimeException {
     }
 
     public BaseCustomException(Long id, ExceptionCodeEnum exceptionCodeEnum) {
+        super(exceptionCodeEnum.getDescription());
         this.exceptionCodeEnum = exceptionCodeEnum;
         this.code = exceptionCodeEnum.getCode();
         this.msg = exceptionCodeEnum.getDescription();
@@ -45,6 +47,7 @@ public abstract class BaseCustomException extends RuntimeException {
     }
 
     public BaseCustomException(ExceptionCodeEnum exceptionCodeEnum, String msg) {
+        super(exceptionCodeEnum.getDescription());
         this.exceptionCodeEnum = exceptionCodeEnum;
         this.code = exceptionCodeEnum.getCode();
         this.msg = exceptionCodeEnum.getDescription() + "\r\n\t Stack at \r\n" + msg;
@@ -52,6 +55,7 @@ public abstract class BaseCustomException extends RuntimeException {
     }
 
     public BaseCustomException(Long id, ExceptionCodeEnum exceptionCodeEnum, String msg) {
+        super(exceptionCodeEnum.getDescription());
         this.exceptionCodeEnum = exceptionCodeEnum;
         this.code = exceptionCodeEnum.getCode();
         this.msg = exceptionCodeEnum.getDescription() + "Stack at \r\n" + msg;

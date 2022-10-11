@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.13.5.29:3307/DASQ?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&useSSL=true&allowMultiQueries=true
+    url: jdbc:mysql://106.13.5.29:3308/dasq?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&useSSL=true&allowMultiQueries=true
     username: root
-    password: root
+    password: dasq
   redis:
     host: 106.13.5.29
     port: 6379
@@ -41,4 +41,4 @@ dasq:
   token: dasKi
   cqHttpUrl: http://127.0.0.1:4700
   cqToken: dasKi
-  version: 002
+  version: "003"

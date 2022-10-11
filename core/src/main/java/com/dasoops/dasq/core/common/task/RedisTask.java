@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.common.task.inittask;
+package com.dasoops.dasq.core.common.task;
 
 import com.dasoops.dasq.core.common.service.DictionaryService;
 import com.dasoops.dasq.core.cq.service.MethodInfoService;
@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 
 @Component
 @Slf4j
-public class RedisInitTask {
+public class RedisTask {
 
     @Resource(name = "stringRedisTemplate", type = StringRedisTemplate.class)
     private StringRedisTemplate redisTemplate;
@@ -53,7 +53,7 @@ public class RedisInitTask {
      * -初始化/更新 白名单关键词-方法info id映射集合 数据至redis
      */
     @PostConstruct
-    void init() {
+    public void initOrUpdate() {
 //     * -初始化/更新 ImageType innerCode-entityJson 数据至redis
 //     * -初始化/更新 ImageType id-entityJson 数据至redis
         imageTypeService.initOrUpdate();

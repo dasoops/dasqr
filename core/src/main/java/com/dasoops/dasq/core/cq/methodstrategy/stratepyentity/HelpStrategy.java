@@ -1,6 +1,7 @@
 package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
 
 import com.dasoops.common.exception.entity.LogicException;
+import com.dasoops.dasq.core.cq.entity.bo.MethodTypeAndInfoBo;
 import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
 import com.dasoops.dasq.core.cq.service.CqService;
 import com.dasoops.dasq.core.cq.service.MethodInfoService;
@@ -39,12 +40,14 @@ public class HelpStrategy implements BaseCqMethodStrategy {
         String helpKeyword = params.get(0);
         if (helpKeyword == null) {
             cqService.sendMsg(methodInfoService.getHelpDoc());
+            return;
         }
-        MethodInfo methodInfo = passListService.getMethodInfoByPassKeyword(helpKeyword);
-        if (methodInfo == null) {
+
+        MethodTypeAndInfoBo bo = passListService.getMethodInfoByPassKeyword(helpKeyword);
+        if (bo == null) {
             cqService.sendMsg("未知方法");
             return;
         }
-        cqService.sendMsg(methodInfo.getDescription() + "\r\n" + methodInfo.getParameters());
+        cqService.sendMsg(bo.getDescription() + "(" + bo.getTypeKeyword() + ")" + "\r\n" + bo.getTypeDescription() + "\r\n" + bo.getParam());
     }
 }

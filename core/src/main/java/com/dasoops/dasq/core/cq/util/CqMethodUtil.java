@@ -5,7 +5,9 @@ import com.dasoops.dasq.core.common.entity.EventInfo;
 import com.dasoops.dasq.core.common.util.EventUtil;
 import com.dasoops.dasq.core.cq.entity.enums.DqCodeEnum;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -19,6 +21,9 @@ import java.util.List;
 public class CqMethodUtil {
 
     public static List<String> getParameterMap(String parameterStr, String message) {
+
+        //message转义
+        String finalMessage = message.replace("\\,", "${comma}");
 
         //去除前后缀
         parameterStr = StrUtil.removePrefix(parameterStr, "{");
@@ -34,8 +39,10 @@ public class CqMethodUtil {
             Arrays.stream(DqCodeEnum.values())
                     .filter(res -> res.getDqCode().equals(s)).findFirst()
                     //对其中的指示符进行解析
-                    .ifPresent(res -> resStrList.set(index, parseDqCode(res, message)));
+                    .ifPresent(res -> resStrList.set(index, parseDqCode(res, finalMessage)));
         }
+        //message转义
+        resStrList.replaceAll(res -> res.replace("${comma}", ","));
         return resStrList;
     }
 

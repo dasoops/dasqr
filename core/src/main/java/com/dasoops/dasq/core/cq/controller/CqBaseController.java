@@ -57,8 +57,6 @@ public class CqBaseController {
         CqKeywordUtil.getMatchKeyword(message, keywordList).ifPresent(res -> {
             context.invoke(methodInfoService.getMethodInfoIdByKeyWord(res), req.getMessage());
         });
-
-
     }
 
 }

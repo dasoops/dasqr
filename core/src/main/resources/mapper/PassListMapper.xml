@@ -31,14 +31,19 @@
             AND P.IS_DELETE = 0
             AND F.IS_DELETE = 0
     </select>
-    <select id="selectMethodInfoByPassKeyword" resultType="com.dasoops.dasq.core.cq.entity.po.MethodInfo">
-        SELECT F.DESCRIPTION,
-               F.PARAMETERS
+    <select id="selectMethodInfoAndTypeByPassKeyword"
+            resultType="com.dasoops.dasq.core.cq.entity.bo.MethodTypeAndInfoBo">
+        SELECT F.DESCRIPTION as description,
+               T.DESCRIPTION as typeDescription,
+               T.KEYWORD     as typeKeyword,
+               F.PARAMETERS  as param
         FROM `TB_CQ_PASS_LIST` P
                  INNER JOIN TB_CQ_METHOD_INFO F ON P.METHOD_INFO_ID = F.id
+                 INNER JOIN TB_CQ_METHOD_TYPE T ON F.TYPE_ID = T.ID
         WHERE P.TYPE = 3
           AND PASS_KEYWORD = #{KEYWORD}
           AND P.IS_DELETE = 0
           AND F.IS_DELETE = 0
+          AND T.IS_DELETE = 0
     </select>
 </mapper>

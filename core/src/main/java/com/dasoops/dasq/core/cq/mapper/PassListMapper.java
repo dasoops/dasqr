@@ -1,5 +1,6 @@
 package com.dasoops.dasq.core.cq.mapper;
 
+import com.dasoops.dasq.core.cq.entity.bo.MethodTypeAndInfoBo;
 import com.dasoops.dasq.core.cq.entity.bo.PassKeywordGetMethodInfoIdBo;
 import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
@@ -30,7 +31,7 @@ public interface PassListMapper extends BaseMapper<PassObject> {
      * @param keyword 关键字
      * @return {@link MethodInfo}
      */
-    MethodInfo selectMethodInfoByPassKeyword(String keyword);
+    MethodTypeAndInfoBo selectMethodInfoAndTypeByPassKeyword(String keyword);
 
 }
 
