@@ -31,8 +31,8 @@ import javax.annotation.Resource;
 public class GlobalExceptionHandler implements ApplicationContextAware {
 
 
-    @Value("dasq.consolePrintStack")
-    private String consolePrintStack;
+    @Value("${dasq.consolePrintStack}")
+    private boolean consolePrintStack;
     @Resource
     private ExceptionService exceptionService;
 
@@ -69,7 +69,7 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
         //执行redis存储
         String message = ExceptionUtil.stacktraceToString(e);
         exceptionService.saveException(String.valueOf(id), message);
-        if (TRUE.equals(consolePrintStack)) {
+        if (consolePrintStack) {
             e.printStackTrace();
         }
 

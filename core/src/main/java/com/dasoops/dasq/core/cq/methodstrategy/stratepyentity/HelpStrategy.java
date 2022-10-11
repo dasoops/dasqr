@@ -1,8 +1,8 @@
 package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
 
-import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.dasq.core.cq.entity.bo.MethodTypeAndInfoBo;
-import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
 import com.dasoops.dasq.core.cq.service.CqService;
 import com.dasoops.dasq.core.cq.service.MethodInfoService;
 import com.dasoops.dasq.core.cq.service.PassListService;
@@ -21,10 +21,8 @@ import java.util.List;
  * @see BaseCqMethodStrategy
  */
 @Component
-public class HelpStrategy implements BaseCqMethodStrategy {
+public class HelpStrategy extends BaseMethodStrategy implements BaseCqMethodStrategy {
 
-    @Resource
-    private CqService cqService;
     @Resource
     private PassListService passListService;
     @Resource
@@ -37,13 +35,12 @@ public class HelpStrategy implements BaseCqMethodStrategy {
 
     @Override
     public void invoke(List<String> params) {
-        String helpKeyword = params.get(0);
-        if (helpKeyword == null) {
+        if (params.isEmpty()) {
             cqService.sendMsg(methodInfoService.getHelpDoc());
             return;
         }
 
-        MethodTypeAndInfoBo bo = passListService.getMethodInfoByPassKeyword(helpKeyword);
+        MethodTypeAndInfoBo bo = passListService.getMethodInfoByPassKeyword(params.get(0));
         if (bo == null) {
             cqService.sendMsg("未知方法");
             return;

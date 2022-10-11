@@ -1,18 +1,15 @@
-package com.dasoops.dasq.core.cq.util;
+package com.dasoops.dasq.core.common.util;
 
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasq.core.common.entity.EventInfo;
 import com.dasoops.dasq.core.common.util.EventUtil;
 import com.dasoops.dasq.core.cq.entity.enums.DqCodeEnum;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Title: CqMethodUtil
- * @ClassPath com.dasoops.dasq.core.cq.util.CqMethodUtil
+ * @ClassPath com.dasoops.dasq.core.common.util.CqMethodUtil
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/10/10
  * @Version 1.0.0
@@ -20,33 +17,59 @@ import java.util.List;
  */
 public class CqMethodUtil {
 
+    /**
+     * 得到消息参数集合
+     *
+     * @param parameterStr 参数str
+     * @param message      消息
+     * @return {@link List}<{@link String}>
+     */
     public static List<String> getParameterMap(String parameterStr, String message) {
+
+        //cq码,转义
+        //获取匹配的CQ码
+        Optional<String> matchStrOpt = RegexUtil.getMatchStr("\\[CQ:\\w+?.*?]", message);
+        if (matchStrOpt.isPresent()) {
+            //CQ码内部转义
+            String matchStr = matchStrOpt.get();
+            String replaceStr = matchStr.replace(",", "\\,");
+            //覆盖原CQ码
+            message = message.replace(matchStr, replaceStr);
+        }
 
         //message转义
         String finalMessage = message.replace("\\,", "${comma}");
+
+        //获取消息参数集合
+        Optional<List<String>> messageParamListOpt = getParamList(finalMessage);
+        if (messageParamListOpt.isEmpty()) {
+            return new ArrayList<>();
+        }
 
         //去除前后缀
         parameterStr = StrUtil.removePrefix(parameterStr, "{");
         parameterStr = StrUtil.removeSuffix(parameterStr, "}");
 
         //分割
-        List<String> resStrList = StrUtil.split(parameterStr, ",");
+        List<String> dcParamList = StrUtil.split(parameterStr, ",");
 
-        for (int i = 0; i < resStrList.size(); i++) {
+        //解析置入
+        for (int i = 0; i < dcParamList.size(); i++) {
             int index = i;
-            String s = resStrList.get(i);
+            String s = dcParamList.get(i);
             //获取其中的DQ指示符
             Arrays.stream(DqCodeEnum.values())
                     .filter(res -> res.getDqCode().equals(s)).findFirst()
                     //对其中的指示符进行解析
-                    .ifPresent(res -> resStrList.set(index, parseDqCode(res, finalMessage)));
+                    .ifPresent(res -> dcParamList.set(index, parseDqCode(res, messageParamListOpt.get())));
         }
+
         //message转义
-        resStrList.replaceAll(res -> res.replace("${comma}", ","));
-        return resStrList;
+        dcParamList.replaceAll(res -> res.replace("${comma}", ","));
+        return dcParamList;
     }
 
-    public static String parseDqCode(DqCodeEnum dqCode, String message) {
+    public static String parseDqCode(DqCodeEnum dqCode, List<String> paramList) {
         switch (dqCode) {
             case AUTHOR_TYPE:
                 return String.valueOf(EventUtil.get().getMessageType());
@@ -62,40 +85,39 @@ public class CqMethodUtil {
                         return null;
                 }
             case PARAM0:
-                return getMethodParam(message, 0);
+                return paramList.get(0);
             case PARAM1:
-                return getMethodParam(message, 1);
+                return paramList.get(1);
             case PARAM2:
-                return getMethodParam(message, 2);
+                return paramList.get(2);
             case PARAM3:
-                return getMethodParam(message, 3);
+                return paramList.get(3);
             case PARAM4:
-                return getMethodParam(message, 4);
+                return paramList.get(4);
             case PARAM5:
-                return getMethodParam(message, 5);
+                return paramList.get(5);
             case PARAM6:
-                return getMethodParam(message, 6);
+                return paramList.get(6);
             case PARAM7:
-                return getMethodParam(message, 7);
+                return paramList.get(7);
             case PARAM8:
-                return getMethodParam(message, 8);
+                return paramList.get(8);
             case PARAM9:
-                return getMethodParam(message, 9);
+                return paramList.get(9);
             case PARAM10:
-                return getMethodParam(message, 10);
+                return paramList.get(10);
             default:
                 return null;
         }
     }
 
-    public static String getMethodParam(String message, Integer index) {
+    public static Optional<List<String>> getParamList(String message) {
         int i = message.indexOf("(");
         if (i == -1) {
-            return null;
+            return Optional.empty();
         }
         String paramStr = message.substring(i + 1, message.length() - 1);
-        List<String> split = StrUtil.split(paramStr, ",");
-        return split.get(index);
+        return Optional.of(StrUtil.split(paramStr, ","));
     }
 
 }

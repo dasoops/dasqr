@@ -1,5 +1,6 @@
 package com.dasoops.common.exception.entity;
 
+import cn.hutool.core.exceptions.ExceptionUtil;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,31 +35,26 @@ public abstract class BaseCustomException extends RuntimeException {
         super(exceptionCodeEnum.getDescription());
         this.exceptionCodeEnum = exceptionCodeEnum;
         this.code = exceptionCodeEnum.getCode();
-        this.msg = exceptionCodeEnum.getDescription();
         this.id = System.currentTimeMillis();
     }
 
-    public BaseCustomException(Long id, ExceptionCodeEnum exceptionCodeEnum) {
-        super(exceptionCodeEnum.getDescription());
-        this.exceptionCodeEnum = exceptionCodeEnum;
-        this.code = exceptionCodeEnum.getCode();
-        this.msg = exceptionCodeEnum.getDescription();
-        this.id = id;
+    public BaseCustomException(Long id, ExceptionCodeEnum exceptionCodeEnum, Throwable t) {
+        this(id, exceptionCodeEnum, ExceptionUtil.stacktraceToString(t));
+    }
+
+    public BaseCustomException(ExceptionCodeEnum exceptionCodeEnum, Throwable t) {
+        this(exceptionCodeEnum, ExceptionUtil.stacktraceToString(t));
     }
 
     public BaseCustomException(ExceptionCodeEnum exceptionCodeEnum, String msg) {
-        super(exceptionCodeEnum.getDescription());
-        this.exceptionCodeEnum = exceptionCodeEnum;
-        this.code = exceptionCodeEnum.getCode();
-        this.msg = exceptionCodeEnum.getDescription() + "\r\n\t Stack at \r\n" + msg;
-        this.id = System.currentTimeMillis();
+        this(System.currentTimeMillis(), exceptionCodeEnum, msg);
     }
 
     public BaseCustomException(Long id, ExceptionCodeEnum exceptionCodeEnum, String msg) {
         super(exceptionCodeEnum.getDescription());
         this.exceptionCodeEnum = exceptionCodeEnum;
         this.code = exceptionCodeEnum.getCode();
-        this.msg = exceptionCodeEnum.getDescription() + "Stack at \r\n" + msg;
+        this.msg = exceptionCodeEnum.getDescription() + "\r\n\tStack at \r\n" + msg;
         this.id = id;
     }
 

@@ -12,13 +12,12 @@ import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
  * @see BaseCustomException
  */
 public class LogicException extends BaseCustomException {
-
     public LogicException(ExceptionCodeEnum exceptionCodeEnum) {
         super(exceptionCodeEnum);
     }
 
-    public LogicException(Long id, ExceptionCodeEnum exceptionCodeEnum) {
-        super(id, exceptionCodeEnum);
+    public LogicException(ExceptionCodeEnum exceptionCodeEnum, Throwable t) {
+        super(exceptionCodeEnum, t);
     }
 
     public LogicException(ExceptionCodeEnum exceptionCodeEnum, String msg) {

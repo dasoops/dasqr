@@ -1,5 +1,7 @@
 package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
 
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
 import com.dasoops.dasq.core.cq.service.CqService;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +18,8 @@ import java.util.List;
  * 默认输出方法,params($authorType,$authorId,String msg)
  */
 @Component
-public class DefaultOutputStrategy implements BaseCqMethodStrategy {
+public class DefaultOutputStrategy extends BaseMethodStrategy implements BaseCqMethodStrategy {
 
-    @Resource
-    private CqService cqService;
 
     @Override
     public Long getId() {

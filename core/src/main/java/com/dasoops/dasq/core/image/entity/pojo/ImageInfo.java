@@ -22,9 +22,6 @@ import lombok.NoArgsConstructor;
  */
 @TableName(value = "TB_IMAGE_IMAGE_INFO")
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class ImageInfo implements Serializable {
     /**
      * ID

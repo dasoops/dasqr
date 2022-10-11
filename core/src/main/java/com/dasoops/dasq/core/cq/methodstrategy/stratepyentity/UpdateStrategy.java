@@ -1,6 +1,8 @@
 package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
 
 import com.dasoops.dasq.core.common.task.RedisTask;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
 import com.dasoops.dasq.core.cq.service.CqService;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +19,8 @@ import java.util.List;
  * @see BaseCqMethodStrategy
  */
 @Component
-public class UpdateStrategy implements BaseCqMethodStrategy {
+public class UpdateStrategy extends BaseMethodStrategy implements BaseCqMethodStrategy {
 
-    @Resource
-    private CqService cqService;
     @Resource
     private RedisTask redisTask;
 

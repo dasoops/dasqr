@@ -3,8 +3,8 @@ package com.dasoops.dasq.core.cq.methodstrategy.strategycontext;
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
 import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
-import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.BaseCqMethodStrategy;
-import com.dasoops.dasq.core.cq.util.CqMethodUtil;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.common.util.CqMethodUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -57,7 +57,9 @@ public class CqMethodStrategyContext {
         try {
             invoke(methodInfo.getTypeId(), CqMethodUtil.getParameterMap(methodInfo.getParameters(), message));
         } catch (NullPointerException e) {
-            throw new LogicException(ExceptionCodeEnum.PARAMETER_GET_ERROR);
+            throw new LogicException(ExceptionCodeEnum.PARAMETER_GET_ERROR, e);
+        } catch (Exception e) {
+            throw new LogicException(ExceptionCodeEnum.UN_EXPECTED_ERROR, e);
         }
     }
 }

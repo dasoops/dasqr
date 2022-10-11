@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.cq.util;
+package com.dasoops.dasq.core.common.util;
 
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
@@ -9,7 +9,7 @@ import java.util.Optional;
 
 /**
  * @Title: CqKeywordUtil
- * @ClassPath com.dasoops.dasq.core.cq.util.CqKeywordUtil
+ * @ClassPath com.dasoops.dasq.core.common.util.CqKeywordUtil
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/10/10
  * @Version 1.0.0

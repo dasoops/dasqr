@@ -1,9 +1,9 @@
 package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
 
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
 import com.dasoops.dasq.core.cq.service.CqService;
-import com.dasoops.dasq.core.cq.service.MethodInfoService;
 import com.dasoops.dasq.core.cq.service.MethodTypeService;
-import com.dasoops.dasq.core.cq.service.impl.MethodTypeServiceImpl;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -19,12 +19,10 @@ import java.util.List;
  * @see BaseCqMethodStrategy
  */
 @Component
-public class SaveMethodTypeStrategy implements BaseCqMethodStrategy {
+public class SaveMethodTypeStrategy extends BaseMethodStrategy implements BaseCqMethodStrategy {
 
     @Resource
     private MethodTypeService methodTypeService;
-    @Resource
-    private CqService cqService;
 
     @Override
     public Long getId() {

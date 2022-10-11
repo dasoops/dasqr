@@ -1,6 +1,8 @@
 package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
 
 import com.dasoops.common.exception.service.ExceptionService;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
 import com.dasoops.dasq.core.cq.service.CqService;
 import org.springframework.stereotype.Component;
 
@@ -16,13 +18,10 @@ import java.util.List;
  * @Description: 获取异常策略
  */
 @Component
-public class ExceptionStrategy implements BaseCqMethodStrategy {
+public class ExceptionStrategy extends BaseMethodStrategy implements BaseCqMethodStrategy {
 
     @Resource
     private ExceptionService exceptionService;
-
-    @Resource
-    private CqService cqService;
 
     @Override
     public Long getId() {
