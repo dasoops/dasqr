@@ -1,10 +1,8 @@
 package com.dasoops.dasq.core.cq.entity.po;
 
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +24,7 @@ public class PassObject implements Serializable {
     /**
      * 主键id
      */
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Long id;
 
     /**
@@ -53,30 +51,35 @@ public class PassObject implements Serializable {
      * 逻辑删除(0:未删除;1:删除)
      */
     @JSONField(serialize = false)
+    @TableField(fill = FieldFill.INSERT)
     private String isDelete;
 
     /**
      * 创建用户
      */
     @JSONField(serialize = false)
+    @TableField(fill = FieldFill.INSERT)
     private String createUser;
 
     /**
      * 创建时间
      */
     @JSONField(serialize = false)
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
      * 更新用户
      */
     @JSONField(serialize = false)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateUser;
 
     /**
      * 更新时间
      */
     @JSONField(serialize = false)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     /**

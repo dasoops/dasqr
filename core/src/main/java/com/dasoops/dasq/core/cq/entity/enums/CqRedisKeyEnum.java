@@ -37,7 +37,15 @@ public enum CqRedisKeyEnum {
      * Map<String,String>
      * Map<PassKeyword,MethodInfoId>
      */
-    PASS_LIST_KEYWORD_GET_METHOD_INFO_ID_MAP("key_cq_pass_list_keyword_get_method_info_id_hash");
+    PASS_LIST_KEYWORD_GET_METHOD_INFO_ID_MAP("key_cq_pass_list_keyword_get_method_info_id_hash"),
+
+    /**
+     * 帮助文档
+     */
+    HELP_DOC_STRING("key_cq_help_doc_string"),
+
+    ;
+
 
     /**
      * redisKey

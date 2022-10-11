@@ -30,7 +30,12 @@ public class ImageTypeServiceImpl extends ServiceImpl<ImageTypeMapper, ImageType
     private StringRedisTemplate redisTemplate;
 
     @Override
-    public void initOrUpdateImageTypeInnerCodeGetEntityJson2Redis() {
+    public void initOrUpdate() {
+        initOrUpdateImageTypeInnerCodeGetEntityJson2Redis();
+        initOrUpdateImageTypeIdGetEntityJson2Redis();
+    }
+
+    private void initOrUpdateImageTypeInnerCodeGetEntityJson2Redis() {
         log.info("初始化/更新 ImageType InnerCode-entityJson 数据至redis");
 
         //清除旧数据
@@ -46,8 +51,7 @@ public class ImageTypeServiceImpl extends ServiceImpl<ImageTypeMapper, ImageType
         log.info("完成: 初始化/更新 ImageType InnerCode-entityJson 数据至redis,innerCodeData:{}", JSON.toJSONString(innerCodeRes));
     }
 
-    @Override
-    public void initOrUpdateImageTypeIdGetEntityJson2Redis() {
+    private void initOrUpdateImageTypeIdGetEntityJson2Redis() {
         log.info("初始化/更新 ImageType id-entityJson 数据至redis");
 
         //清除旧数据

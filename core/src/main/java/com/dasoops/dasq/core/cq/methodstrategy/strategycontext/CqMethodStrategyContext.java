@@ -1,7 +1,7 @@
 package com.dasoops.dasq.core.cq.methodstrategy.strategycontext;
 
 import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
-import com.dasoops.dasq.core.cq.methodstrategy.StratepyEntity.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.cq.util.CqMethodUtil;
 
 import java.util.List;
@@ -38,16 +38,20 @@ public class CqMethodStrategyContext {
      * @param params 参数
      */
     public void invoke(Long id, List<String> params) {
-        strategyMap.get(id).invoke(params);
+        BaseCqMethodStrategy strategy = strategyMap.get(id);
+        if (strategy == null) {
+            return;
+        }
+        strategy.invoke(params);
     }
 
     /**
      * 调用方法
      *
      * @param methodInfo 方法信息
+     * @param message    消息
      */
-    public void invoke(MethodInfo methodInfo) {
-        invoke(methodInfo.getTypeId(), CqMethodUtil.getParameterMap(methodInfo.getParameters()));
+    public void invoke(MethodInfo methodInfo, String message) {
+        invoke(methodInfo.getTypeId(), CqMethodUtil.getParameterMap(methodInfo.getParameters(), message));
     }
-
 }

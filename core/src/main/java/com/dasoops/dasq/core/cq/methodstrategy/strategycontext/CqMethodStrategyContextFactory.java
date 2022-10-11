@@ -1,6 +1,6 @@
 package com.dasoops.dasq.core.cq.methodstrategy.strategycontext;
 
-import com.dasoops.dasq.core.cq.methodstrategy.StratepyEntity.BaseCqMethodStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.BaseCqMethodStrategy;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

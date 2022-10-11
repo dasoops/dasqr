@@ -14,14 +14,9 @@ public interface DictionaryService extends IService<Dictionary> {
 
     /**
      * 初始化/更新 DictionaryTreeData 数据至redis
-     */
-    void initOrUpdateDictTreeData2Redis();
-
-
-    /**
      * 初始化/更新 DictFatherDictCodeMap 数据至redis
      */
-    void initOrUpdateDictFatherDictCodeMap2Redis();
+    void initOrUpdate();
 
     /**
      * 通过id获取字典

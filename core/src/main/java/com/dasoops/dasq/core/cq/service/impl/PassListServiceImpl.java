@@ -3,8 +3,8 @@ package com.dasoops.dasq.core.cq.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.dasq.core.cq.entity.bo.PassKeywordGetMethodInfoIdBo;
-import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.enums.CqRedisKeyEnum;
+import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
 import com.dasoops.dasq.core.cq.service.PassListService;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
 import com.dasoops.dasq.core.cq.mapper.PassListMapper;
@@ -35,7 +35,12 @@ public class PassListServiceImpl extends ServiceImpl<PassListMapper, PassObject>
     private PassListMapper passListMapper;
 
     @Override
-    public void initOrUpdatePassListTypeGetEntityJsonSetMap2Redis() {
+    public void initOrUpdate() {
+        initOrUpdatePassListKeywordGetMethodInfoMap2Redis();
+        initOrUpdatePassListTypeGetEntityJsonSetMap2Redis();
+    }
+
+    private void initOrUpdatePassListTypeGetEntityJsonSetMap2Redis() {
         log.info("初始化/更新 PassListTypeGetEntityJsonSetMap 数据至redis");
 
         //清除旧数据
@@ -58,8 +63,7 @@ public class PassListServiceImpl extends ServiceImpl<PassListMapper, PassObject>
         log.info("完成: 初始化/更新 PassListTypeGetEntityJsonSetMap 数据至redis,Data:{}", JSON.toJSONString(resMap));
     }
 
-    @Override
-    public void initOrUpdatePassListKeywordGetMethodInfoMap2Redis() {
+    private void initOrUpdatePassListKeywordGetMethodInfoMap2Redis() {
         log.info("初始化/更新 白名单关键词-方法info id映射集合 数据至redis");
         List<PassKeywordGetMethodInfoIdBo> boList = getPassListKeywordGetMethodInfoList();
         Map<String, String> resMap = boList.stream().collect(Collectors.toMap(PassKeywordGetMethodInfoIdBo::getKeyword, res -> String.valueOf(res.getId())));
@@ -79,5 +83,10 @@ public class PassListServiceImpl extends ServiceImpl<PassListMapper, PassObject>
     @Override
     public List<PassKeywordGetMethodInfoIdBo> getPassListKeywordGetMethodInfoList() {
         return passListMapper.selectPassKeywordGetMethodInfoMap();
+    }
+
+    @Override
+    public MethodInfo getMethodInfoByPassKeyword(String keyword) {
+        return passListMapper.selectMethodInfoByPassKeyword(keyword);
     }
 }

@@ -28,5 +28,17 @@
         FROM `TB_CQ_PASS_LIST` P
                  INNER JOIN TB_CQ_METHOD_INFO F ON P.METHOD_INFO_ID = F.ID
             AND P.TYPE = 3
+            AND P.IS_DELETE = 0
+            AND F.IS_DELETE = 0
+    </select>
+    <select id="selectMethodInfoByPassKeyword" resultType="com.dasoops.dasq.core.cq.entity.po.MethodInfo">
+        SELECT F.DESCRIPTION,
+               F.PARAMETERS
+        FROM `TB_CQ_PASS_LIST` P
+                 INNER JOIN TB_CQ_METHOD_INFO F ON P.METHOD_INFO_ID = F.id
+        WHERE P.TYPE = 3
+          AND PASS_KEYWORD = #{KEYWORD}
+          AND P.IS_DELETE = 0
+          AND F.IS_DELETE = 0
     </select>
 </mapper>

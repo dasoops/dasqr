@@ -13,5 +13,14 @@ public interface MethodTypeService extends IService<MethodType> {
     /**
      * 初始化/更新 MethodType Id-EntityJson 数据至redis
      */
-    void initOrUpdateMethodTypeIdEntityJson2Redis();
+    void initOrUpdate();
+
+    /**
+     * 添加方法类型
+     *
+     * @param keyword     关键字
+     * @param hasScan     已经扫描
+     * @param description 描述
+     */
+    void addMethodType(String keyword, String hasScan, String description);
 }

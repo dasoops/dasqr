@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.cq.methodstrategy.StratepyEntity;
+package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
 
 import java.util.List;
 

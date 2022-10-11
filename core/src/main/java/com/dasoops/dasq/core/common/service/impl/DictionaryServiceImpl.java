@@ -28,7 +28,12 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
     private StringRedisTemplate redisTemplate;
 
     @Override
-    public void initOrUpdateDictTreeData2Redis() {
+    public void initOrUpdate() {
+        initOrUpdateDictTreeData2Redis();
+        initOrUpdateDictFatherDictCodeMap2Redis();
+    }
+
+    private void initOrUpdateDictTreeData2Redis() {
         log.info("初始化/更新 DictionaryTreeData 数据至redis");
 
         //清除旧数据
@@ -44,8 +49,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
         log.info("完成: 初始化/更新 DictionaryTreeData 数据至redis,Data:{}", JSON.toJSONString(map));
     }
 
-    @Override
-    public void initOrUpdateDictFatherDictCodeMap2Redis() {
+    private void initOrUpdateDictFatherDictCodeMap2Redis() {
         log.info("初始化/更新 DictFatherDictCodeMap 数据至redis");
 
         //清除旧数据

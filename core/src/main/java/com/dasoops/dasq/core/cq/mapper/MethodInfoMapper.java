@@ -1,7 +1,10 @@
 package com.dasoops.dasq.core.cq.mapper;
 
+import com.dasoops.dasq.core.cq.entity.bo.HelpBo;
 import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * @author Administrator
@@ -10,6 +13,13 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @Entity com.dasoops.dasq.core.cq.entity.pojo.TbCqMethodInfo
  */
 public interface MethodInfoMapper extends BaseMapper<MethodInfo> {
+
+    /**
+     * 获取帮助文档
+     *
+     * @return {@link List}<{@link HelpBo}>
+     */
+    List<HelpBo> selectHelpBoList();
 
 }
 

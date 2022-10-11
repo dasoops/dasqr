@@ -1,9 +1,7 @@
 package com.dasoops.dasq.core.image.entity.pojo;
 
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -41,30 +39,35 @@ public class ImageType implements Serializable {
      * 逻辑删除(0:未删除;1:删除)
      */
     @JSONField(serialize = false)
+    @TableField(fill = FieldFill.INSERT)
     private String isDelete;
 
     /**
      * 创建用户
      */
     @JSONField(serialize = false)
+    @TableField(fill = FieldFill.INSERT)
     private String createUser;
 
     /**
      * 创建时间
      */
     @JSONField(serialize = false)
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
      * 更新用户
      */
     @JSONField(serialize = false)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateUser;
 
     /**
      * 更新时间
      */
     @JSONField(serialize = false)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     @TableField(exist = false)
@@ -83,13 +86,13 @@ public class ImageType implements Serializable {
         }
         ImageType other = (ImageType) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getInnerCode() == null ? other.getInnerCode() == null : this.getInnerCode().equals(other.getInnerCode()))
-            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
-            && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
-            && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateUser() == null ? other.getUpdateUser() == null : this.getUpdateUser().equals(other.getUpdateUser()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+                && (this.getInnerCode() == null ? other.getInnerCode() == null : this.getInnerCode().equals(other.getInnerCode()))
+                && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
+                && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
+                && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+                && (this.getUpdateUser() == null ? other.getUpdateUser() == null : this.getUpdateUser().equals(other.getUpdateUser()))
+                && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override

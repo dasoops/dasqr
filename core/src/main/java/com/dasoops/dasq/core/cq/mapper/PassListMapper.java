@@ -1,6 +1,7 @@
 package com.dasoops.dasq.core.cq.mapper;
 
 import com.dasoops.dasq.core.cq.entity.bo.PassKeywordGetMethodInfoIdBo;
+import com.dasoops.dasq.core.cq.entity.po.MethodInfo;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -21,6 +22,15 @@ public interface PassListMapper extends BaseMapper<PassObject> {
      * @return {@link Map}<{@link String}, {@link Long}>
      */
     List<PassKeywordGetMethodInfoIdBo> selectPassKeywordGetMethodInfoMap();
+
+
+    /**
+     * 通过关键字获取方法信息
+     *
+     * @param keyword 关键字
+     * @return {@link MethodInfo}
+     */
+    MethodInfo selectMethodInfoByPassKeyword(String keyword);
 
 }
 

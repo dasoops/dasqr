@@ -13,16 +13,10 @@ import java.util.Optional;
 public interface ImageTypeService extends IService<ImageType> {
 
     /**
-     * 初始化/更新 ImageType innerCode-entityJson 数据至redis
-     * - innerCode对应ImageType
-     */
-    void initOrUpdateImageTypeInnerCodeGetEntityJson2Redis();
-
-    /**
      * 初始化/更新 ImageType id-entityJson 数据至redis
-     * - id对应ImageType
+     * 初始化/更新 ImageType innerCode-entityJson 数据至redis
      */
-    void initOrUpdateImageTypeIdGetEntityJson2Redis();
+    void initOrUpdate();
 
     /**
      * 根据内部软编码从redis获取类型id

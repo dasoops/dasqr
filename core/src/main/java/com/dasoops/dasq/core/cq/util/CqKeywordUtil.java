@@ -25,7 +25,7 @@ public class CqKeywordUtil {
      * @return {@link Optional}<{@link String}>
      */
     public static Optional<String> getMatchKeyword(String message, List<String> keywordList) {
-        String realMessage = StrUtil.removePrefix(message, CqKeywordEnum.COMMON_SUFFIX.getSimpleName());
+        String realMessage = StrUtil.removePrefix(message, CqKeywordEnum.COMMON_PREFIX.getSimpleName());
         //获取匹配项,取最长的
         return keywordList.stream()
                 .filter(keyword -> StrUtil.startWithIgnoreCase(realMessage, keyword))

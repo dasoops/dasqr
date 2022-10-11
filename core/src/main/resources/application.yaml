@@ -1,5 +1,6 @@
 server:
   port: 4701
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -11,9 +12,14 @@ spring:
     port: 6379
     database: 3
     password: dasoops
+
 logging:
   level:
-    root: info
+    com:
+      dasoops:
+        dasq:
+          core: debug
+
 minio:
   enable: true
   url: 106.13.5.29
@@ -22,9 +28,17 @@ minio:
   accessKey: aaaaa
   secretKey: aaaaaaaa
   tempDownloadPath: D:\temp
+
+mybatis-plus:
+  global-config:
+    db-config:
+      # 全局逻辑删除的实体字段名
+      logic-delete-field: isDelete
+
 dasq:
   # 控制台打印异常堆栈信息
   consolePrintStack: true
   token: dasKi
   cqHttpUrl: http://127.0.0.1:4700
   cqToken: dasKi
+  version: 002

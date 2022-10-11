@@ -12,6 +12,16 @@ package com.dasoops.dasq.core.cq.entity.enums;
 public enum CqKeywordEnum {
 
     /**
+     * 启用
+     */
+    ENABLE("enable", "1"),
+
+    /**
+     * 禁用
+     */
+    DISABLE("disable", "0"),
+
+    /**
      * cq消息类型
      */
     MESSAGE_TYPE("messageType", "message_type"),
@@ -115,7 +125,7 @@ public enum CqKeywordEnum {
      */
     CQ_RES_STATUS_OK("ok", "ok"),
 
-    COMMON_SUFFIX(".", "."),
+    COMMON_PREFIX(".", "."),
 
     ;
 

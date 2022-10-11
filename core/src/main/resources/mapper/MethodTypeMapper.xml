@@ -7,6 +7,7 @@
     <resultMap id="BaseResultMap" type="com.dasoops.dasq.core.cq.entity.po.MethodType">
         <id property="id" column="ID" jdbcType="BIGINT"/>
         <result property="keyword" column="KEYWORD" jdbcType="VARCHAR"/>
+        <result property="hasScan" column="HAS_SCAN" jdbcType="TINYINT"/>
         <result property="description" column="DESCRIPTION" jdbcType="VARCHAR"/>
         <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
         <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
@@ -18,6 +19,7 @@
     <sql id="Base_Column_List">
         ID
         ,KEYWORD,
+        HAS_SCAN,
         DESCRIPTION,
             IS_DELETE,CREATE_USER,CREATE_TIME,
             UPDATE_USER,UPDATE_TIME

@@ -24,4 +24,12 @@
         CREATE_USER,CREATE_TIME,UPDATE_USER,
         UPDATE_TIME
     </sql>
+    <select id="selectHelpBoList" resultType="com.dasoops.dasq.core.cq.entity.bo.HelpBo">
+        SELECT P.PASS_KEYWORD AS keyword,
+               F.DESCRIPTION  AS description
+        FROM `TB_CQ_METHOD_INFO` F
+                 INNER JOIN TB_CQ_PASS_LIST P ON F.ID = P.METHOD_INFO_ID
+        WHERE P.IS_DELETE = 0
+          AND F.IS_DELETE = 0
+    </select>
 </mapper>

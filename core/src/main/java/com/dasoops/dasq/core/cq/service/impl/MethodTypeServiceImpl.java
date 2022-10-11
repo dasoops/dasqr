@@ -29,7 +29,11 @@ public class MethodTypeServiceImpl extends ServiceImpl<MethodTypeMapper, MethodT
     private StringRedisTemplate redisTemplate;
 
     @Override
-    public void initOrUpdateMethodTypeIdEntityJson2Redis() {
+    public void initOrUpdate() {
+        initOrUpdateMethodTypeIdEntityJson2Redis();
+    }
+
+    private void initOrUpdateMethodTypeIdEntityJson2Redis() {
         log.info("初始化/更新 MethodType Id-EntityJson 数据至redis");
 
         //清除旧数据
@@ -47,6 +51,21 @@ public class MethodTypeServiceImpl extends ServiceImpl<MethodTypeMapper, MethodT
 
         log.info("完成: 初始化/更新 MethodType Id-EntityJson 数据至redis,Data:{}", JSON.toJSONString(resMap));
     }
+
+    @Override
+    public void addMethodType(String keyword, String hasScan, String description) {
+        //获取methodType
+        MethodType methodType = new MethodType();
+        methodType.setKeyword(keyword);
+        methodType.setHasScan(Integer.parseInt(hasScan));
+        methodType.setDescription(description);
+        this.save(methodType);
+
+        //更新数据
+        initOrUpdate();
+
+    }
+
 }
 
 

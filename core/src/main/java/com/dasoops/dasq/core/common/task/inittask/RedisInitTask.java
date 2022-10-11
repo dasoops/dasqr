@@ -55,21 +55,18 @@ public class RedisInitTask {
     @PostConstruct
     void init() {
 //     * -初始化/更新 ImageType innerCode-entityJson 数据至redis
-        imageTypeService.initOrUpdateImageTypeInnerCodeGetEntityJson2Redis();
 //     * -初始化/更新 ImageType id-entityJson 数据至redis
-        imageTypeService.initOrUpdateImageTypeIdGetEntityJson2Redis();
+        imageTypeService.initOrUpdate();
 //     * -初始化/更新 DictionaryTreeData 数据至redis
-        dictionaryService.initOrUpdateDictTreeData2Redis();
 //     * -初始化/更新 DictFatherDictCodeMap 数据至redis
-        dictionaryService.initOrUpdateDictFatherDictCodeMap2Redis();
+        dictionaryService.initOrUpdate();
 //     * -初始化/更新 MethodType Id-EntityJson 数据至redis
-        methodTypeService.initOrUpdateMethodTypeIdEntityJson2Redis();
+        methodTypeService.initOrUpdate();
 //     * -初始化/更新 MethodInfo Id-EntityJson 数据至redis
-        methodInfoService.initOrUpdateMethodInfoIdEntityJson2Redis();
+        methodInfoService.initOrUpdate();
 //     * -初始化/更新 PassListTypeGetEntityJsonSetMap 数据至redis
-        passListService.initOrUpdatePassListTypeGetEntityJsonSetMap2Redis();
 //     * -初始化/更新 白名单关键词-方法info id映射集合 数据至redis
-        passListService.initOrUpdatePassListKeywordGetMethodInfoMap2Redis();
+        passListService.initOrUpdate();
 
     }
 
