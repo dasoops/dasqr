@@ -29,16 +29,26 @@ public class ImageInfoServiceImpl extends ServiceImpl<ImageInfoMapper, ImageInfo
     private ImageTypeService imageTypeService;
 
     @Override
-    public void saveImage(Long groupId, Long authorId, String desc, String keyword, String innerCode, String url) {
-        Optional<String> filenameOpt = minioTemplate.saveImage(url);
+    public boolean saveImage(Long groupId, Long authorId, String desc, String keyword, String innerCode, String url) {
+        //检查关键词是否重复
+        if (super.lambdaQuery().eq(ImageInfo::getKeyword, keyword).count() > 0) {
+            return false;
+        }
+
+        Optional<String> filenameOpt;
+        try {
+            filenameOpt = minioTemplate.saveImage(url);
+        } catch (Exception e) {
+            throw new LogicException(ExceptionCodeEnum.IMAGE_SERVICE_ERROR, e);
+        }
         String filename = filenameOpt.orElseThrow(() -> new LogicException(ExceptionCodeEnum.IMAGE_SERVICE_ERROR));
 
         long typeId;
         if (!StrUtil.isBlank(innerCode)) {
             Optional<Long> typeIdOpt = imageTypeService.getTypeIdByTypeInnerCode(innerCode);
-            typeId = typeIdOpt.orElse(-1L);
+            typeId = typeIdOpt.orElse(0L);
         } else {
-            typeId = -1L;
+            typeId = 0L;
         }
 
         ImageInfo imageInfo = new ImageInfo();
@@ -47,10 +57,10 @@ public class ImageInfoServiceImpl extends ServiceImpl<ImageInfoMapper, ImageInfo
         imageInfo.setTypeId(typeId);
         imageInfo.setGroupId(groupId == null ? -1L : groupId);
         imageInfo.setAuthorId(authorId);
-        imageInfo.setDesc(desc == null ? "" : desc);
+        imageInfo.setDescription(desc == null ? "" : desc);
 
         //信息持久化
-        this.save(imageInfo);
+        return this.save(imageInfo);
     }
 
     @Override
@@ -58,7 +68,7 @@ public class ImageInfoServiceImpl extends ServiceImpl<ImageInfoMapper, ImageInfo
         return this.lambdaQuery().eq(ImageInfo::getKeyword, keyword).one();
     }
 
-
+    public
 }
 
 

@@ -10,7 +10,7 @@
             <result property="typeId" column="TYPE_ID" jdbcType="BIGINT"/>
             <result property="groupId" column="GROUP_ID" jdbcType="BIGINT"/>
             <result property="authorId" column="AUTHOR_ID" jdbcType="BIGINT"/>
-            <result property="desc" column="DESC" jdbcType="VARCHAR"/>
+            <result property="description" column="DESCRIPTION" jdbcType="VARCHAR"/>
             <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
             <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
             <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
@@ -19,8 +19,9 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID,KEYWORDS,TYPE_ID,
-        GROUP_ID,AUTHOR_ID,DESC,
+        ID
+        ,KEYWORDS,TYPE_ID,
+        GROUP_ID,AUTHOR_ID,DESCRIPTION,
         IS_DELETE,CREATE_USER,CREATE_TIME,
         UPDATE_USER,UPDATE_TIME
     </sql>

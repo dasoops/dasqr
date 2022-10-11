@@ -30,11 +30,10 @@ public class ExceptionStrategy extends BaseMethodStrategy implements BaseCqMetho
 
     @Override
     public void invoke(List<String> params) {
-        String param = params.get(0);
-        if (param == null) {
+        if (params.isEmpty()) {
             cqService.sendMsg("CrazyFridayException\r\n\tStack at\r\nvMe50");
         }
-        String exceptionMsg = exceptionService.getException(param);
+        String exceptionMsg = exceptionService.getException(params.get(0));
         if (exceptionMsg == null) {
             cqService.sendMsg("未查询到错误信息");
             return;

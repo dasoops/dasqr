@@ -22,7 +22,7 @@ public class MinioTemplateTest {
 
     @Test
     public void test(){
-        minioTemplate.saveImage("http://106.13.5.29:9000/nas/bqb/QQ%E5%9B%BE%E7%89%8720220709152441.jpg");
+//        minioTemplate.saveImage("http://106.13.5.29:9000/nas/bqb/QQ%E5%9B%BE%E7%89%8720220709152441.jpg");
 //        byte[] image = minioTemplate.getImage("微信图片_20220930135135.jpg");
 //        System.out.println(new String(image));
     }

@@ -20,7 +20,7 @@ public interface ImageInfoService extends IService<ImageInfo> {
      * @param innerCode 类型软编号
      * @param url       图片url
      */
-    void saveImage(Long groupId, Long authorId, String desc, String keyword, String innerCode, String url);
+    boolean saveImage(Long groupId, Long authorId, String desc, String keyword, String innerCode, String url);
 
     /**
      * 按关键字获取图像信息

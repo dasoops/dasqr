@@ -65,7 +65,12 @@ public class CqMethodUtil {
         }
 
         //message转义
-        dcParamList.replaceAll(res -> res.replace("${comma}", ","));
+        dcParamList.replaceAll(res -> {
+            if (res == null) {
+                return null;
+            }
+            return res.replace("${comma}", ",");
+        });
         return dcParamList;
     }
 
@@ -85,27 +90,27 @@ public class CqMethodUtil {
                         return null;
                 }
             case PARAM0:
-                return paramList.get(0);
+                return getParam(paramList, 0);
             case PARAM1:
-                return paramList.get(1);
+                return getParam(paramList, 1);
             case PARAM2:
-                return paramList.get(2);
+                return getParam(paramList, 2);
             case PARAM3:
-                return paramList.get(3);
+                return getParam(paramList, 3);
             case PARAM4:
-                return paramList.get(4);
+                return getParam(paramList, 4);
             case PARAM5:
-                return paramList.get(5);
+                return getParam(paramList, 5);
             case PARAM6:
-                return paramList.get(6);
+                return getParam(paramList, 6);
             case PARAM7:
-                return paramList.get(7);
+                return getParam(paramList, 7);
             case PARAM8:
-                return paramList.get(8);
+                return getParam(paramList, 8);
             case PARAM9:
-                return paramList.get(9);
+                return getParam(paramList, 9);
             case PARAM10:
-                return paramList.get(10);
+                return getParam(paramList, 10);
             default:
                 return null;
         }
@@ -118,6 +123,13 @@ public class CqMethodUtil {
         }
         String paramStr = message.substring(i + 1, message.length() - 1);
         return Optional.of(StrUtil.split(paramStr, ","));
+    }
+
+    private static String getParam(List<String> strList, int index) {
+        if (strList.size() < index + 1) {
+            return null;
+        }
+        return strList.get(index);
     }
 
 }

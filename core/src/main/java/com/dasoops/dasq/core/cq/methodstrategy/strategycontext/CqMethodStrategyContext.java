@@ -56,6 +56,8 @@ public class CqMethodStrategyContext {
     public void invoke(MethodInfo methodInfo, String message) {
         try {
             invoke(methodInfo.getTypeId(), CqMethodUtil.getParameterMap(methodInfo.getParameters(), message));
+        } catch (LogicException e) {
+            throw e;
         } catch (NullPointerException e) {
             throw new LogicException(ExceptionCodeEnum.PARAMETER_GET_ERROR, e);
         } catch (Exception e) {
