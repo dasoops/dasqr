@@ -32,7 +32,7 @@ public class RereadStrategy {
         final int rereadThreshold = 3;
 
         //非群聊不记录
-        boolean group = EventUtil.isGroup();
+        boolean group = EventUtil.isGroup(paramObj);
         if (!group) {
             return;
         }

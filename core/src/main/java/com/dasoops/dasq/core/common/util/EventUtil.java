@@ -75,4 +75,9 @@ public final class EventUtil {
         return String.valueOf(THREAD_LOCAL.get().getMessageType()).equals(CqKeywordEnum.MESSAGE_TYPE_GROUP.getOtherName());
     }
 
+    public static boolean isGroup(JSONObject paramObj) {
+        String messageTypeStr = paramObj.getString("message_type");
+        return messageTypeStr.equals(CqKeywordEnum.MESSAGE_TYPE_GROUP.getOtherName());
+    }
+
 }
