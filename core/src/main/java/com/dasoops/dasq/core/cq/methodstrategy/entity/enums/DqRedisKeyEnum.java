@@ -39,6 +39,11 @@ public enum DqRedisKeyEnum {
      */
     REREAD_MESSAGE_COUNT("message_count"),
 
+    /**
+     * 指令风格
+     */
+    STYLE("dq:style"),
+
     ;
 
     final String redisKey;

@@ -19,15 +19,21 @@ public enum RedisKeyEnum {
      * Map<Long,String>
      * Hash<id,ImageJson>
      */
-    CORE_ID_GET_EXCEPTION_INFO_JSON_MAP("core:id_get_exception_info_hash"),
+    ID_GET_EXCEPTION_INFO_JSON_MAP("core:id_get_exception_info_hash"),
     /**
      * 根据字典id获取子记录
      * Map<Long,Map<String,String>>
      * Hash<id,Map<dictCode,dictValue>>
      */
-    CORE_DICT_ID_GET_CHILD_DICT_INFO_MAP_JSON_MAP("core:dict_id_get_child_dict_info_map_json_hash"),
+    DICT_ID_GET_CHILD_DICT_INFO_MAP_JSON_MAP("core:dict_id_get_child_dict_info_map_json_hash"),
 
-    CORE_DICT_DICT_CODE_GET_FATHER_ID_MAP_HASH("core:dict_dict_code_get_father_id_map_hash"),
+    /**
+     * dict编号得到idMap
+     * Map<String,String>
+     * Hash<dictCode,fatherId>
+     */
+    DICT_DICT_CODE_GET_FATHER_ID_HASH("core:dict_dict_code_get_father_id_hash"),
+
     ;
 
     /**

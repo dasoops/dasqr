@@ -23,12 +23,12 @@ public class ExceptionServiceImpl implements ExceptionService {
 
     @Override
     public String getException(String errorId) {
-        return (String) redisTemplate.opsForHash().get(RedisKeyEnum.CORE_ID_GET_EXCEPTION_INFO_JSON_MAP.getRedisKey(), errorId);
+        return (String) redisTemplate.opsForHash().get(RedisKeyEnum.ID_GET_EXCEPTION_INFO_JSON_MAP.getRedisKey(), errorId);
     }
 
     @Override
     public void saveException(String errorId, String msg) {
-        redisTemplate.opsForHash().put(RedisKeyEnum.CORE_ID_GET_EXCEPTION_INFO_JSON_MAP.getRedisKey(), errorId, msg);
+        redisTemplate.opsForHash().put(RedisKeyEnum.ID_GET_EXCEPTION_INFO_JSON_MAP.getRedisKey(), errorId, msg);
     }
 
 }

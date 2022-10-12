@@ -9,6 +9,7 @@ import com.dasoops.dasq.core.common.util.WebUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.game.RereadStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys.StyleStrategy;
 import com.dasoops.dasq.core.cq.service.PassListService;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +43,7 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
     @Resource
     private RereadStrategy rereadStrategy;
     @Resource
-    private DasqProperties dasqProperties;
+    private StyleStrategy styleStrategy;
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
@@ -57,7 +58,7 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
         rereadStrategy.invokeReread(paramObj);
 
         //是否为清爽模式
-        if (KeywordEnum.STYLE_NORMAL.getKeyword().equals(dasqProperties.getStyle())) {
+        if (KeywordEnum.STYLE_NORMAL.getKeyword().equals(styleStrategy.getStyle())) {
             //是否为命令
             if (!this.isCommon(paramObj)) {
                 return false;

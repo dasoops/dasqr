@@ -12,7 +12,7 @@ package com.dasoops.dasq.core.common.entity.enums;
 public enum KeywordEnum {
 
     /**
-     * 清爽风格
+     * 极简风格
      */
     STYLE_COOL("cool"),
 

@@ -1,6 +1,7 @@
 package com.dasoops.dasq.core.common.task;
 
 import com.dasoops.dasq.core.common.service.DictionaryService;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys.StyleStrategy;
 import com.dasoops.dasq.core.cq.service.MethodInfoService;
 import com.dasoops.dasq.core.cq.service.MethodTypeService;
 import com.dasoops.dasq.core.cq.service.PassListService;
@@ -40,6 +41,9 @@ public class RedisTask {
     private MethodInfoService methodInfoService;
     @Resource
     private PassListService passListService;
+    @Resource
+    private StyleStrategy styleStrategy;
+
 
     /**
      * 初始化
@@ -67,7 +71,8 @@ public class RedisTask {
 //     * -初始化/更新 PassListTypeGetEntityJsonSetMap 数据至redis
 //     * -初始化/更新 白名单关键词-方法info id映射集合 数据至redis
         passListService.initOrUpdate();
-
+//     * -初始化 指令风格
+        styleStrategy.init();
     }
 
 

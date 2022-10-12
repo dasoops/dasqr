@@ -37,14 +37,14 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
         log.info("初始化/更新 DictionaryTreeData 数据至redis");
 
         //清除旧数据
-        redisTemplate.delete(RedisKeyEnum.CORE_DICT_DICT_CODE_GET_FATHER_ID_MAP_HASH.getRedisKey());
+        redisTemplate.delete(RedisKeyEnum.DICT_DICT_CODE_GET_FATHER_ID_HASH.getRedisKey());
 
         //查询数据库,构建集合
         List<Dictionary> list = super.lambdaQuery().ne(Dictionary::getHasChild, 0).list();
         Map<String, String> map = list.stream().collect(Collectors.toMap(Dictionary::getDictCode, res -> String.valueOf(res.getId())));
 
         //存入
-        redisTemplate.opsForHash().putAll(RedisKeyEnum.CORE_DICT_DICT_CODE_GET_FATHER_ID_MAP_HASH.getRedisKey(), map);
+        redisTemplate.opsForHash().putAll(RedisKeyEnum.DICT_DICT_CODE_GET_FATHER_ID_HASH.getRedisKey(), map);
 
         log.info("完成: 初始化/更新 DictionaryTreeData 数据至redis,Data:{}", JSON.toJSONString(map));
     }
@@ -53,7 +53,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
         log.info("初始化/更新 DictFatherDictCodeMap 数据至redis");
 
         //清除旧数据
-        redisTemplate.delete(RedisKeyEnum.CORE_DICT_ID_GET_CHILD_DICT_INFO_MAP_JSON_MAP.getRedisKey());
+        redisTemplate.delete(RedisKeyEnum.DICT_ID_GET_CHILD_DICT_INFO_MAP_JSON_MAP.getRedisKey());
 
         //查询数据库,构建集合
         List<Dictionary> list = super.lambdaQuery().list();
@@ -72,7 +72,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
         ));
 
         //存入
-        redisTemplate.opsForHash().putAll(RedisKeyEnum.CORE_DICT_ID_GET_CHILD_DICT_INFO_MAP_JSON_MAP.getRedisKey(), resMap);
+        redisTemplate.opsForHash().putAll(RedisKeyEnum.DICT_ID_GET_CHILD_DICT_INFO_MAP_JSON_MAP.getRedisKey(), resMap);
 
         log.info("完成: 初始化/更新 DictFatherDictCodeMap 数据至redis,Data:{}", JSON.toJSONString(map));
     }
@@ -85,7 +85,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
 
     @Override
     public Map<String, String> getDictionaryMapByFatherId(Long fatherId) {
-        String jsonStr = (String) redisTemplate.opsForHash().get(RedisKeyEnum.CORE_DICT_ID_GET_CHILD_DICT_INFO_MAP_JSON_MAP.getRedisKey(), String.valueOf(fatherId));
+        String jsonStr = (String) redisTemplate.opsForHash().get(RedisKeyEnum.DICT_ID_GET_CHILD_DICT_INFO_MAP_JSON_MAP.getRedisKey(), String.valueOf(fatherId));
         return Objects.requireNonNull(JSON.parseObject(jsonStr)).entrySet().stream().collect(Collectors.toMap(
                 Map.Entry::getKey,
                 res -> String.valueOf(res.getValue())
@@ -94,7 +94,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
 
     @Override
     public Long getIdByDictCode(String dictCode) {
-        String str = (String) redisTemplate.opsForHash().get(RedisKeyEnum.CORE_DICT_DICT_CODE_GET_FATHER_ID_MAP_HASH.getRedisKey(), dictCode);
+        String str = (String) redisTemplate.opsForHash().get(RedisKeyEnum.DICT_DICT_CODE_GET_FATHER_ID_HASH.getRedisKey(), dictCode);
         assert str != null;
         return Long.parseLong(str);
     }

@@ -7,6 +7,7 @@ import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
 import com.dasoops.dasq.core.cq.methodstrategy.strategycontext.CqMethodStrategyContext;
 import com.dasoops.dasq.core.cq.methodstrategy.strategycontext.CqMethodStrategyContextFactory;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys.StyleStrategy;
 import com.dasoops.dasq.core.cq.service.MethodInfoService;
 import com.dasoops.dasq.core.cq.service.PassListService;
 import com.dasoops.dasq.core.common.util.KeywordUtil;
@@ -38,7 +39,7 @@ public class CqBaseController {
     @Resource
     private CqMethodStrategyContextFactory factory;
     @Resource
-    private DasqProperties dasqProperties;
+    private StyleStrategy styleStrategy;
 
     @PostMapping
     public void onMessage(@RequestBody CqMessageReq req) {
@@ -58,7 +59,7 @@ public class CqBaseController {
         List<String> keywordList = passListOpt.get().stream().map(PassObject::getPassKeyword).collect(Collectors.toList());
 
         KeywordUtil.getMatchKeyword(finalMessage, keywordList).ifPresent(res -> {
-            context.invoke(methodInfoService.getMethodInfoIdByKeyWord(res), finalMessage, dasqProperties.getStyle());
+            context.invoke(methodInfoService.getMethodInfoIdByKeyWord(res), finalMessage, styleStrategy.getStyle());
         });
     }
 
