@@ -149,17 +149,11 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
     private boolean isMatch(String keyword, Integer messageTypeCode) {
         Optional<List<PassObject>> passListOpt = passListService.getPassListByType(messageTypeCode);
 
-        //在匹配列表中放行
-        if (passListOpt.isPresent()) {
-            //消息类型匹配,忽略大小写,忽略全半角
-            boolean isMatch = passListOpt.get().stream().anyMatch(passObj ->
-                    Convert.toDBC(passObj.getPassKeyword()).equalsIgnoreCase(Convert.toDBC(keyword))
-            );
-            if (isMatch) {
-                return true;
-            }
-        }
-        return false;
+        //在匹配列表中放行(只要有一个匹配)
+        return passListOpt.map(passObjects -> passObjects.stream().anyMatch(passObj ->
+                //消息类型匹配,忽略大小写,忽略全半角
+                Convert.toDBC(passObj.getPassKeyword()).equalsIgnoreCase(Convert.toDBC(keyword))
+        )).orElse(false);
     }
 
     /**
@@ -172,6 +166,4 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
         String message = paramObj.getString(CqKeywordEnum.MESSAGE.getOtherName());
         return message.startsWith(".");
     }
-
-
 }

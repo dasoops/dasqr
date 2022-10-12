@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Slf4j
-//@ConfigurationProperties(prefix = "empty2")
 public class DasqConfiguration {
 
     @Bean
