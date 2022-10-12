@@ -45,12 +45,12 @@ dasq:
   # cq OAUTH2 access-token
   cqToken: dasKi
   # DasServer版本号
-  version: "020"
+  version: "026"
   # 开发群id
   devGroupId: 673745932
   # 主开发者id
   adminId: 776465218
   # 是否为demo版本
   isDemo: true
-  # 命令样式 clear/normal
+  # 命令样式 cool/normal
   style: cool
