@@ -38,6 +38,7 @@ public class CqMethodUtil {
         }
 
         //message转义
+        parameterStr = parameterStr.replace("\\,", "${comma}");
         message = message.replace("\\,", "${comma}");
 
         //获取消息参数集合

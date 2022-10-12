@@ -39,8 +39,7 @@ public class RereadStrategy {
 
         //获取群聊id
         String message = paramObj.getString(CqKeywordEnum.MESSAGE.getOtherName());
-        EventInfo eventInfo = EventUtil.get();
-        Long groupId = eventInfo.getGroupId();
+        Long groupId = EventUtil.getGroupId(paramObj);
 
         //构建redisKey
         String messageKey = DqRedisKeyEnum.REREAD.getRedisKey() + ":" + groupId + ":" + DqRedisKeyEnum.REREAD_MESSAGE;
