@@ -52,3 +52,5 @@ dasq:
   adminId: 776465218
   # 是否为demo版本
   isDemo: true
+  # 命令样式 clear/normal
+  style: cool

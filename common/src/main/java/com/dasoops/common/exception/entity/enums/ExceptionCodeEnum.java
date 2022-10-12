@@ -20,7 +20,7 @@ public enum ExceptionCodeEnum {
     CQ_HTTP_ERROR(1603, "cqHttp访问异常"),
     IMAGE_SERVICE_ERROR(1604, "图片服务访问异常"),
     IMAGE_GET_ERROR(1605, "图片获取失败"),
-    ;
+    PARAMETER_STYLE_ERROR(1606, "botCommon主题设置有误,请管理员检查配置文件");
 
     /**
      * 错误代码

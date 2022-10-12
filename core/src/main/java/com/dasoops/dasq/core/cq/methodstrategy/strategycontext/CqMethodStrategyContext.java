@@ -53,9 +53,9 @@ public class CqMethodStrategyContext {
      * @param methodInfo 方法信息
      * @param message    消息
      */
-    public void invoke(MethodInfo methodInfo, String message) {
+    public void invoke(MethodInfo methodInfo, String message, String style) {
         try {
-            invoke(methodInfo.getTypeId(), CqMethodUtil.getParameterMap(methodInfo.getParameters(), message));
+            invoke(methodInfo.getTypeId(), CqMethodUtil.getParameterMap(methodInfo.getParameters(), message, style));
         } catch (LogicException e) {
             throw e;
         } catch (NullPointerException e) {

@@ -1,8 +1,10 @@
 package com.dasoops.dasq.core.common.util;
 
 import cn.hutool.core.util.StrUtil;
+import com.dasoops.common.exception.entity.LogicException;
+import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
 import com.dasoops.dasq.core.common.entity.EventInfo;
-import com.dasoops.dasq.core.common.util.EventUtil;
+import com.dasoops.dasq.core.common.entity.enums.KeywordEnum;
 import com.dasoops.dasq.core.cq.entity.enums.DqCodeEnum;
 
 import java.util.*;
@@ -24,7 +26,7 @@ public class CqMethodUtil {
      * @param message      消息
      * @return {@link List}<{@link String}>
      */
-    public static List<String> getParameterMap(String parameterStr, String message) {
+    public static List<String> getParameterMap(String parameterStr, String message, String style) {
 
         //cq码,转义
         //获取匹配的CQ码
@@ -43,7 +45,7 @@ public class CqMethodUtil {
 
         //获取消息参数集合
         List<String> messageParamList = new ArrayList<>();
-        Optional<List<String>> messageParamListOpt = getParamList(message);
+        Optional<List<String>> messageParamListOpt = getParamList(message, style);
         if (messageParamListOpt.isPresent()) {
             messageParamList = messageParamListOpt.get();
         }
@@ -120,12 +122,25 @@ public class CqMethodUtil {
         }
     }
 
-    public static Optional<List<String>> getParamList(String message) {
-        int i = message.indexOf("(");
+    public static Optional<List<String>> getParamList(String message, String style) {
+
+        //根据模式获取参数
+        int i;
+        if (KeywordUtil.isCool(style)) {
+            i = message.indexOf(" ");
+        } else if (KeywordUtil.isNormal(style)) {
+            i = message.indexOf("(");
+        } else {
+            throw new LogicException(ExceptionCodeEnum.PARAMETER_STYLE_ERROR);
+        }
+
+        //没有参数
         if (i == -1) {
             return Optional.empty();
         }
-        String paramStr = message.substring(i + 1, message.length() - 1);
+
+        //提取参数字符串
+        String paramStr = message.substring(i + 1, KeywordUtil.isNormal(style) ? message.length() - 1 : message.length());
         return Optional.of(StrUtil.split(paramStr, ","));
     }
 

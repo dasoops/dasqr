@@ -1,6 +1,7 @@
 package com.dasoops.dasq.core.cq.controller;
 
 import cn.hutool.core.convert.Convert;
+import com.dasoops.dasq.core.common.entity.DasqProperties;
 import com.dasoops.dasq.core.cq.entity.dto.CqMessageReq;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
@@ -8,7 +9,7 @@ import com.dasoops.dasq.core.cq.methodstrategy.strategycontext.CqMethodStrategyC
 import com.dasoops.dasq.core.cq.methodstrategy.strategycontext.CqMethodStrategyContextFactory;
 import com.dasoops.dasq.core.cq.service.MethodInfoService;
 import com.dasoops.dasq.core.cq.service.PassListService;
-import com.dasoops.dasq.core.common.util.CqKeywordUtil;
+import com.dasoops.dasq.core.common.util.KeywordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,8 @@ public class CqBaseController {
     private PassListService passListService;
     @Resource
     private CqMethodStrategyContextFactory factory;
+    @Resource
+    private DasqProperties dasqProperties;
 
     @PostMapping
     public void onMessage(@RequestBody CqMessageReq req) {
@@ -54,8 +57,8 @@ public class CqBaseController {
         }
         List<String> keywordList = passListOpt.get().stream().map(PassObject::getPassKeyword).collect(Collectors.toList());
 
-        CqKeywordUtil.getMatchKeyword(finalMessage, keywordList).ifPresent(res -> {
-            context.invoke(methodInfoService.getMethodInfoIdByKeyWord(res), finalMessage);
+        KeywordUtil.getMatchKeyword(finalMessage, keywordList).ifPresent(res -> {
+            context.invoke(methodInfoService.getMethodInfoIdByKeyWord(res), finalMessage, dasqProperties.getStyle());
         });
     }
 

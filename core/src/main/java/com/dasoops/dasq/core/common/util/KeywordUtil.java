@@ -1,8 +1,8 @@
 package com.dasoops.dasq.core.common.util;
 
-import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import com.dasoops.dasq.core.common.entity.enums.KeywordEnum;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 
 import java.util.*;
@@ -15,7 +15,7 @@ import java.util.*;
  * @Version 1.0.0
  * @Description: cq关键词跑龙套
  */
-public class CqKeywordUtil {
+public class KeywordUtil {
 
     /**
      * 得到最匹配关键字
@@ -74,5 +74,24 @@ public class CqKeywordUtil {
         return buildCqCode("at", Map.of("qq", id));
     }
 
+    /**
+     * 是正常风格
+     *
+     * @param style 风格
+     * @return boolean
+     */
+    public static boolean isNormal(String style) {
+        return KeywordEnum.STYLE_NORMAL.getKeyword().equals(style);
+    }
+
+    /**
+     * 是清爽风格
+     *
+     * @param style 风格
+     * @return boolean
+     */
+    public static boolean isCool(String style) {
+        return KeywordEnum.STYLE_COOL.getKeyword().equals(style);
+    }
 
 }

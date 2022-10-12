@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Optional;
 
-import static com.dasoops.dasq.core.common.util.CqKeywordUtil.buildImageCqCode;
+import static com.dasoops.dasq.core.common.util.KeywordUtil.buildImageCqCode;
 
 /**
  * @author Administrator

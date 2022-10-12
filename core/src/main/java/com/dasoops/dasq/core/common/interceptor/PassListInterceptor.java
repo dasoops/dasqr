@@ -3,6 +3,8 @@ package com.dasoops.dasq.core.common.interceptor;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSONObject;
+import com.dasoops.dasq.core.common.entity.DasqProperties;
+import com.dasoops.dasq.core.common.entity.enums.KeywordEnum;
 import com.dasoops.dasq.core.common.util.WebUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
@@ -39,6 +41,8 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
     private PassListService passListService;
     @Resource
     private RereadStrategy rereadStrategy;
+    @Resource
+    private DasqProperties dasqProperties;
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
@@ -52,9 +56,12 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
 
         rereadStrategy.invokeReread(paramObj);
 
-        //是否为命令
-        if (!this.isCommon(paramObj)) {
-            return false;
+        //是否为清爽模式
+        if (KeywordEnum.STYLE_NORMAL.getKeyword().equals(dasqProperties.getStyle())) {
+            //是否为命令
+            if (!this.isCommon(paramObj)) {
+                return false;
+            }
         }
 
         if (!this.authorIsMatch(paramObj)) {
