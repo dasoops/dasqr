@@ -6,6 +6,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.dasq.core.common.util.WebUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.game.RereadStrategy;
 import com.dasoops.dasq.core.cq.service.PassListService;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -36,6 +37,8 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
 
     @Resource
     private PassListService passListService;
+    @Resource
+    private RereadStrategy rereadStrategy;
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
@@ -46,6 +49,8 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
         if (!this.postTypeIsMatch(paramObj)) {
             return false;
         }
+
+        rereadStrategy.invokeReread(paramObj);
 
         //是否为命令
         if (!this.isCommon(paramObj)) {

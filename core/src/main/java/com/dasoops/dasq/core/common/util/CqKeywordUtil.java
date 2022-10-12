@@ -64,5 +64,15 @@ public class CqKeywordUtil {
         return buildCqCode("image", Map.of("url", url, "file", RandomUtil.randomNumbers(10) + ".image"));
     }
 
+    /**
+     * 构建atCqCode
+     *
+     * @param id id
+     * @return {@link String}
+     */
+    public static String buildAtCqCode(String id) {
+        return buildCqCode("at", Map.of("qq", id));
+    }
+
 
 }

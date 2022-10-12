@@ -42,9 +42,5 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 
 }

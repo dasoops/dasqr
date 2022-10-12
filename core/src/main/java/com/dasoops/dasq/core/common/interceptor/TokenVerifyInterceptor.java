@@ -35,7 +35,6 @@ public class TokenVerifyInterceptor implements HandlerInterceptor, Ordered {
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
-
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 

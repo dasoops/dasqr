@@ -2,6 +2,7 @@ package com.dasoops.dasq.core.common.util;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.dasq.core.common.entity.EventInfo;
+import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 
 import java.util.Map;
 
@@ -64,4 +65,14 @@ public final class EventUtil {
 
         return eventInfo;
     }
+
+    /**
+     * 是否为群组消息
+     *
+     * @return boolean
+     */
+    public static boolean isGroup() {
+        return String.valueOf(THREAD_LOCAL.get().getMessageType()).equals(CqKeywordEnum.MESSAGE_TYPE_GROUP.getOtherName());
+    }
+
 }

@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
 @Slf4j
 public class MybatisPlusConfiguration {
 
-
     @Bean
     public PaginationInnerInterceptor paginationInnerInterceptor() {
         return new PaginationInnerInterceptor();
