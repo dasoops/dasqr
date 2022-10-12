@@ -56,6 +56,11 @@ public class EndRollStrategy extends BaseMethodStrategy implements BaseCqMethodS
                 res -> Integer.valueOf(String.valueOf(res.getValue()))
         ));
 
+        if (rollMap.isEmpty()) {
+            cqService.sendMsg("本轮摇点没有人参与");
+            return;
+        }
+
         Map.Entry<String, Integer> entry = rollMap.entrySet().stream().max(Comparator.comparingInt(Map.Entry::getValue)).orElseThrow(() -> new LogicException(ExceptionCodeEnum.PARAMETER_GET_ERROR));
         String id = entry.getKey();
         Integer maxPoint = entry.getValue();
