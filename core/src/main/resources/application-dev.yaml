@@ -45,7 +45,7 @@ dasq:
   # cq OAUTH2 access-token
   cqToken: dasKi
   # DasServer版本号
-  version: "026"
+  version: "028"
   # 开发群id
   devGroupId: 673745932
   # 主开发者id
