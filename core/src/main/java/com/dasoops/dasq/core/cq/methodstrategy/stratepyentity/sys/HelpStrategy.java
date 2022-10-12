@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
+package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys;
 
 import com.dasoops.dasq.core.cq.entity.bo.MethodTypeAndInfoBo;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
@@ -35,7 +35,7 @@ public class HelpStrategy extends BaseMethodStrategy implements BaseCqMethodStra
 
     @Override
     public void invoke(List<String> params) {
-        if (params.isEmpty()) {
+        if (params.isEmpty() || params.get(0) == null) {
             cqService.sendMsg(methodInfoService.getHelpDoc());
             return;
         }

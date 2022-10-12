@@ -1,5 +1,6 @@
 package com.dasoops.dasq.core;
 
+import com.dasoops.dasq.core.common.util.BannerUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.annotation.MapperScans;
 import org.springframework.boot.SpringApplication;
@@ -24,6 +25,7 @@ public class DasServerApplication {
 
 
     public static void main(String[] args) {
+        BannerUtil.printBanner();
         SpringApplication.run(DasServerApplication.class, args);
     }
 

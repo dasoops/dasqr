@@ -1,5 +1,6 @@
 package com.dasoops.dasq.core.common.util;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.stream.StreamUtil;
 import com.alibaba.fastjson2.JSON;
@@ -62,7 +63,9 @@ public final class WebUtil {
         while ((inputStr = streamReader.readLine()) != null) {
             responseStrBuilder.append(inputStr);
         }
-        return responseStrBuilder.toString();
+        String resStr = responseStrBuilder.toString();
+        resStr = Convert.toDBC(resStr.replace("。", "."));
+        return resStr;
     }
 
     /**

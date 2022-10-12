@@ -15,15 +15,12 @@ import java.util.regex.Pattern;
 public class RegexUtil {
 
     public static Optional<String> getMatchStr(String rex, String str) {
-        String matchStr;
-        try {
-            Matcher m = Pattern.compile(rex).matcher(str);
-            boolean b = m.find();
+        String matchStr = null;
+        Matcher m = Pattern.compile(rex).matcher(str);
+        while (m.find()) {
             matchStr = m.group();
-        } catch (Exception e) {
-            return Optional.empty();
         }
-        return Optional.of(matchStr);
+        return Optional.ofNullable(matchStr);
     }
 
 }

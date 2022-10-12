@@ -3,8 +3,6 @@ package com.dasoops.minio.util;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.http.HttpUtil;
-import com.dasoops.common.exception.entity.LogicException;
-import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
 import com.dasoops.minio.entity.MinioProperties;
 import io.minio.*;
 import io.minio.errors.*;
@@ -12,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,7 +46,7 @@ public class MinioTemplate {
                 .stream(inputStream, inputStream.available(), -1)
                 .build();
         minioClient.putObject(putObjectArgs);
-        return Optional.of(uuid);
+        return Optional.of(uuid + "." + type);
     }
 
     public Optional<String> saveImage(String url) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
@@ -72,9 +69,18 @@ public class MinioTemplate {
         return bytes;
     }
 
+    /**
+     * 构建图片连接
+     *
+     * @param imageName 文件名
+     * @return {@link String}
+     */
+    public String buildImagePath(String imageName) {
+        return "http://" + properties.getUrl() + ":" + properties.getPort() + "/" + properties.getBucket() + "/" + imageName;
+    }
+
     public String getServerPath() {
         return properties.getUrl();
     }
-
 
 }

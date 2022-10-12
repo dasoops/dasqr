@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Optional;
 
+import static com.dasoops.dasq.core.common.util.CqKeywordUtil.buildImageCqCode;
+
 /**
  * @author Administrator
  * @description 针对表【TB_SYS_IMAGE_INFO(图片信息)】的数据库操作Service实现
@@ -68,7 +70,12 @@ public class ImageInfoServiceImpl extends ServiceImpl<ImageInfoMapper, ImageInfo
         return this.lambdaQuery().eq(ImageInfo::getKeyword, keyword).one();
     }
 
-    public
+    @Override
+    public String getImageCqCode(String keyword) {
+        ImageInfo imageInfo = this.getImageInfoByKeyword(keyword);
+        String url = minioTemplate.buildImagePath(imageInfo.getFileName());
+        return buildImageCqCode(url);
+    }
 }
 
 

@@ -72,7 +72,7 @@ public class CqServiceImpl implements CqService {
             }
 
         } catch (Exception e) {
-            throw new LogicException(ExceptionCodeEnum.CQ_HTTP_ERROR, ExceptionUtil.stacktraceToString(e));
+            throw new LogicException(ExceptionCodeEnum.CQ_HTTP_ERROR, e);
         }
 
         log.debug("命令执行成功:{}", resp.getBody());

@@ -19,6 +19,7 @@ public interface ImageInfoService extends IService<ImageInfo> {
      * @param keyword   关键字
      * @param innerCode 类型软编号
      * @param url       图片url
+     * @return boolean
      */
     boolean saveImage(Long groupId, Long authorId, String desc, String keyword, String innerCode, String url);
 
@@ -29,4 +30,12 @@ public interface ImageInfoService extends IService<ImageInfo> {
      * @return {@link ImageInfo}
      */
     ImageInfo getImageInfoByKeyword(String keyword);
+
+    /**
+     * 得到图像cqCode
+     *
+     * @param keyword 关键字
+     * @return {@link String}
+     */
+    String getImageCqCode(String keyword);
 }

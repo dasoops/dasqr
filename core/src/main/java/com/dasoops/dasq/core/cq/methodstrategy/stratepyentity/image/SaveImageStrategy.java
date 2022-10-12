@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
+package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.image;
 
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 /**
  * @Title: SaveImageStrategy
- * @ClassPath com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.SaveImageStrategy
+ * @ClassPath com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.image.SaveImageStrategy
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/10/11
  * @Version 1.0.0

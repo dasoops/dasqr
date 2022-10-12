@@ -38,13 +38,16 @@ public class CqMethodUtil {
         }
 
         //message转义
-        String finalMessage = message.replace("\\,", "${comma}");
+        message = message.replace("\\,", "${comma}");
 
         //获取消息参数集合
-        Optional<List<String>> messageParamListOpt = getParamList(finalMessage);
-        if (messageParamListOpt.isEmpty()) {
-            return new ArrayList<>();
+        List<String> messageParamList = new ArrayList<>();
+        Optional<List<String>> messageParamListOpt = getParamList(message);
+        if (messageParamListOpt.isPresent()) {
+            messageParamList = messageParamListOpt.get();
         }
+
+        List<String> finalMessageParamList = messageParamList;
 
         //去除前后缀
         parameterStr = StrUtil.removePrefix(parameterStr, "{");
@@ -61,7 +64,7 @@ public class CqMethodUtil {
             Arrays.stream(DqCodeEnum.values())
                     .filter(res -> res.getDqCode().equals(s)).findFirst()
                     //对其中的指示符进行解析
-                    .ifPresent(res -> dcParamList.set(index, parseDqCode(res, messageParamListOpt.get())));
+                    .ifPresent(res -> dcParamList.set(index, parseDqCode(res, finalMessageParamList)));
         }
 
         //message转义

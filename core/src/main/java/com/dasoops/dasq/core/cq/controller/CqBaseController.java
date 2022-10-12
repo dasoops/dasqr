@@ -1,5 +1,6 @@
 package com.dasoops.dasq.core.cq.controller;
 
+import cn.hutool.core.convert.Convert;
 import com.dasoops.dasq.core.cq.entity.dto.CqMessageReq;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
@@ -43,6 +44,8 @@ public class CqBaseController {
 
         //获取消息
         String message = req.getMessage();
+        //全半角 标点转换
+        String finalMessage = Convert.toDBC(message.replace("。", "."));
 
         //获取关键词集合
         Optional<List<PassObject>> passListOpt = passListService.getPassListByType(Integer.parseInt(CqKeywordEnum.MESSAGE_TYPE_MESSAGE_PREFIX.getOtherName()));
@@ -51,8 +54,8 @@ public class CqBaseController {
         }
         List<String> keywordList = passListOpt.get().stream().map(PassObject::getPassKeyword).collect(Collectors.toList());
 
-        CqKeywordUtil.getMatchKeyword(message, keywordList).ifPresent(res -> {
-            context.invoke(methodInfoService.getMethodInfoIdByKeyWord(res), req.getMessage());
+        CqKeywordUtil.getMatchKeyword(finalMessage, keywordList).ifPresent(res -> {
+            context.invoke(methodInfoService.getMethodInfoIdByKeyWord(res), finalMessage);
         });
     }
 

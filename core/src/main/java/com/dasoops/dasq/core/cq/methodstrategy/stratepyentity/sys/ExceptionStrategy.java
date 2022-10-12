@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
+package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys;
 
 import com.dasoops.common.exception.service.ExceptionService;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
@@ -30,8 +30,9 @@ public class ExceptionStrategy extends BaseMethodStrategy implements BaseCqMetho
 
     @Override
     public void invoke(List<String> params) {
-        if (params.isEmpty()) {
+        if (params.isEmpty() || params.get(0) == null) {
             cqService.sendMsg("CrazyFridayException\r\n\tStack at\r\nvMe50");
+            return;
         }
         String exceptionMsg = exceptionService.getException(params.get(0));
         if (exceptionMsg == null) {

@@ -1,6 +1,7 @@
 package com.dasoops.dasq.core.common.interceptor;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.dasq.core.common.util.WebUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
@@ -54,7 +55,6 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
         if (!this.authorIsMatch(paramObj)) {
             return false;
         }
-
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }

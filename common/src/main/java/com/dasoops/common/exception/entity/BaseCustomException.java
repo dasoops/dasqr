@@ -36,6 +36,7 @@ public abstract class BaseCustomException extends RuntimeException {
         this.exceptionCodeEnum = exceptionCodeEnum;
         this.code = exceptionCodeEnum.getCode();
         this.id = System.currentTimeMillis();
+        this.msg = exceptionCodeEnum.getDescription();
     }
 
     public BaseCustomException(Long id, ExceptionCodeEnum exceptionCodeEnum, Throwable t) {

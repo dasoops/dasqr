@@ -1,37 +1,37 @@
-package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
+package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys;
 
+import com.dasoops.dasq.core.common.task.RedisTask;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
 import com.dasoops.dasq.core.cq.service.CqService;
-import com.dasoops.dasq.core.cq.service.MethodInfoService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @Title: SaveMethodStrategy
- * @ClassPath com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.SaveMethodStrategy
+ * @Title: helpStrategy
+ * @ClassPath com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.helpStrategy
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/10/10
  * @Version 1.0.0
- * @Description: 保存方法策略
+ * @Description: 帮助策略
  * @see BaseCqMethodStrategy
  */
 @Component
-public class SaveMethodStrategy extends BaseMethodStrategy implements BaseCqMethodStrategy {
+public class UpdateStrategy extends BaseMethodStrategy implements BaseCqMethodStrategy {
 
     @Resource
-    private MethodInfoService methodInfoService;
+    private RedisTask redisTask;
 
     @Override
     public Long getId() {
-        return 1L;
+        return 1579653655149408257L;
     }
 
     @Override
     public void invoke(List<String> params) {
-        methodInfoService.addMethod(params.get(0), params.get(1), params.get(2), params.get(3));
-        cqService.sendMsg("方法添加成功");
+        redisTask.initOrUpdate();
+        cqService.sendMsg("success");
     }
 }

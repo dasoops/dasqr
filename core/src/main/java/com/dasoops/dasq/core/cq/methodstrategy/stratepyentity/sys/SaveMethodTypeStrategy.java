@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
+package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys;
 
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @Title: SaveMethodStrategy
- * @ClassPath com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.SaveMethodStrategy
+ * @ClassPath com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys.SaveMethodStrategy
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/10/10
  * @Version 1.0.0
