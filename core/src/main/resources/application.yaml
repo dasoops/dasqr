@@ -38,7 +38,15 @@ mybatis-plus:
 dasq:
   # 控制台打印异常堆栈信息
   consolePrintStack: true
+  # java端访问token
   token: dasKi
+  # cqhttp url地址
   cqHttpUrl: http://127.0.0.1:4700
+  # cq OAUTH2 access-token
   cqToken: dasKi
-  version: "012"
+  # DasServer版本号
+  version: "013"
+  # 开发群id
+  devGroupId: 673745932
+  # 主开发者id
+  adminId: 776465218

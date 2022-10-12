@@ -23,9 +23,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ServletComponentScan
 public class DasServerApplication {
 
-
     public static void main(String[] args) {
-        BannerUtil.printBanner();
         SpringApplication.run(DasServerApplication.class, args);
     }
 

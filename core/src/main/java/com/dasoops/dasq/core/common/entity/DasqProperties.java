@@ -16,4 +16,6 @@ public class DasqProperties {
     private String token;
     private String cqHttpUrl;
     private String version;
+    private String devGroupId;
+    private String adminId;
 }

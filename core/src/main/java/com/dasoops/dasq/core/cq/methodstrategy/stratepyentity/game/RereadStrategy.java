@@ -41,10 +41,12 @@ public class RereadStrategy {
         String message = paramObj.getString(CqKeywordEnum.MESSAGE.getOtherName());
         EventInfo eventInfo = EventUtil.get();
         Long groupId = eventInfo.getGroupId();
+
         //构建redisKey
         String messageKey = DqRedisKeyEnum.REREAD.getRedisKey() + ":" + groupId + ":" + DqRedisKeyEnum.REREAD_MESSAGE;
         String messageCountKey = DqRedisKeyEnum.REREAD.getRedisKey() + ":" + groupId + ":" + DqRedisKeyEnum.REREAD_MESSAGE_COUNT;
 
+        //获取最新消息
         String lastMessage = redisTemplate.opsForValue().get(messageKey);
 
         //首条消息/非复读消息记录
