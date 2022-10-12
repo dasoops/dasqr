@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Title: GetImageStrategy
@@ -31,7 +32,11 @@ public class GetImageStrategy extends BaseMethodStrategy implements BaseCqMethod
 
     @Override
     public void invoke(List<String> params) {
-        String imageCqCode = imageInfoService.getImageCqCode(params.get(0));
-        cqService.sendMsg(imageCqCode);
+        Optional<String> imageCqCodeOpt = imageInfoService.getImageCqCode(params.get(0));
+        if (imageCqCodeOpt.isPresent()) {
+            cqService.sendMsg(imageCqCodeOpt.get());
+        } else {
+            cqService.sendMsg("没有这张图捏");
+        }
     }
 }

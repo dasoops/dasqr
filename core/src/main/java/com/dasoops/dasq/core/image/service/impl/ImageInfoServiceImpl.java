@@ -71,10 +71,13 @@ public class ImageInfoServiceImpl extends ServiceImpl<ImageInfoMapper, ImageInfo
     }
 
     @Override
-    public String getImageCqCode(String keyword) {
+    public Optional<String> getImageCqCode(String keyword) {
         ImageInfo imageInfo = this.getImageInfoByKeyword(keyword);
+        if (imageInfo == null) {
+            return Optional.empty();
+        }
         String url = minioTemplate.buildImagePath(imageInfo.getFileName());
-        return buildImageCqCode(url);
+        return Optional.of(buildImageCqCode(url));
     }
 }
 

@@ -61,10 +61,10 @@ public class RereadStrategy {
             return;
         }
 
-        if (Integer.parseInt(count) >= rereadThreshold - 1) {
+        if (Integer.parseInt(count) >= rereadThreshold) {
             //禁止反复重复
             redisTemplate.opsForValue().set(messageCountKey, "-10");
-            cqService.sendMsg(message);
+            cqService.sendMsg(true, groupId, message);
         }
 
         redisTemplate.opsForValue().increment(messageCountKey);

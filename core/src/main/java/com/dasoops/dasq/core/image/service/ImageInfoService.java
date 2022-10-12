@@ -3,6 +3,8 @@ package com.dasoops.dasq.core.image.service;
 import com.dasoops.dasq.core.image.entity.pojo.ImageInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Optional;
+
 /**
  * @author Administrator
  * @description 针对表【TB_SYS_IMAGE_INFO(图片信息)】的数据库操作Service
@@ -37,5 +39,5 @@ public interface ImageInfoService extends IService<ImageInfo> {
      * @param keyword 关键字
      * @return {@link String}
      */
-    String getImageCqCode(String keyword);
+    Optional<String> getImageCqCode(String keyword);
 }

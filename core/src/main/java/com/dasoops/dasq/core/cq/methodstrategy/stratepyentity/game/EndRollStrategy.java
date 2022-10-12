@@ -59,6 +59,8 @@ public class EndRollStrategy extends BaseMethodStrategy implements BaseCqMethodS
         Map.Entry<String, Integer> entry = rollMap.entrySet().stream().max(Comparator.comparingInt(Map.Entry::getValue)).orElseThrow(() -> new LogicException(ExceptionCodeEnum.PARAMETER_GET_ERROR));
         String id = entry.getKey();
         Integer maxPoint = entry.getValue();
+
+        redisTemplate.delete(redisKey);
         cqService.sendMsg(CqKeywordUtil.buildAtCqCode(id) + "恭喜这个B摇到了最高点: " + maxPoint);
     }
 }
