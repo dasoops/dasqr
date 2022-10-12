@@ -76,7 +76,11 @@ public class MethodInfoServiceImpl extends ServiceImpl<MethodInfoMapper, MethodI
     private void initOrUpdateHelpDoc() {
         log.info("初始化/更新 HelpDoc 数据至redis");
         List<HelpBo> boList = methodInfoMapper.selectHelpBoList();
-        StringBuilder sb = new StringBuilder("帮助文档").append(" Ver").append(".").append(dasqProperties.getVersion()).append("\r\n");
+        StringBuilder sb = new StringBuilder("帮助文档").append(" Ver").append(".").append(dasqProperties.getVersion());
+        if (dasqProperties.getIsDemo()) {
+            sb.append("D");
+        }
+        sb.append("\r\n");
 
         for (int i = 0; i < boList.size(); i++) {
             HelpBo res = boList.get(i);
