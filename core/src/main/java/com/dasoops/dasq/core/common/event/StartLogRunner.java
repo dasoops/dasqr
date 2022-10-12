@@ -30,6 +30,6 @@ public class StartLogRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        cqService.sendMsg(true, Long.parseLong(dasqProperties.getDevGroupId()), "DasServer Start");
+        cqService.sendMsg(true, Long.parseLong(dasqProperties.getDevGroupId()), "DasServer Start,Ver." + dasqProperties.getVersion() + (dasqProperties.getIsDemo() ? "D" : "R"));
     }
 }
