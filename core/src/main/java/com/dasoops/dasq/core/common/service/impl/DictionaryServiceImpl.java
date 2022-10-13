@@ -3,7 +3,7 @@ package com.dasoops.dasq.core.common.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.RedisKeyEnum;
-import com.dasoops.dasq.core.common.entity.pojo.Dictionary;
+import com.dasoops.dasq.core.common.entity.po.Dictionary;
 import com.dasoops.dasq.core.common.service.DictionaryService;
 import com.dasoops.dasq.core.common.mapper.DictionaryMapper;
 import lombok.extern.slf4j.Slf4j;

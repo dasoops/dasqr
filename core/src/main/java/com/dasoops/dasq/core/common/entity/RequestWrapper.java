@@ -11,9 +11,7 @@ import java.io.*;
  * @ProjectName com.ymeifen.filter
  * @Author qierkang xyqierkang@163.com
  * @Date Created in 2019-03-14 00:20
- * @Description [ 拦截器中，request中getReader()和getInputStream()只能调用一次，构建可重复读取inputStream的request.
- * 由于 request中getReader()和getInputStream()只能调用一次 导致在Controller @ResponseBody的时候获取不到 null 或Stream closed
- * 在项目中，可能会出现需要针对接口参数进行校验等问题 如：Token
+ * @Description 拦截器中，request中getReader()和getInputStream()只能调用一次，该类为构建可重复读取inputStream的request.
  * <p>
  * ]
  */

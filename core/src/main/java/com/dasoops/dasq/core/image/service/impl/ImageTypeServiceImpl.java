@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.dasq.core.image.entity.enums.ImageRedisKeyEnum;
 import com.dasoops.dasq.core.image.service.ImageTypeService;
-import com.dasoops.dasq.core.image.entity.pojo.ImageType;
+import com.dasoops.dasq.core.image.entity.po.ImageType;
 import com.dasoops.dasq.core.image.mapper.ImageTypeMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;

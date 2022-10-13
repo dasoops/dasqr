@@ -1,8 +1,6 @@
 package com.dasoops.dasq.core;
 
-import com.dasoops.dasq.core.common.util.BannerUtil;
 import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.annotation.MapperScans;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;

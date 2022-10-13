@@ -1,6 +1,6 @@
 package com.dasoops.dasq.core.image.service;
 
-import com.dasoops.dasq.core.image.entity.pojo.ImageInfo;
+import com.dasoops.dasq.core.image.entity.po.ImageInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Optional;
@@ -12,6 +12,12 @@ import java.util.Optional;
  */
 public interface ImageInfoService extends IService<ImageInfo> {
 
+    /**
+     * 关键字是否重复
+     *
+     * @param keyword 关键字
+     * @return boolean
+     */
     boolean keywordIsRepeat(String keyword);
 
     /**

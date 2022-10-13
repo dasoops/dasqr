@@ -1,7 +1,6 @@
 package com.dasoops.dasq.core.common.event;
 
 import com.dasoops.dasq.core.common.entity.DasqProperties;
-import com.dasoops.dasq.core.common.util.BannerUtil;
 import com.dasoops.dasq.core.cq.service.CqService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

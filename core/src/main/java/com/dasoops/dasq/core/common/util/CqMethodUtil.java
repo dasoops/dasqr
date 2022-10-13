@@ -3,8 +3,8 @@ package com.dasoops.dasq.core.common.util;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
+import com.dasoops.common.util.RegexUtil;
 import com.dasoops.dasq.core.common.entity.EventInfo;
-import com.dasoops.dasq.core.common.entity.enums.KeywordEnum;
 import com.dasoops.dasq.core.cq.entity.enums.DqCodeEnum;
 
 import java.util.*;

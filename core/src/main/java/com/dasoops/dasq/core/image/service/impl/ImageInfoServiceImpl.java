@@ -4,11 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
-import com.dasoops.dasq.core.image.entity.pojo.ImageInfo;
+import com.dasoops.dasq.core.image.entity.po.ImageInfo;
 import com.dasoops.dasq.core.image.service.ImageTypeService;
 import com.dasoops.dasq.core.image.service.ImageInfoService;
 import com.dasoops.dasq.core.image.mapper.ImageInfoMapper;
-import com.dasoops.minio.util.MinioTemplate;
+import com.dasoops.minio.MinioTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

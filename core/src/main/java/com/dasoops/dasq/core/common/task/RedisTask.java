@@ -1,7 +1,7 @@
 package com.dasoops.dasq.core.common.task;
 
 import com.dasoops.dasq.core.common.service.DictionaryService;
-import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys.StyleStrategy;
+import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.sys.StyleStrategy;
 import com.dasoops.dasq.core.cq.service.MethodInfoService;
 import com.dasoops.dasq.core.cq.service.MethodTypeService;
 import com.dasoops.dasq.core.cq.service.PassListService;

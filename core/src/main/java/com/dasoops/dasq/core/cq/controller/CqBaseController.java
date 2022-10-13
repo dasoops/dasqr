@@ -1,13 +1,12 @@
 package com.dasoops.dasq.core.cq.controller;
 
 import cn.hutool.core.convert.Convert;
-import com.dasoops.dasq.core.common.entity.DasqProperties;
 import com.dasoops.dasq.core.cq.entity.dto.CqMessageReq;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
-import com.dasoops.dasq.core.cq.methodstrategy.strategycontext.CqMethodStrategyContext;
-import com.dasoops.dasq.core.cq.methodstrategy.strategycontext.CqMethodStrategyContextFactory;
-import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys.StyleStrategy;
+import com.dasoops.dasq.core.dq.methodstrategy.strategycontext.CqMethodStrategyContext;
+import com.dasoops.dasq.core.dq.methodstrategy.strategycontext.CqMethodStrategyContextFactory;
+import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.sys.StyleStrategy;
 import com.dasoops.dasq.core.cq.service.MethodInfoService;
 import com.dasoops.dasq.core.cq.service.PassListService;
 import com.dasoops.dasq.core.common.util.KeywordUtil;

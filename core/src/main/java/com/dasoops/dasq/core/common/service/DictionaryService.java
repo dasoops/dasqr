@@ -1,6 +1,6 @@
 package com.dasoops.dasq.core.common.service;
 
-import com.dasoops.dasq.core.common.entity.pojo.Dictionary;
+import com.dasoops.dasq.core.common.entity.po.Dictionary;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Map;
