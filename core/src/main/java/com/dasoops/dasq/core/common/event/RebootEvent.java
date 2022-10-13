@@ -29,7 +29,7 @@ public class RebootEvent extends Thread {
     public void run() {
         try {
             log.info("1");
-            Process process = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", dasqProperties.getRebootShellPath()});
+            Process process = Runtime.getRuntime().exec(new String[]{"/bin/sh", dasqProperties.getRebootShellPath()});
             log.info("2");
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line = "";
