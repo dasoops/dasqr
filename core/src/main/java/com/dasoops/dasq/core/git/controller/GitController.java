@@ -42,7 +42,7 @@ public class GitController {
         List<Commits> commitList = gitProperties.getCommits();
         for (int i = 0; i < commitList.size(); i++) {
             Commits res = commitList.get(i);
-            sb.append("commit").append(i + 1).append(": ").append(res.getMessage()).append("\r\n");
+            sb.append("commit").append(i + 1).append(": ").append(res.getMessage());
             sb.append(res.getUrl()).append("\r\n");
         }
 
