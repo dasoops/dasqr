@@ -1,6 +1,7 @@
 package com.dasoops.dasq.core.common.event;
 
 import com.dasoops.dasq.core.common.entity.DasqProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -18,6 +19,7 @@ import java.io.InputStreamReader;
  * @see Thread
  */
 @Component
+@Slf4j
 public class RebootEvent extends Thread {
 
     @Resource
@@ -30,7 +32,7 @@ public class RebootEvent extends Thread {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line = "";
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                log.info(line);
             }
         } catch (IOException e) {
             e.printStackTrace();

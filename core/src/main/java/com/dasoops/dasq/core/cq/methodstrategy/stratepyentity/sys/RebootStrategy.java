@@ -3,6 +3,7 @@ package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys;//package com
 import com.dasoops.dasq.core.common.event.RebootEvent;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -19,6 +20,7 @@ import java.util.List;
  * @see BaseCqMethodStrategy
  */
 @Component
+@Slf4j
 public class RebootStrategy extends BaseMethodStrategy implements BaseCqMethodStrategy {
 
     @Resource
@@ -31,6 +33,7 @@ public class RebootStrategy extends BaseMethodStrategy implements BaseCqMethodSt
 
     @Override
     public void invoke(List<String> params) {
+        log.info("reboot");
         rebootEvent.run();
     }
 }
