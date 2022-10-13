@@ -53,7 +53,7 @@ public class MethodTypeServiceImpl extends ServiceImpl<MethodTypeMapper, MethodT
     }
 
     @Override
-    public void addMethodType(String keyword, String hasScan, String description) {
+    public Long addMethodType(String keyword, String hasScan, String description) {
         //获取methodType
         MethodType methodType = new MethodType();
         methodType.setKeyword(keyword);
@@ -63,6 +63,7 @@ public class MethodTypeServiceImpl extends ServiceImpl<MethodTypeMapper, MethodT
 
         //更新数据
         initOrUpdate();
+        return methodType.getId();
 
     }
 

@@ -30,7 +30,7 @@ public class SaveMethodTypeStrategy extends BaseMethodStrategy implements BaseCq
 
     @Override
     public void invoke(List<String> params) {
-        methodTypeService.addMethodType(params.get(0), params.get(1), params.get(2));
-        cqService.sendMsg("方法类型添加成功");
+        Long id = methodTypeService.addMethodType(params.get(0), params.get(1), params.get(2));
+        cqService.sendMsg("方法类型添加成功,id: " + id);
     }
 }

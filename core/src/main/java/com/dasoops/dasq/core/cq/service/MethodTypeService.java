@@ -21,6 +21,7 @@ public interface MethodTypeService extends IService<MethodType> {
      * @param keyword     关键字
      * @param hasScan     已经扫描
      * @param description 描述
+     * @return {@link Long}
      */
-    void addMethodType(String keyword, String hasScan, String description);
+    Long addMethodType(String keyword, String hasScan, String description);
 }
