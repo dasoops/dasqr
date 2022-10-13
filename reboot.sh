@@ -2,7 +2,7 @@ pid=`ps -ef | grep dasServer | grep -v grep | cut -c 9-15`
 
 git pull
 cd /usr/local/gitRepo/dasServer
-mvn install
+mvn clean install
 cd core
 
 echo $pid
