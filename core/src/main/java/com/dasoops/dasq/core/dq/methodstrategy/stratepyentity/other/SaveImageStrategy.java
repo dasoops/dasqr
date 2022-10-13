@@ -37,6 +37,7 @@ public class SaveImageStrategy extends BaseMethodStrategy implements BaseCqMetho
 
     @Override
     public void invoke(List<String> params) {
+        EventInfo eventInfo = EventUtil.get();
         //手机兼容 分段发送
         if (params.get(1) == null) {
             //判断是否重复
@@ -44,7 +45,7 @@ public class SaveImageStrategy extends BaseMethodStrategy implements BaseCqMetho
                 cqService.sendMsg("关键词已存在");
                 return;
             }
-            redisTemplate.opsForValue().set(ImageRedisKeyEnum.SAVE_IMAGE_PART.getRedisKey(), params.get(0));
+            redisTemplate.opsForValue().set(ImageRedisKeyEnum.SAVE_IMAGE_PART.getRedisKey() + (EventUtil.isGroup() ? eventInfo.getGroupId() : eventInfo.getAuthorId()), params.get(0));
             cqService.sendMsg("图来");
             return;
         }

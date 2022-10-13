@@ -69,12 +69,18 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
             return false;
         }
 
+        //发送人/群是否匹配
+        if (!this.authorIsMatch(paramObj)) {
+            return false;
+        }
+
+        //复读模块记录
+        rereadStrategy.invokeReread(paramObj);
+
         //是否为存图part
         if (saveImagePart(paramObj)) {
             return false;
         }
-
-        rereadStrategy.invokeReread(paramObj);
 
         //是否为清爽模式
         if (KeywordEnum.STYLE_NORMAL.getKeyword().equals(styleStrategy.getStyle())) {
@@ -82,10 +88,6 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
             if (!this.isCommon(paramObj)) {
                 return false;
             }
-        }
-
-        if (!this.authorIsMatch(paramObj)) {
-            return false;
         }
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
@@ -100,7 +102,7 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
         EventInfo eventInfo = EventUtil.buildEventInfo(paramObj, dict);
         EventUtil.set(eventInfo);
 
-        String saveImagePart = redisTemplate.opsForValue().getAndDelete(ImageRedisKeyEnum.SAVE_IMAGE_PART.getRedisKey());
+        String saveImagePart = redisTemplate.opsForValue().getAndDelete(ImageRedisKeyEnum.SAVE_IMAGE_PART.getRedisKey() + (EventUtil.isGroup() ? eventInfo.getGroupId() : eventInfo.getAuthorId()));
         if (saveImagePart == null) {
             return false;
         }
@@ -134,6 +136,7 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
     }
 
     /**
+     * 作者是匹配
      * 作者是否匹配
      *
      * @param paramObj param obj
