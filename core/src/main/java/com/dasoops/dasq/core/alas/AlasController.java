@@ -3,9 +3,7 @@ package com.dasoops.dasq.core.alas;
 import com.dasoops.dasq.core.common.entity.DasqProperties;
 import com.dasoops.dasq.core.common.util.KeywordUtil;
 import com.dasoops.dasq.core.cq.service.CqService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
