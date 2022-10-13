@@ -33,7 +33,7 @@ public class RebootStrategy extends BaseMethodStrategy implements BaseCqMethodSt
 
     @Override
     public void invoke(List<String> params) {
-        log.info("reboot");
-        rebootEvent.run();
+        cqService.sendMsg("Reboot,请尽量不要在reboot期间输入指令");
+        rebootEvent.start();
     }
 }
