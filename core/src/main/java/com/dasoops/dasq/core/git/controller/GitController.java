@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Title: GitController
@@ -35,8 +36,9 @@ public class GitController {
         sb.append("收到了新的push!\r\n");
         sb.append("sender: ").append(gitProperties.getSender().getName()).append("(").append(gitProperties.getSender().getEmail()).append(")\r\n");
 
-        for (int i = 0; i <= gitProperties.getCommits().size(); i++) {
-            Commits res = gitProperties.getCommits().get(i);
+        List<Commits> commitList = gitProperties.getCommits();
+        for (int i = 0; i < commitList.size(); i++) {
+            Commits res = commitList.get(i);
             sb.append("commit").append(i).append(": ").append(res.getCommitter().getName()).append("(").append(res.getCommitter().getEmail()).append(")\r\n");
         }
 
