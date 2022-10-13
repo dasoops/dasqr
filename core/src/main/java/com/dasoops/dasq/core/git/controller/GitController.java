@@ -43,7 +43,7 @@ public class GitController {
         for (int i = 0; i < commitList.size(); i++) {
             Commits res = commitList.get(i);
             sb.append("commit").append(i + 1).append(": ").append(res.getMessage()).append("\r\n");
-            sb.append("   url").append(i + 1).append(": ").append(res.getUrl()).append("\r\n");
+            sb.append(res.getUrl()).append("\r\n");
         }
 
         cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), KeywordUtil.buildAtCqCode(dasqProperties.getAdminId()) + sb);
