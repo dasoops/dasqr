@@ -40,7 +40,7 @@ public class GitController {
         sb.append("sender: ").append(gitProperties.getHeadCommit().getCommitter().getName()).append("(").append(gitProperties.getHeadCommit().getCommitter().getEmail()).append(")\r\n");
         sb.append("branch: ").append(branch).append("\r\n");
         List<Commits> commitList = gitProperties.getCommits();
-        for (int i = 0; i < commitList.size(); i++) {
+        for (int i = commitList.size() - 1; i >= 0; i--) {
             Commits res = commitList.get(i);
             sb.append("commit").append(i + 1).append(": ").append(res.getMessage());
             sb.append(res.getUrl()).append("\r\n");
