@@ -1,6 +1,7 @@
 package com.dasoops.dasq.core.common.task;
 
 import com.dasoops.dasq.core.common.service.DictionaryService;
+import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.game.RereadStrategy;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.sys.StyleStrategy;
 import com.dasoops.dasq.core.cq.service.MethodInfoService;
 import com.dasoops.dasq.core.cq.service.MethodTypeService;
@@ -43,6 +44,8 @@ public class RedisTask {
     private PassListService passListService;
     @Resource
     private StyleStrategy styleStrategy;
+    @Resource
+    private RereadStrategy rereadStrategy;
 
 
     /**
@@ -73,6 +76,7 @@ public class RedisTask {
         passListService.initOrUpdate();
 //     * -初始化 指令风格
         styleStrategy.init();
+
     }
 
 

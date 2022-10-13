@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 /**
  * @Title: ReReadStrategy
@@ -21,6 +22,13 @@ import javax.annotation.Resource;
  */
 @Component
 public class RereadStrategy extends BaseMethodStrategy {
+
+    public void init() {
+        Set<String> keys = redisTemplate.keys(DqRedisKeyEnum.REREAD.getRedisKey() + "*");
+        if (keys != null) {
+            redisTemplate.delete(keys);
+        }
+    }
 
     public void invokeReread(JSONObject paramObj) {
         final int rereadThreshold = 3;
