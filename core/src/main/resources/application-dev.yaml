@@ -19,8 +19,6 @@ logging:
       dasoops:
         dasq:
           core: debug
-  file: /logs/logback.log
-
 
 minio:
   enable: true
