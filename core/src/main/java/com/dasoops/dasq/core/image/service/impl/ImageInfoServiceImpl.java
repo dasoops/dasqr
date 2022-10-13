@@ -30,10 +30,21 @@ public class ImageInfoServiceImpl extends ServiceImpl<ImageInfoMapper, ImageInfo
     @Resource
     private ImageTypeService imageTypeService;
 
+    /**
+     * 是否重复关键字
+     *
+     * @param keyword 关键字
+     * @return boolean
+     */
+    @Override
+    public boolean keywordIsRepeat(String keyword) {
+        return super.lambdaQuery().eq(ImageInfo::getKeyword, keyword).count() > 0;
+    }
+
     @Override
     public boolean saveImage(Long groupId, Long authorId, String desc, String keyword, String innerCode, String url) {
         //检查关键词是否重复
-        if (super.lambdaQuery().eq(ImageInfo::getKeyword, keyword).count() > 0) {
+        if (!keywordIsRepeat(keyword)) {
             return false;
         }
 

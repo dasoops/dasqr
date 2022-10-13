@@ -1,5 +1,6 @@
 package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.image;
 
+import com.dasoops.common.entity.enums.RedisKeyEnum;
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
 import com.dasoops.dasq.core.common.entity.EventInfo;
@@ -7,6 +8,7 @@ import com.dasoops.dasq.core.common.util.EventUtil;
 import com.dasoops.dasq.core.common.util.RegexUtil;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
+import com.dasoops.dasq.core.image.entity.enums.ImageRedisKeyEnum;
 import com.dasoops.dasq.core.image.service.ImageInfoService;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +40,27 @@ public class SaveImageStrategy extends BaseMethodStrategy implements BaseCqMetho
 
     @Override
     public void invoke(List<String> params) {
+        //手机兼容 分段发送
+        if (params.get(1) == null) {
+            //判断是否重复
+            if (imageInfoService.keywordIsRepeat(params.get(0))) {
+                cqService.sendMsg("关键词已存在");
+                return;
+            }
+            redisTemplate.opsForValue().set(ImageRedisKeyEnum.SAVE_IMAGE_PART.getRedisKey(), params.get(0));
+            cqService.sendMsg("图来");
+            return;
+        }
+        //非手机兼容直接存图
+        saveImage(params);
+    }
+
+    /**
+     * 保存图像
+     *
+     * @param params 参数
+     */
+    public void saveImage(List<String> params) {
         EventInfo eventInfo = EventUtil.get();
         //正则匹配参数
         Optional<String> matchStr = RegexUtil.getMatchStr(".(?<=url=h).*?(?=])", params.get(1));
@@ -47,6 +70,23 @@ public class SaveImageStrategy extends BaseMethodStrategy implements BaseCqMetho
         if (!isRepeat) {
             cqService.sendMsg("关键词已存在");
         }
+
+        cqService.sendMsg("已阅");
+    }
+
+
+    /**
+     * 保存图像
+     *
+     * @param keyword 关键字
+     * @param cqCode  cq编号
+     */
+    public void saveImage(String keyword, String cqCode) {
+        EventInfo eventInfo = EventUtil.get();
+        //正则匹配参数
+        Optional<String> matchStr = RegexUtil.getMatchStr(".(?<=url=h).*?(?=])", cqCode);
+        imageInfoService.saveImage(eventInfo.getGroupId(), eventInfo.getAuthorId(), null, keyword, null,
+                matchStr.orElseThrow(() -> new LogicException(ExceptionCodeEnum.IMAGE_GET_ERROR)));
 
         cqService.sendMsg("已阅");
     }

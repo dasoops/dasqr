@@ -12,6 +12,8 @@ import java.util.Optional;
  */
 public interface ImageInfoService extends IService<ImageInfo> {
 
+    boolean keywordIsRepeat(String keyword);
+
     /**
      * 保存图像
      *

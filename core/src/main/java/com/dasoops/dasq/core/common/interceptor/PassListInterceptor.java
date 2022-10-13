@@ -5,15 +5,19 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.dasq.core.common.entity.DasqProperties;
 import com.dasoops.dasq.core.common.entity.enums.KeywordEnum;
+import com.dasoops.dasq.core.common.util.CqMethodUtil;
 import com.dasoops.dasq.core.common.util.WebUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.game.RereadStrategy;
+import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.image.SaveImageStrategy;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys.StyleStrategy;
 import com.dasoops.dasq.core.cq.service.PassListService;
+import com.dasoops.dasq.core.image.entity.enums.ImageRedisKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.Ordered;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,6 +48,10 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
     private RereadStrategy rereadStrategy;
     @Resource
     private StyleStrategy styleStrategy;
+    @Resource(name = "stringRedisTemplate", type = StringRedisTemplate.class)
+    private StringRedisTemplate redisTemplate;
+    @Resource
+    private SaveImageStrategy saveImageStrategy;
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
@@ -53,6 +61,11 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
         //go_cqhttp消息类型匹配
         if (!this.postTypeIsMatch(paramObj)) {
             return false;
+        }
+
+        String saveImagePart = redisTemplate.opsForValue().getAndDelete(ImageRedisKeyEnum.SAVE_IMAGE_PART.getRedisKey());
+        if (saveImagePart != null) {
+            saveImageStrategy.saveImage(saveImagePart, paramObj.getString(CqKeywordEnum.MESSAGE.getSimpleName()));
         }
 
         rereadStrategy.invokeReread(paramObj);

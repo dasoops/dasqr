@@ -2,6 +2,8 @@ package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base;
 
 import com.dasoops.dasq.core.common.entity.DasqProperties;
 import com.dasoops.dasq.core.cq.service.CqService;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.Resource;
 
@@ -19,5 +21,7 @@ public class BaseMethodStrategy {
     protected DasqProperties dasqProperties;
     @Resource
     protected CqService cqService;
+    @Resource(name = "stringRedisTemplate", type = StringRedisTemplate.class)
+    protected StringRedisTemplate redisTemplate;
 
 }

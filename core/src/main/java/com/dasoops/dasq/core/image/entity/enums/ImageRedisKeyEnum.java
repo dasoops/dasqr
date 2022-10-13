@@ -22,7 +22,14 @@ public enum ImageRedisKeyEnum {
      * Map<String,String>
      * Hash<id,ImageJson>
      */
-    TYPE_ID_GET_ENTITY_JSON_MAP("image:type_id_get_entity_Json_hash");
+    TYPE_ID_GET_ENTITY_JSON_MAP("image:type_id_get_entity_Json_hash"),
+
+    /**
+     * 下条消息是否为分片存图 part2
+     * String
+     * String
+     */
+    SAVE_IMAGE_PART("image:save_image_part");
 
     /**
      * redisKey
