@@ -21,6 +21,8 @@ import java.util.List;
 @Component
 public class RebootStrategy extends BaseMethodStrategy implements BaseCqMethodStrategy {
 
+    @Resource
+    private RebootEvent rebootEvent;
 
     @Override
     public Long getId() {
@@ -29,7 +31,6 @@ public class RebootStrategy extends BaseMethodStrategy implements BaseCqMethodSt
 
     @Override
     public void invoke(List<String> params) {
-        RebootEvent rebootEvent = new RebootEvent();
         rebootEvent.run();
     }
 }
