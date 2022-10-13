@@ -1,5 +1,6 @@
 package com.dasoops.dasq.core.alas;
 
+import cn.hutool.json.JSONObject;
 import com.dasoops.dasq.core.common.entity.DasqProperties;
 import com.dasoops.dasq.core.common.util.KeywordUtil;
 import com.dasoops.dasq.core.cq.service.CqService;
@@ -25,8 +26,11 @@ public class AlasController {
     private DasqProperties dasqProperties;
 
     @PostMapping("/error")
-    public void alasError(@RequestBody String msg) {
+    public void alasError(@RequestBody JSONObject paramObject) {
+        String msg = paramObject.getStr("content").split("> ")[1];
 
-        cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), KeywordUtil.buildAtCqCode(dasqProperties.getAdminId()) + "Alas模块发生异常,请求人类接管,errorMsg: \r\n\t" + msg);
+        cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()),
+                KeywordUtil.buildAtCqCode(dasqProperties.getAdminId()) + "Alas模块发生异常,请求人类接管,errorMsg: \r\n"
+                        + msg);
     }
 }
