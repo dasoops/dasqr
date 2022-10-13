@@ -32,14 +32,18 @@ public class GitController {
 
     @PostMapping("/push")
     public void push(@RequestBody GitProperties gitProperties) {
+        String[] refSplit = gitProperties.getRef().split("/");
+        String branch = refSplit[refSplit.length - 1].replace("/", "");
+
         StringBuilder sb = new StringBuilder();
         sb.append("收到了新的push!\r\n");
-        sb.append("sender: ").append(gitProperties.getSender().getName()).append("(").append(gitProperties.getSender().getEmail()).append(")\r\n");
-
+        sb.append("sender: ").append(gitProperties.getHeadCommit().getCommitter().getName()).append("(").append(gitProperties.getHeadCommit().getCommitter().getEmail()).append(")\r\n");
+        sb.append("branch: ").append(branch).append("\r\n");
         List<Commits> commitList = gitProperties.getCommits();
         for (int i = 0; i < commitList.size(); i++) {
             Commits res = commitList.get(i);
             sb.append("commit").append(i + 1).append(": ").append(res.getMessage()).append("\r\n");
+            sb.append("   url").append(i + 1).append(": ").append(res.getUrl()).append("\r\n");
         }
 
         cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), KeywordUtil.buildAtCqCode(dasqProperties.getAdminId()) + sb);
