@@ -13,9 +13,9 @@ import lombok.Data;
  */
 @Data
 public class CqRes {
-    @JsonProperty("data")
+    @JSONField(name = "data")
     private CqResData data;
-    @JsonProperty("retcode")
+    @JSONField(name = "retcode")
     private Integer retCode;
     private String msg;
     private String status;

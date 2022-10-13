@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @Data
 public class CqResData {
-    @JsonProperty("message_id")
+    @JSONField(name = "message_id")
     private Long messageId;
 
 }
