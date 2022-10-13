@@ -4,7 +4,9 @@ import com.dasoops.dasq.core.common.entity.DasqProperties;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @Title: RebootEvent
@@ -24,7 +26,12 @@ public class RebootEvent extends Thread {
     @Override
     public void run() {
         try {
-            Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", dasqProperties.getRebootShellPath()});
+            Process process = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", dasqProperties.getRebootShellPath()});
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
