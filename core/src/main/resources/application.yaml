@@ -37,7 +37,7 @@ mybatis-plus:
 
 dasq:
   # 控制台打印异常堆栈信息
-  consolePrintStack: true
+  consolePrintStack: false
   # java端访问token
   token: dasKi
   # cqhttp url地址
