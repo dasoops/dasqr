@@ -19,6 +19,8 @@ logging:
       dasoops:
         dasq:
           core: debug
+  file: /logs/logback.log
+
 
 minio:
   enable: true
@@ -54,3 +56,5 @@ dasq:
   isDemo: true
   # 命令样式 cool/normal
   style: cool
+  # reboot sh 脚本路径
+  rebootShellPath: /usr/local/gitRepo/dasServer/reboot.sh

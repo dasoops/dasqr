@@ -1,5 +1,6 @@
 package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base;
 
+import com.dasoops.dasq.core.common.entity.DasqProperties;
 import com.dasoops.dasq.core.cq.service.CqService;
 
 import javax.annotation.Resource;
@@ -14,6 +15,8 @@ import javax.annotation.Resource;
  */
 public class BaseMethodStrategy {
 
+    @Resource
+    protected DasqProperties dasqProperties;
     @Resource
     protected CqService cqService;
 

@@ -81,7 +81,7 @@ public class KeywordUtil {
      * @return boolean
      */
     public static boolean isNormal(String style) {
-        return KeywordEnum.STYLE_NORMAL.getKeyword().equals(style);
+        return KeywordEnum.STYLE_NORMAL.getKeyword().equals(style.trim());
     }
 
     /**
@@ -91,7 +91,7 @@ public class KeywordUtil {
      * @return boolean
      */
     public static boolean isCool(String style) {
-        return KeywordEnum.STYLE_COOL.getKeyword().equals(style);
+        return KeywordEnum.STYLE_COOL.getKeyword().equals(style.trim());
     }
 
 }

@@ -20,4 +20,5 @@ public class DasqProperties {
     private String adminId;
     private Boolean isDemo;
     private String style;
+    private String rebootShellPath;
 }

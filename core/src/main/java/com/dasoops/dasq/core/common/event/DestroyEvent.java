@@ -24,7 +24,6 @@ public class DestroyEvent implements DisposableBean {
     @Resource
     private DasqProperties dasqProperties;
 
-
     @Override
     public void destroy() throws Exception {
         cqService.sendMsg(true, Long.parseLong(dasqProperties.getDevGroupId()), "DasServer destroy");
