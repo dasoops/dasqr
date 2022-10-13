@@ -26,8 +26,9 @@ public class AlasController {
     @Resource
     private DasqProperties dasqProperties;
 
-    @GetMapping("/error")
-    public void alasError() {
-        cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), KeywordUtil.buildAtCqCode(dasqProperties.getAdminId()) + "Alas模块发生异常,请求人类接管");
+    @PostMapping("/error")
+    public void alasError(@RequestBody String msg) {
+
+        cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), KeywordUtil.buildAtCqCode(dasqProperties.getAdminId()) + "Alas模块发生异常,请求人类接管,errorMsg: \r\n\t" + msg);
     }
 }
