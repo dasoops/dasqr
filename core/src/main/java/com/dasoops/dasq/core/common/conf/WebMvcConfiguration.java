@@ -6,11 +6,13 @@ import com.dasoops.dasq.core.common.interceptor.PassListInterceptor;
 import com.dasoops.dasq.core.common.interceptor.TokenVerifyInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Title: WebMvcConfiguration
@@ -41,6 +43,5 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(logInterceptor).addPathPatterns("/*");
         WebMvcConfigurer.super.addInterceptors(registry);
     }
-
 
 }
