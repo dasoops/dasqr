@@ -27,7 +27,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-@ControllerAdvice
+@ControllerAdvice("com.dasoops.*")
 public class GlobalExceptionHandler implements ApplicationContextAware {
 
 

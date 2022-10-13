@@ -44,7 +44,7 @@ public class ImageInfoServiceImpl extends ServiceImpl<ImageInfoMapper, ImageInfo
     @Override
     public boolean saveImage(Long groupId, Long authorId, String desc, String keyword, String innerCode, String url) {
         //检查关键词是否重复
-        if (!keywordIsRepeat(keyword)) {
+        if (keywordIsRepeat(keyword)) {
             return false;
         }
 

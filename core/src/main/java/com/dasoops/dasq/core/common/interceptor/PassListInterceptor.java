@@ -4,14 +4,18 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.dasq.core.common.entity.DasqProperties;
+import com.dasoops.dasq.core.common.entity.EventInfo;
 import com.dasoops.dasq.core.common.entity.enums.KeywordEnum;
+import com.dasoops.dasq.core.common.service.DictionaryService;
 import com.dasoops.dasq.core.common.util.CqMethodUtil;
+import com.dasoops.dasq.core.common.util.EventUtil;
 import com.dasoops.dasq.core.common.util.WebUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.game.RereadStrategy;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.image.SaveImageStrategy;
 import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.sys.StyleStrategy;
+import com.dasoops.dasq.core.cq.service.CqService;
 import com.dasoops.dasq.core.cq.service.PassListService;
 import com.dasoops.dasq.core.image.entity.enums.ImageRedisKeyEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +30,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -52,6 +57,10 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
     private StringRedisTemplate redisTemplate;
     @Resource
     private SaveImageStrategy saveImageStrategy;
+    @Resource
+    private CqService cqService;
+    @Resource
+    private DictionaryService dictionaryService;
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
@@ -63,9 +72,9 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
             return false;
         }
 
-        String saveImagePart = redisTemplate.opsForValue().getAndDelete(ImageRedisKeyEnum.SAVE_IMAGE_PART.getRedisKey());
-        if (saveImagePart != null) {
-            saveImageStrategy.saveImage(saveImagePart, paramObj.getString(CqKeywordEnum.MESSAGE.getSimpleName()));
+        //是否为存图part
+        if (saveImagePart(paramObj)) {
+            return false;
         }
 
         rereadStrategy.invokeReread(paramObj);
@@ -83,6 +92,23 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
         }
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
+    }
+
+    private boolean saveImagePart(JSONObject paramObj) {
+
+        //获取dict集合
+        Long id = dictionaryService.getIdByDictCode(CqKeywordEnum.MESSAGE_TYPE.getSimpleName());
+        Map<String, String> dict = dictionaryService.getDictionaryMapByFatherId(id);
+        //构建事件对象
+        EventInfo eventInfo = EventUtil.buildEventInfo(paramObj, dict);
+        EventUtil.set(eventInfo);
+
+        String saveImagePart = redisTemplate.opsForValue().getAndDelete(ImageRedisKeyEnum.SAVE_IMAGE_PART.getRedisKey());
+        if (saveImagePart == null) {
+            return false;
+        }
+        saveImageStrategy.saveImage(saveImagePart, paramObj.getString(CqKeywordEnum.MESSAGE.getSimpleName()));
+        return true;
     }
 
     @Override

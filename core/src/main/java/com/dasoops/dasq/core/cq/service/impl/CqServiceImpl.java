@@ -57,6 +57,7 @@ public class CqServiceImpl implements CqService {
 
         ResponseEntity<Object> resp;
         Long messageId = -1L;
+        CqRes cqRes = null;
         try {
             //发送请求
             resp = restTemplate.exchange(url, HttpMethod.GET, httpEntity, Object.class, paramMap);
@@ -66,13 +67,13 @@ public class CqServiceImpl implements CqService {
             }
 
             //go_cqhttp返回值再次判断
-            CqRes cqRes = BeanUtil.toBean(resp.getBody(), CqRes.class);
+            cqRes = BeanUtil.toBean(resp.getBody(), CqRes.class);
             if (cqRes.getStatus().equals(CqKeywordEnum.CQ_RES_STATUS_FAILED.getSimpleName())) {
                 messageId = cqRes.getData().getMessageId();
             }
 
         } catch (Exception e) {
-            throw new LogicException(ExceptionCodeEnum.CQ_HTTP_ERROR, e);
+            throw new LogicException(ExceptionCodeEnum.CQ_HTTP_ERROR, cqRes.getMsg());
         }
 
         log.debug("命令执行成功:{}", resp.getBody());

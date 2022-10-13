@@ -85,8 +85,13 @@ public class SaveImageStrategy extends BaseMethodStrategy implements BaseCqMetho
         EventInfo eventInfo = EventUtil.get();
         //正则匹配参数
         Optional<String> matchStr = RegexUtil.getMatchStr(".(?<=url=h).*?(?=])", cqCode);
+        if (matchStr.isEmpty()) {
+            cqService.sendMsg("存图失败,你会不会啊~");
+            return;
+        }
+
         imageInfoService.saveImage(eventInfo.getGroupId(), eventInfo.getAuthorId(), null, keyword, null,
-                matchStr.orElseThrow(() -> new LogicException(ExceptionCodeEnum.IMAGE_GET_ERROR)));
+                matchStr.get());
 
         cqService.sendMsg("已阅");
     }
