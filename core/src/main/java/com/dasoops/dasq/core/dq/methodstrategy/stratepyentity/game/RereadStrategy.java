@@ -23,6 +23,9 @@ import java.util.Set;
 @Component
 public class RereadStrategy extends BaseMethodStrategy {
 
+    /**
+     * 初始化 复读消息
+     */
     public void init() {
         Set<String> keys = redisTemplate.keys(DqRedisKeyEnum.REREAD.getRedisKey() + "*");
         if (keys != null) {

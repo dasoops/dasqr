@@ -1,8 +1,5 @@
 package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other;
 
-import com.dasoops.dasq.core.common.entity.EventInfo;
-import com.dasoops.dasq.core.common.util.EventUtil;
-import com.dasoops.dasq.core.common.util.KeywordUtil;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
 import com.dasoops.dasq.core.image.service.ImageInfoService;
@@ -11,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @Title: GetImageStrategy
@@ -34,11 +32,25 @@ public class GetImageStrategy extends BaseMethodStrategy implements BaseCqMethod
 
     @Override
     public void invoke(List<String> params) {
-        Optional<String> imageCqCodeOpt = imageInfoService.getImageCqCode(params.get(0));
+        String keyword = params.get(0);
+        Optional<String> imageCqCodeOpt = imageInfoService.getImageCqCode(keyword);
         if (imageCqCodeOpt.isPresent()) {
             cqService.sendMsg(imageCqCodeOpt.get());
-        } else {
-            cqService.sendMsg("没有这张图捏");
+            return;
         }
+        StringBuilder sb = new StringBuilder("没有这张图捏");
+        List<String> keywordList = imageInfoService.getImageKeywordList();
+
+        AtomicBoolean isFirst = new AtomicBoolean(true);
+        keywordList.stream().filter(res -> res.contains(keyword)).forEach(res -> {
+            if (!isFirst.get()) {
+                sb.append(",").append(res);
+            } else {
+                sb.append(",相关关键词有: ");
+                sb.append(res);
+                isFirst.set(false);
+            }
+        });
+        cqService.sendMsg(sb.toString());
     }
 }

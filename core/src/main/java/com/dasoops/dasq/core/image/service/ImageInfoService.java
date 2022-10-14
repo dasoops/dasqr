@@ -13,10 +13,6 @@ import java.util.Optional;
  */
 public interface ImageInfoService extends IService<ImageInfo> {
 
-    /**
-     * 初始化/更新 图像关键字列表
-     */
-    void initOrUpdateImageKeywordList();
 
     /**
      * 得到获取关键字列表

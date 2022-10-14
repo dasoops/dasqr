@@ -41,11 +41,10 @@ public class ImageInfoServiceImpl extends ServiceImpl<ImageInfoMapper, ImageInfo
 
     @Override
     public void initOrUpdate() {
-        imageInfoMapper.selectKeywordList();
+        initOrUpdateImageKeywordList();
     }
 
-    @Override
-    public void initOrUpdateImageKeywordList() {
+    private void initOrUpdateImageKeywordList() {
         List<String> keywordList = imageInfoMapper.selectKeywordList();
         redisTemplate.opsForValue().set(ImageRedisKeyEnum.KEYWORD_LIST.getRedisKey(), JSON.toJSONString(keywordList));
     }
