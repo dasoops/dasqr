@@ -1,17 +1,22 @@
 package com.dasoops.dasq.core.image.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
+import com.dasoops.dasq.core.image.entity.enums.ImageRedisKeyEnum;
 import com.dasoops.dasq.core.image.entity.po.ImageInfo;
 import com.dasoops.dasq.core.image.service.ImageTypeService;
 import com.dasoops.dasq.core.image.service.ImageInfoService;
 import com.dasoops.dasq.core.image.mapper.ImageInfoMapper;
 import com.dasoops.minio.MinioTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static com.dasoops.dasq.core.common.util.KeywordUtil.buildImageCqCode;
@@ -29,13 +34,31 @@ public class ImageInfoServiceImpl extends ServiceImpl<ImageInfoMapper, ImageInfo
     private MinioTemplate minioTemplate;
     @Resource
     private ImageTypeService imageTypeService;
+    @Resource
+    private ImageInfoMapper imageInfoMapper;
+    @Resource(name = "stringRedisTemplate", type = StringRedisTemplate.class)
+    StringRedisTemplate redisTemplate;
 
-    /**
-     * 是否重复关键字
-     *
-     * @param keyword 关键字
-     * @return boolean
-     */
+    @Override
+    public void initOrUpdate() {
+        imageInfoMapper.selectKeywordList();
+    }
+
+    @Override
+    public void initOrUpdateImageKeywordList() {
+        List<String> keywordList = imageInfoMapper.selectKeywordList();
+        redisTemplate.opsForValue().set(ImageRedisKeyEnum.KEYWORD_LIST.getRedisKey(), JSON.toJSONString(keywordList));
+    }
+
+    @Override
+    public List<String> getImageKeywordList() {
+        String jsonStr = redisTemplate.opsForValue().get(ImageRedisKeyEnum.KEYWORD_LIST.getRedisKey());
+        if (jsonStr == null) {
+            return new ArrayList<>();
+        }
+        return JSON.parseArray(jsonStr, String.class);
+    }
+
     @Override
     public boolean keywordIsRepeat(String keyword) {
         return super.lambdaQuery().eq(ImageInfo::getKeyword, keyword).count() > 0;
@@ -90,6 +113,7 @@ public class ImageInfoServiceImpl extends ServiceImpl<ImageInfoMapper, ImageInfo
         String url = minioTemplate.buildImagePath(imageInfo.getFileName());
         return Optional.of(buildImageCqCode(url));
     }
+
 }
 
 

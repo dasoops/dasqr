@@ -3,6 +3,7 @@ package com.dasoops.dasq.core.image.service;
 import com.dasoops.dasq.core.image.entity.po.ImageInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -11,6 +12,18 @@ import java.util.Optional;
  * @createDate 2022-10-07 16:40:31
  */
 public interface ImageInfoService extends IService<ImageInfo> {
+
+    /**
+     * 初始化/更新 图像关键字列表
+     */
+    void initOrUpdateImageKeywordList();
+
+    /**
+     * 得到获取关键字列表
+     *
+     * @return {@link List}<{@link String}>
+     */
+    List<String> getImageKeywordList();
 
     /**
      * 关键字是否重复
@@ -48,4 +61,9 @@ public interface ImageInfoService extends IService<ImageInfo> {
      * @return {@link String}
      */
     Optional<String> getImageCqCode(String keyword);
+
+    /**
+     * 初始化或更新
+     */
+    void initOrUpdate();
 }
