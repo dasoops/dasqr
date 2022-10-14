@@ -33,6 +33,10 @@ public class RebootStrategy extends BaseMethodStrategy implements BaseCqMethodSt
 
     @Override
     public void invoke(List<String> params) {
+        if (dasqProperties.getIsDemo()) {
+            cqService.sendMsg("demo版本暂时不支持reboot命令哦!");
+            return;
+        }
         cqService.sendMsg("toReboot,请尽量不要在reboot期间输入指令");
         rebootEvent.start();
     }
