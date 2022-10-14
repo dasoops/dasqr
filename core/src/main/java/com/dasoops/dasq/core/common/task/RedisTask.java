@@ -58,7 +58,9 @@ public class RedisTask {
      * -初始化/更新 MethodInfo Id-EntityJson 数据至redis
      * -初始化/更新 PassListTypeGetEntityJsonSetMap 数据至redis
      * -初始化/更新 白名单关键词-方法info id映射集合 数据至redis
+     * -初始化 指令风格
      * -初始化/更新 图像关键字列表
+     * -初始化 复读消息
      */
     @PostConstruct
     public void initOrUpdate() {
@@ -79,7 +81,8 @@ public class RedisTask {
         styleStrategy.init();
 //     * -初始化/更新 图像关键字列表
         imageInfoService.initOrUpdate();
-
+//     * -初始化
+        rereadStrategy.init();
     }
 
 
