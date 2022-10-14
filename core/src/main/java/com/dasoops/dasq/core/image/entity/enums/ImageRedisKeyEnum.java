@@ -29,7 +29,15 @@ public enum ImageRedisKeyEnum {
      * String
      * String
      */
-    SAVE_IMAGE_PART("image:save_image_part");
+    SAVE_IMAGE_PART("image:save_image_part"),
+
+    /**
+     * 图片关键词列表
+     * String(List<String>)
+     * value(List<keyword>)
+     */
+    KEYWORD_LIST("image:keyword_list"),
+    ;
 
     /**
      * redisKey

@@ -25,4 +25,8 @@
         IS_DELETE,CREATE_USER,CREATE_TIME,
         UPDATE_USER,UPDATE_TIME
     </sql>
+    <select id="selectKeywordList" resultType="java.lang.String">
+        SELECT KEYWORD
+        FROM TB_IMAGE_IMAGE_INFO
+    </select>
 </mapper>
