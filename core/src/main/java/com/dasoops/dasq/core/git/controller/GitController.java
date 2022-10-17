@@ -53,7 +53,10 @@ public class GitController {
 
         cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), KeywordUtil.buildAtCqCode(dasqProperties.getAdminId()) + sb);
 
-        cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), "master分支收到提交(Ver." + dictionaryService.getCloudVersion() + "R),可以使用reboot指令重新编译运行最新版本了捏");
+        final String master = "master";
+        if (master.equals(branch)) {
+            cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), "master分支收到提交(Ver." + dictionaryService.getCloudVersion() + "R),可以使用reboot指令重新编译运行最新版本了捏");
+        }
     }
 
 
