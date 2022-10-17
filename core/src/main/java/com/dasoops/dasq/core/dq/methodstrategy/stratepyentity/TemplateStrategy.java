@@ -1,7 +1,5 @@
-//package com.dasoops.dasq.core.cq.methodstrategy.stratepyentity;
-//
-//import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
-//import com.dasoops.dasq.core.cq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
+//import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
+//import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
 //import org.springframework.stereotype.Component;
 //
 //import java.util.List;
