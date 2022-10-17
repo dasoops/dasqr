@@ -1,7 +1,6 @@
 package com.dasoops.common.exception.handler;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
-import com.dasoops.common.entity.enums.RedisKeyEnum;
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.service.ExceptionService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +8,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -50,10 +48,17 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
      *
      * @param e e
      */
-    @ExceptionHandler(LogicException.class)
-    public void logicExceptionHandler(LogicException e) {
-        Long id = e.getId();
-        log.error("LogicException:errorId:{}, errorCode:{}", id, e.getCode());
+    @ExceptionHandler(Exception.class)
+    public void exceptionHandler(Exception e) {
+        Long id;
+        if (e instanceof LogicException) {
+            LogicException logicException = (LogicException) e;
+            id = logicException.getId();
+            log.error("LogicException:errorId:{}, errorCode:{}", id, logicException.getCode());
+        } else {
+            id = System.currentTimeMillis();
+            log.error("Exception:errorMsg:", e);
+        }
         ExceptionHandlerWrapper reinforcedBean;
         try {
             reinforcedBean = applicationContext.getBean(ExceptionHandlerWrapper.class);
@@ -78,6 +83,5 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
             reinforcedBean.after(id);
         }
     }
-
 
 }

@@ -53,6 +53,6 @@ dasq:
   # 是否为demo版本
   isDemo: true
   # 命令样式 cool/normal
-  style: cool
+  style: coolp
   # reboot sh 脚本路径
   rebootShellPath: /usr/local/gitRepo/dasServer/reboot.sh
