@@ -5,6 +5,14 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * @Title: Repository
+ * @ClassPath com.dasoops.dasq.core.git.entity.Repository
+ * @Author DasoopsNicole@Gmail.com
+ * @Date 2022/10/17
+ * @Version 1.0.0
+ * @Description:
+ */
 @Data
 public class Repository {
     private int id;

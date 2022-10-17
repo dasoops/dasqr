@@ -37,7 +37,6 @@ public class FastJsonConfiguration implements org.springframework.web.servlet.co
         converter.setDefaultCharset(StandardCharsets.UTF_8);
         List<MediaType> supportedMediaTypes = new ArrayList<>();
         supportedMediaTypes.add(MediaType.APPLICATION_JSON);
-        supportedMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
         converter.setSupportedMediaTypes(supportedMediaTypes);
         converters.add(0, converter);
     }
