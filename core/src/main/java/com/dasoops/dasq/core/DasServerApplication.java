@@ -15,9 +15,8 @@ import org.springframework.context.annotation.ComponentScan;
  * @Description: dasServer
  */
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.dasoops.*"})
 @MapperScan(value = "com.dasoops.dasq.core.*.mapper")
-@ComponentScan(value = "com.dasoops.*")
 @ServletComponentScan
 public class DasServerApplication {
 

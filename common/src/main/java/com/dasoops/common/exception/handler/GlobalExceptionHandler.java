@@ -25,16 +25,13 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-@ControllerAdvice("com.dasoops.*")
+@ControllerAdvice
 public class GlobalExceptionHandler implements ApplicationContextAware {
-
 
     @Value("${dasq.consolePrintStack}")
     private boolean consolePrintStack;
     @Resource
     private ExceptionService exceptionService;
-
-    final String TRUE = "true";
 
     private ApplicationContext applicationContext;
 
@@ -50,15 +47,25 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
      */
     @ExceptionHandler(Exception.class)
     public void exceptionHandler(Exception e) {
-        Long id;
-        if (e instanceof LogicException) {
-            LogicException logicException = (LogicException) e;
-            id = logicException.getId();
-            log.error("LogicException:errorId:{}, errorCode:{}", id, logicException.getCode());
-        } else {
-            id = System.currentTimeMillis();
-            log.error("Exception:errorMsg:", e);
-        }
+        Long id = System.currentTimeMillis();
+        log.error("Exception:errorMsg:", e);
+        resolve(e, id);
+    }
+
+    /**
+     * 异常处理
+     *
+     * @param e e
+     */
+    @ExceptionHandler(LogicException.class)
+    public void logicExceptionHandler(LogicException e) {
+        Long id = e.getId();
+        log.error("LogicException:errorId:{}, errorCode:{}", id, e.getCode());
+        resolve(e, id);
+    }
+
+
+    private void resolve(Exception e, Long id) {
         ExceptionHandlerWrapper reinforcedBean;
         try {
             reinforcedBean = applicationContext.getBean(ExceptionHandlerWrapper.class);
