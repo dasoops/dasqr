@@ -1,6 +1,7 @@
 package com.dasoops.dasq.core.common.event;
 
 import com.dasoops.dasq.core.common.entity.DasqProperties;
+import com.dasoops.dasq.core.common.service.DictionaryService;
 import com.dasoops.dasq.core.cq.service.CqService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -26,9 +27,11 @@ public class StartLogRunner implements ApplicationRunner {
     private CqService cqService;
     @Resource
     private DasqProperties dasqProperties;
+    @Resource
+    private DictionaryService dictionaryService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        cqService.sendMsg(true, Long.parseLong(dasqProperties.getDevGroupId()), "DasServer Start,Ver." + dasqProperties.getVersion() + (dasqProperties.getIsDemo() ? "D" : "R"));
+        cqService.sendMsg(true, Long.parseLong(dasqProperties.getDevGroupId()), "DasServer Start,Ver." + dictionaryService.getVersion() + (dasqProperties.getIsDemo() ? "D" : "R"));
     }
 }

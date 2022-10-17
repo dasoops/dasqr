@@ -30,7 +30,7 @@ public class UpdateStrategy extends BaseMethodStrategy implements BaseCqMethodSt
 
     @Override
     public void invoke(List<String> params) {
-        redisTask.initOrUpdate();
+        redisTask.update();
         cqService.sendMsg("success");
     }
 }

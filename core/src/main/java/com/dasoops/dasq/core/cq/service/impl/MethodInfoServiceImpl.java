@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
 import com.dasoops.dasq.core.common.entity.DasqProperties;
+import com.dasoops.dasq.core.common.service.DictionaryService;
 import com.dasoops.dasq.core.cq.entity.bo.HelpBo;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.enums.CqRedisKeyEnum;
@@ -46,6 +47,8 @@ public class MethodInfoServiceImpl extends ServiceImpl<MethodInfoMapper, MethodI
     private MethodInfoMapper methodInfoMapper;
     @Resource
     private DasqProperties dasqProperties;
+    @Resource
+    private DictionaryService dictionaryService;
 
     @Override
     public void initOrUpdate() {
@@ -76,7 +79,7 @@ public class MethodInfoServiceImpl extends ServiceImpl<MethodInfoMapper, MethodI
     private void initOrUpdateHelpDoc() {
         log.info("初始化/更新 HelpDoc 数据至redis");
         List<HelpBo> boList = methodInfoMapper.selectHelpBoList();
-        StringBuilder sb = new StringBuilder("帮助文档").append(" Ver").append(".").append(dasqProperties.getVersion());
+        StringBuilder sb = new StringBuilder("帮助文档").append(" Ver").append(".").append(dictionaryService.getVersion());
         if (dasqProperties.getIsDemo()) {
             sb.append("D");
         }

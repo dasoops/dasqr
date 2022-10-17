@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import static com.baomidou.mybatisplus.core.toolkit.Wrappers.update;
+
 /**
  * @Title: redisInitTask
  * @ClassPath com.dasoops.dasq.task.inittask.redisInitTask
@@ -47,7 +49,6 @@ public class RedisTask {
     @Resource
     private RereadStrategy rereadStrategy;
 
-
     /**
      * 初始化
      * -初始化/更新 ImageType innerCode-entityJson 数据至redis
@@ -63,7 +64,43 @@ public class RedisTask {
      * -初始化 复读消息
      */
     @PostConstruct
-    public void initOrUpdate() {
+    public void init() {
+//     * -初始化/更新 DictionaryTreeData 数据至redis
+//     * -初始化/更新 DictFatherDictCodeMap 数据至redis
+//     * -初始化 Version 数据至redis
+        dictionaryService.init();
+//     * -初始化 指令风格
+        styleStrategy.init();
+//     * -初始化
+        rereadStrategy.init();
+//     * -初始化/更新 ImageType innerCode-entityJson 数据至redis
+//     * -初始化/更新 ImageType id-entityJson 数据至redis
+        imageTypeService.initOrUpdate();
+//     * -初始化/更新 MethodType Id-EntityJson 数据至redis
+        methodTypeService.initOrUpdate();
+//     * -初始化/更新 MethodInfo Id-EntityJson 数据至redis
+        methodInfoService.initOrUpdate();
+//     * -初始化/更新 PassListTypeGetEntityJsonSetMap 数据至redis
+//     * -初始化/更新 白名单关键词-方法info id映射集合 数据至redis
+        passListService.initOrUpdate();
+//     * -初始化/更新 图像关键字列表
+        imageInfoService.initOrUpdate();
+
+    }
+
+    /**
+     * -初始化/更新 ImageType innerCode-entityJson 数据至redis
+     * -初始化/更新 ImageType id-entityJson 数据至redis
+     * -初始化/更新 DictionaryTreeData 数据至redis
+     * -初始化/更新 DictFatherDictCodeMap 数据至redis
+     * -初始化/更新 MethodType Id-EntityJson 数据至redis
+     * -初始化/更新 MethodInfo Id-EntityJson 数据至redis
+     * -初始化/更新 PassListTypeGetEntityJsonSetMap 数据至redis
+     * -初始化/更新 白名单关键词-方法info id映射集合 数据至redis
+     * -初始化/更新 图像关键字列表
+     */
+    @PostConstruct
+    public void update() {
 //     * -初始化/更新 ImageType innerCode-entityJson 数据至redis
 //     * -初始化/更新 ImageType id-entityJson 数据至redis
         imageTypeService.initOrUpdate();
@@ -77,12 +114,8 @@ public class RedisTask {
 //     * -初始化/更新 PassListTypeGetEntityJsonSetMap 数据至redis
 //     * -初始化/更新 白名单关键词-方法info id映射集合 数据至redis
         passListService.initOrUpdate();
-//     * -初始化 指令风格
-        styleStrategy.init();
 //     * -初始化/更新 图像关键字列表
         imageInfoService.initOrUpdate();
-//     * -初始化
-        rereadStrategy.init();
     }
 
 

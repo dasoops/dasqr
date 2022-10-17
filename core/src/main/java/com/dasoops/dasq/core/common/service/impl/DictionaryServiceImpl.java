@@ -33,6 +33,25 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
         initOrUpdateDictFatherDictCodeMap2Redis();
     }
 
+    @Override
+    public void init() {
+        initVersion2Redis();
+        this.initOrUpdate();
+    }
+
+    private void initVersion2Redis() {
+        log.info("初始化 Version 数据至redis");
+
+        redisTemplate.delete(RedisKeyEnum.VERSION.getRedisKey());
+
+        Dictionary dict = super.lambdaQuery().eq(Dictionary::getDictCode, "version").one();
+        String version = dict.getDictValue();
+
+        redisTemplate.opsForValue().set(RedisKeyEnum.VERSION.getRedisKey(), version);
+
+        log.info("完成: 初始化 Version 数据至redis,Data:{}", JSON.toJSONString(version));
+    }
+
     private void initOrUpdateDictTreeData2Redis() {
         log.info("初始化/更新 DictionaryTreeData 数据至redis");
 
@@ -99,6 +118,28 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
         return Long.parseLong(str);
     }
 
+    @Override
+    public synchronized void updateVersion(Integer commitCount) {
+        final int maxLength = 3;
+        Dictionary dict = super.lambdaQuery().eq(Dictionary::getDictCode, "version").one();
+        int version = Integer.parseInt(dict.getDictValue());
+        String versionStr = String.valueOf(version + commitCount);
+        if (versionStr.length() < maxLength) {
+            versionStr = "0".repeat(3 - versionStr.length()) + versionStr;
+        }
+        dict.setDictValue(versionStr);
+        super.updateById(dict);
+    }
+
+    @Override
+    public String getVersion() {
+        return redisTemplate.opsForValue().get(RedisKeyEnum.VERSION.getRedisKey());
+    }
+
+    @Override
+    public String getCloudVersion() {
+        return super.lambdaQuery().eq(Dictionary::getDictCode, "version").one().getDictValue();
+    }
 
 }
 

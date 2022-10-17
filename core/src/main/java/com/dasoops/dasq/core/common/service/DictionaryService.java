@@ -19,6 +19,11 @@ public interface DictionaryService extends IService<Dictionary> {
     void initOrUpdate();
 
     /**
+     * 初始化 Version 数据至redis
+     */
+    void init();
+
+    /**
      * 通过id获取字典
      *
      * @param fatherId 父亲id
@@ -42,4 +47,25 @@ public interface DictionaryService extends IService<Dictionary> {
      * @return {@link Long}
      */
     Long getIdByDictCode(String dictCode);
+
+    /**
+     * 更新版本
+     *
+     * @param commitCount 提交数
+     */
+    void updateVersion(Integer commitCount);
+
+    /**
+     * 获得版本
+     *
+     * @return {@link String}
+     */
+    String getVersion();
+
+    /**
+     * 获取云端最新版本
+     *
+     * @return {@link String}
+     */
+    String getCloudVersion();
 }

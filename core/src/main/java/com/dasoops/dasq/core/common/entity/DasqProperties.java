@@ -15,7 +15,6 @@ public class DasqProperties {
     private Boolean consolePrintStack;
     private String token;
     private String cqHttpUrl;
-    private String version;
     private String devGroupId;
     private String adminId;
     private Boolean isDemo;

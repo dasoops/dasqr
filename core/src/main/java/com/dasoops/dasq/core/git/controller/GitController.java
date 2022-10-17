@@ -1,6 +1,7 @@
 package com.dasoops.dasq.core.git.controller;
 
 import com.dasoops.dasq.core.common.entity.DasqProperties;
+import com.dasoops.dasq.core.common.service.DictionaryService;
 import com.dasoops.dasq.core.common.util.KeywordUtil;
 import com.dasoops.dasq.core.cq.service.CqService;
 import com.dasoops.dasq.core.git.entity.Commits;
@@ -29,6 +30,8 @@ public class GitController {
     private CqService cqService;
     @Resource
     private DasqProperties dasqProperties;
+    @Resource
+    private DictionaryService dictionaryService;
 
     @PostMapping("/push")
     public void push(@RequestBody GitProperties gitProperties) {
@@ -46,7 +49,11 @@ public class GitController {
             sb.append(res.getUrl()).append("\r\n");
         }
 
+        dictionaryService.updateVersion(commitList.size());
+
         cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), KeywordUtil.buildAtCqCode(dasqProperties.getAdminId()) + sb);
+
+        cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), "master分支收到提交(Ver." + dictionaryService.getCloudVersion() + "R),可以使用reboot指令重新编译运行最新版本了捏");
     }
 
 

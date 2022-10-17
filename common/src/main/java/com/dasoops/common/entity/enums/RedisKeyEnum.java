@@ -34,6 +34,14 @@ public enum RedisKeyEnum {
      */
     DICT_DICT_CODE_GET_FATHER_ID_HASH("core:dict_dict_code_get_father_id_hash"),
 
+    /**
+     * 版本号
+     * String
+     * version
+     */
+    VERSION("core:version"),
+
+
     ;
 
     /**

@@ -44,8 +44,6 @@ dasq:
   cqHttpUrl: http://127.0.0.1:4700
   # cq OAUTH2 access-token
   cqToken:
-  # DasServer版本号
-  version:
   # 开发群id
   devGroupId: 673745932
   # 主开发者id
