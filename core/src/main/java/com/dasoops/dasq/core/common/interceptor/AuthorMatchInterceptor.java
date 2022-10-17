@@ -9,11 +9,10 @@ import com.dasoops.dasq.core.common.util.EventUtil;
 import com.dasoops.dasq.core.common.util.WebUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.cq.entity.po.PassObject;
+import com.dasoops.dasq.core.cq.service.PassListService;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.game.RereadStrategy;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other.SaveImageStrategy;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.sys.StyleStrategy;
-import com.dasoops.dasq.core.cq.service.CqService;
-import com.dasoops.dasq.core.cq.service.PassListService;
 import com.dasoops.dasq.core.image.entity.enums.ImageRedisKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -42,97 +41,29 @@ import java.util.Optional;
  */
 @Component
 @Slf4j
-public class PassListInterceptor implements HandlerInterceptor, Ordered {
+public class AuthorMatchInterceptor implements HandlerInterceptor {
 
     @Resource
     private PassListService passListService;
-    @Resource
-    private RereadStrategy rereadStrategy;
-    @Resource
-    private StyleStrategy styleStrategy;
-    @Resource(name = "stringRedisTemplate", type = StringRedisTemplate.class)
-    private StringRedisTemplate redisTemplate;
-    @Resource
-    private SaveImageStrategy saveImageStrategy;
-    @Resource
-    private CqService cqService;
-    @Resource
-    private DictionaryService dictionaryService;
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
         //获取消息对象
         JSONObject paramObj = WebUtil.getParameters(request);
 
-        //go_cqhttp消息类型匹配
-        if (!this.postTypeIsMatch(paramObj)) {
-            return false;
-        }
-
         //发送人/群是否匹配
         if (!this.authorIsMatch(paramObj)) {
             return false;
         }
 
-        //复读模块记录
-        rereadStrategy.invokeReread(paramObj);
-
-        //是否为存图part
-        if (saveImagePart(paramObj)) {
-            return false;
-        }
-
-        //是否为清爽模式
-        if (KeywordEnum.STYLE_NORMAL.getKeyword().equals(styleStrategy.getStyle())) {
-            //是否为命令
-            if (!this.isCommon(paramObj)) {
-                return false;
-            }
-        }
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
-    private boolean saveImagePart(JSONObject paramObj) {
-
-        //获取dict集合
-        Long id = dictionaryService.getIdByDictCode(CqKeywordEnum.MESSAGE_TYPE.getSimpleName());
-        Map<String, String> dict = dictionaryService.getDictionaryMapByFatherId(id);
-        //构建事件对象
-        EventInfo eventInfo = EventUtil.buildEventInfo(paramObj, dict);
-        EventUtil.set(eventInfo);
-
-        String saveImagePart = redisTemplate.opsForValue().getAndDelete(ImageRedisKeyEnum.SAVE_IMAGE_PART.getRedisKey() + (EventUtil.isGroup() ? eventInfo.getGroupId() : eventInfo.getAuthorId()));
-        if (saveImagePart == null) {
-            return false;
-        }
-        saveImageStrategy.saveImage(saveImagePart, paramObj.getString(CqKeywordEnum.MESSAGE.getSimpleName()));
-        return true;
-    }
 
     @Override
     public void postHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler, ModelAndView modelAndView) throws Exception {
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-    }
-
-    @Override
-    public int getOrder() {
-        return 1;
-    }
-
-    /**
-     * go_cqhttp消息类型匹配
-     *
-     * @param paramObj param obj
-     * @return boolean
-     */
-    private boolean postTypeIsMatch(JSONObject paramObj) {
-        //获取消息类型id
-        String postType = paramObj.getString(CqKeywordEnum.POST_TYPE.getOtherName());
-
-        //消息类型
-        final Integer messageTypeCode = 2;
-        return isMatch(postType, messageTypeCode);
     }
 
     /**
@@ -203,14 +134,4 @@ public class PassListInterceptor implements HandlerInterceptor, Ordered {
         )).orElse(false);
     }
 
-    /**
-     * 是否为命令
-     *
-     * @param paramObj param obj
-     * @return boolean
-     */
-    public boolean isCommon(JSONObject paramObj) {
-        String message = paramObj.getString(CqKeywordEnum.MESSAGE.getOtherName());
-        return message.startsWith(".");
-    }
 }

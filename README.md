@@ -12,5 +12,5 @@
 
 #### 软件架构
 
-JAVA 11 MySQL 8.0.24 Redis 7.0.3
+JAVA 11 , MySQL 8.0.24 , Redis 7.0.3
 
