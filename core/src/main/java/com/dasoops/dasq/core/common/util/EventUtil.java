@@ -90,4 +90,8 @@ public final class EventUtil {
         return paramObj.getLong("group_id");
     }
 
+    public static boolean isEmpty() {
+        EventInfo eventInfo = EventUtil.get();
+        return eventInfo == null;
+    }
 }
