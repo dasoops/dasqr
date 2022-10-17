@@ -47,9 +47,13 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
      */
     @ExceptionHandler(Exception.class)
     public void exceptionHandler(Exception e) {
-        Long id = System.currentTimeMillis();
-        log.error("Exception:errorMsg:", e);
-        resolve(e, id);
+        try {
+            Long id = System.currentTimeMillis();
+            log.error("Exception:errorMsg:", e);
+            resolve(e, id);
+        } catch (Exception e2) {
+            log.error("Exception at ExceptionHandler", e2);
+        }
     }
 
     /**
@@ -59,9 +63,13 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
      */
     @ExceptionHandler(LogicException.class)
     public void logicExceptionHandler(LogicException e) {
-        Long id = e.getId();
-        log.error("LogicException:errorId:{}, errorCode:{}", id, e.getCode());
-        resolve(e, id);
+        try {
+            Long id = e.getId();
+            log.error("LogicException:errorId:{}, errorCode:{}", id, e.getCode());
+            resolve(e, id);
+        } catch (Exception e2) {
+            log.error("Exception at ExceptionHandler", e2);
+        }
     }
 
 
