@@ -29,7 +29,7 @@ public class ExceptionHandlerWrapperImpl implements ExceptionHandlerWrapper {
     @Override
     public void after(Long id) {
         if (EventUtil.isEmpty()) {
-            cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), StrUtil.format("服务端发生异常,请求人类接管(本条消息管理群通知),errorId:{}", id));
+            cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), StrUtil.format("服务端发生异常,请求人类接管(本条消息为管理群通知),errorId:{}", id));
         }
         cqService.sendMsg(StrUtil.format("服务端发生异常,请求人类接管,errorId:{}", id));
     }

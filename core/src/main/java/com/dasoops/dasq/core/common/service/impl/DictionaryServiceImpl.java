@@ -121,7 +121,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
     @Override
     public synchronized void updateVersion(Integer commitCount) {
         final int maxLength = 3;
-        Dictionary dict = super.lambdaQuery().eq(Dictionary::getDictCode, "version").one();
+        Dictionary dict = super.getById(11L);
         int version = Integer.parseInt(dict.getDictValue());
         String versionStr = String.valueOf(version + commitCount);
         if (versionStr.length() < maxLength) {
