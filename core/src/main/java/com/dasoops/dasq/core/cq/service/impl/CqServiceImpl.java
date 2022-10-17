@@ -73,6 +73,9 @@ public class CqServiceImpl implements CqService {
             }
 
         } catch (Exception e) {
+            if (cqRes == null) {
+                throw new LogicException(ExceptionCodeEnum.CQ_HTTP_ERROR, "Cq response is null");
+            }
             throw new LogicException(ExceptionCodeEnum.CQ_HTTP_ERROR, cqRes.getMsg());
         }
 

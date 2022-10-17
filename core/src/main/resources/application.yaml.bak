@@ -4,14 +4,14 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.13.5.29:3308/dasq?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&useSSL=true&allowMultiQueries=true
-    username: root
-    password: dasq
+    url: jdbc:mysql:///dasq?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&useSSL=true&allowMultiQueries=true
+    username:
+    password:
   redis:
-    host: 106.13.5.29
+    host:
     port: 6379
-    database: 3
-    password: dasoops
+    database:
+    password:
 
 logging:
   level:
@@ -22,11 +22,11 @@ logging:
 
 minio:
   enable: true
-  url: 106.13.5.29
-  port: 9000
-  bucket: dasqserver
-  accessKey: aaaaa
-  secretKey: aaaaaaaa
+  url:
+  port:
+  bucket:
+  accessKey:
+  secretKey:
   tempDownloadPath: D:\temp
 
 mybatis-plus:
@@ -39,13 +39,13 @@ dasq:
   # 控制台打印异常堆栈信息
   consolePrintStack: false
   # java端访问token
-  token: dasKi
+  token:
   # cqhttp url地址
   cqHttpUrl: http://127.0.0.1:4700
   # cq OAUTH2 access-token
-  cqToken: dasKi
+  cqToken:
   # DasServer版本号
-  version: "066"
+  version:
   # 开发群id
   devGroupId: 673745932
   # 主开发者id
