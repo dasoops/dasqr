@@ -2,6 +2,7 @@ package com.dasoops.dasq.core.cq.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
@@ -17,8 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -45,22 +52,26 @@ public class CqServiceImpl implements CqService {
         String baseUrl = dasqProperties.getCqHttpUrl() +
                 CqKeywordEnum.URL_SEPARATOR.getSimpleName() +
                 (isGroup ? CqKeywordEnum.SEND_GROUP_MSG.getOtherName() : CqKeywordEnum.SEND_PRIVATE_MSG.getOtherName());
+        Map<String, String> paramMap = null;
 
         //拼接参数地址
-        Map<String, String> paramMap = Map.of(
+        paramMap = Map.of(
                 isGroup ? CqKeywordEnum.GROUP_ID.getOtherName() : CqKeywordEnum.USER_ID.getOtherName(), String.valueOf(receiveId),
                 CqKeywordEnum.MESSAGE.getSimpleName(), msg
         );
-        String url = WebUtil.getParametersUrl(baseUrl, paramMap);
 
-        var httpEntity = WebUtil.getAuthHttpEntity(dasqProperties.getToken());
-
+        CqRes cqRes = null;
         ResponseEntity<Object> resp;
         Long messageId = -1L;
-        CqRes cqRes = null;
         try {
+            UriComponentsBuilder finalBuilder = UriComponentsBuilder.fromUriString(baseUrl);
+            paramMap.forEach((key, value) -> finalBuilder.queryParam(key, URLEncoder.encode(value, StandardCharsets.UTF_8)));
+            URI uri = finalBuilder.build(true).toUri();
+
+            var httpEntity = WebUtil.getAuthHttpEntity(dasqProperties.getToken());
+
             //发送请求
-            resp = restTemplate.exchange(url, HttpMethod.GET, httpEntity, Object.class, paramMap);
+            resp = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, Object.class);
             //http返回值判断
             if (resp.getStatusCode() != HttpStatus.OK || resp.getBody() == null) {
                 throw new LogicException(ExceptionCodeEnum.CQ_HTTP_ERROR, JSON.toJSONString(resp));
@@ -74,9 +85,9 @@ public class CqServiceImpl implements CqService {
 
         } catch (Exception e) {
             if (cqRes == null) {
-                throw new LogicException(ExceptionCodeEnum.CQ_HTTP_ERROR, "Cq response is null");
+                throw new LogicException(ExceptionCodeEnum.CQ_HTTP_ERROR, ExceptionUtil.stacktraceToString(e));
             }
-            throw new LogicException(ExceptionCodeEnum.CQ_HTTP_ERROR, cqRes.getMsg());
+            throw new LogicException(ExceptionCodeEnum.CQ_HTTP_ERROR, cqRes.getMsg() + "\n" + ExceptionUtil.stacktraceToString(e));
         }
 
         log.debug("命令执行成功:{}", resp.getBody());

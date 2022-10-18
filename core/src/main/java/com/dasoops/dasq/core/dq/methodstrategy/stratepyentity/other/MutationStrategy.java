@@ -61,7 +61,7 @@ public class MutationStrategy extends BaseMethodStrategy implements BaseCqMethod
             String mutation = dictionaryService.getDictValueByDictCode("mutation");
             //下周突变需要 + 1
             Mutation lastMutation = mutationService.getById(Long.parseLong(mutation) + (lastFlag ? 1L : 0L));
-            cqService.sendMsg(StrUtil.format("下周突变: {}({})\n因子:{}\n分数:{}(残酷%2B{})",
+            cqService.sendMsg(StrUtil.format("下周突变: {}({})\n因子:{}\n分数:{}(残酷+{})",
                     lastMutation.getName(), lastMutation.getMap(), lastMutation.getFactor(), lastMutation.getScore(), lastMutation.getLevel()));
             return;
         }
@@ -74,7 +74,7 @@ public class MutationStrategy extends BaseMethodStrategy implements BaseCqMethod
         for (int i = 0; i < mutationList.size(); i++) {
             Mutation mutation = mutationList.get(i);
             sb.append("\n").append(i + 1).append(".");
-            String str = StrUtil.format("{}({})\n因子:{}\n分数:{}(残酷%2B{})", mutation.getName(), mutation.getMap(), mutation.getFactor(), mutation.getScore(), mutation.getLevel());
+            String str = StrUtil.format("{}({})\n因子:{}\n分数:{}(残酷+{})", mutation.getName(), mutation.getMap(), mutation.getFactor(), mutation.getScore(), mutation.getLevel());
             sb.append(str);
         }
         cqService.sendMsg(sb.toString());
