@@ -1,7 +1,9 @@
-package com.dasoops.dasq.core.common.entity.po;
+package com.dasoops.dasq.core.dq.entity.pojo;
 
-import com.alibaba.fastjson2.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,77 +11,66 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * @Title: Dictionary
- * @ClassPath com.dasoops.dasq.core.common.entity.pojo.Dictionary
+ * @Title: Factor
+ * @ClassPath com.dasoops.dasq.core.dq.entity.pojo.Factor
  * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/09
+ * @Date 2022/10/18
  * @Version 1.0.0
- * @Description: 字典
+ * @Description: sc2 因子
  * @see Serializable
  */
-@TableName(value = "TB_SYS_DICTIONARY")
+@TableName(value = "TB_OTHER_SC2_FACTOR")
 @Data
-public class Dictionary implements Serializable {
+public class Factor implements Serializable {
     /**
      * ID
      */
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Long id;
 
     /**
-     * 父类索引
+     * 名称
      */
-    private Long parentId;
+    private String name;
 
     /**
-     * 字典编码
+     * 分数
      */
-    private String dictCode;
+    private Integer score;
 
     /**
-     * 字典描述
+     * 描述
      */
-    private String dictValue;
+    private String description;
 
     /**
-     * 是否有子数据#1:是;0:否;
+     * 对应图片名称
      */
-    private Integer hasChild;
-
+    private String imageFileName;
 
     /**
      * 逻辑删除(0:未删除;1:删除)
      */
-    @JSONField(serialize = false)
-    @TableField(fill = FieldFill.INSERT)
     private String isDelete;
 
     /**
      * 创建用户
      */
-    @JSONField(serialize = false)
-    @TableField(fill = FieldFill.INSERT)
     private String createUser;
 
     /**
      * 创建时间
      */
-    @JSONField(serialize = false)
-    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
      * 更新用户
      */
-    @JSONField(serialize = false)
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateUser;
 
     /**
      * 更新时间
      */
-    @JSONField(serialize = false)
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     @TableField(exist = false)
@@ -96,12 +87,12 @@ public class Dictionary implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Dictionary other = (Dictionary) that;
+        Factor other = (Factor) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getParentId() == null ? other.getParentId() == null : this.getParentId().equals(other.getParentId()))
-                && (this.getDictCode() == null ? other.getDictCode() == null : this.getDictCode().equals(other.getDictCode()))
-                && (this.getDictValue() == null ? other.getDictValue() == null : this.getDictValue().equals(other.getDictValue()))
-                && (this.getHasChild() == null ? other.getHasChild() == null : this.getHasChild().equals(other.getHasChild()))
+                && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+                && (this.getScore() == null ? other.getScore() == null : this.getScore().equals(other.getScore()))
+                && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
+                && (this.getImageFileName() == null ? other.getImageFileName() == null : this.getImageFileName().equals(other.getImageFileName()))
                 && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()))
                 && (this.getCreateUser() == null ? other.getCreateUser() == null : this.getCreateUser().equals(other.getCreateUser()))
                 && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
@@ -114,10 +105,10 @@ public class Dictionary implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getParentId() == null) ? 0 : getParentId().hashCode());
-        result = prime * result + ((getDictCode() == null) ? 0 : getDictCode().hashCode());
-        result = prime * result + ((this.getDictValue() == null) ? 0 : this.getDictValue().hashCode());
-        result = prime * result + ((getHasChild() == null) ? 0 : getHasChild().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getScore() == null) ? 0 : getScore().hashCode());
+        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
+        result = prime * result + ((getImageFileName() == null) ? 0 : getImageFileName().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
         result = prime * result + ((getCreateUser() == null) ? 0 : getCreateUser().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
@@ -132,10 +123,10 @@ public class Dictionary implements Serializable {
                 " [" +
                 "Hash = " + hashCode() +
                 ", id=" + id +
-                ", parentId=" + parentId +
-                ", dictCode=" + dictCode +
-                ", dicValue=" + dictValue +
-                ", hasChild=" + hasChild +
+                ", name=" + name +
+                ", score=" + score +
+                ", description=" + description +
+                ", imageFileName=" + imageFileName +
                 ", isDelete=" + isDelete +
                 ", createUser=" + createUser +
                 ", createTime=" + createTime +

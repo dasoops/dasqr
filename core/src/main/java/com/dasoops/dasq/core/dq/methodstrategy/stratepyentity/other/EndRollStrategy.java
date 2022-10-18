@@ -3,6 +3,7 @@ package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other;
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
 import com.dasoops.dasq.core.common.entity.EventInfo;
+import com.dasoops.dasq.core.common.util.CqCodeUtil;
 import com.dasoops.dasq.core.common.util.KeywordUtil;
 import com.dasoops.dasq.core.common.util.EventUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
@@ -59,6 +60,6 @@ public class EndRollStrategy extends BaseMethodStrategy implements BaseCqMethodS
         Integer maxPoint = entry.getValue();
 
         redisTemplate.delete(redisKey);
-        cqService.sendMsg(KeywordUtil.buildAtCqCode(id) + "恭喜这个B摇到了最高点: " + maxPoint);
+        cqService.sendMsg(CqCodeUtil.buildAtCqCode(id) + "恭喜这个B摇到了最高点: " + maxPoint);
     }
 }

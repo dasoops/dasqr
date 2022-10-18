@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.dasoops.dasq.core.common.util.KeywordUtil.buildImageCqCode;
+import static com.dasoops.dasq.core.common.util.CqCodeUtil.buildImageCqCode;
+
 
 /**
  * @author Administrator

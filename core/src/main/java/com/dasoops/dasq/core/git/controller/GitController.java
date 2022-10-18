@@ -2,6 +2,7 @@ package com.dasoops.dasq.core.git.controller;
 
 import com.dasoops.dasq.core.common.entity.DasqProperties;
 import com.dasoops.dasq.core.common.service.DictionaryService;
+import com.dasoops.dasq.core.common.util.CqCodeUtil;
 import com.dasoops.dasq.core.common.util.KeywordUtil;
 import com.dasoops.dasq.core.cq.service.CqService;
 import com.dasoops.dasq.core.git.entity.Commits;
@@ -51,7 +52,7 @@ public class GitController {
 
         dictionaryService.updateVersion(commitList.size());
 
-        cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), KeywordUtil.buildAtCqCode(dasqProperties.getAdminId()) + sb);
+        cqService.sendMsg(true, Long.valueOf(dasqProperties.getDevGroupId()), CqCodeUtil.buildAtCqCode(dasqProperties.getAdminId()) + sb);
 
         final String master = "master";
         if (master.equals(branch)) {
