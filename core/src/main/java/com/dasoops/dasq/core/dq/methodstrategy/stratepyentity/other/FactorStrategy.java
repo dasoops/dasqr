@@ -45,6 +45,9 @@ public class FactorStrategy extends BaseMethodStrategy implements BaseCqMethodSt
         }
 
         Factor factor = factorService.getFactorByName(params.get(0));
+        if (factor == null) {
+            cqService.sendMsg("没有这个因子捏!");
+        }
         String str = StrUtil.format("{}\r\n{}({}分)\r\n{}",
                 CqCodeUtil.buildImageCqCode(minioTemplate.buildImagePath(factor.getImageFileName())),
                 factor.getName(), factor.getScore(), factor.getDescription());
