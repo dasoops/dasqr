@@ -33,12 +33,28 @@ public interface DictionaryService extends IService<Dictionary> {
     String getDictionaryById(Long fatherId, String dictCode);
 
     /**
-     * 被通过父id获取字典集合
+     * 通过父id获取字典集合
      *
      * @param fatherId 父亲id
      * @return {@link Map}<{@link String}, {@link String}>
      */
     Map<String, String> getDictionaryMapByFatherId(Long fatherId);
+
+    /**
+     * 得到dictCode通过字典集合
+     *
+     * @param dictCode dict编号
+     * @return {@link Map}<{@link String}, {@link String}>
+     */
+    Map<String, String> getDictionaryMapByDictCode(String dictCode);
+
+    /**
+     * 通过dictCode获得dictValue
+     *
+     * @param dictCode dict编号
+     * @return {@link String}
+     */
+    String getDictValueByDictCode(String dictCode);
 
     /**
      * 根据dictCode获取id

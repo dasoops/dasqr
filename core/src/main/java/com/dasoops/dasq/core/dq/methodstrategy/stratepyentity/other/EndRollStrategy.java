@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.game;
+package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other;
 
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
@@ -9,10 +9,8 @@ import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.dq.methodstrategy.entity.enums.DqRedisKeyEnum;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;

@@ -59,7 +59,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
         redisTemplate.delete(RedisKeyEnum.DICT_DICT_CODE_GET_FATHER_ID_HASH.getRedisKey());
 
         //查询数据库,构建集合
-        List<Dictionary> list = super.lambdaQuery().ne(Dictionary::getHasChild, 0).list();
+        List<Dictionary> list = super.lambdaQuery().eq(Dictionary::getParentId, -1).list();
         Map<String, String> map = list.stream().collect(Collectors.toMap(Dictionary::getDictCode, res -> String.valueOf(res.getId())));
 
         //存入
@@ -68,6 +68,7 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
         log.info("完成: 初始化/更新 DictionaryTreeData 数据至redis,Data:{}", JSON.toJSONString(map));
     }
 
+    @SuppressWarnings("unchecked")
     private void initOrUpdateDictFatherDictCodeMap2Redis() {
         log.info("初始化/更新 DictFatherDictCodeMap 数据至redis");
 
@@ -76,18 +77,30 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
 
         //查询数据库,构建集合
         List<Dictionary> list = super.lambdaQuery().list();
-        Map<Long, Map<String, String>> map = new HashMap<>(16);
+        Map<Long, Object> map = new HashMap<>(16);
         list.forEach(res -> {
-            if (res.getHasChild() != 0) {
-                map.put(res.getId(), new HashMap<>(16));
+            //parentId = -1 && hasChild 1 为集合
+            //parentId = -1 && hasChild 0 为单项
+            //parentId != -1              为子项
+            Long parentId = res.getParentId();
+            if (parentId == -1 && res.getHasChild() == 1) {
+                map.put(res.getId(), new HashMap<String, String>(16));
+            } else if (parentId != -1) {
+                Map<String, String> getMap;
+                getMap = (Map<String, String>) map.get(res.getParentId());
+                getMap.put(res.getDictCode(), res.getDictValue());
             } else {
-                map.get(res.getParentId()).put(res.getDictCode(), res.getDictValue());
+                map.put(res.getId(), res.getDictValue());
             }
         });
-
         Map<String, String> resMap = map.entrySet().stream().collect(Collectors.toMap(
                 res -> String.valueOf(res.getKey()),
-                res -> JSON.toJSONString(res.getValue())
+                res -> {
+                    if (res.getValue() instanceof String) {
+                        return String.valueOf(res.getValue());
+                    }
+                    return JSON.toJSONString(res.getValue());
+                }
         ));
 
         //存入
@@ -109,6 +122,16 @@ public class DictionaryServiceImpl extends ServiceImpl<DictionaryMapper, Diction
                 Map.Entry::getKey,
                 res -> String.valueOf(res.getValue())
         ));
+    }
+
+    @Override
+    public Map<String, String> getDictionaryMapByDictCode(String dictCode) {
+        return getDictionaryMapByFatherId(getIdByDictCode(dictCode));
+    }
+
+    @Override
+    public String getDictValueByDictCode(String dictCode) {
+        return String.valueOf(redisTemplate.opsForHash().get(RedisKeyEnum.DICT_ID_GET_CHILD_DICT_INFO_MAP_JSON_MAP.getRedisKey(), String.valueOf(getIdByDictCode(dictCode))));
     }
 
     @Override

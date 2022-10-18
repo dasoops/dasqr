@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.game;
+package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other;
 
 import cn.hutool.core.util.RandomUtil;
 import com.dasoops.dasq.core.common.entity.EventInfo;
@@ -6,10 +6,8 @@ import com.dasoops.dasq.core.common.util.EventUtil;
 import com.dasoops.dasq.core.dq.methodstrategy.entity.enums.DqRedisKeyEnum;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 

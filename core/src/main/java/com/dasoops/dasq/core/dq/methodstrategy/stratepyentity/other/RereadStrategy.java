@@ -1,15 +1,12 @@
-package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.game;
+package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.dasq.core.common.util.EventUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
 import com.dasoops.dasq.core.dq.methodstrategy.entity.enums.DqRedisKeyEnum;
-import com.dasoops.dasq.core.cq.service.CqService;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Set;
 
 /**

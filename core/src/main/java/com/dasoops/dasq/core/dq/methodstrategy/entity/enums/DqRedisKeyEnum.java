@@ -44,6 +44,7 @@ public enum DqRedisKeyEnum {
      */
     STYLE("dq:style"),
 
+
     ;
 
     final String redisKey;

@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other;
+package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.image;
 
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseMethodStrategy;

@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other;
+package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.image;
 
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;

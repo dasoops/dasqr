@@ -1,18 +1,12 @@
 package com.dasoops.dasq.core.common.interceptor;
 
-import cn.hutool.core.convert.Convert;
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.dasq.core.common.entity.EventInfo;
-import com.dasoops.dasq.core.common.entity.enums.KeywordEnum;
 import com.dasoops.dasq.core.common.service.DictionaryService;
 import com.dasoops.dasq.core.common.util.EventUtil;
 import com.dasoops.dasq.core.common.util.WebUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
-import com.dasoops.dasq.core.cq.entity.po.PassObject;
-import com.dasoops.dasq.core.cq.service.PassListService;
-import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.game.RereadStrategy;
-import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other.SaveImageStrategy;
-import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.sys.StyleStrategy;
+import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.image.SaveImageStrategy;
 import com.dasoops.dasq.core.image.entity.enums.ImageRedisKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -25,9 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @Title: PassListInterceptor
