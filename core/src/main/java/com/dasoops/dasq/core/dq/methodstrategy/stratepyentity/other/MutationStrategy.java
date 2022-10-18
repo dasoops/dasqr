@@ -30,8 +30,6 @@ public class MutationStrategy extends BaseMethodStrategy implements BaseCqMethod
     //addMethod 查询突变,mutation,查询突变信息,{$param0}
 
     @Resource
-    private MutationMapper mutationMapper;
-    @Resource
     private MutationService mutationService;
     @Resource
     private DictionaryService dictionaryService;
@@ -52,24 +50,22 @@ public class MutationStrategy extends BaseMethodStrategy implements BaseCqMethod
 
         String param = params.get(0);
         //下周突变
-        final String lastFlag = "last";
-        if (lastFlag.equals(param)) {
+
+        final String lastStr = "last";
+        final String thisStr = "this";
+        boolean lastFlag = lastStr.equals(param);
+        boolean thisFlag = thisStr.equals(param);
+
+        //下周突变||本周突变
+        if (lastFlag || thisFlag) {
             String mutation = dictionaryService.getDictValueByDictCode("mutation");
-            Mutation lastMutation = mutationService.getById(Long.parseLong(mutation) + 1L);
-            cqService.sendMsg(StrUtil.format("下周突变: {}({})\n因子:{}\n分数:{}(残酷+{})",
+            //下周突变需要 + 1
+            Mutation lastMutation = mutationService.getById(Long.parseLong(mutation) + (lastFlag ? 1L : 0L));
+            cqService.sendMsg(StrUtil.format("下周突变: {}({})\n因子:{}\n分数:{}(残酷%2B{})",
                     lastMutation.getName(), lastMutation.getMap(), lastMutation.getFactor(), lastMutation.getScore(), lastMutation.getLevel()));
             return;
         }
 
-        //下周突变
-        final String thisFlag = "this";
-        if (thisFlag.equals(param)) {
-            String mutation = dictionaryService.getDictValueByDictCode("mutation");
-            Mutation lastMutation = mutationService.getById(Long.parseLong(mutation));
-            cqService.sendMsg(StrUtil.format("下周突变: {}({})\n因子:{}\n分数:{}(残酷+{})",
-                    lastMutation.getName(), lastMutation.getMap(), lastMutation.getFactor(), lastMutation.getScore(), lastMutation.getLevel()));
-            return;
-        }
 
         //查询突变
         List<Mutation> mutationList = mutationService.getListByKeyword(param);
@@ -78,7 +74,7 @@ public class MutationStrategy extends BaseMethodStrategy implements BaseCqMethod
         for (int i = 0; i < mutationList.size(); i++) {
             Mutation mutation = mutationList.get(i);
             sb.append("\n").append(i + 1).append(".");
-            String str = StrUtil.format("{}({})\n因子:{}\n分数:{}(残酷+{})", mutation.getName(), mutation.getMap(), mutation.getFactor(), mutation.getScore(), mutation.getLevel());
+            String str = StrUtil.format("{}({})\n因子:{}\n分数:{}(残酷%2B{})", mutation.getName(), mutation.getMap(), mutation.getFactor(), mutation.getScore(), mutation.getLevel());
             sb.append(str);
         }
         cqService.sendMsg(sb.toString());
