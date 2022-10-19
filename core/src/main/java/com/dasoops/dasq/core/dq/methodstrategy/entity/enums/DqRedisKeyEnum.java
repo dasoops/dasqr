@@ -44,6 +44,12 @@ public enum DqRedisKeyEnum {
      */
     STYLE("dq:style"),
 
+    /**
+     * 撤销消息集合
+     * Map<String,String>
+     * hash<id,message>
+     */
+    UNDO_MESSAGE_ID_GET_MESSAGE_MAP("dq:undo_message_id_get_message_hash"),
 
     ;
 

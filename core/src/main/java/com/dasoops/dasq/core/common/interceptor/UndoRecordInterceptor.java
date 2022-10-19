@@ -1,13 +1,11 @@
 package com.dasoops.dasq.core.common.interceptor;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.dasoops.dasq.core.common.entity.enums.KeywordEnum;
 import com.dasoops.dasq.core.common.util.WebUtil;
-import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
-import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.sys.StyleStrategy;
+import com.dasoops.dasq.core.dq.methodstrategy.entity.enums.DqRedisKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.core.Ordered;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,39 +15,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Title: PassListInterceptor
- * @ClassPath com.dasoops.dasq.core.common.interceptor.PassListInterceptor
+ * @Title: UndoInterceptor
+ * @ClassPath com.dasoops.dasq.core.common.interceptor.UndoInterceptor
  * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/09
+ * @Date 2022/10/19
  * @Version 1.0.0
- * @Description: 通过拦截器列表
- * @see HandlerInterceptor
- * @see Ordered
+ * @Description: 撤销拦截器
  */
 @Component
 @Slf4j
-public class CoolStyleInterceptor implements HandlerInterceptor {
+public class UndoRecordInterceptor implements HandlerInterceptor {
 
-    @Resource
-    private StyleStrategy styleStrategy;
+    @Resource(name = "stringRedisTemplate", type = StringRedisTemplate.class)
+    private StringRedisTemplate redisTemplate;
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
+
         //获取消息对象
         JSONObject paramObj = WebUtil.getParameters(request);
 
-        boolean isCommon = this.isCommon(paramObj);
-
-        //是否为普通模式
-        if (KeywordEnum.STYLE_NORMAL.getKeyword().equals(styleStrategy.getStyle())) {
-            //是否为命令
-            return isCommon;
-        }
-
-        //清爽模式 不接收normal指令
-        if (isCommon) {
-            return false;
-        }
+        //存入
+        String message = paramObj.getString("message");
+        String id = paramObj.getString("message_id");
+        redisTemplate.opsForHash().put(DqRedisKeyEnum.UNDO_MESSAGE_ID_GET_MESSAGE_MAP.getRedisKey(), id, message);
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
@@ -59,15 +48,8 @@ public class CoolStyleInterceptor implements HandlerInterceptor {
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 
-
-    /**
-     * 是否为命令
-     *
-     * @param paramObj param obj
-     * @return boolean
-     */
-    public boolean isCommon(JSONObject paramObj) {
-        String message = paramObj.getString(CqKeywordEnum.MESSAGE.getOtherName());
-        return message.startsWith(".");
+    @Override
+    public void afterCompletion(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler, Exception ex) throws Exception {
+        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }
