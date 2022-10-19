@@ -26,4 +26,12 @@ public interface CqService {
      * @return {@link Long}
      */
     Long sendMsg(String msg);
+
+    /**
+     * 得到消息信息
+     *
+     * @param messageId 消息id
+     * @return {@link String}
+     */
+    String getMessage(String messageId);
 }

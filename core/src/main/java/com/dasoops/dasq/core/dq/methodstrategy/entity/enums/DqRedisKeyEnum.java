@@ -46,10 +46,10 @@ public enum DqRedisKeyEnum {
 
     /**
      * 撤销消息集合
-     * Map<String,String>
-     * hash<id,message>
+     * List<String>
+     * List<MessageId>
      */
-    UNDO_MESSAGE_ID_GET_MESSAGE_MAP("dq:undo_message_id_get_message_hash"),
+    UNDO("dq:undo"),
 
     ;
 

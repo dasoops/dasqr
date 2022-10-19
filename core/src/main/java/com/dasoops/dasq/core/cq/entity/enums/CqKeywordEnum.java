@@ -127,6 +127,11 @@ public enum CqKeywordEnum {
 
     COMMON_PREFIX(".", "."),
 
+    /**
+     * 得到消息
+     */
+    GET_MESSAGE("getMsg", "get_msg"),
+
     ;
 
     final String simpleName;

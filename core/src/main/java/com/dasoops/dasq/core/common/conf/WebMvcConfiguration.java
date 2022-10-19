@@ -34,6 +34,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     private PostTypeMatchInterceptor postTypeMatchInterceptor;
     @Resource
     private SaveImagePartInterceptor saveImagePartInterceptor;
+    @Resource
+    private UndoInterceptor undoInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -43,6 +45,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         //TokenVerify(token验证)
         registry.addInterceptor(tokenVerifyInterceptor).addPathPatterns(setting);
         //HeartBeat(心跳检测-暂未开启)
+        //Undo(撤回)
+        registry.addInterceptor(undoInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
         //PostType(消息类型)
         registry.addInterceptor(postTypeMatchInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
         //Log(日志)
