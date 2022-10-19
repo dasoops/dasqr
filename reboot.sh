@@ -7,7 +7,7 @@ cd core
 
 echo $pid
 str=$"\n"
-nohup mvn spring-boot:run &
+nohup mvn spring-boot:run >../logs/mvn.log 2>&1 &
 sstr=$(echo -e $str)
 echo $sstr
 kill $pid
