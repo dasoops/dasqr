@@ -38,12 +38,19 @@ public class CoolStyleInterceptor implements HandlerInterceptor {
         //获取消息对象
         JSONObject paramObj = WebUtil.getParameters(request);
 
-        //是否为清爽模式
+        boolean isCommon = this.isCommon(paramObj);
+
+        //是否为普通模式
         if (KeywordEnum.STYLE_NORMAL.getKeyword().equals(styleStrategy.getStyle())) {
             //是否为命令
-            if (!this.isCommon(paramObj)) {
+            if (!isCommon) {
                 return false;
             }
+        }
+
+        //清爽模式 不接收normal指令
+        if (isCommon) {
+            return false;
         }
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
