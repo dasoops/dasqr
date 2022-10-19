@@ -7,7 +7,7 @@
 5. (ok by @Das) cq消息接受 按关键词分发处理 分发部分框架完善
 6. (ok by @Das) ExceptionHandlerWrapperImpl 向用户/群组 发送错误id
 7. (ok by @Das) getParameterMap dq码转换
-8. go_cqhttp 重启
+8. (无用需求) go_cqhttp 重启
 9. java gc (@Passssing认领)
 10. (ok by @Das) dasServer 重启
 11. 消息撤回记录 (das认领)

@@ -20,7 +20,7 @@ logging:
         dasq:
           core: debug
   file:
-    name: logs/dasServer.log
+    name: ../../logs/dasServer.log
   logback:
     rollingpolicy:
       max-file-size: 100MB

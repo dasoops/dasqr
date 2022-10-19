@@ -37,18 +37,26 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //拦截器顺序 tokenVerify(token验证) heartBeat(心跳检测-暂未开启) passList(白名单) eventInfo(事件信息) log(日志打印)
         String setting = "/setting/*";
         String alas = "/alas/error";
         String git = "/git/push";
+        //TokenVerify(token验证)
         registry.addInterceptor(tokenVerifyInterceptor).addPathPatterns(setting);
+        //HeartBeat(心跳检测-暂未开启)
+        //PostType(消息类型)
         registry.addInterceptor(postTypeMatchInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
-        registry.addInterceptor(authorMatchInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
-        registry.addInterceptor(rereadInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
-        registry.addInterceptor(saveImagePartInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
-        registry.addInterceptor(coolStyleInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
-        registry.addInterceptor(eventInfoInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
+        //Log(日志)
         registry.addInterceptor(logInterceptor).addPathPatterns("/*").excludePathPatterns(alas, git);
+        //AuthorMatch(用户白名单匹配)
+        registry.addInterceptor(authorMatchInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
+        //Reread(复读)
+        registry.addInterceptor(rereadInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
+        //SaveImagePart(分段存图)
+        registry.addInterceptor(saveImagePartInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
+        //CoolStyle(风格)
+        registry.addInterceptor(coolStyleInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
+        //EventInfo(用户信息)
+        registry.addInterceptor(eventInfoInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 

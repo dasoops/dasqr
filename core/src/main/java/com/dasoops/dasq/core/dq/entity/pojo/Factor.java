@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @Title: Factor
@@ -21,6 +22,7 @@ import lombok.Data;
  */
 @TableName(value = "TB_OTHER_SC2_FACTOR")
 @Data
+@Document("factor")
 public class Factor implements Serializable {
     /**
      * ID
