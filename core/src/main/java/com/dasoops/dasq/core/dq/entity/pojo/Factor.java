@@ -1,15 +1,12 @@
 package com.dasoops.dasq.core.dq.entity.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @Title: Factor
@@ -22,7 +19,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @TableName(value = "TB_OTHER_SC2_FACTOR")
 @Data
-@Document("factor")
 public class Factor implements Serializable {
     /**
      * ID
