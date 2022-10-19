@@ -4,7 +4,10 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.http.HttpUtil;
 import com.dasoops.minio.entity.MinioProperties;
-import io.minio.*;
+import io.minio.GetObjectArgs;
+import io.minio.GetObjectResponse;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
 import io.minio.errors.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,7 +49,9 @@ public class MinioTemplate {
                 .stream(inputStream, inputStream.available(), -1)
                 .build();
         minioClient.putObject(putObjectArgs);
-        return Optional.of(uuid + "." + type);
+        String filename = uuid + "." + type;
+        log.info("minio putObject({})", filename);
+        return Optional.of(filename);
     }
 
     public Optional<String> saveImage(String url) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
