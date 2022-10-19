@@ -1,6 +1,7 @@
 package com.dasoops.dasq.core.common.interceptor;
 
 import cn.hutool.core.convert.Convert;
+import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.dasq.core.common.util.WebUtil;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
@@ -62,7 +63,13 @@ public class PostTypeMatchInterceptor implements HandlerInterceptor {
      */
     private boolean postTypeIsMatch(JSONObject paramObj) {
         //获取消息类型id
-        String postType = paramObj.getString(CqKeywordEnum.POST_TYPE.getOtherName());
+        String postType = "";
+        try {
+            postType = paramObj.getString(CqKeywordEnum.POST_TYPE.getOtherName());
+        } catch (Exception e) {
+            log.info(JSON.toJSONString(paramObj));
+            throw e;
+        }
 
         //消息类型
         final Integer messageTypeCode = 2;

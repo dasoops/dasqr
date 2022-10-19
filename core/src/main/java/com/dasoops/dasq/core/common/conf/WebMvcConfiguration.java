@@ -34,8 +34,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     private PostTypeMatchInterceptor postTypeMatchInterceptor;
     @Resource
     private SaveImagePartInterceptor saveImagePartInterceptor;
-    @Resource
-    private UndoRecordInterceptor undoRecordInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -51,8 +49,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(logInterceptor).addPathPatterns("/*").excludePathPatterns(alas, git);
         //AuthorMatch(用户白名单匹配)
         registry.addInterceptor(authorMatchInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
-        //UndoRecord(撤销记录)
-        registry.addInterceptor(undoRecordInterceptor).addPathPatterns("/*").excludePathPatterns(alas, git);
         //Reread(复读)
         registry.addInterceptor(rereadInterceptor).addPathPatterns("/*").excludePathPatterns(setting, alas, git);
         //SaveImagePart(分段存图)
