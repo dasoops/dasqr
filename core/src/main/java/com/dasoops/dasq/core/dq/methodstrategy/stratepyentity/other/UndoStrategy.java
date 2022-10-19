@@ -33,6 +33,10 @@ public class UndoStrategy extends BaseMethodStrategy implements BaseCqMethodStra
         EventInfo eventInfo = EventUtil.get();
         Long groupId = eventInfo.getGroupId();
         String messageId = (String) redisTemplate.opsForHash().get(DqRedisKeyEnum.UNDO.getRedisKey(), String.valueOf(groupId));
+        if (messageId == null) {
+            cqService.sendMsg("没有丢人消息捏");
+            return;
+        }
         cqService.sendMsg(cqService.getMessage(messageId));
     }
 }
