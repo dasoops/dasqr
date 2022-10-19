@@ -2,9 +2,9 @@ package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.image;
 
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.entity.enums.ExceptionCodeEnum;
+import com.dasoops.common.util.RegexUtil;
 import com.dasoops.dasq.core.common.entity.EventInfo;
 import com.dasoops.dasq.core.common.util.EventUtil;
-import com.dasoops.common.util.RegexUtil;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
 import com.dasoops.dasq.core.image.entity.enums.ImageRedisKeyEnum;
@@ -67,6 +67,7 @@ public class SaveImageStrategy extends BaseMethodStrategy implements BaseCqMetho
 
         if (!isRepeat) {
             cqService.sendMsg("关键词已存在");
+            return;
         }
 
         cqService.sendMsg("已阅");
