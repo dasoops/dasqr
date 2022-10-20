@@ -1,6 +1,7 @@
 package com.dasoops.common.exception.handler;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
+import com.alibaba.fastjson2.JSON;
 import com.dasoops.common.exception.entity.LogicException;
 import com.dasoops.common.exception.service.ExceptionService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.annotation.Resource;
+import java.net.http.HttpRequest;
 
 /**
  * @Title: GlobalExceptionHandler
@@ -46,8 +48,9 @@ public class GlobalExceptionHandler implements ApplicationContextAware {
      * @param e e
      */
     @ExceptionHandler(Exception.class)
-    public void exceptionHandler(Exception e) {
+    public void exceptionHandler(Exception e, HttpRequest request) {
         try {
+            log.error("request:{}", JSON.toJSONString(request));
             Long id = System.currentTimeMillis();
             log.error("Exception:errorMsg:", e);
             resolve(e, id);
