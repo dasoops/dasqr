@@ -21,7 +21,7 @@ public class CqProperties {
     /**
      * url
      */
-    private String url = "/ws/*/";
+    private String url = "/ws/DasServer";
 
     /**
      * 文本消息缓冲区大小

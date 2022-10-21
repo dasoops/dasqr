@@ -15,38 +15,27 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
  * @see WebSocketHandler
  */
 @Slf4j
-public class WebsocketHandler extends TextWebSocketHandler {
+public class WsHandler extends TextWebSocketHandler {
+
+    public WsHandler() {
+    }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        WsSessionManager.add("aoe",session);
-        log.info(JSON.toJSONString(session));
+
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        log.info(JSON.toJSONString(session));
-        log.info(JSON.toJSONString(closeStatus));
     }
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        log.info(JSON.toJSONString(session));
-        log.info(JSON.toJSONString(message));
     }
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        log.info(JSON.toJSONString(exception));
-        log.info(JSON.toJSONString(session));
     }
 
-    public WebsocketHandler() {
-        log.info("aoe");
-    }
 
-    @Override
-    protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
-        log.info("aoe");
-    }
 }

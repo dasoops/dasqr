@@ -1,11 +1,10 @@
 package com.dasoops.cq.boot;
 
-import com.dasoops.cq.websocket.WebsocketHandler;
+import com.dasoops.cq.websocket.WsHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 /**
  * @Title: CqBeanConfiguration
@@ -21,7 +20,7 @@ public class CqBeanConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public WebSocketHandler createWebSocketHandler() {
-        return new WebsocketHandler();
+        return new WsHandler();
     }
 
 

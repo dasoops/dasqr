@@ -3,8 +3,6 @@ package com.dasoops.core;
 import com.dasoops.cq.EnableCq;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 /**
  * @Title: Application
@@ -16,8 +14,8 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
  */
 @SpringBootApplication
 @EnableCq
-public class Application {
+public class DasServerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class,args);
+        SpringApplication.run(DasServerApplication.class,args);
     }
 }
