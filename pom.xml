@@ -4,6 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>cq-spring-boot-starter</module>
+        <module>core</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -12,7 +13,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dasoops</groupId>
-    <artifactId>dasQServer</artifactId>
+    <artifactId>dasServer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>parent</name>
     <packaging>pom</packaging>
@@ -24,6 +25,7 @@
         <fastjson2-extension.version>2.0.15</fastjson2-extension.version>
         <hutool.version>5.8.8</hutool.version>
         <log4j.version>1.2.17</log4j.version>
+        <cq.version>0.0.1-SNAPSHOT</cq.version>
     </properties>
 
     <dependencyManagement>
@@ -61,6 +63,11 @@
                 <version>${log4j.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.dasoops</groupId>
+                <artifactId>cq-spring-boot-starter</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
