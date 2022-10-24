@@ -33,11 +33,17 @@ public class GetImageStrategy extends BaseMethodStrategy implements BaseCqMethod
     @Override
     public void invoke(List<String> params) {
         String keyword = params.get(0);
+        if (keyword == null) {
+            cqService.sendMsg("取图失败,你会不会啊");
+            return;
+        }
+
         Optional<String> imageCqCodeOpt = imageInfoService.getImageCqCode(keyword);
         if (imageCqCodeOpt.isPresent()) {
             cqService.sendMsg(imageCqCodeOpt.get());
             return;
         }
+
         StringBuilder sb = new StringBuilder("没有这张图捏");
         List<String> keywordList = imageInfoService.getImageKeywordList();
 
@@ -53,4 +59,6 @@ public class GetImageStrategy extends BaseMethodStrategy implements BaseCqMethod
         });
         cqService.sendMsg(sb.toString());
     }
+
 }
+
