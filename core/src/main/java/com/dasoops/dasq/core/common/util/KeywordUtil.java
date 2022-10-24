@@ -24,11 +24,11 @@ public class KeywordUtil {
      * @param keywordList 关键字列表
      * @return {@link Optional}<{@link String}>
      */
-    public static Optional<String> getMatchKeyword(String message, List<String> keywordList) {
+    public static Optional<String> getMatchKeyword(String message, List<String> keywordList, String style) {
         String realMessage = StrUtil.removePrefix(message, CqKeywordEnum.COMMON_PREFIX.getSimpleName());
         //获取匹配项,取最长的
         return keywordList.stream()
-                .filter(keyword -> StrUtil.startWithIgnoreCase(realMessage, keyword))
+                .filter(keyword -> StrUtil.startWithIgnoreCase(realMessage + (style.equalsIgnoreCase("cool") ? " " : "("), keyword))
                 .max(Comparator.comparingInt(String::length));
     }
 

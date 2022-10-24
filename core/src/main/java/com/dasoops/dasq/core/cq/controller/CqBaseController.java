@@ -57,8 +57,9 @@ public class CqBaseController {
         }
         List<String> keywordList = passListOpt.get().stream().map(PassObject::getPassKeyword).collect(Collectors.toList());
 
-        KeywordUtil.getMatchKeyword(finalMessage, keywordList).ifPresent(res -> {
-            context.invoke(methodInfoService.getMethodInfoIdByKeyWord(res), finalMessage, styleStrategy.getStyle());
+        String style = styleStrategy.getStyle();
+        KeywordUtil.getMatchKeyword(finalMessage, keywordList, style).ifPresent(res -> {
+            context.invoke(methodInfoService.getMethodInfoIdByKeyWord(res), finalMessage, style);
         });
     }
 
