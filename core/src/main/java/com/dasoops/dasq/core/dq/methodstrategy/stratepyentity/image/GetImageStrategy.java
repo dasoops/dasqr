@@ -35,6 +35,7 @@ public class GetImageStrategy extends BaseMethodStrategy implements BaseCqMethod
         String keyword = params.get(0);
         if (keyword == null) {
             cqService.sendMsg("取图失败,你会不会啊");
+            return;
         }
         Optional<String> imageCqCodeOpt = imageInfoService.getImageCqCode(keyword);
         if (imageCqCodeOpt.isPresent()) {
@@ -56,4 +57,6 @@ public class GetImageStrategy extends BaseMethodStrategy implements BaseCqMethod
         });
         cqService.sendMsg(sb.toString());
     }
+
 }
+
