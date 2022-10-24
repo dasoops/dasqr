@@ -4,6 +4,14 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import com.dasoops.dasq.core.cq.entity.dto.Sender;
 import lombok.Data;
 
+/**
+ * @Title: MsgData
+ * @ClassPath com.dasoops.dasq.core.dq.methodstrategy.entity.MsgData
+ * @Author DasoopsNicole@Gmail.com
+ * @Date 2022/10/24
+ * @Version 1.0.0
+ * @Description: msg数据
+ */
 @Data
 public class MsgData {
     private boolean group;

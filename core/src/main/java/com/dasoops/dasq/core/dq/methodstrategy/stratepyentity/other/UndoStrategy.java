@@ -1,4 +1,4 @@
-package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other;//import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
+package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other;
 
 import com.dasoops.dasq.core.common.entity.EventInfo;
 import com.dasoops.dasq.core.common.util.EventUtil;
