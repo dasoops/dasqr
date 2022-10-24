@@ -4,7 +4,6 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasq.core.common.entity.enums.KeywordEnum;
 import com.dasoops.dasq.core.cq.entity.enums.CqKeywordEnum;
-import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.sys.StyleStrategy;
 
 import java.util.*;
 
@@ -25,11 +24,11 @@ public class KeywordUtil {
      * @param keywordList 关键字列表
      * @return {@link Optional}<{@link String}>
      */
-    public static Optional<String> getMatchKeyword(String message, List<String> keywordList, String style) {
+    public static Optional<String> getMatchKeyword(String message, List<String> keywordList) {
         String realMessage = StrUtil.removePrefix(message, CqKeywordEnum.COMMON_PREFIX.getSimpleName());
         //获取匹配项,取最长的
         return keywordList.stream()
-                .filter(keyword -> StrUtil.startWithIgnoreCase(realMessage + (style.equalsIgnoreCase("cool") ? " " : "("), keyword))
+                .filter(keyword -> StrUtil.startWithIgnoreCase(realMessage, keyword))
                 .max(Comparator.comparingInt(String::length));
     }
 
