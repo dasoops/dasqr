@@ -2,6 +2,7 @@ package com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.other;
 
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseMethodStrategy;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * @author yly
  * @date 2022-10-24 18:40
  */
+@Component
 public class GcStrategy extends BaseMethodStrategy implements BaseCqMethodStrategy {
 
     @Override
