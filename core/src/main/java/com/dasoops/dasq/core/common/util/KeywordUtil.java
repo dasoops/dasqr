@@ -28,7 +28,7 @@ public class KeywordUtil {
         String realMessage = StrUtil.removePrefix(message, CqKeywordEnum.COMMON_PREFIX.getSimpleName());
         //获取匹配项,取最长的
         return keywordList.stream()
-                .filter(keyword -> StrUtil.startWithIgnoreCase(realMessage + (style.equalsIgnoreCase("cool") ? " " : "("), keyword))
+                .filter(keyword -> StrUtil.startWithIgnoreCase(realMessage, keyword + ("cool".equalsIgnoreCase(style) ? " " : "(")))
                 .max(Comparator.comparingInt(String::length));
     }
 
