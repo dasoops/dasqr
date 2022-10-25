@@ -1,6 +1,7 @@
 package com.dasoops.dasq.core.dq.methodstrategy.strategycontext;
 
 import com.dasoops.dasq.core.dq.methodstrategy.stratepyentity.base.BaseCqMethodStrategy;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -21,12 +22,10 @@ import java.util.Map;
 @Component
 public class CqMethodStrategyContextFactory implements ApplicationContextAware {
 
-    private ApplicationContext applicationContext;
     private CqMethodStrategyContext context;
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
+    public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
         if (context == null) {
             context = new CqMethodStrategyContext();
             Map<String, BaseCqMethodStrategy> strategyMap = applicationContext.getBeansOfType(BaseCqMethodStrategy.class);
