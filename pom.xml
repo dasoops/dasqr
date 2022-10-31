@@ -5,7 +5,6 @@
     <modules>
         <module>cq-core-spring-boot-starter</module>
         <module>core</module>
-        <module>cq-core-db-spring-boot-starter</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -18,7 +17,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>parent</name>
     <packaging>pom</packaging>
-    <description>parent</description>
+    <description>dasServer parent</description>
     <properties>
         <java.version>11</java.version>
         <lombok.version>1.18.24</lombok.version>

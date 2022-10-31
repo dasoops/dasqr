@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dasoops.cq.mapper.PluginMapper">
+
+    <resultMap id="BaseResultMap" type="com.dasoops.cq.entity.po.PluginPo">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="keyword" column="KEYWORD" jdbcType="VARCHAR"/>
+        <result property="classPath" column="CLASS_PATH" jdbcType="VARCHAR"/>
+        <result property="role" column="ROLE" jdbcType="VARCHAR"/>
+        <result property="level" column="LEVEL" jdbcType="TINYINT"/>
+        <result property="description" column="DESCRIPTION" jdbcType="VARCHAR"/>
+        <result property="enable" column="ENABLE" jdbcType="TINYINT"/>
+        <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
+        <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID
+        ,KEYWORD,CLASS_PATH,
+        ROLE,LEVEL,DESCRIPTION,
+        ENABLE,IS_DELETE,CREATE_USER,
+        CREATE_TIME,UPDATE_USER,UPDATE_TIME
+    </sql>
+    <select id="selectAllClassPath" resultType="java.util.List">
+        SELECT CLASS_PATH
+        FROM TB_CORE_PLUGIN
+        WHERE ENABLE = TRUE
+    </select>
+
+
+</mapper>

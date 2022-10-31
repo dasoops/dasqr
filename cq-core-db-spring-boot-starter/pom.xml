@@ -3,18 +3,30 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>dasServer</artifactId>
+        <artifactId>cq-core-spring-boot-starter</artifactId>
         <groupId>com.dasoops</groupId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath />
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <description>dasQServer cq模块核心 database部分</description>
     <artifactId>cq-core-db-spring-boot-starter</artifactId>
+    <description>dasServer cq模块核心 database部分</description>
+    <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dasoops</groupId>
+            <artifactId>cq-core-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
 </project>
