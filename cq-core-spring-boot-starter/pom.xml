@@ -6,10 +6,11 @@
         <artifactId>dasServer</artifactId>
         <groupId>com.dasoops</groupId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath />
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>core</artifactId>
+    <description>dasQServer cq模块核心</description>
+    <artifactId>cq-core-spring-boot-starter</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -18,9 +19,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.dasoops</groupId>
-            <artifactId>cq-core-spring-boot-starter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
     </dependencies>
+
 </project>

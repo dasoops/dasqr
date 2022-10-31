@@ -3,8 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <module>cq-spring-boot-starter</module>
+        <module>cq-core-spring-boot-starter</module>
         <module>core</module>
+        <module>cq-core-db-spring-boot-starter</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -65,7 +66,7 @@
 
             <dependency>
                 <groupId>com.dasoops</groupId>
-                <artifactId>cq-spring-boot-starter</artifactId>
+                <artifactId>cq-core-spring-boot-starter</artifactId>
                 <version>${cq.version}</version>
             </dependency>
         </dependencies>
