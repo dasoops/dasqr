@@ -1,8 +1,8 @@
 package com.dasoops.cq.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.cq.CqPlugin;
 import com.dasoops.cq.entity.po.PluginPo;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,8 +46,15 @@ public interface PluginService extends IService<PluginPo> {
      * 通过关键字更新
      *
      * @param pluginPo 插件
+     * @return boolean
      */
     boolean updateByKeyword(PluginPo pluginPo);
 
+    /**
+     * 根据最小level获取插件id集合
+     *
+     * @param minLevel 最小level
+     * @return {@link List}<{@link Integer}>
+     */
     List<Integer> getIdListByMinLevel(Integer minLevel);
 }

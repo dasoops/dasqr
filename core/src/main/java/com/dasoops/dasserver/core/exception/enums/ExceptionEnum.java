@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.core.Exception.enums;
+package com.dasoops.dasserver.core.exception.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

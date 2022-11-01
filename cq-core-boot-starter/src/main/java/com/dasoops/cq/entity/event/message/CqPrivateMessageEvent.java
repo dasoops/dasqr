@@ -6,7 +6,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 私聊消息
+ * @Title: CqPrivateMessageEvent
+ * @ClassPath com.dasoops.cq.entity.event.message.CqPrivateMessageEvent
+ * @Author DasoopsNicole@Gmail.com
+ * @Date 2022/11/01
+ * @Version 1.0.0
+ * @Description: 私聊消息
+ * @see CqMessageEvent
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

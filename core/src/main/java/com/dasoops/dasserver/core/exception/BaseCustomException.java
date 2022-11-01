@@ -1,9 +1,8 @@
-package com.dasoops.dasserver.core.Exception;
+package com.dasoops.dasserver.core.exception;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.dasserver.core.Exception.enums.ExceptionEnum;
-import com.dasoops.dasserver.core.Exception.enums.IExceptionEnum;
+import com.dasoops.dasserver.core.exception.enums.IExceptionEnum;
 
 /**
  * @Title: BaseCustomException

@@ -21,5 +21,11 @@
             <groupId>com.dasoops</groupId>
             <artifactId>core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.dasoops</groupId>
+            <artifactId>cq-core-boot-starter</artifactId>
+        </dependency>
     </dependencies>
+
 </project>

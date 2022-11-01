@@ -3,19 +3,21 @@ package com.dasoops.cq.websocket;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.cq.CqGlobal;
-import com.dasoops.cq.bot.ApiHandler;
-import com.dasoops.cq.bot.CqFactory;
-import com.dasoops.cq.bot.CqTemplate;
-import com.dasoops.cq.bot.EventHandler;
+import com.dasoops.cq.bot.*;
 import com.dasoops.cq.conf.properties.EventProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.NonNullApi;
-import org.springframework.web.socket.*;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.Objects;
-import java.util.concurrent.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Title: websocketHandler
@@ -43,7 +45,8 @@ public class WsHandler extends TextWebSocketHandler {
                 eventProperties.getMaxPoolSize(),
                 eventProperties.getKeepAliveTime(),
                 TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<>(eventProperties.getWorkQueueSize())
+                new ArrayBlockingQueue<>(eventProperties.getWorkQueueSize()),
+                new NamedThreadFactory("wsHandler")
         );
     }
 
@@ -54,7 +57,7 @@ public class WsHandler extends TextWebSocketHandler {
      * @throws Exception
      */
     @Override
-    public void afterConnectionEstablished(@NonNull WebSocketSession session) throws Exception {
+    public void afterConnectionEstablished(@NonNull WebSocketSession session) {
         long qid = getQid(session);
         log.info("{} connection", qid);
 
@@ -71,7 +74,7 @@ public class WsHandler extends TextWebSocketHandler {
      * @throws Exception 异常
      */
     @Override
-    public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus closeStatus) throws Exception {
+    public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus closeStatus) {
         long qid = getQid(session);
         log.info("{} close connection", qid);
 
@@ -86,7 +89,7 @@ public class WsHandler extends TextWebSocketHandler {
      * @throws Exception 异常
      */
     @Override
-    public void handleTextMessage(@NonNull WebSocketSession session, @NonNull TextMessage message) throws Exception {
+    public void handleTextMessage(@NonNull WebSocketSession session, @NonNull TextMessage message) {
         long qid = getQid(session);
         CqTemplate cqTemplate = CqGlobal.robots.get(qid);
 
