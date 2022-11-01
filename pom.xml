@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <module>cq-core-spring-boot-starter</module>
-        <module>core</module>
+        <module>cq-core-boot-starter</module>
+        <module>dasserver-core</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -20,54 +20,39 @@
     <description>dasServer parent</description>
     <properties>
         <java.version>11</java.version>
-        <lombok.version>1.18.24</lombok.version>
-        <fastjson2.version>2.0.15</fastjson2.version>
-        <fastjson2-extension.version>2.0.15</fastjson2-extension.version>
-        <hutool.version>5.8.8</hutool.version>
-        <log4j.version>1.2.17</log4j.version>
         <cq.version>0.0.1-SNAPSHOT</cq.version>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
     </properties>
 
     <dependencyManagement>
 
         <dependencies>
-
+            <!-- spring系列 -->
             <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-                <scope>provided</scope>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
 
+            <!-- 自定义组件 -->
             <dependency>
-                <groupId>com.alibaba.fastjson2</groupId>
-                <artifactId>fastjson2</artifactId>
-                <version>${fastjson2.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba.fastjson2</groupId>
-                <artifactId>fastjson2-extension</artifactId>
-                <version>${fastjson2-extension.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
+                <groupId>com.dasoops</groupId>
+                <artifactId>cq-core-boot-starter</artifactId>
+                <version>${cq.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.dasoops</groupId>
-                <artifactId>cq-core-spring-boot-starter</artifactId>
+                <artifactId>cq-core-db-boot-starter</artifactId>
                 <version>${cq.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.dasoops</groupId>
+                <artifactId>core</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
         </dependencies>
 
     </dependencyManagement>
@@ -83,31 +68,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba.fastjson2</groupId>
-            <artifactId>fastjson2</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba.fastjson2</groupId>
-            <artifactId>fastjson2-extension</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
         </dependency>
 
     </dependencies>
