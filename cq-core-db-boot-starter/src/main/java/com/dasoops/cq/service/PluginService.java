@@ -23,7 +23,7 @@ public interface PluginService extends IService<PluginPo> {
      *
      * @return {@link Optional}<{@link List}<{@link ?} {@link extends} {@link Class}<{@link CqPlugin}>>>
      */
-    Optional<List<? extends Class<CqPlugin>>> getAllPluginClass();
+    Optional<List<Class<? extends CqPlugin>>> getAllPluginClass();
 
     /**
      * 通过关键字获取插件对象

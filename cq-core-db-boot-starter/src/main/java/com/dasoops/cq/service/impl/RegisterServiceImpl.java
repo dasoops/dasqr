@@ -1,14 +1,15 @@
 package com.dasoops.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dasoops.core.util.Assert;
 import com.dasoops.cq.entity.po.BasePo;
 import com.dasoops.cq.entity.po.RegisterMtmPluginPo;
 import com.dasoops.cq.entity.po.RegisterPo;
+import com.dasoops.cq.mapper.RegisterMapper;
 import com.dasoops.cq.service.PluginService;
 import com.dasoops.cq.service.RegisterMtmPluginService;
 import com.dasoops.cq.service.RegisterService;
-import com.dasoops.cq.mapper.RegisterMapper;
-import com.dasoops.dasserver.core.util.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,19 +30,17 @@ import java.util.stream.Collectors;
 public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterPo>
         implements RegisterService {
 
-    private final PluginService pluginService;
-    private final RegisterMtmPluginService registerMtmPluginService;
+    @Autowired
+    private PluginService pluginService;
+    @Autowired
+    private RegisterMtmPluginService registerMtmPluginService;
 
-    public RegisterServiceImpl(PluginService pluginService, RegisterMtmPluginService registerMtmPluginService) {
-        this.pluginService = pluginService;
-        this.registerMtmPluginService = registerMtmPluginService;
-    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(RegisterPo registerPo) {
-        Assert.notNull(registerPo, registerPo.getRegisterId(), registerPo.getType(), registerPo.getLevel());
-        Assert.isNull(registerPo.getId());
+        Assert.allNotNull(registerPo, registerPo.getRegisterId(), registerPo.getType(), registerPo.getLevel());
+        Assert.allNull(registerPo.getId());
 
         //存储注册对象
         Assert.isTrue(super.save(registerPo));

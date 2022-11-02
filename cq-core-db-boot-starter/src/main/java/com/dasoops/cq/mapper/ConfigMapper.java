@@ -1,7 +1,7 @@
 package com.dasoops.cq.mapper;
 
-import com.dasoops.cq.entity.po.ConfigPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dasoops.cq.entity.po.ConfigPo;
 
 /**
  * @Title: ConfigMapper

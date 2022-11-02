@@ -3,7 +3,7 @@ package com.dasoops.cq.conf;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.dasoops.cq.utils.EventUtil;
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Date;
 
@@ -16,7 +16,7 @@ import java.util.Date;
  * @Description: 参数自动填充
  * @see MetaObjectHandler
  */
-@Component
+@Configuration
 public class ParameterFillConfiguration implements MetaObjectHandler {
 
     @Override

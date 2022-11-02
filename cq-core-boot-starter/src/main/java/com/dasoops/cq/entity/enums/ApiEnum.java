@@ -55,6 +55,6 @@ public enum ApiEnum {
     CLEAN_PLUGIN_LOG("clean_plugin_log", "清理插件日志");
 
 
-    private String url;
-    private String desc;
+    private final String url;
+    private final String desc;
 }

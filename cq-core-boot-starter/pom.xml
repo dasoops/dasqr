@@ -10,7 +10,6 @@
         <artifactId>dasServer</artifactId>
         <groupId>com.dasoops</groupId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath />
     </parent>
     <artifactId>cq-core-boot-starter</artifactId>
     <description>dasQServer cq模块核心</description>
@@ -28,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>com.dasoops</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>common</artifactId>
         </dependency>
     </dependencies>
 

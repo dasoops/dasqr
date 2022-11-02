@@ -1,8 +1,8 @@
-package com.dasoops.dasserver.core.exception;
+package com.dasoops.core.exception;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.dasserver.core.exception.enums.IExceptionEnum;
+import com.dasoops.core.entity.enums.IExceptionEnum;
+import com.dasoops.core.util.ExceptionUtil;
 
 /**
  * @Title: BaseCustomException
@@ -35,7 +35,7 @@ public class BaseCustomException extends RuntimeException {
 
     public BaseCustomException(IExceptionEnum exceptionEnum, Exception exception) {
         this.exceptionEnum = exceptionEnum;
-        this.message = ExceptionUtil.stacktraceToString(exception, 100000);
+        this.message = getStackInfo();
     }
 
     public BaseCustomException(IExceptionEnum exceptionEnum, String message) {
@@ -50,7 +50,7 @@ public class BaseCustomException extends RuntimeException {
      */
     @Override
     public String getMessage() {
-        return StrUtil.format("ERROR{{}:{}}  stack of\r\n", exceptionEnum.getCode(), exceptionEnum.getMsg()) + message;
+        return StrUtil.format("ERROR{{}:{}}  stack\r\n", exceptionEnum.getCode(), exceptionEnum.getMsg()) + message;
     }
 
     /**
@@ -58,11 +58,16 @@ public class BaseCustomException extends RuntimeException {
      *
      * @return {@link String}
      */
-    private String getStackInfo(){
+    private String getStackInfo() {
+        final int excludeLine = 5;
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         StringBuilder sb = new StringBuilder();
-
-        for (int i = 1; i < stackTrace.length; i++) {
+        //未知异常情况
+        if (stackTrace.length <= excludeLine) {
+            ExceptionUtil.buildUnExpected();
+        }
+        //排除前5行(断言,异常类信息)
+        for (int i = excludeLine; i < stackTrace.length; i++) {
             StackTraceElement element = stackTrace[i];
             sb.append(StrUtil.format("\t at {}.{}({}:{})\r\n", element.getClassName(), element.getMethodName(), element.getClassName(), element.getLineNumber()));
         }

@@ -1,6 +1,5 @@
 package com.dasoops.dasserver.core;
 
-import com.alibaba.fastjson2.JSON;
 import com.dasoops.cq.CqPlugin;
 import com.dasoops.cq.bot.CqTemplate;
 import com.dasoops.cq.bot.PassObj;
@@ -22,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class TemplatePlugin extends CqPlugin {
     @Override
     public PassObj onPrivateMessage(CqTemplate cqTemplate, CqPrivateMessageEvent event) {
-        log.info(JSON.toJSONString(event));
+        log.info("你收到了一条消息:{} --来自TemplatePlugin", event.getMessage());
         return super.onPrivateMessage(cqTemplate, event);
     }
 }

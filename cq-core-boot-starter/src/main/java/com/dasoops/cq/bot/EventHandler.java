@@ -1,6 +1,7 @@
 package com.dasoops.cq.bot;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.dasoops.core.util.Assert;
 import com.dasoops.cq.CqPlugin;
 import com.dasoops.cq.entity.event.message.CqDiscussMessageEvent;
 import com.dasoops.cq.entity.event.message.CqGroupMessageEvent;
@@ -45,6 +46,7 @@ public class EventHandler {
      */
     public void handle(CqTemplate cq, JSONObject eventJson) {
         EventUtil.set(eventJson);
+        Assert.allNotNull(cq.getPluginList());
 
         String postType = eventJson.getString("post_type");
         switch (postType) {
@@ -226,7 +228,7 @@ public class EventHandler {
                 var event = eventJson.to(CqHeartBeatMetaEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                        if (!(passObj = getPlugin(pluginClass).onHeartBeatMeta(cq, (CqHeartBeatMetaEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!(passObj = getPlugin(pluginClass).onHeartBeatMeta(cq, (CqHeartBeatMetaEvent) passObj.getParam().orElse(null))).isPass()) {
                         break;
                     }
                 }
@@ -236,7 +238,7 @@ public class EventHandler {
                 var event = eventJson.to(CqLifecycleMetaEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                        if (!(passObj = getPlugin(pluginClass).onLifecycleMeta(cq, (CqLifecycleMetaEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!(passObj = getPlugin(pluginClass).onLifecycleMeta(cq, (CqLifecycleMetaEvent) passObj.getParam().orElse(null))).isPass()) {
                         break;
                     }
                 }

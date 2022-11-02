@@ -1,10 +1,9 @@
 package com.dasoops.cq.mapper;
 
-import com.dasoops.cq.entity.po.PluginPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dasoops.cq.entity.po.PluginPo;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @Title: PluginMapper
@@ -18,12 +17,11 @@ import java.util.Optional;
 public interface PluginMapper extends BaseMapper<PluginPo> {
 
     /**
-     * 选择所有类路径
      * 获取所有插件全类名路径
      *
-     * @return {@link Optional}<{@link List}<{@link String}>>
+     * @return {@link List}<{@link String}>
      */
-    Optional<List<String>> selectAllClassPath();
+    List<String> selectAllClassPath();
 
 }
 

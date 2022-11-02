@@ -26,7 +26,7 @@
         ENABLE,IS_DELETE,CREATE_USER,
         CREATE_TIME,UPDATE_USER,UPDATE_TIME
     </sql>
-    <select id="selectAllClassPath" resultType="java.util.List">
+    <select id="selectAllClassPath" resultType="java.lang.String">
         SELECT CLASS_PATH
         FROM TB_CORE_PLUGIN
         WHERE ENABLE = TRUE

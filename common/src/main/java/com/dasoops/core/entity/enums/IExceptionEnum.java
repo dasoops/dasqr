@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.core.exception.enums;
+package com.dasoops.core.entity.enums;
 
 /**
  * @Title: BaseExceptionCode

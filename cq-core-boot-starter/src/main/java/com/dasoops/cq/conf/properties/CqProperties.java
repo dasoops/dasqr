@@ -1,45 +1,44 @@
 package com.dasoops.cq.conf.properties;
 
+import com.dasoops.cq.CqPlugin;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Title: CqProperties
- * @ClassPath com.dasoops.cq.boot.CqProperties
+ * @ClassPath com.dasoops.cq.conf.properties.CqProperties
  * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
+ * @Date 2022/11/02
  * @Version 1.0.0
- * @Description: cq参数
+ * @Description: cq属性
  */
-@ConfigurationProperties(prefix = "dasq.cq")
+@ConfigurationProperties(prefix = "dasq.cq.core")
 @Getter
 @Setter
 public class CqProperties {
 
     /**
-     * url
+     * 加载插件集合
      */
-    private String url = "/ws/DasServer/";
+    private List<Class<? extends CqPlugin>> pluginList = new ArrayList<>();
 
     /**
-     * 文本消息缓冲区大小
+     * 加载数据库插件配置
      */
-    private Integer maxTextMessageBufferSize = 512000;
+    private boolean loadLocalPluginList = false;
 
     /**
-     * 二进制消息缓冲区大小
+     * 控制台打印异常堆栈信息
      */
-    private Integer maxBinaryMessageBufferSize = 512000;
+    private boolean consolePrintStack = false;
 
     /**
-     * 连接最长闲置时间(默认15min)
+     * 使用jdk原生错误打印
      */
-    private Long maxSessionIdleTimeout = 15 * 60000L;
-
-    /**
-     * api超时时间(默认2min)
-     */
-    private Long apiTimeout = 120000L;
+    private boolean nativePrintStack = false;
 
 }

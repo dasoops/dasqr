@@ -4,7 +4,6 @@ import com.alibaba.fastjson2.JSONReader;
 import com.alibaba.fastjson2.JSONWriter;
 import com.alibaba.fastjson2.support.config.FastJsonConfig;
 import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageConverter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -24,7 +23,6 @@ import java.util.List;
  * @see WebMvcConfigurer
  */
 @Configuration
-@Slf4j
 public class FastJsonConfiguration implements WebMvcConfigurer {
 
     @Override

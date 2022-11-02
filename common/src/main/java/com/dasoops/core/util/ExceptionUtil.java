@@ -1,8 +1,8 @@
-package com.dasoops.dasserver.core.util;
+package com.dasoops.core.util;
 
-import com.dasoops.dasserver.core.exception.BaseCustomException;
-import com.dasoops.dasserver.core.exception.enums.ExceptionEnum;
-import com.dasoops.dasserver.core.exception.enums.IExceptionEnum;
+import com.dasoops.core.entity.enums.ExceptionEnum;
+import com.dasoops.core.entity.enums.IExceptionEnum;
+import com.dasoops.core.exception.BaseCustomException;
 
 /**
  * @Title: ExceptionUtil

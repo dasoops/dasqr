@@ -1,6 +1,8 @@
-package com.dasoops.cq.bot;
+package com.dasoops.cq.thread;
 
+import com.dasoops.core.util.Assert;
 import com.dasoops.cq.utils.EventUtil;
+import com.dasoops.cq.utils.entity.EventInfo;
 import lombok.NonNull;
 
 import java.util.concurrent.ThreadFactory;
@@ -8,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Title: NamedThreadFactory
- * @ClassPath com.dasoops.cq.bot.NamedThreadFactory
+ * @ClassPath com.dasoops.cq.threadfactory.NamedThreadFactory
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/11/01
  * @Version 1.0.0
@@ -28,7 +30,7 @@ public class NamedThreadFactory implements ThreadFactory {
 
     @Override
     public Thread newThread(@NonNull Runnable r) {
-        Thread t = new Thread(group, r, namePrefix + EventUtil.get().getMessageId(), 0);
+        Thread t = new Thread(group, r, namePrefix + Assert.notNullOrElse(EventUtil.get(), EventInfo::getMessageId, res -> "sys"), 0);
         if (t.isDaemon()) {
             t.setDaemon(false);
         }

@@ -1,17 +1,19 @@
 package com.dasoops.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dasoops.core.util.Assert;
+import com.dasoops.cq.CqPlugin;
 import com.dasoops.cq.entity.po.BasePo;
 import com.dasoops.cq.entity.po.PluginPo;
 import com.dasoops.cq.entity.po.RegisterMtmPluginPo;
-import com.dasoops.cq.service.PluginService;
 import com.dasoops.cq.mapper.PluginMapper;
+import com.dasoops.cq.service.PluginService;
 import com.dasoops.cq.service.RegisterMtmPluginService;
 import com.dasoops.cq.service.RegisterService;
-import com.dasoops.dasserver.core.util.Assert;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import com.dasoops.cq.CqPlugin;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -33,28 +35,27 @@ import java.util.stream.Collectors;
 public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
         implements PluginService {
 
-    private final PluginMapper pluginMapper;
-    private final RegisterService registerService;
-    private final RegisterMtmPluginService registerMtmPluginService;
+    @Autowired
+    private PluginMapper pluginMapper;
+    @Autowired
+    @Lazy
+    private RegisterService registerService;
+    @Autowired
+    private RegisterMtmPluginService registerMtmPluginService;
 
-    public PluginServiceImpl(PluginMapper pluginMapper, RegisterService registerService, RegisterMtmPluginService registerMtmPluginService) {
-        this.pluginMapper = pluginMapper;
-        this.registerService = registerService;
-        this.registerMtmPluginService = registerMtmPluginService;
-    }
 
     @Override
     @SuppressWarnings("unchecked")
-    public Optional<List<? extends Class<CqPlugin>>> getAllPluginClass() {
+    public Optional<List<Class<? extends CqPlugin>>> getAllPluginClass() {
         //获取所有类全路径
-        Optional<List<String>> classPathListOpt = pluginMapper.selectAllClassPath();
+        Optional<List<String>> classPathListOpt = Optional.ofNullable(pluginMapper.selectAllClassPath());
 
         if (classPathListOpt.isEmpty()) {
             return Optional.empty();
         }
 
         //根据类路径获取类对象
-        List<Class<CqPlugin>> resList = classPathListOpt.get().stream().map(classPath -> {
+        List<Class<? extends CqPlugin>> resList = classPathListOpt.get().stream().map(classPath -> {
             try {
                 return (Class<CqPlugin>) Class.forName(classPath);
             } catch (ClassNotFoundException e) {
@@ -73,8 +74,8 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(PluginPo pluginPo) {
-        Assert.notNull(pluginPo, pluginPo.getKeyword(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription());
-        Assert.isNull(pluginPo.getId());
+        Assert.allNotNull(pluginPo, pluginPo.getKeyword(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription());
+        Assert.allNull(pluginPo.getId());
 
         //默认启用,存储插件对象
         pluginPo.setEnable(1);
@@ -97,8 +98,8 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
     }
 
     @Override
-    public boolean updateByKeyword(PluginPo pluginPo){
-        Assert.isTrue(super.lambdaUpdate().eq(PluginPo::getKeyword,pluginPo.getKeyword()).update(pluginPo));
+    public boolean updateByKeyword(PluginPo pluginPo) {
+        Assert.isTrue(super.lambdaUpdate().eq(PluginPo::getKeyword, pluginPo.getKeyword()).update(pluginPo));
         return true;
     }
 

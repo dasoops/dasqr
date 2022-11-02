@@ -1,6 +1,5 @@
 package com.dasoops.dasserver.core;
 
-import com.dasoops.cq.EnableCq;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -13,7 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description: 应用程序
  */
 @SpringBootApplication
-@EnableCq
 public class DasServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(DasServerApplication.class,args);

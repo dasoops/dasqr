@@ -1,0 +1,20 @@
+dasq:
+  cq:
+    core:
+      consolePrintStack: true
+      loadLocalPluginList: true
+      pluginList:
+        - com.example.demo.plugin.DemoPlugin
+        - com.example.demo.plugin.TestPlugin
+        - com.example.demo.plugin.HelloPlugin
+      ws:
+        url: "/ws/DasServer/"
+        maxTextMessageBufferSize: 512000
+        maxBinaryMessageBufferSize: 512000
+        maxSessionIdleTimeout: 900000
+        apiTimeout: 120000
+      event:
+        corePoolSize: 5
+        maxPoolSize: 20
+        keepAliveTime: 2000
+        workQueueSize: 512

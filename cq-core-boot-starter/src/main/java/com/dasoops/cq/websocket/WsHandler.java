@@ -2,9 +2,16 @@ package com.dasoops.cq.websocket;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.dasoops.core.util.Assert;
 import com.dasoops.cq.CqGlobal;
-import com.dasoops.cq.bot.*;
+import com.dasoops.cq.bot.ApiHandler;
+import com.dasoops.cq.bot.CqFactory;
+import com.dasoops.cq.bot.CqTemplate;
+import com.dasoops.cq.bot.EventHandler;
+import com.dasoops.cq.conf.properties.CqProperties;
 import com.dasoops.cq.conf.properties.EventProperties;
+import com.dasoops.cq.exception.wrapper.ExceptionWrapper;
+import com.dasoops.cq.thread.NamedThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.web.socket.CloseStatus;
@@ -35,8 +42,10 @@ public class WsHandler extends TextWebSocketHandler {
     private final ApiHandler apiHandler;
     private final EventHandler eventHandler;
     private final ExecutorService executor;
+    private final CqProperties cqProperties;
+    private final ExceptionWrapper exceptionWrapper;
 
-    public WsHandler(CqFactory cqFactory, ApiHandler apiHandler, EventHandler eventHandler, EventProperties eventProperties) {
+    public WsHandler(CqFactory cqFactory, ApiHandler apiHandler, EventHandler eventHandler, EventProperties eventProperties, ExceptionWrapper exceptionWrapper, CqProperties cqProperties) {
         this.cqFactory = cqFactory;
         this.apiHandler = apiHandler;
         this.eventHandler = eventHandler;
@@ -46,8 +55,9 @@ public class WsHandler extends TextWebSocketHandler {
                 eventProperties.getKeepAliveTime(),
                 TimeUnit.MILLISECONDS,
                 new ArrayBlockingQueue<>(eventProperties.getWorkQueueSize()),
-                new NamedThreadFactory("wsHandler")
-        );
+                new NamedThreadFactory("wsHandler"));
+        this.cqProperties = cqProperties;
+        this.exceptionWrapper = exceptionWrapper;
     }
 
     /**
@@ -107,10 +117,19 @@ public class WsHandler extends TextWebSocketHandler {
         } else {
             //是cq消息上报
             CqTemplate finalCqTemplate = cqTemplate;
-            executor.execute(() -> eventHandler.handle(finalCqTemplate, messageObj));
+            log.info("接收到消息:{}", JSON.toJSONString(message));
+            executor.execute(() -> {
+                try {
+                    eventHandler.handle(finalCqTemplate, messageObj);
+                } catch (Exception e) {
+                    //异常处理
+                    Assert.isTrue(cqProperties.isConsolePrintStack(), () -> {
+                        Assert.isTrueOrElse(cqProperties.isNativePrintStack(), e::printStackTrace, () -> log.error("消息处理发生异常: {}", e.getMessage()));
+                    });
+                    Assert.notNull(exceptionWrapper, () -> exceptionWrapper.invoke(e));
+                }
+            });
         }
-
-        log.info("get message:{}", JSON.toJSONString(message));
     }
 
     /**

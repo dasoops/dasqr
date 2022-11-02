@@ -2,7 +2,6 @@ package com.dasoops.cq.conf;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +16,6 @@ import org.springframework.context.annotation.Configuration;
  * @see MetaObjectHandler
  */
 @Configuration
-@Slf4j
 public class MybatisPlusConfiguration {
 
     @Bean

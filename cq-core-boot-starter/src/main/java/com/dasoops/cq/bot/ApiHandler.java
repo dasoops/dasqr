@@ -3,7 +3,7 @@ package com.dasoops.cq.bot;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson2.JSONObject;
-import com.dasoops.cq.conf.properties.CqProperties;
+import com.dasoops.cq.conf.properties.WsProperties;
 import com.dasoops.cq.entity.enums.ApiEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.WebSocketSession;
@@ -28,10 +28,10 @@ public class ApiHandler {
      */
     private final Map<String, ApiSender> callBackMap = new HashMap<>(16);
 
-    private final CqProperties cqProperties;
+    private final WsProperties wsProperties;
 
-    public ApiHandler(CqProperties cqProperties) {
-        this.cqProperties = cqProperties;
+    public ApiHandler(WsProperties wsProperties) {
+        this.wsProperties = wsProperties;
     }
 
     /**
@@ -40,7 +40,7 @@ public class ApiHandler {
      * @param responseJson json响应
      * @return {@link JSONObject}
      */
-    public void onReceiveApiMessage(JSONObject responseJson){
+    public void onReceiveApiMessage(JSONObject responseJson) {
         //获取回音
         String echo = getEcho(responseJson);
         //获取调用的apiSender对象
@@ -60,7 +60,7 @@ public class ApiHandler {
      * @throws InterruptedException 中断异常
      */
     public JSONObject sendApiMessage(WebSocketSession botSession, ApiEnum apiEnum, JSONObject params) throws IOException, InterruptedException {
-        ApiSender apiSender = new ApiSender(botSession, cqProperties.getApiTimeout());
+        ApiSender apiSender = new ApiSender(botSession, wsProperties.getApiTimeout());
         //构建请求参数
         JSONObject apiJson = buildRequestJson(apiEnum, params);
         //以回音为key存入callBackMap

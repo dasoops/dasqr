@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @Version 1.0.0
  * @Description: 事件参数
  */
-@ConfigurationProperties(prefix = "dasq.cq.event")
+@ConfigurationProperties(prefix = "dasq.cq.core.event")
 @Getter
 @Setter
 public class EventProperties {
