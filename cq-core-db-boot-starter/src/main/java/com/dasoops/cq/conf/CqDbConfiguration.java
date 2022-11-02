@@ -28,7 +28,7 @@ public class CqDbConfiguration {
 
     @Bean
     @ConditionalOnProperty(prefix = "dasq.cq.core", name = "loadLocalPluginList", havingValue = "false", matchIfMissing = true)
-    public CqFactory CqFactory(
+    public CqFactory cqFactory(
             @Autowired(required = false) ApiHandler apiHandler,
             @Autowired(required = false) CqProperties cqProperties,
             @Autowired(required = false) PluginService pluginService) {
