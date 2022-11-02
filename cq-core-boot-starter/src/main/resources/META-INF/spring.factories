@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.dasoops.cq.conf.CqConfiguration
+  com.dasoops.dasserver.cq.conf.CqConfiguration,\
+  com.dasoops.dasserver.cq.conf.CqBeanConfiguration

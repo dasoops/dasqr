@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cq-core-boot-starter</artifactId>
-        <groupId>com.dasoops</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath />
+        <artifactId>dasServer</artifactId>
+        <groupId>com.dasoops.dasserver</groupId>
+        <version>0.0.1</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
     <artifactId>cq-core-db-boot-starter</artifactId>
+    <version>0.0.1</version>
     <description>dasServer cq模块核心 database部分</description>
+    <modelVersion>4.0.0</modelVersion>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -18,6 +18,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.dasoops</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -27,11 +32,10 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.2</version>
         </dependency>
 
         <dependency>
-            <groupId>com.dasoops</groupId>
+            <groupId>com.dasoops.dasserver</groupId>
             <artifactId>cq-core-boot-starter</artifactId>
         </dependency>
     </dependencies>

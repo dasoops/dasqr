@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dasoops.cq.mapper.PluginMapper">
+<mapper namespace="com.dasoops.dasserver.cq.mapper.PluginMapper">
 
-    <resultMap id="BaseResultMap" type="com.dasoops.cq.entity.po.PluginPo">
+    <resultMap id="BaseResultMap" type="com.dasoops.dasserver.cq.entity.po.PluginPo">
         <id property="id" column="ID" jdbcType="INTEGER"/>
         <result property="keyword" column="KEYWORD" jdbcType="VARCHAR"/>
         <result property="classPath" column="CLASS_PATH" jdbcType="VARCHAR"/>

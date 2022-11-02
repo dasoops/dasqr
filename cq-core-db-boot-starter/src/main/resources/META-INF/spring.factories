@@ -1,2 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    com.dasoops.cq.conf.CqDbConfiguration
+  com.dasoops.dasserver.cq.conf.CqDbConfiguration,\
+  com.dasoops.dasserver.cq.conf.ParameterFillConfiguration,\
+  com.dasoops.dasserver.cq.conf.MybatisPlusConfiguration
