@@ -46,17 +46,35 @@ public class ExceptionUtil {
         throw new BaseCustomException(ExceptionEnum.DB_EXECUTE_FAILED);
     }
 
-    public static void buildDbExecuteResIsZero() {
+    public static void buildDbExecuteReturnIsZero() {
         throw new BaseCustomException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_ZERO);
     }
 
-    public static void buildIsTrue(){
+    public static void buildIsTrue() {
         throw new BaseCustomException(ExceptionEnum.IS_TRUE);
     }
 
-    public static void buildIsFalse(){
+    public static void buildIsFalse() {
         throw new BaseCustomException(ExceptionEnum.IS_FALSE);
     }
 
+    public static void buildNoCqConnection() {
+        throw new BaseCustomException(ExceptionEnum.NO_CQ_CONNECTION);
+    }
 
+    public static void buildRedisDataNotNull() {
+        throw new BaseCustomException(ExceptionEnum.REDIS_DATA_NOT_NULL);
+    }
+
+    public static void buildDbExecuteReturnNotNull() {
+        throw new BaseCustomException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_NULL);
+    }
+
+    public static void buildDbExecuteReturnNotFalse() {
+        throw new BaseCustomException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_FALSE);
+    }
+
+    public static void buildCqReturnFailed(String message) {
+        throw new BaseCustomException(ExceptionEnum.CQ_RETURN_FAILED, message);
+    }
 }

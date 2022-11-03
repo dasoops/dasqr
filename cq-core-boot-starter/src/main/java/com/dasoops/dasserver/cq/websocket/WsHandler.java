@@ -108,7 +108,7 @@ public class WsHandler extends TextWebSocketHandler {
             CqGlobal.robots.put(qid, cqTemplate);
             log.info("触发快速重连(真的能触发吗,没懂)");
         }
-        cqTemplate.setSession(session);
+        cqTemplate.setBotSession(session);
 
         JSONObject messageObj = JSON.parseObject(message.getPayload());
         if (isReturn(messageObj)) {

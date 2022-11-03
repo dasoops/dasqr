@@ -21,7 +21,7 @@ public interface PluginMapper extends BaseMapper<PluginPo> {
      *
      * @return {@link List}<{@link String}>
      */
-    List<String> selectAllClassPath();
+    List<String> selectAllClassPathOrderByOrder();
 
 }
 

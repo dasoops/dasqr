@@ -65,9 +65,9 @@
             </dependency>
 
             <dependency>
-                <groupId>com.dasoops</groupId>
+                <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>common</artifactId>
-                <version>${cq.version}</version>
+                <version>0.0.1</version>
             </dependency>
 
             <!-- DasServer plugin -->

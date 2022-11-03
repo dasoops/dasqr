@@ -34,6 +34,11 @@ public class PluginPo extends BasePo implements Serializable {
     private String classPath;
 
     /**
+     * 排序
+     */
+    private Integer order;
+
+    /**
      * 权限等级
      */
     private Integer level;

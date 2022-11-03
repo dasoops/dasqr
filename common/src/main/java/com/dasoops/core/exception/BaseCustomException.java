@@ -40,7 +40,7 @@ public class BaseCustomException extends RuntimeException {
 
     public BaseCustomException(IExceptionEnum exceptionEnum, String message) {
         this.exceptionEnum = exceptionEnum;
-        this.message = message;
+        this.message = StrUtil.format("errorData:{}\r\n{}", message, getStackInfo());
     }
 
     /**

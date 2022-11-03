@@ -22,6 +22,6 @@ public class TemplatePlugin extends CqPlugin {
     @Override
     public PassObj onPrivateMessage(CqTemplate cqTemplate, CqPrivateMessageEvent event) {
         log.info("你收到了一条消息:{} --来自TemplatePlugin", event.getMessage());
-        return super.onPrivateMessage(cqTemplate, event);
+        return PassObj.pass();
     }
 }

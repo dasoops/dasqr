@@ -41,4 +41,19 @@ public class CqProperties {
      */
     private boolean nativePrintStack = false;
 
+    /**
+     * 是否为demo环境
+     */
+    private boolean isDemo = true;
+
+    /**
+     * 开发群id
+     */
+    private int devGroupId;
+
+    /**
+     * 主开发者id
+     */
+    private int devUserId;
+
 }

@@ -59,7 +59,7 @@ public class ApiHandler {
      * @throws IOException          IoException
      * @throws InterruptedException 中断异常
      */
-    public JSONObject sendApiMessage(WebSocketSession botSession, ApiEnum apiEnum, JSONObject params) throws IOException, InterruptedException {
+    public JSONObject sendApiMessage(WebSocketSession botSession, ApiEnum apiEnum, JSONObject params) {
         ApiSender apiSender = new ApiSender(botSession, wsProperties.getApiTimeout());
         //构建请求参数
         JSONObject apiJson = buildRequestJson(apiEnum, params);
@@ -74,6 +74,48 @@ public class ApiHandler {
             responseJson = buildErrorResponseJson(e);
         }
         return responseJson;
+    }
+
+    /**
+     * 发送cusmon api消息
+     *
+     * @param botSession botSession
+     * @param apiRequest api请求
+     * @return {@link JSONObject}
+     * @throws IOException          IoException
+     * @throws InterruptedException 中断异常
+     */
+    public JSONObject sendCusmonApiMessage(WebSocketSession botSession, IApiRequest apiRequest) throws IOException, InterruptedException {
+        ApiSender apiSender = new ApiSender(botSession, wsProperties.getApiTimeout());
+        //构建请求参数
+        JSONObject apiJson = buildRequestJson(apiRequest);
+        //以回音为key存入callBackMap
+        String echo = getEcho(apiJson);
+        callBackMap.put(echo, apiSender);
+        //发起请求
+        JSONObject responseJson;
+        try {
+            responseJson = apiSender.sendApiJson(apiJson);
+        } catch (Exception e) {
+            responseJson = buildErrorResponseJson(e);
+        }
+        return responseJson;
+    }
+
+    /**
+     * 构建json请求参数
+     *
+     * @param apiRequest api请求
+     * @return {@link JSONObject}
+     */
+    private JSONObject buildRequestJson(IApiRequest apiRequest) {
+        JSONObject apiJson = new JSONObject();
+        apiJson.put("action", apiRequest.getUrl());
+        apiJson.put("echo", IdUtil.fastSimpleUUID());
+        if (!apiRequest.getParams().isEmpty()) {
+            apiJson.put("params", apiRequest.getParams());
+        }
+        return apiJson;
     }
 
     /**

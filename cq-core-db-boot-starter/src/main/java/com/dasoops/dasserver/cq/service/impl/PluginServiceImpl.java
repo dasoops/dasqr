@@ -48,7 +48,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
     @SuppressWarnings("unchecked")
     public Optional<List<Class<? extends CqPlugin>>> getAllPluginClass() {
         //获取所有类全路径
-        Optional<List<String>> classPathListOpt = Optional.ofNullable(pluginMapper.selectAllClassPath());
+        Optional<List<String>> classPathListOpt = Optional.ofNullable(pluginMapper.selectAllClassPathOrderByOrder());
 
         if (classPathListOpt.isEmpty()) {
             return Optional.empty();
@@ -63,6 +63,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
                 return null;
             }
         }).collect(Collectors.toList());
+
         return Optional.of(resList);
     }
 
@@ -74,7 +75,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(PluginPo pluginPo) {
-        Assert.allNotNull(pluginPo, pluginPo.getKeyword(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription());
+        Assert.allNotNull(pluginPo, pluginPo.getKeyword(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription(), pluginPo.getOrder());
         Assert.allNull(pluginPo.getId());
 
         //默认启用,存储插件对象

@@ -20,7 +20,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.dasoops</groupId>
+            <groupId>com.dasoops.dasserver</groupId>
             <artifactId>common</artifactId>
         </dependency>
         <dependency>

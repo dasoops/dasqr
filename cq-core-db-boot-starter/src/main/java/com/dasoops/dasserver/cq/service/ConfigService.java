@@ -23,7 +23,7 @@ public interface ConfigService extends IService<ConfigPo> {
      * @param config 配置
      * @return {@link Optional}<{@link String}>
      */
-    Optional<String> getConfig(ConfigEnum config);
+    String getConfig(ConfigEnum config);
 
     /**
      * 更新版本
@@ -31,6 +31,6 @@ public interface ConfigService extends IService<ConfigPo> {
      * @param version 版本
      * @return boolean 是否成功
      */
-    boolean updateVersion(Integer version);
+    Integer updateVersion(Integer version);
 
 }

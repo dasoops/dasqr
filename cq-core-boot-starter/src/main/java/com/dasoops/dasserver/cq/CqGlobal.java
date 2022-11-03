@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @Title: WsConnection
@@ -23,4 +24,8 @@ public class CqGlobal {
      * Map<QId,CqTemplate>
      */
     public static Map<Long, CqTemplate> robots = new HashMap<>();
+
+    public static Optional<CqTemplate> findFirst(){
+        return CqGlobal.robots.values().stream().findFirst();
+    }
 }

@@ -159,7 +159,7 @@ public class CqCodeUtil {
      * @param qq 被@的群成员帐号
      * @return [CQ:at,qq={1}]
      */
-    public static String at(Long qq) {
+    public static String at(int qq) {
         return buildCqCode("image", Map.of("qq", qq));
     }
 

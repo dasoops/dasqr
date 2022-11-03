@@ -22,6 +22,12 @@ public enum ExceptionEnum implements IExceptionEnum {
     UN_EXPECTED(65535, "预料之外的错误"),
 
     /**
+     * CqHttp异常
+     */
+    NO_CQ_CONNECTION(2001, "没有CqHttp连接"),
+    CQ_RETURN_FAILED(2002, "CqHttp调用失败"),
+
+    /**
      * 通用异常
      */
     IS_TRUE(3001, "值必须为true"),
@@ -40,6 +46,13 @@ public enum ExceptionEnum implements IExceptionEnum {
     DB_CONNECTION_ERROR(5001, "数据库连接异常"),
     DB_EXECUTE_FAILED(5002, "数据库操作失败"),
     DB_EXECUTE_RETURN_NOT_ZERO(5003, "数据库执行生效记录数为0"),
+    DB_EXECUTE_RETURN_NOT_NULL(5004, "数据库返回不应为null"),
+    DB_EXECUTE_RETURN_NOT_FALSE(5005, "数据库返回不应为false"),
+
+    /**
+     * 缓存异常
+     */
+    REDIS_DATA_NOT_NULL(6001, "redis数据不应为空"),
 
     ;
 

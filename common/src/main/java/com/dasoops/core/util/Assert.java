@@ -13,7 +13,6 @@ import java.util.function.Function;
  * @Description: 断言
  */
 public class Assert {
-
     /**
      * 对象非空
      *
@@ -168,7 +167,14 @@ public class Assert {
      */
     public static void dbExecuteResNotZero(Integer count) {
         if (count <= 0) {
-            ExceptionUtil.buildDbExecuteResIsZero();
+            ExceptionUtil.buildDbExecuteReturnIsZero();
+        }
+    }
+
+    public static void isNotFailed(String status,String message) {
+        String failed = "failed";
+        if (failed.equals(status)) {
+            ExceptionUtil.buildCqReturnFailed(message);
         }
     }
 
