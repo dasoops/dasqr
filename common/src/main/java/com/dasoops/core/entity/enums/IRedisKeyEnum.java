@@ -10,6 +10,12 @@ package com.dasoops.core.entity.enums;
  */
 public interface IRedisKeyEnum {
 
+    String CORE = "core:";
+    String CORE_CONFIG = CORE + "config:";
+    String CORE_EXCEPTION = CORE + "core:exception:";
+
+    String PLUGIN = "plugin:";
+
     /**
      * 获取key
      *

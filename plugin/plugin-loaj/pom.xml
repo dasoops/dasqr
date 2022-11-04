@@ -7,9 +7,9 @@
         <groupId>com.dasoops.dasserver</groupId>
         <version>0.0.1</version>
     </parent>
-    <artifactId>core</artifactId>
+    <artifactId>plugin-loaj</artifactId>
     <version>0.0.1</version>
-    <description>dasserver 启动模块</description>
+    <description>dasServer plugin 旧世整合包</description>
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
@@ -21,31 +21,15 @@
     <dependencies>
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>plugin-core</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>cq-core-db-boot-starter</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>plugin-gitNotice</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>plugin-sys-exceptionWrapper</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>plugin-log</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>plugin-loaj</artifactId>
+            <artifactId>common</artifactId>
         </dependency>
     </dependencies>
 

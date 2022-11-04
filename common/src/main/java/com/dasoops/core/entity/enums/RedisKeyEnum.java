@@ -14,7 +14,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum RedisKeyEnum {
+public enum RedisKeyEnum implements IRedisKeyEnum{
 
 
     ;
@@ -22,5 +22,5 @@ public enum RedisKeyEnum {
     /**
      * 描述
      */
-    final String redisKey;
+    final String key;
 }

@@ -2,14 +2,13 @@ package com.dasoops.dasserver.cq.cache;
 
 import com.dasoops.core.util.Assert;
 import com.dasoops.core.util.ExceptionUtil;
-import com.dasoops.dasserver.cq.cache.enums.ConfigKeyEnum;
+import com.dasoops.dasserver.cq.entity.enums.ConfigKeyEnum;
 import com.dasoops.dasserver.cq.entity.enums.ConfigEnum;
 import com.dasoops.dasserver.cq.service.ConfigService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Optional;
 
 /**
  * @Title: ConfigCache
