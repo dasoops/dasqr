@@ -54,6 +54,10 @@ public enum ExceptionEnum implements IExceptionEnum {
      */
     REDIS_DATA_NOT_NULL(6001, "redis数据不应为空"),
 
+    /**
+     * 系统异常
+     */
+    PLUGIN_NOT_FOUNT(7001, "插件装配异常"),
     ;
 
     /**

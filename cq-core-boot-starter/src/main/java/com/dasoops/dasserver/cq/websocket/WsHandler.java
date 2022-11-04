@@ -2,6 +2,7 @@ package com.dasoops.dasserver.cq.websocket;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.dasoops.core.exception.BaseCustomException;
 import com.dasoops.core.util.Assert;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.bot.ApiHandler;
@@ -68,7 +69,7 @@ public class WsHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) {
-        long qid = getQid(session);
+        Long qid = getQid(session);
         log.info("{} connection", qid);
 
         //创建CqTemplate,存入CqGlobal方便取用
@@ -85,7 +86,7 @@ public class WsHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus closeStatus) {
-        long qid = getQid(session);
+        Long qid = getQid(session);
         log.info("{} close connection", qid);
 
         CqGlobal.robots.remove(qid);
@@ -100,7 +101,7 @@ public class WsHandler extends TextWebSocketHandler {
      */
     @Override
     public void handleTextMessage(@NonNull WebSocketSession session, @NonNull TextMessage message) {
-        long qid = getQid(session);
+        Long qid = getQid(session);
         CqTemplate cqTemplate = CqGlobal.robots.get(qid);
 
         if (cqTemplate == null) {
@@ -117,14 +118,13 @@ public class WsHandler extends TextWebSocketHandler {
         } else {
             //是cq消息上报
             CqTemplate finalCqTemplate = cqTemplate;
-            log.info("接收到消息:{}", JSON.toJSONString(message));
             executor.execute(() -> {
                 try {
                     eventHandler.handle(finalCqTemplate, messageObj);
                 } catch (Exception e) {
                     //异常处理
                     Assert.isTrue(cqProperties.isConsolePrintStack(), () -> {
-                        Assert.isTrueOrElse(cqProperties.isNativePrintStack(), e::printStackTrace, () -> log.error("消息处理发生异常: {}", e.getMessage()));
+                        Assert.isTrueOrElse(cqProperties.isNativePrintStack(), e::printStackTrace, () -> log.error("消息处理发生异常: {}", e instanceof BaseCustomException ? ((BaseCustomException) e).getStackMessage() : e));
                     });
                     Assert.notNull(exceptionWrapper, () -> exceptionWrapper.invoke(e));
                 }
@@ -138,10 +138,10 @@ public class WsHandler extends TextWebSocketHandler {
      * @param session 会话
      * @return long
      */
-    private long getQid(WebSocketSession session) {
+    private Long getQid(WebSocketSession session) {
         final String headerQid = "x-self-id";
         String qid = Objects.requireNonNull(session.getHandshakeHeaders().get(headerQid)).get(0);
-        return Long.parseLong(qid);
+        return Long.valueOf(qid);
     }
 
     private boolean isReturn(JSONObject messageObj) {

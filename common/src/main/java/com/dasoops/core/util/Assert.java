@@ -92,6 +92,18 @@ public class Assert {
     }
 
     /**
+     * 对象非空时执行function,为空时执行orElseFunction
+     *
+     * @param obj obj
+     */
+    public static <T> void notNullOrElse(T obj, NoneFunction function, NoneFunction orElseFunction) {
+        if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
+            function.invoke();
+        }
+        orElseFunction.invoke();
+    }
+
+    /**
      * 结果为真
      *
      * @param bool boolean
@@ -123,6 +135,8 @@ public class Assert {
     public static void isTrueOrElse(Boolean bool, NoneFunction function, NoneFunction orElseFunction) {
         if (bool) {
             function.invoke();
+        } else {
+            orElseFunction.invoke();
         }
     }
 
@@ -171,7 +185,7 @@ public class Assert {
         }
     }
 
-    public static void isNotFailed(String status,String message) {
+    public static void isNotFailed(String status, String message) {
         String failed = "failed";
         if (failed.equals(status)) {
             ExceptionUtil.buildCqReturnFailed(message);

@@ -26,9 +26,9 @@ public class GitNoticeProperties {
     /**
      * notice 群组id
      */
-    private int noticeGroupId;
+    private Long noticeGroupId;
     /**
      * notice at用户id
      */
-    private int noticeUserId;
+    private Long noticeUserId;
 }

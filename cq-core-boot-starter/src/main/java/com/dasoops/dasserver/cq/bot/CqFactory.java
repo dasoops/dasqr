@@ -29,7 +29,7 @@ public class CqFactory {
         this.pluginList = pluginList;
     }
 
-    public CqTemplate create(long selfId, WebSocketSession webSocketSession) {
+    public CqTemplate create(Long selfId, WebSocketSession webSocketSession) {
         return new CqTemplate(selfId, webSocketSession, apiHandler, pluginList);
     }
 }

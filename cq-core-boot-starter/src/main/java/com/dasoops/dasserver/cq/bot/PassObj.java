@@ -33,17 +33,6 @@ public class PassObj {
     }
 
     /**
-     * 放行
-     *
-     * @return {@link PassObj}
-     */
-    public static PassObj pass() {
-        PassObj passObj = new PassObj();
-        passObj.isPass = true;
-        return passObj;
-    }
-
-    /**
      * 带参放行,参数将传递给下一个拦截器
      *
      * @param param 参数

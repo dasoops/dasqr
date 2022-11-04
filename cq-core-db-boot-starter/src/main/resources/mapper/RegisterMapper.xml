@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.dasoops.dasserver.cq.entity.po.RegisterPo">
             <id property="id" column="ID" jdbcType="INTEGER"/>
-            <result property="registerId" column="REGISTER_ID" jdbcType="INTEGER"/>
+            <result property="registerId" column="REGISTER_ID" jdbcType="BIGINT"/>
             <result property="type" column="TYPE" jdbcType="TINYINT"/>
             <result property="level" column="LEVEL" jdbcType="TINYINT"/>
             <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>

@@ -28,10 +28,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onPrivateMessage(CqTemplate cqTemplate, CqPrivateMessageEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -39,10 +39,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onGroupMessage(CqTemplate cqTemplate, CqGroupMessageEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -50,10 +50,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onDiscussMessage(CqTemplate cqTemplate, CqDiscussMessageEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -62,10 +62,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onGroupUploadNotice(CqTemplate cqTemplate, CqGroupUploadNoticeEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -73,10 +73,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onGroupAdminNotice(CqTemplate cqTemplate, CqGroupAdminNoticeEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -84,10 +84,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onGroupDecreaseNotice(CqTemplate cqTemplate, CqGroupDecreaseNoticeEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -95,10 +95,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onGroupIncreaseNotice(CqTemplate cqTemplate, CqGroupIncreaseNoticeEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -106,10 +106,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onGroupBanNotice(CqTemplate cqTemplate, CqGroupBanNoticeEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -117,10 +117,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onFriendAddNotice(CqTemplate cqTemplate, CqFriendAddNoticeEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -128,10 +128,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onFriendRequest(CqTemplate cqTemplate, CqFriendRequestEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -139,10 +139,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onGroupRequest(CqTemplate cqTemplate, CqGroupRequestEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -151,10 +151,10 @@ public class CqPlugin {
      *
      * @param cqTemplate    机器人对象
      * @param event 事件内容
-     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass()表示继续
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
     public PassObj onHeartBeatMeta(CqTemplate cqTemplate, CqHeartBeatMetaEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 
     /**
@@ -165,6 +165,6 @@ public class CqPlugin {
      * @return {@link PassObj}
      */
     public PassObj onLifecycleMeta(CqTemplate cqTemplate, CqLifecycleMetaEvent event) {
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
 }

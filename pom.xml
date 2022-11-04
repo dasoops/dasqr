@@ -8,6 +8,8 @@
         <module>core</module>
         <module>cq-core-db-boot-starter</module>
         <module>plugin/plugin-gitNotice</module>
+        <module>plugin/plugin-sys-exceptionWrapper</module>
+        <module>cq-core-mongo-boot-starter</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -60,6 +62,12 @@
 
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>cq-core-mongo-boot-starter</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-core</artifactId>
                 <version>${cq.version}</version>
             </dependency>
@@ -67,13 +75,25 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>common</artifactId>
-                <version>0.0.1</version>
+                <version>${cq.version}</version>
             </dependency>
 
             <!-- DasServer plugin -->
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-gitNotice</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-sys-exceptionWrapper</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-log</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 

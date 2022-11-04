@@ -25,7 +25,7 @@ public class RegisterPo extends BasePo implements Serializable {
     /**
      * 用户/群组id
      */
-    private Integer registerId;
+    private Long registerId;
 
     /**
      * 类型(0:user;1:group)

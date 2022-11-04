@@ -21,9 +21,9 @@ public enum GitNoticeTypeEnum {
     CORE_GROUP_AT_USER("coreGroupAtUser"),
     CORE_GROUP("coreGroup"),
     CORE_PRIVATE("corePrivate"),
-    GROUP_AT_USER("GroupAtUser"),
-    GROUP("Group"),
-    PRIVATE("Private"),
+    GROUP_AT_USER("groupAtUser"),
+    GROUP("group"),
+    PRIVATE("private"),
 
     ;
 

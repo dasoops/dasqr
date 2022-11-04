@@ -23,8 +23,6 @@ import org.springframework.context.annotation.Import;
  */
 @ComponentScan("com.dasoops.dasserver.cq")
 @MapperScan("com.dasoops.dasserver.cq.mapper")
-//@Import({MybatisPlusConfiguration.class, ParameterFillConfiguration.class})
-//@EnableAutoConfiguration
 public class CqDbConfiguration {
 
     @Bean

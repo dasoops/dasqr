@@ -30,7 +30,7 @@ public class CqTemplate {
     private List<Class<? extends CqPlugin>> pluginList;
     private long selfId;
 
-    public CqTemplate(int selfId, WebSocketSession botSession, ApiHandler apiHandler, List<Class<? extends CqPlugin>> pluginList) {
+    public CqTemplate(Long selfId, WebSocketSession botSession, ApiHandler apiHandler, List<Class<? extends CqPlugin>> pluginList) {
         this.selfId = selfId;
         this.botSession = botSession;
         this.apiHandler = apiHandler;
@@ -59,7 +59,7 @@ public class CqTemplate {
      * @param autoEscape 消息内容是否作为纯文本发送（即不解析 CQ 码），只在 message 字段是字符串时有效
      * @return 结果
      */
-    public ApiData<MessageData> sendPrivateMsg(int qId, String message, boolean autoEscape) {
+    public ApiData<MessageData> sendPrivateMsg(Long qId, String message, boolean autoEscape) {
         ApiEnum action = ApiEnum.SEND_PRIVATE_MSG;
 
         JSONObject params = new JSONObject();
@@ -80,7 +80,7 @@ public class CqTemplate {
      * @param autoEscape 消息内容是否作为纯文本发送（即不解析 CQ 码），只在 message 字段是字符串时有效
      * @return 结果
      */
-    public ApiData<MessageData> sendGroupMsg(int groupId, String message, boolean autoEscape) {
+    public ApiData<MessageData> sendGroupMsg(Long groupId, String message, boolean autoEscape) {
 
         ApiEnum action = ApiEnum.SEND_GROUP_MSG;
 
@@ -102,7 +102,7 @@ public class CqTemplate {
      * @param autoEscape 消息内容是否作为纯文本发送（即不解析 CQ 码），只在 message 字段是字符串时有效
      * @return 结果
      */
-    public ApiData<MessageData> sendDiscussMsg(int discussId, String message, boolean autoEscape){
+    public ApiData<MessageData> sendDiscussMsg(Long discussId, String message, boolean autoEscape){
         ApiEnum action = ApiEnum.SEND_DISCUSS_MSG;
 
         JSONObject params = new JSONObject();
@@ -121,7 +121,7 @@ public class CqTemplate {
      * @param messageId 消息 ID
      * @return 结果
      */
-    public ApiRawData deleteMsg(int messageId){
+    public ApiRawData deleteMsg(String messageId){
         ApiEnum action = ApiEnum.DELETE_MSG;
 
         JSONObject params = new JSONObject();
@@ -138,7 +138,7 @@ public class CqTemplate {
      * @param times   赞的次数，每个好友每天最多 10 次
      * @return 结果
      */
-    public ApiRawData sendLike(int userId, Integer times){
+    public ApiRawData sendLike(Long userId, Integer times){
         ApiEnum action = ApiEnum.SEND_LIKE;
 
         JSONObject params = new JSONObject();
@@ -157,7 +157,7 @@ public class CqTemplate {
      * @param rejectAddRequest 拒绝此人的加群请求
      * @return 结果
      */
-    public ApiRawData setGroupKick(int groupId, int userId, boolean rejectAddRequest){
+    public ApiRawData setGroupKick(Long groupId, Long userId, boolean rejectAddRequest){
         ApiEnum action = ApiEnum.SET_GROUP_KICK;
 
         JSONObject params = new JSONObject();
@@ -177,7 +177,7 @@ public class CqTemplate {
      * @param duration 禁言时长，单位秒，0 表示取消禁言
      * @return 结果
      */
-    public ApiRawData setGroupBan(int groupId, int userId, long duration) {
+    public ApiRawData setGroupBan(Long groupId, Long userId, long duration) {
         ApiEnum action = ApiEnum.SET_GROUP_BAN;
 
         JSONObject params = new JSONObject();
@@ -197,7 +197,7 @@ public class CqTemplate {
      * @param duration         禁言时长，单位秒，无法取消匿名用户禁言
      * @return 结果
      */
-    public ApiRawData setGroupAnonymousBan(int groupId, CqGroupAnonymous cqGroupAnonymous, boolean duration) {
+    public ApiRawData setGroupAnonymousBan(Long groupId, CqGroupAnonymous cqGroupAnonymous, boolean duration) {
         ApiEnum action = ApiEnum.SET_GROUP_ANONYMOUS_BAN;
 
         JSONObject params = new JSONObject();
@@ -217,7 +217,7 @@ public class CqTemplate {
      * @param duration 禁言时长，单位秒，无法取消匿名用户禁言
      * @return 结果
      */
-    public ApiRawData setGroupAnonymousBan(int groupId, String flag, boolean duration) {
+    public ApiRawData setGroupAnonymousBan(Long groupId, String flag, boolean duration) {
         ApiEnum action = ApiEnum.SET_GROUP_ANONYMOUS_BAN;
 
         JSONObject params = new JSONObject();
@@ -236,7 +236,7 @@ public class CqTemplate {
      * @param enable   是否禁言
      * @return 结果
      */
-    public ApiRawData setGroupWholeBan(int groupId, boolean enable) {
+    public ApiRawData setGroupWholeBan(Long groupId, boolean enable) {
         ApiEnum action = ApiEnum.SET_GROUP_WHOLE_BAN;
         JSONObject params = new JSONObject();
         params.put("group_id", groupId);
@@ -254,7 +254,7 @@ public class CqTemplate {
      * @param enable   true 为设置，false 为取消
      * @return 结果
      */
-    public ApiRawData setGroupAdmin(int groupId, int userId, boolean enable) {
+    public ApiRawData setGroupAdmin(Long groupId, Long userId, boolean enable) {
         ApiEnum action = ApiEnum.SET_GROUP_ADMIN;
 
         JSONObject params = new JSONObject();
@@ -273,7 +273,7 @@ public class CqTemplate {
      * @param enable   是否允许匿名聊天
      * @return 结果
      */
-    public ApiRawData setGroupAnonymous(int groupId, boolean enable) {
+    public ApiRawData setGroupAnonymous(Long groupId, boolean enable) {
         ApiEnum action = ApiEnum.SET_GROUP_ANONYMOUS;
 
         JSONObject params = new JSONObject();
@@ -292,7 +292,7 @@ public class CqTemplate {
      * @param card     群名片内容，不填或空字符串表示删除群名片
      * @return 结果
      */
-    public ApiRawData setGroupCard(int groupId, int userId, String card) {
+    public ApiRawData setGroupCard(Long groupId, Long userId, String card) {
         ApiEnum action = ApiEnum.SET_GROUP_CARD;
 
         JSONObject params = new JSONObject();
@@ -309,7 +309,7 @@ public class CqTemplate {
      * @param isDismiss 是否解散，如果登录号是群主，则仅在此项为 true 时能够解散
      * @return 结果
      */
-    public ApiRawData setGroupLeave(int groupId, boolean isDismiss) {
+    public ApiRawData setGroupLeave(Long groupId, boolean isDismiss) {
         ApiEnum action = ApiEnum.SET_GROUP_LEAVE;
 
         JSONObject params = new JSONObject();
@@ -329,7 +329,7 @@ public class CqTemplate {
      * @param duration      专属头衔有效期，单位秒，-1 表示永久，不过此项似乎没有效果，可能是只有某些特殊的时间长度有效，有待测试
      * @return 结果
      */
-    public ApiRawData setGroupSpecialTitle(int groupId, long userId, String specialTitle, int duration) {
+    public ApiRawData setGroupSpecialTitle(Long groupId, Long userId, String specialTitle, int duration) {
         ApiEnum action = ApiEnum.SET_GROUP_SPECIAL_TITLE;
 
         JSONObject params = new JSONObject();
@@ -348,7 +348,7 @@ public class CqTemplate {
      * @param discussId 讨论组 ID（正常情况下看不到，需要从讨论组消息上报的数据中获得）
      * @return 结果
      */
-    public ApiRawData setDiscussLeave(int discussId) {
+    public ApiRawData setDiscussLeave(Integer discussId) {
         ApiEnum action = ApiEnum.SET_DISCUSS_LEAVE;
 
         JSONObject params = new JSONObject();
@@ -420,7 +420,7 @@ public class CqTemplate {
      * @param noCache 是否不使用缓存（使用缓存可能更新不及时，但响应更快）
      * @return 结果
      */
-    public ApiData<StrangerInfoData> getStrangerInfo(int userId, boolean noCache) {
+    public ApiData<StrangerInfoData> getStrangerInfo(Long userId, boolean noCache) {
 
         ApiEnum action = ApiEnum.GET_STRANGER_INFO;
 
@@ -465,7 +465,7 @@ public class CqTemplate {
      * @param noCache 是否不使用缓存（使用缓存可能更新不及时，但响应更快）
      * @return 结果
      */
-    public ApiData<GroupInfoData> getGroupInfo(int groupId, boolean noCache) {
+    public ApiData<GroupInfoData> getGroupInfo(Long groupId, boolean noCache) {
         ApiEnum action = ApiEnum.GET_GROUP_INFO;
         JSONObject params = new JSONObject();
         params.put("group_id", groupId);
@@ -483,7 +483,7 @@ public class CqTemplate {
      * @param noCache 是否不使用缓存（使用缓存可能更新不及时，但响应更快）
      * @return 结果
      */
-    public ApiData<GroupMemberInfoData> getGroupMemberInfo(int groupId, int userId, boolean noCache) {
+    public ApiData<GroupMemberInfoData> getGroupMemberInfo(Long groupId, Long userId, boolean noCache) {
         ApiEnum action = ApiEnum.GET_GROUP_MEMBER_INFO;
 
         JSONObject params = new JSONObject();
@@ -504,7 +504,7 @@ public class CqTemplate {
      * @param groupId 群号
      * @return 结果
      */
-    public ApiListData<GroupMemberInfoData> getGroupMemberList(int groupId) {
+    public ApiListData<GroupMemberInfoData> getGroupMemberList(Long groupId) {
         ApiEnum action = ApiEnum.GET_GROUP_MEMBER_LIST;
         JSONObject params = new JSONObject();
 

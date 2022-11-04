@@ -1,8 +1,10 @@
 package com.dasoops.core.exception;
 
 import cn.hutool.core.util.StrUtil;
+import com.dasoops.core.entity.enums.ExceptionEnum;
 import com.dasoops.core.entity.enums.IExceptionEnum;
 import com.dasoops.core.util.ExceptionUtil;
+import lombok.Getter;
 
 /**
  * @Title: BaseCustomException
@@ -12,6 +14,7 @@ import com.dasoops.core.util.ExceptionUtil;
  * @Version 1.0.0
  * @Description: 基础自定义异常
  */
+@Getter
 public class BaseCustomException extends RuntimeException {
 
     /**
@@ -21,7 +24,7 @@ public class BaseCustomException extends RuntimeException {
     /**
      * 错误信息,请传入堆栈异常
      */
-    private String message;
+    private String stackMessage;
 
     private BaseCustomException() {
 
@@ -29,28 +32,24 @@ public class BaseCustomException extends RuntimeException {
 
     public BaseCustomException(IExceptionEnum exceptionEnum) {
         this.exceptionEnum = exceptionEnum;
-        this.message = getStackInfo();
+        this.stackMessage = getStackInfo();
 
     }
 
-    public BaseCustomException(IExceptionEnum exceptionEnum, Exception exception) {
+    public BaseCustomException(Exception exception) {
+        if (exception instanceof BaseCustomException) {
+            BaseCustomException e = (BaseCustomException) exception;
+            this.exceptionEnum = e.getExceptionEnum();
+            this.stackMessage = e.getStackMessage();
+            return;
+        }
+        this.exceptionEnum = ExceptionEnum.UN_EXPECTED;
+        this.stackMessage = getStackInfo(exception);
+    }
+
+    public BaseCustomException(IExceptionEnum exceptionEnum, String stackMessage) {
         this.exceptionEnum = exceptionEnum;
-        this.message = getStackInfo();
-    }
-
-    public BaseCustomException(IExceptionEnum exceptionEnum, String message) {
-        this.exceptionEnum = exceptionEnum;
-        this.message = StrUtil.format("errorData:{}\r\n{}", message, getStackInfo());
-    }
-
-    /**
-     * 重写获取错误信息方法
-     *
-     * @return {@link String}
-     */
-    @Override
-    public String getMessage() {
-        return StrUtil.format("ERROR{{}:{}}  stack\r\n", exceptionEnum.getCode(), exceptionEnum.getMsg()) + message;
+        this.stackMessage = StrUtil.format("errorData:{}\r\n{}", stackMessage, getStackInfo());
     }
 
     /**
@@ -66,9 +65,27 @@ public class BaseCustomException extends RuntimeException {
         if (stackTrace.length <= excludeLine) {
             ExceptionUtil.buildUnExpected();
         }
+        sb.append(StrUtil.format("ERROR{{}:{}}{}  stack\r\n", exceptionEnum.getCode(), exceptionEnum.getMsg(), stackMessage == null ? "" : stackMessage));
         //排除前5行(断言,异常类信息)
         for (int i = excludeLine; i < stackTrace.length; i++) {
             StackTraceElement element = stackTrace[i];
+            sb.append(StrUtil.format("\t at {}.{}({}:{})\r\n", element.getClassName(), element.getMethodName(), element.getClassName(), element.getLineNumber()));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 得到当前堆栈信息
+     *
+     * @return {@link String}
+     */
+    private String getStackInfo(Exception e) {
+        StackTraceElement[] stackTrace = e.getStackTrace();
+        StringBuilder sb = new StringBuilder();
+        //未知异常情况
+        sb.append(StrUtil.format("ERROR{{}:{}}{}  stack\r\n", exceptionEnum.getCode(), exceptionEnum.getMsg(), stackMessage == null ? "" : stackMessage));
+        //排除前5行(断言,异常类信息)
+        for (StackTraceElement element : stackTrace) {
             sb.append(StrUtil.format("\t at {}.{}({}:{})\r\n", element.getClassName(), element.getMethodName(), element.getClassName(), element.getLineNumber()));
         }
         return sb.toString();

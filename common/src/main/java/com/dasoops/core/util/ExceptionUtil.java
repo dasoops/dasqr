@@ -77,4 +77,12 @@ public class ExceptionUtil {
     public static void buildCqReturnFailed(String message) {
         throw new BaseCustomException(ExceptionEnum.CQ_RETURN_FAILED, message);
     }
+
+    public static void buildPluginNotFount() {
+        throw new BaseCustomException(ExceptionEnum.PLUGIN_NOT_FOUNT);
+    }
+
+    public static void buildPluginNotFount(String message) {
+        throw new BaseCustomException(ExceptionEnum.PLUGIN_NOT_FOUNT, message);
+    }
 }

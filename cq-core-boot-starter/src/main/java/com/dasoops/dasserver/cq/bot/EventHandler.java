@@ -2,7 +2,9 @@ package com.dasoops.dasserver.cq.bot;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.core.util.Assert;
+import com.dasoops.core.util.ExceptionUtil;
 import com.dasoops.dasserver.cq.CqPlugin;
+import com.dasoops.dasserver.cq.entity.event.CqEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqDiscussMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
@@ -15,6 +17,8 @@ import com.dasoops.dasserver.cq.entity.event.request.CqGroupRequestEvent;
 import com.dasoops.dasserver.cq.utils.EventUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
+
+import java.util.Optional;
 
 
 /**
@@ -82,7 +86,7 @@ public class EventHandler {
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
                     //非阻塞赋值,后续调用使用改对象的参数
-                    if (!(passObj = getPlugin(pluginClass).onPrivateMessage(cq, (CqPrivateMessageEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onPrivateMessage(cq, (CqPrivateMessageEvent) passObj.getParam().orElse(null))).isPass())) {
                         //阻塞直接break
                         break;
                     }
@@ -93,7 +97,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupMessageEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onGroupMessage(cq, (CqGroupMessageEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onGroupMessage(cq, (CqGroupMessageEvent) passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -103,7 +107,7 @@ public class EventHandler {
                 var event = eventJson.to(CqDiscussMessageEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onDiscussMessage(cq, (CqDiscussMessageEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onDiscussMessage(cq, (CqDiscussMessageEvent) passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -125,7 +129,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupUploadNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onGroupUploadNotice(cq, (CqGroupUploadNoticeEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onGroupUploadNotice(cq, (CqGroupUploadNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -135,7 +139,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupAdminNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onGroupAdminNotice(cq, (CqGroupAdminNoticeEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onGroupAdminNotice(cq, (CqGroupAdminNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -145,7 +149,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupDecreaseNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onGroupDecreaseNotice(cq, (CqGroupDecreaseNoticeEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onGroupDecreaseNotice(cq, (CqGroupDecreaseNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -155,7 +159,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupIncreaseNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onGroupIncreaseNotice(cq, (CqGroupIncreaseNoticeEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onGroupIncreaseNotice(cq, (CqGroupIncreaseNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -165,7 +169,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupBanNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onGroupBanNotice(cq, (CqGroupBanNoticeEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onGroupBanNotice(cq, (CqGroupBanNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -175,7 +179,7 @@ public class EventHandler {
                 var event = eventJson.to(CqFriendAddNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onFriendAddNotice(cq, (CqFriendAddNoticeEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onFriendAddNotice(cq, (CqFriendAddNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -198,7 +202,7 @@ public class EventHandler {
                 var event = eventJson.to(CqFriendRequestEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onFriendRequest(cq, (CqFriendRequestEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onFriendRequest(cq, (CqFriendRequestEvent) passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -208,7 +212,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupRequestEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onGroupRequest(cq, (CqGroupRequestEvent) passObj.getParam().orElse(null))).isPass()) {
+                        if (!((passObj = getPlugin(pluginClass).onHeartBeatMeta(cq, (CqHeartBeatMetaEvent)passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -229,7 +233,7 @@ public class EventHandler {
                 var event = eventJson.to(CqHeartBeatMetaEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onHeartBeatMeta(cq, (CqHeartBeatMetaEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onHeartBeatMeta(cq, (CqHeartBeatMetaEvent)passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -239,7 +243,7 @@ public class EventHandler {
                 var event = eventJson.to(CqLifecycleMetaEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!(passObj = getPlugin(pluginClass).onLifecycleMeta(cq, (CqLifecycleMetaEvent) passObj.getParam().orElse(null))).isPass()) {
+                    if (!((passObj = getPlugin(pluginClass).onLifecycleMeta(cq, (CqLifecycleMetaEvent) passObj.getParam().orElse(null))).isPass())) {
                         break;
                     }
                 }
@@ -254,7 +258,7 @@ public class EventHandler {
         try {
             return applicationContext.getBean(pluginClass);
         } catch (Exception e) {
-            log.error("已跳过 {} ，请检查 @Component", pluginClass.getSimpleName());
+            Assert.notNullOrElse(pluginClass, () -> ExceptionUtil.buildPluginNotFount(pluginClass.getName()), ExceptionUtil::buildPluginNotFount);
             return defaultPlugin;
         }
     }

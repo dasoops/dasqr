@@ -59,7 +59,7 @@ public class CqCodeUtil {
     public static String buildCqCode(String type, Map<String, Object> params) {
         StringBuilder sb = new StringBuilder();
         sb.append("[CQ:").append(type);
-        params.forEach((key, value) -> sb.append(",").append(key).append(":").append(escape(String.valueOf(value))));
+        params.forEach((key, value) -> sb.append(",").append(key).append("=").append(escape(String.valueOf(value))));
         sb.append("]");
         return sb.toString();
     }
@@ -92,7 +92,7 @@ public class CqCodeUtil {
      * @return [CQ:bface,id={1}]
      */
     public static String bface(int id) {
-        return buildCqCode("emoji", Map.of("id", id));
+        return buildCqCode("bface", Map.of("id", id));
     }
 
     /**
@@ -137,7 +137,7 @@ public class CqCodeUtil {
      * @return [CQ:record,file={1},magic={2},cache={2},timeout={3}]
      */
     public static String record(String file, boolean magic) {
-        return buildCqCode("image", Map.of("file", file, "magic", magic));
+        return buildCqCode("record", Map.of("file", file, "magic", magic));
     }
 
     /**
@@ -150,7 +150,7 @@ public class CqCodeUtil {
      * @return
      */
     public static String record(String file, boolean magic, boolean cache, int timeout) {
-        return buildCqCode("image", Map.of("file", file, "magic", magic, "cache", cache, "timeout", timeout));
+        return buildCqCode("record", Map.of("file", file, "magic", magic, "cache", cache, "timeout", timeout));
     }
 
     /**
@@ -159,8 +159,8 @@ public class CqCodeUtil {
      * @param qq 被@的群成员帐号
      * @return [CQ:at,qq={1}]
      */
-    public static String at(int qq) {
-        return buildCqCode("image", Map.of("qq", qq));
+    public static String at(Long qq) {
+        return buildCqCode("at", Map.of("qq", qq));
     }
 
     /**
@@ -169,7 +169,7 @@ public class CqCodeUtil {
      * @return [CQ:at,qq=all]
      */
     public static String atAll() {
-        return buildCqCode("image", Map.of("qq", "all"));
+        return buildCqCode("at", Map.of("qq", "all"));
     }
 
     /**
@@ -179,7 +179,7 @@ public class CqCodeUtil {
      * @return [CQ:rps,type={1}]
      */
     public static String rps(int type) {
-        return buildCqCode("image", Map.of("type", type));
+        return buildCqCode("rps", Map.of("type", type));
     }
 
     /**

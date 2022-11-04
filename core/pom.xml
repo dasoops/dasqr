@@ -34,6 +34,16 @@
             <artifactId>plugin-gitNotice</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-exceptionWrapper</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-log</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

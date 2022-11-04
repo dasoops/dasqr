@@ -3,6 +3,7 @@ package com.dasoops.dasserver.core;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.bot.PassObj;
+import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,12 @@ import org.springframework.stereotype.Component;
 public class TemplatePlugin extends CqPlugin {
     @Override
     public PassObj onPrivateMessage(CqTemplate cqTemplate, CqPrivateMessageEvent event) {
-        log.info("你收到了一条消息:{} --来自TemplatePlugin", event.getMessage());
-        return PassObj.pass();
+        return PassObj.pass(event);
     }
+
+    @Override
+    public PassObj onGroupMessage(CqTemplate cqTemplate, CqGroupMessageEvent event) {
+        return super.onGroupMessage(cqTemplate, event);
+    }
+
 }

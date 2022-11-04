@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,13 +36,15 @@ import java.util.stream.Collectors;
 public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
         implements PluginService {
 
-    @Autowired
-    private PluginMapper pluginMapper;
-    @Autowired
-    @Lazy
-    private RegisterService registerService;
-    @Autowired
-    private RegisterMtmPluginService registerMtmPluginService;
+    private final PluginMapper pluginMapper;
+    private final RegisterService registerService;
+    private final RegisterMtmPluginService registerMtmPluginService;
+
+    public PluginServiceImpl(@Autowired(required = false) PluginMapper pluginMapper, @Lazy RegisterService registerService, RegisterMtmPluginService registerMtmPluginService) {
+        this.pluginMapper = pluginMapper;
+        this.registerService = registerService;
+        this.registerMtmPluginService = registerMtmPluginService;
+    }
 
 
     @Override
@@ -55,14 +58,15 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
         }
 
         //根据类路径获取类对象
-        List<Class<? extends CqPlugin>> resList = classPathListOpt.get().stream().map(classPath -> {
+        List<String> classPathList = classPathListOpt.get();
+        List<Class<? extends CqPlugin>> resList = new ArrayList<>(classPathList.size());
+        classPathList.forEach(classPath -> {
             try {
-                return (Class<CqPlugin>) Class.forName(classPath);
+                resList.add((Class<CqPlugin>) Class.forName(classPath));
             } catch (ClassNotFoundException e) {
                 log.error("ClassNotFound,classPath: {}", classPath);
-                return null;
             }
-        }).collect(Collectors.toList());
+        });
 
         return Optional.of(resList);
     }

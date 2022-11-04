@@ -49,11 +49,11 @@ public class CqProperties {
     /**
      * 开发群id
      */
-    private int devGroupId;
+    private Long devGroupId;
 
     /**
      * 主开发者id
      */
-    private int devUserId;
+    private Long devUserId;
 
 }

@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.cq.utils;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.dasoops.dasserver.cq.utils.entity.EventInfo;
 
 /**
@@ -66,12 +67,6 @@ public final class EventUtil {
      * @return {@link EventInfo}
      */
     public static EventInfo buildMessageInfo(JSONObject paramObj) {
-        EventInfo eventInfo = new EventInfo();
-        eventInfo.setTime(paramObj.getLong("time"));
-        eventInfo.setAuthorId(paramObj.getLong("user_id"));
-        eventInfo.setGroupId(paramObj.getLong("group_id"));
-        eventInfo.setMessageId(paramObj.getString("message_id"));
-
-        return eventInfo;
+        return paramObj.to(EventInfo.class);
     }
 }

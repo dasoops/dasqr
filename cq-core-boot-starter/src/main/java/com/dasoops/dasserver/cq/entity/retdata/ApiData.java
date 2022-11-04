@@ -34,4 +34,10 @@ public class ApiData<T> {
 
     @JSONField(name = "data")
     private T data;
+
+    @JSONField(name = "wording")
+    private String wording;
+
+    @JSONField(name = "msg")
+    private String msg;
 }

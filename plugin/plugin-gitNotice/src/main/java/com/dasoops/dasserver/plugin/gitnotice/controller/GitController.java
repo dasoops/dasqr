@@ -1,7 +1,10 @@
 package com.dasoops.dasserver.plugin.gitnotice.controller;
 
+import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
+import com.dasoops.core.entity.enums.ExceptionEnum;
+import com.dasoops.core.exception.BaseCustomException;
 import com.dasoops.core.util.Assert;
 import com.dasoops.core.util.ExceptionUtil;
 import com.dasoops.dasserver.cq.CqGlobal;
@@ -55,19 +58,16 @@ public class GitController {
         }
         GitNoticeTypeEnum noticeTypeEnum = noticeTypeEnumOpt.get();
 
-        Optional<CqTemplate> cqTemplateOpt = CqGlobal.findFirst();
         //无cq连接抛出异常
-        if (cqTemplateOpt.isEmpty()) {
-            ExceptionUtil.buildNoCqConnection();
-        }
+        CqTemplate cqTemplate = CqGlobal.findFirst().orElseThrow(() -> new BaseCustomException(ExceptionEnum.NO_CQ_CONNECTION));
 
         //发送git通知
-        sendNotice(cqTemplateOpt.get(), noticeTypeEnum, buildCommitNoticeStr(pushNoticeDto));
+        sendNotice(cqTemplate, noticeTypeEnum, buildCommitNoticeStr(pushNoticeDto));
 
         //master分支收到消息发送重启通知
         if (isMaster(pushNoticeDto)) {
             Integer version = configService.updateVersion(pushNoticeDto.getTotalCommitsCount());
-            sendNotice(cqTemplateOpt.get(), noticeTypeEnum, buildRebootNoticeStr(pushNoticeDto, version));
+            sendNotice(cqTemplate, noticeTypeEnum, buildRebootNoticeStr(pushNoticeDto, version));
         }
     }
 
@@ -140,6 +140,7 @@ public class GitController {
      * @return {@link String}
      */
     private String buildCommitNoticeStr(PushNoticeDto pushNoticeDto) {
+        int k = 1 / 0;
         String[] refSplit = pushNoticeDto.getRef().split("/");
         String branch = refSplit[refSplit.length - 1].replace("/", "");
 
@@ -156,9 +157,9 @@ public class GitController {
             commit2: build():  架构改动
             https://gitee.com/dasoopsnicole/dasServer/commit/cff8ac47b0b1e07b7ff89c5717352c39249ac81b
         */
-        for (int i = 0; i <= commitList.size(); i++) {
+        for (int i = 0; i < commitList.size(); i++) {
             Commits res = commitList.get(i);
-            sb.append(StrUtil.format("commit{}: {}()", i + 1, res.getMessage()));
+            sb.append(StrUtil.format("commit{}: {}", i + 1, res.getMessage()));
             sb.append(res.getUrl()).append("\r\n");
         }
 
@@ -170,9 +171,10 @@ public class GitController {
      *
      * @return {@link Optional}<{@link GitNoticeTypeEnum}>
      */
+    @SuppressWarnings("all")
     private Optional<GitNoticeTypeEnum> getEnum() {
-        GitNoticeTypeEnum gitNoticeTypeEnum = Enum.valueOf(GitNoticeTypeEnum.class, gitNoticeProperties.getNoticeType());
-        return Optional.of(gitNoticeTypeEnum);
+        GitNoticeTypeEnum gitNoticeTypeEnum = EnumUtil.getBy(GitNoticeTypeEnum::getKeyword, gitNoticeProperties.getNoticeType());
+        return Optional.ofNullable(gitNoticeTypeEnum);
     }
 
 }
