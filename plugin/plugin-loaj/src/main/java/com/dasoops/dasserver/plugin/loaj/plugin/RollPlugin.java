@@ -40,12 +40,13 @@ public class RollPlugin extends CqPlugin {
     @SuppressWarnings("all")
     public PassObj onGroupMessage(CqTemplate cqTemplate, CqGroupMessageEvent event) {
 
+        final String prefix = LoajKeyEnum.ROLL.getKey() + ":" + event.getGroupId() + ":";
         final String roll = "roll";
         final String endRoll = "endRoll";
-        String prefix = LoajKeyEnum.ROLL.getKey() + ":" + event.getGroupId() + ":";
 
         if (super.matchPrefix(event.getMessage(), roll)) {
             //roll
+
             int i = RandomUtil.randomInt(1, 101);
 
             String redisKey = prefix + event.getUserId();
@@ -59,6 +60,7 @@ public class RollPlugin extends CqPlugin {
 
         } else if (super.matchPrefix(event.getMessage(), endRoll)) {
             //endRoll
+
             //根据前缀获取key集合
             Set<String> keys = stringRedisTemplate.keys(prefix + "*");
             //没有人roll直接短路
@@ -87,15 +89,15 @@ public class RollPlugin extends CqPlugin {
                 final Integer niggerScore = 20;
                 Long size = stringRedisTemplate.opsForSet().size(prefix + userId);
 
-                if (resMap.size() <= 1) {
-                    cqTemplate.sendGroupMsg(event.getGroupId(), "一个人玩roll点,乐", false);
-                } else if (score <= niggerScore) {
+                if (score <= niggerScore) {
                     if (size > 1) {
                         cqTemplate.sendGroupMsg(event.getGroupId(), StrUtil.format("投了{}次,整个{}分,乐,铁黑鬼",size,score), false);
                     }else {
                         cqTemplate.sendGroupMsg(event.getGroupId(), StrUtil.format("{}分,乐,什么黑鬼",score), false);
                     }
-                } else if (size >= 1) {
+                }else if (resMap.size() <= 1) {
+                    cqTemplate.sendGroupMsg(event.getGroupId(), "一个人玩roll点,乐", false);
+                }else if (size > 1) {
                     cqTemplate.sendGroupMsg(event.getGroupId(), "不过,roll多次对别人可不太公平哦~", false);
                 }
 
@@ -106,4 +108,5 @@ public class RollPlugin extends CqPlugin {
 
         return PassObj.block();
     }
+
 }
