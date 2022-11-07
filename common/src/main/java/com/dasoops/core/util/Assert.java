@@ -2,7 +2,9 @@ package com.dasoops.core.util;
 
 import cn.hutool.core.util.ObjUtil;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @Title: Assert
@@ -77,6 +79,18 @@ public class Assert {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             function.invoke();
         }
+    }
+
+    /**
+     * 对象非空时执行
+     *
+     * @param obj obj
+     */
+    public static <T, R> R notNull(T obj, Function<T, R> function) {
+        if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
+            return function.apply(obj);
+        }
+        return null;
     }
 
     /**
