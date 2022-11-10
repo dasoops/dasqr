@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.core;
 
-import com.dasoops.core.exception.BaseCustomException;
-import com.dasoops.core.util.Assert;
+import com.dasoops.common.exception.BaseCustomException;
+import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.exception.wrapper.ExceptionWrapper;
 import lombok.extern.slf4j.Slf4j;

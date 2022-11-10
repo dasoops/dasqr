@@ -15,14 +15,15 @@ public enum ConfigEnum {
 
     //版本
     VERSION("version"),
-
+    //本地运行版本
+    LOCAL_VERSION("localVersion"),
 
     ;
 
     @Getter
-    final String name;
+    final String key;
 
-    ConfigEnum(String name) {
-        this.name = name;
+    ConfigEnum(String key) {
+        this.key = key;
     }
 }

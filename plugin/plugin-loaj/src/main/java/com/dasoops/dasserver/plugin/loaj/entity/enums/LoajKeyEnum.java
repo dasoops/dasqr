@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.loaj.entity.enums;
 
-import com.dasoops.core.entity.enums.IRedisKeyEnum;
+import com.dasoops.common.entity.enums.IRedisKeyEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

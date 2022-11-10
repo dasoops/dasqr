@@ -3,7 +3,7 @@ package com.dasoops.dasserver.cq.bot;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson2.JSONObject;
-import com.dasoops.core.exception.BaseCustomException;
+import com.dasoops.common.exception.BaseCustomException;
 import com.dasoops.dasserver.cq.conf.properties.WsProperties;
 import com.dasoops.dasserver.cq.entity.enums.ApiEnum;
 import lombok.extern.slf4j.Slf4j;

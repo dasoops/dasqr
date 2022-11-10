@@ -1,14 +1,16 @@
 package com.dasoops.dasserver.cq.cache;
 
-import com.dasoops.core.util.Assert;
-import com.dasoops.core.util.ExceptionUtil;
+import com.dasoops.common.util.Assert;
+import com.dasoops.common.util.ExceptionUtil;
 import com.dasoops.dasserver.cq.entity.enums.ConfigKeyEnum;
 import com.dasoops.dasserver.cq.entity.enums.ConfigEnum;
+import com.dasoops.dasserver.cq.entity.po.ConfigPo;
 import com.dasoops.dasserver.cq.service.ConfigService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * @Title: ConfigCache
@@ -31,16 +33,29 @@ public class ConfigCache {
 
     @PostConstruct
     public void init() {
-        setVersion(Integer.parseInt(configService.getConfig(ConfigEnum.VERSION)));
+        initConfig();
     }
 
-    public String getVersion() {
+    /**
+     * 初始化配置
+     */
+    public void initConfig() {
+        redisTemplate.delete(ConfigKeyEnum.CONFIG.getKey());
+
+        List<ConfigPo> configList = configService.list();
+        Assert.dbExecuteReturnNotNull(configList);
+        configList.forEach(config -> {
+            redisTemplate.opsForHash().put(ConfigKeyEnum.CONFIG.getKey(), config.getKeyword(), config.getValue());
+        });
+    }
+
+    public String getConfig() {
         String localVersion = redisTemplate.opsForValue().get(ConfigKeyEnum.LOCAL_VERSION.getKey());
         Assert.notNull(localVersion, ExceptionUtil::buildRedisDataNotNull);
         return localVersion;
     }
 
-    public void setVersion(Integer version) {
-        redisTemplate.opsForValue().set(ConfigKeyEnum.LOCAL_VERSION.getKey(), String.valueOf(version));
+    public void setLocalVersion(Integer version) {
+        redisTemplate.opsForHash().put(ConfigKeyEnum.CONFIG.getKey(), ConfigEnum.LOCAL_VERSION.getKey(), String.valueOf(version));
     }
 }

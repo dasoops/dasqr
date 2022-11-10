@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.loaj.plugin;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.core.util.Assert;
+import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.bot.PassObj;
@@ -14,9 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * @Title: rollPlugin
@@ -42,11 +44,11 @@ public class RollPlugin extends CqPlugin {
 
         final String prefix = LoajKeyEnum.ROLL.getKey() + ":" + event.getGroupId() + ":";
         final String roll = "roll";
-        final String endRoll = "endRoll";
+        final String endRoll = "endroll";
 
-        if (super.matchPrefix(event.getMessage(), roll)) {
+        if (StrUtil.startWithIgnoreCase(event.getMessage(), roll)) {
             //roll
-
+            log.debug("(MessageLogPlugin) 进入roll点逻辑");
             int i = RandomUtil.randomInt(1, 101);
 
             String redisKey = prefix + event.getUserId();
@@ -58,15 +60,19 @@ public class RollPlugin extends CqPlugin {
             stringRedisTemplate.opsForSet().add(redisKey, String.valueOf(i));
             cqTemplate.sendGroupMsg(event.getGroupId(), CqCodeUtil.at(event.getUserId()) + "你roll到了: " + i, false);
 
-        } else if (super.matchPrefix(event.getMessage(), endRoll)) {
+            log.info("(MessageLogPlugin) roll点逻辑执行完毕,阻塞后续插件");
+            return PassObj.block();
+        } else if (StrUtil.startWithIgnoreCase(event.getMessage(), endRoll)) {
             //endRoll
+            log.debug("(MessageLogPlugin) 进入endRoll点逻辑");
 
             //根据前缀获取key集合
             Set<String> keys = stringRedisTemplate.keys(prefix + "*");
             //没有人roll直接短路
             if (ObjUtil.isEmpty(keys)) {
                 cqTemplate.sendGroupMsg(event.getGroupId(), "还没有人roll点哦", false);
-                return PassObj.pass(event);
+                log.debug("(MessageLogPlugin) endRoll逻辑执行完毕,阻塞后续插件 - 无人roll点分支");
+                return PassObj.block();
             }
             if (!ObjUtil.isEmpty(keys)) {
                 //id对应最大值集合
@@ -91,22 +97,24 @@ public class RollPlugin extends CqPlugin {
 
                 if (score <= niggerScore) {
                     if (size > 1) {
-                        cqTemplate.sendGroupMsg(event.getGroupId(), StrUtil.format("投了{}次,整个{}分,乐,铁黑鬼",size,score), false);
-                    }else {
-                        cqTemplate.sendGroupMsg(event.getGroupId(), StrUtil.format("{}分,乐,什么黑鬼",score), false);
+                        cqTemplate.sendGroupMsg(event.getGroupId(), StrUtil.format("投了{}次,整个{}分,乐,铁黑鬼", size, score), false);
+                    } else {
+                        cqTemplate.sendGroupMsg(event.getGroupId(), StrUtil.format("{}分,乐,什么黑鬼", score), false);
                     }
-                }else if (resMap.size() <= 1) {
+                } else if (resMap.size() <= 1) {
                     cqTemplate.sendGroupMsg(event.getGroupId(), "一个人玩roll点,乐", false);
-                }else if (size > 1) {
+                } else if (size > 1) {
                     cqTemplate.sendGroupMsg(event.getGroupId(), "不过,roll多次对别人可不太公平哦~", false);
                 }
 
                 stringRedisTemplate.delete(keys);
             }
 
+            log.info("(MessageLogPlugin) endRoll逻辑执行完毕,阻塞后续插件");
+            return PassObj.block();
         }
 
-        return PassObj.block();
+        return PassObj.pass(event);
     }
 
 }

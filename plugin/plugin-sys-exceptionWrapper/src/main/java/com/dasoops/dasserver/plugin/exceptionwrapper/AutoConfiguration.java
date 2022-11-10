@@ -1,16 +1,6 @@
 package com.dasoops.dasserver.plugin.exceptionwrapper;
 
-import cn.hutool.core.util.StrUtil;
-import com.dasoops.core.entity.enums.ExceptionEnum;
-import com.dasoops.core.exception.BaseCustomException;
-import com.dasoops.dasserver.cq.CqGlobal;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.conf.AsyncMongoTemplate;
-import com.dasoops.dasserver.cq.exception.wrapper.ExceptionWrapper;
-import com.dasoops.dasserver.cq.utils.EventUtil;
-import com.dasoops.dasserver.cq.utils.entity.EventInfo;
-import org.bson.types.ObjectId;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -22,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description: 自动配置
  */
 @Configuration
+@ComponentScan("com.dasoops.dasserver.plugin.exceptionwrapper")
 public class AutoConfiguration {
 
 }

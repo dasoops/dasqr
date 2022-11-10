@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dasoops.core.util.Assert;
+import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.entity.po.BasePo;
 import com.dasoops.dasserver.cq.entity.po.RegisterMtmPluginPo;
 import com.dasoops.dasserver.cq.entity.po.RegisterPo;
@@ -51,7 +51,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterPo>
         List<RegisterMtmPluginPo> rpList = pluginPoIdList.stream().map(pluginPoId -> {
             RegisterMtmPluginPo po = new RegisterMtmPluginPo();
             po.setPluginId(pluginPoId);
-            po.setRegisterId(registerPo.getId());
+            po.setRegisterId(Math.toIntExact(registerPo.getId()));
             return po;
         }).collect(Collectors.toList());
 

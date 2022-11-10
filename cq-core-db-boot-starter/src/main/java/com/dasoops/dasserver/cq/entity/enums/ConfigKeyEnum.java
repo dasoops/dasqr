@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.cq.entity.enums;
 
-import com.dasoops.core.entity.enums.IRedisKeyEnum;
+import com.dasoops.common.entity.enums.IRedisKeyEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,12 +16,14 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ConfigKeyEnum implements IRedisKeyEnum {
-
+    /**
+     * config Hash<keyword,value>
+     */
+    CONFIG(CORE_CONFIG + "config"),
     /**
      * 本地版本号
      */
     LOCAL_VERSION(CORE_CONFIG + "localVersion"),
-
     ;
 
     final String key;

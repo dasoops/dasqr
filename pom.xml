@@ -3,14 +3,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modules>
         <module>common</module>
-        <module>cq-core-boot-starter</module>
         <module>core</module>
+        <module>minio-boot-starter</module>
+        <module>ocr-boot-starter</module>
+        <module>cq-core-boot-starter</module>
         <module>cq-core-db-boot-starter</module>
         <module>cq-core-mongo-boot-starter</module>
         <module>plugin/plugin-core</module>
         <module>plugin/plugin-gitNotice</module>
         <module>plugin/plugin-sys-exceptionWrapper</module>
         <module>plugin/plugin-loaj</module>
+        <module>plugin/plugin-style</module>
+        <module>plugin/plugin-image</module>
+        <module>plugin/plugin-sys-pluginWrapper</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -35,6 +40,7 @@
         <fastjson2-extension.version>2.0.15</fastjson2-extension.version>
         <hutool.version>5.8.8</hutool.version>
         <log4j.version>1.2.17</log4j.version>
+        <tencentSdk.version>3.1.625</tencentSdk.version>
     </properties>
 
 
@@ -79,6 +85,17 @@
                 <version>${cq.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>minio-boot-starter</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>ocr-boot-starter</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
             <!-- DasServer plugin -->
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
@@ -101,6 +118,24 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-loaj</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-style</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-image</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-sys-pluginWrapper</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 
@@ -136,6 +171,13 @@
                 <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
+
+            <!-- other -->
+            <dependency>
+                <groupId>com.tencentcloudapi</groupId>
+                <artifactId>tencentcloud-sdk-java-ocr</artifactId>
+                <version>${tencentSdk.version}</version>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
@@ -156,6 +198,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
 
     </dependencies>

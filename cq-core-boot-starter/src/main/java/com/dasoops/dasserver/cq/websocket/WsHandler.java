@@ -1,9 +1,11 @@
 package com.dasoops.dasserver.cq.websocket;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.dasoops.core.exception.BaseCustomException;
-import com.dasoops.core.util.Assert;
+import com.dasoops.common.entity.enums.RedisKeyEnum;
+import com.dasoops.common.exception.BaseCustomException;
+import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.bot.ApiHandler;
 import com.dasoops.dasserver.cq.bot.CqFactory;
@@ -21,6 +23,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -75,6 +78,36 @@ public class WsHandler extends TextWebSocketHandler {
         //创建CqTemplate,存入CqGlobal方便取用
         CqTemplate cqTemplate = cqFactory.create(qid, session);
         CqGlobal.robots.put(qid, cqTemplate);
+
+/*
+        插件通知 预计迁移至增强插件
+        List<String> unLoadPluginList = stringRedisTemplate.opsForList().range(RedisKeyEnum.UN_LOAD_PLUGIN.getKey(), 0, -1);
+        List<String> loadPluginList = stringRedisTemplate.opsForList().range(RedisKeyEnum.LOAD_PLUGIN.getKey(), 0, -1);
+
+        String configRedisKey = RedisKeyEnum.CORE_CONFIG + ":config";
+        String version = "null";
+        if (Boolean.TRUE.equals(stringRedisTemplate.hasKey(configRedisKey))) {
+            version = (String) stringRedisTemplate.opsForHash().get(RedisKeyEnum.CORE_CONFIG + ":config", "localVersion");
+        }
+        StringBuilder sb = new StringBuilder("Server Start V." + version);
+        if (unLoadPluginList != null) {
+            sb.append("\r\n已加载插件: ");
+            unLoadPluginList.forEach(pluginName -> {
+                sb.append("\r\n\t- ").append(pluginName);
+            });
+        }
+        if (loadPluginList != null) {
+            sb.append("未成功加载插件: ");
+            loadPluginList.forEach(pluginName -> {
+                sb.append("\r\n\t- ").append(pluginName);
+            });
+        }
+
+        Assert.notNull(loadPluginList, () -> sb.append(StrUtil.format("成功加载插件 {} 个\r\n", loadPluginList.size())));
+        Assert.notNull(unLoadPluginList, () -> sb.append(StrUtil.format("未成功加载插件 {} 个\r\n", unLoadPluginList.size())));
+
+        cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), sb.toString(), false);
+        */
     }
 
     /**

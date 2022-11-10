@@ -1,6 +1,10 @@
 package com.dasoops.dasserver.cq.utils;
 
-import java.util.Map;
+import cn.hutool.core.util.ReUtil;
+import com.dasoops.dasserver.cq.entity.CqCode;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Title: CqCodeUtil
@@ -36,6 +40,53 @@ public class CqCodeUtil {
                 .replace("[", "&#91;")
                 .replace("]", "&#93;")
                 .replace("&", "&amp;");
+    }
+
+    public static boolean haveCqCode(String message) {
+        String regex = "\\[CQ:\\w+?.*?]";
+        return ReUtil.contains(regex, message);
+    }
+
+    public static Optional<List<String>> getCqCode(String message) {
+        if (!haveCqCode(message)) {
+            return Optional.empty();
+        }
+
+        final String codeRegex = "\\[CQ:\\w+?.*?]";
+        List<String> cqCodeStrList = ReUtil.findAll(codeRegex, message, 0, new ArrayList<>());
+        return Optional.of(cqCodeStrList);
+    }
+
+    public static Optional<List<CqCode>> reslove(String message) {
+        //获取cqCode
+        Optional<List<String>> cqCodeStrListOpt = getCqCode(message);
+        if (cqCodeStrListOpt.isEmpty()) {
+            return Optional.empty();
+        }
+        List<String> cqCodeStrList = cqCodeStrListOpt.get();
+
+        final String typeRegex = "\\[CQ:(\\w+)";
+        final String paramRegex = ",([\\w\\-.]+?)=([^,\\]]+)";
+        List<CqCode> cqCodeList = cqCodeStrList.stream().map(cqCodeStr -> {
+            CqCode cqCode = new CqCode();
+
+            //获取类型
+            String typeStr = ReUtil.findAll(typeRegex, cqCodeStr, 0, new ArrayList<>()).get(0);
+            cqCode.setType(typeStr.replace("[CQ:", ""));
+
+            //获取参数集合
+            List<String> paramStrList = ReUtil.findAll(paramRegex, cqCodeStr, 0, new ArrayList<>());
+            Map<String, String> paramMap = new HashMap<>();
+            paramStrList.forEach(paramStr -> {
+                String key = paramStr.substring(1, paramStr.indexOf("="));
+                String value = paramStr.substring(paramStr.indexOf("=") + 1);
+                paramMap.put(key, value);
+            });
+            cqCode.setParam(paramMap);
+            return cqCode;
+        }).collect(Collectors.toList());
+
+        return Optional.of(cqCodeList);
     }
 
     /**
@@ -288,4 +339,7 @@ public class CqCodeUtil {
         return buildCqCode("contact", Map.of("type", type, "id", id));
     }
 
+    public static String getImgUrl(String param) {
+        return ReUtil.getGroup0(".(?<=url=h).*?(?=])", param);
+    }
 }

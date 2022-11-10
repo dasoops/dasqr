@@ -1,8 +1,8 @@
 package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dasoops.core.util.Assert;
-import com.dasoops.core.util.ExceptionUtil;
+import com.dasoops.common.util.Assert;
+import com.dasoops.common.util.ExceptionUtil;
 import com.dasoops.dasserver.cq.entity.enums.ConfigEnum;
 import com.dasoops.dasserver.cq.entity.po.ConfigPo;
 import com.dasoops.dasserver.cq.service.ConfigService;
@@ -28,7 +28,7 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigPo>
     @Override
     public String getConfig(ConfigEnum config) {
         //获取配置对象
-        Optional<ConfigPo> configPoOpt = this.lambdaQuery().eq(ConfigPo::getKeyword, config.getName()).oneOpt();
+        Optional<ConfigPo> configPoOpt = this.lambdaQuery().eq(ConfigPo::getKeyword, config.getKey()).oneOpt();
         if (configPoOpt.isEmpty()) {
             ExceptionUtil.buildDbExecuteReturnNotNull();
         }
@@ -40,7 +40,7 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigPo>
         //获取版本号对象,获取版本号,增加后更新
         int version = Integer.parseInt(getConfig(ConfigEnum.VERSION));
         int endVersion = version + addVersion;
-        Assert.isTrue(super.lambdaUpdate().eq(ConfigPo::getKeyword, ConfigEnum.VERSION.getName()).set(ConfigPo::getValue, endVersion).update(), ExceptionUtil::buildDbExecuteReturnNotFalse);
+        Assert.isTrue(super.lambdaUpdate().eq(ConfigPo::getKeyword, ConfigEnum.VERSION.getKey()).set(ConfigPo::getValue, endVersion).update(), ExceptionUtil::buildDbExecuteReturnNotFalse);
         return endVersion;
     }
 

@@ -43,9 +43,25 @@
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-log</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-loaj</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-style</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-image</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-pluginWrapper</artifactId>
         </dependency>
     </dependencies>
 

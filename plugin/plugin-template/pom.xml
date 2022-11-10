@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>cq-core-boot-starter</artifactId>
+            <artifactId>plugin-core</artifactId>
         </dependency>
     </dependencies>
 

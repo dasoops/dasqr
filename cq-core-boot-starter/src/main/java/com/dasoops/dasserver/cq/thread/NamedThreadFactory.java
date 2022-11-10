@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.cq.thread;
 
-import com.dasoops.core.util.Assert;
+import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.utils.EventUtil;
 import com.dasoops.dasserver.cq.utils.entity.EventInfo;
 import lombok.NonNull;

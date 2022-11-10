@@ -36,6 +36,7 @@ public class PluginPo extends BasePo implements Serializable {
     /**
      * 排序
      */
+    @TableField("`ORDER`")
     private Integer order;
 
     /**

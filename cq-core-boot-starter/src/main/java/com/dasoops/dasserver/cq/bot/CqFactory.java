@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.cq.bot;
 
-import com.dasoops.core.util.Assert;
+import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import org.springframework.web.socket.WebSocketSession;

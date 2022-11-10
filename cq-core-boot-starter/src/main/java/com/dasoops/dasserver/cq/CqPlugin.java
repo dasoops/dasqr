@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.cq;
 
+import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.bot.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqDiscussMessageEvent;
@@ -22,10 +23,6 @@ import lombok.Getter;
  * @Description: cqTemplate插件, 提供消息接收功能拓展
  */
 public class CqPlugin {
-
-    protected boolean matchPrefix(String message, String prefix) {
-        return message.startsWith(prefix);
-    }
 
     /**
      * 收到私聊消息时调用此方法

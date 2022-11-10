@@ -6,6 +6,9 @@ import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.entity.CqGroupAnonymous;
 import com.dasoops.dasserver.cq.entity.entity.CqStatus;
 import com.dasoops.dasserver.cq.entity.enums.ApiEnum;
+import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
+import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
+import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
 import com.dasoops.dasserver.cq.entity.retdata.*;
 import lombok.Data;
 import org.springframework.web.socket.WebSocketSession;
@@ -52,6 +55,21 @@ public class CqTemplate {
     }
 
     /**
+     * 发送消息
+     *
+     * @param event   事件
+     * @param message 消息
+     * @return {@link ApiData}<{@link MessageData}>
+     */
+    public ApiData<MessageData> sendMsg(CqMessageEvent event, String message) {
+        String messageType = event.getMessageType();
+        if ("group".equals(messageType)) {
+            return sendGroupMsg(((CqGroupMessageEvent) event).getGroupId(), message, false);
+        }
+        return sendPrivateMsg(event.getUserId(), message, false);
+    }
+
+    /**
      * 发送私聊消息
      *
      * @param qId        对方 QQ 号
@@ -90,7 +108,8 @@ public class CqTemplate {
         params.put("auto_escape", autoEscape);
 
 
-        ApiData<MessageData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<MessageData>>() {});
+        ApiData<MessageData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<MessageData>>() {
+        });
         return result;
     }
 
@@ -98,11 +117,11 @@ public class CqTemplate {
      * 发送讨论组消息
      *
      * @param discussId  讨论组 ID（正常情况下看不到，需要从讨论组消息上报的数据中获得）
-     * @param message     要发送的内容
+     * @param message    要发送的内容
      * @param autoEscape 消息内容是否作为纯文本发送（即不解析 CQ 码），只在 message 字段是字符串时有效
      * @return 结果
      */
-    public ApiData<MessageData> sendDiscussMsg(Long discussId, String message, boolean autoEscape){
+    public ApiData<MessageData> sendDiscussMsg(Long discussId, String message, boolean autoEscape) {
         ApiEnum action = ApiEnum.SEND_DISCUSS_MSG;
 
         JSONObject params = new JSONObject();
@@ -121,7 +140,7 @@ public class CqTemplate {
      * @param messageId 消息 ID
      * @return 结果
      */
-    public ApiRawData deleteMsg(String messageId){
+    public ApiRawData deleteMsg(String messageId) {
         ApiEnum action = ApiEnum.DELETE_MSG;
 
         JSONObject params = new JSONObject();
@@ -135,10 +154,10 @@ public class CqTemplate {
      * 发送好友赞
      *
      * @param userId 对方 QQ 号
-     * @param times   赞的次数，每个好友每天最多 10 次
+     * @param times  赞的次数，每个好友每天最多 10 次
      * @return 结果
      */
-    public ApiRawData sendLike(Long userId, Integer times){
+    public ApiRawData sendLike(Long userId, Integer times) {
         ApiEnum action = ApiEnum.SEND_LIKE;
 
         JSONObject params = new JSONObject();
@@ -152,12 +171,12 @@ public class CqTemplate {
     /**
      * 群组踢人
      *
-     * @param groupId           群号
-     * @param userId            要踢的 QQ 号
+     * @param groupId          群号
+     * @param userId           要踢的 QQ 号
      * @param rejectAddRequest 拒绝此人的加群请求
      * @return 结果
      */
-    public ApiRawData setGroupKick(Long groupId, Long userId, boolean rejectAddRequest){
+    public ApiRawData setGroupKick(Long groupId, Long userId, boolean rejectAddRequest) {
         ApiEnum action = ApiEnum.SET_GROUP_KICK;
 
         JSONObject params = new JSONObject();
@@ -172,8 +191,8 @@ public class CqTemplate {
     /**
      * 群组单人禁言
      *
-     * @param groupId 群号
-     * @param userId  要禁言的 QQ 号
+     * @param groupId  群号
+     * @param userId   要禁言的 QQ 号
      * @param duration 禁言时长，单位秒，0 表示取消禁言
      * @return 结果
      */
@@ -192,7 +211,7 @@ public class CqTemplate {
     /**
      * 群组匿名用户禁言
      *
-     * @param groupId         群号
+     * @param groupId          群号
      * @param cqGroupAnonymous 要禁言的匿名用户对象（群消息上报的 anonymous 字段）
      * @param duration         禁言时长，单位秒，无法取消匿名用户禁言
      * @return 结果
@@ -212,7 +231,7 @@ public class CqTemplate {
     /**
      * 群组匿名用户禁言
      *
-     * @param groupId 群号
+     * @param groupId  群号
      * @param flag     要禁言的匿名用户的 flag（需从群消息上报的数据中获得）
      * @param duration 禁言时长，单位秒，无法取消匿名用户禁言
      * @return 结果
@@ -233,7 +252,7 @@ public class CqTemplate {
      * 群组全员禁言
      *
      * @param groupId 群号
-     * @param enable   是否禁言
+     * @param enable  是否禁言
      * @return 结果
      */
     public ApiRawData setGroupWholeBan(Long groupId, boolean enable) {
@@ -251,7 +270,7 @@ public class CqTemplate {
      *
      * @param groupId 群号
      * @param userId  要设置管理员的 QQ 号
-     * @param enable   true 为设置，false 为取消
+     * @param enable  true 为设置，false 为取消
      * @return 结果
      */
     public ApiRawData setGroupAdmin(Long groupId, Long userId, boolean enable) {
@@ -270,7 +289,7 @@ public class CqTemplate {
      * 群组匿名
      *
      * @param groupId 群号
-     * @param enable   是否允许匿名聊天
+     * @param enable  是否允许匿名聊天
      * @return 结果
      */
     public ApiRawData setGroupAnonymous(Long groupId, boolean enable) {
@@ -289,7 +308,7 @@ public class CqTemplate {
      *
      * @param groupId 群号
      * @param userId  要设置的 QQ 号
-     * @param card     群名片内容，不填或空字符串表示删除群名片
+     * @param card    群名片内容，不填或空字符串表示删除群名片
      * @return 结果
      */
     public ApiRawData setGroupCard(Long groupId, Long userId, String card) {
@@ -326,7 +345,7 @@ public class CqTemplate {
      * @param groupId      群号
      * @param userId       要设置的 QQ 号
      * @param specialTitle 专属头衔，不填或空字符串表示删除专属头衔
-     * @param duration      专属头衔有效期，单位秒，-1 表示永久，不过此项似乎没有效果，可能是只有某些特殊的时间长度有效，有待测试
+     * @param duration     专属头衔有效期，单位秒，-1 表示永久，不过此项似乎没有效果，可能是只有某些特殊的时间长度有效，有待测试
      * @return 结果
      */
     public ApiRawData setGroupSpecialTitle(Long groupId, Long userId, String specialTitle, int duration) {
@@ -381,10 +400,10 @@ public class CqTemplate {
     /**
      * 处理加群请求／邀请
      *
-     * @param flag     加群请求的 flag（需从上报的数据中获得）
+     * @param flag    加群请求的 flag（需从上报的数据中获得）
      * @param subType add 或 invite，请求类型（需要和上报消息中的 subType 字段相符）
-     * @param approve  是否同意请求／邀请
-     * @param reason   拒绝理由（仅在拒绝时有效）
+     * @param approve 是否同意请求／邀请
+     * @param reason  拒绝理由（仅在拒绝时有效）
      * @return 结果
      */
     public ApiRawData setGroupAddRequest(String flag, String subType, boolean approve, String reason) {
@@ -567,7 +586,7 @@ public class CqTemplate {
     /**
      * 获取语音
      *
-     * @param file       收到的语音文件名（CQ 码的 file 参数），如 0B38145AA44505000B38145AA4450500.silk
+     * @param file      收到的语音文件名（CQ 码的 file 参数），如 0B38145AA44505000B38145AA4450500.silk
      * @param outFormat 要转换到的格式，目前支持 mp3、amr、wma、m4a、spx、ogg、wav、flac
      * @param fullPath  是否返回文件的绝对路径（Windows 环境下建议使用，Docker 中不建议）
      * @return 结果

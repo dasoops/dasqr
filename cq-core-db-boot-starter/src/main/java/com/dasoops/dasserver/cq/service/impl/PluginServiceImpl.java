@@ -1,8 +1,10 @@
 package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dasoops.core.util.Assert;
+import com.dasoops.common.util.Assert;
+import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.CqPlugin;
+import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.entity.po.BasePo;
 import com.dasoops.dasserver.cq.entity.po.PluginPo;
 import com.dasoops.dasserver.cq.entity.po.RegisterMtmPluginPo;
@@ -63,7 +65,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
         classPathList.forEach(classPath -> {
             try {
                 resList.add((Class<CqPlugin>) Class.forName(classPath));
-            } catch (ClassNotFoundException e) {
+            } catch (Exception e) {
                 log.error("ClassNotFound,classPath: {}", classPath);
             }
         });

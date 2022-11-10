@@ -2,8 +2,11 @@ package com.dasoops.dasserver.plugin.exceptionwrapper;
 
 import lombok.Data;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.Date;
 
@@ -19,7 +22,8 @@ import java.util.Date;
 @Data
 public class ExceptionPo {
 
-    private ObjectId objectId;
+    @MongoId(targetType = FieldType.OBJECT_ID)
+    private ObjectId id;
     /**
      * 时间戳
      */

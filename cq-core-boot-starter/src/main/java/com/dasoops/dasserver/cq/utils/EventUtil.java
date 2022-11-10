@@ -67,6 +67,8 @@ public final class EventUtil {
      * @return {@link EventInfo}
      */
     public static EventInfo buildMessageInfo(JSONObject paramObj) {
-        return paramObj.to(EventInfo.class);
+        EventInfo eventInfo = paramObj.to(EventInfo.class);
+        eventInfo.setAuthorId(paramObj.getLong("user_id"));
+        return eventInfo;
     }
 }

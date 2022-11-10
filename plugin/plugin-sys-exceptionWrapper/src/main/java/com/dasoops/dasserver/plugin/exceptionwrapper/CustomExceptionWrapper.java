@@ -1,11 +1,10 @@
 package com.dasoops.dasserver.plugin.exceptionwrapper;
 
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.core.entity.enums.ExceptionEnum;
-import com.dasoops.core.exception.BaseCustomException;
+import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.exception.BaseCustomException;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.conf.AsyncMongoTemplate;
 import com.dasoops.dasserver.cq.exception.wrapper.ExceptionWrapper;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.EventUtil;
@@ -49,45 +48,46 @@ public class CustomExceptionWrapper implements ExceptionWrapper {
         //根据类型构建错误信息(自定义异常为已捕获)
         exceptionPo.setType(finalException.getExceptionEnum().getMsg());
         exceptionPo.setStackMessage(finalException.getStackMessage());
-        ExceptionPo res = mongoTemplate.save(exceptionPo);
+        exceptionPo = mongoTemplate.save(exceptionPo);
 
         //发送错误通知
         //todo 待改进
-        sendNoticeMsg(EventUtil.get(),res.getObjectId());
+        sendNoticeMsg(EventUtil.get(), exceptionPo);
 
     }
 
-    private void sendNoticeMsg(EventInfo eventInfo,ObjectId objectId) {
+    private void sendNoticeMsg(EventInfo eventInfo, ExceptionPo exceptionPo) {
         CqTemplate cqTemplate = CqGlobal.findFirst().orElseThrow(() -> new BaseCustomException(ExceptionEnum.NO_CQ_CONNECTION));
         String messageType = eventInfo.getMessageType();
 
         switch (messageType) {
             case "private":
                 //私聊发送
-                cqTemplate.sendPrivateMsg(eventInfo.getAuthorId(), buildNoticeMsg(false, false, eventInfo, objectId), false);
+                cqTemplate.sendPrivateMsg(eventInfo.getAuthorId(), buildNoticeMsg(false, false, eventInfo, exceptionPo), false);
                 break;
             case "group":
                 //群聊at
-                cqTemplate.sendGroupMsg(eventInfo.getAuthorId(), buildNoticeMsg(true, false, eventInfo, objectId), false);
+                cqTemplate.sendGroupMsg(eventInfo.getGroupId(), buildNoticeMsg(true, false, eventInfo, exceptionPo), false);
                 break;
             case "httpRequest":
                 //群聊atAdmin
-                cqTemplate.sendGroupMsg(eventInfo.getAuthorId(), buildNoticeMsg(true, true, eventInfo, objectId), false);
+                cqTemplate.sendGroupMsg(eventInfo.getAuthorId(), buildNoticeMsg(true, true, eventInfo, exceptionPo), false);
                 break;
             default:
                 //群聊普通消息
-                cqTemplate.sendGroupMsg(eventInfo.getAuthorId(), buildNoticeMsg(false, true, eventInfo, objectId), false);
+                cqTemplate.sendGroupMsg(eventInfo.getAuthorId(), buildNoticeMsg(false, true, eventInfo, exceptionPo), false);
                 break;
         }
     }
 
-    private String buildNoticeMsg(boolean hasAt, boolean isAdminNotice, EventInfo eventInfo, ObjectId objectId) {
-        String msgTemplate = "{}消息解析发生异常{}\r\nmessageId:{}\r\nerrorId:{}";
+    private String buildNoticeMsg(boolean hasAt, boolean isAdminNotice, EventInfo eventInfo, ExceptionPo exceptionPo) {
+        String msgTemplate = "{}消息解析发生异常{}\r\ntype: {}\r\nmessageId: {}\r\nerrorId: {}";
         String msg = StrUtil.format(msgTemplate,
-                hasAt ? CqCodeUtil.at(eventInfo.getAuthorId()) : null,
-                isAdminNotice ? "(此条为管理群通知)" : null,
+                hasAt ? CqCodeUtil.at(eventInfo.getAuthorId()) : "",
+                isAdminNotice ? "(此条为管理群通知)" : "",
+                exceptionPo.getType(),
                 eventInfo.getMessageId(),
-                objectId.toHexString()
+                exceptionPo.getId().toHexString()
         );
         return msg;
     }
