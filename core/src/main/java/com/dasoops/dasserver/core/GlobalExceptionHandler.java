@@ -40,8 +40,8 @@ public class GlobalExceptionHandler {
     public void exceptionHandler(Exception e) {
         try {
             //异常处理
-            Assert.isTrue(cqProperties.isConsolePrintStack(), () -> {
-                Assert.isTrueOrElse(cqProperties.isNativePrintStack(), e::printStackTrace, () -> {
+            Assert.ifTrue(cqProperties.isConsolePrintStack(), () -> {
+                Assert.ifTrueOrElse(cqProperties.isNativePrintStack(), e::printStackTrace, () -> {
                     if (e instanceof BaseCustomException) {
                         log.error("消息处理发生异常: {}", ((BaseCustomException) e).getStackMessage());
                     } else {
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
                     }
                 });
             });
-            Assert.notNull(exceptionWrapper, () -> exceptionWrapper.invoke(e));
+            Assert.ifNotNull(exceptionWrapper, () -> exceptionWrapper.invoke(e));
         } catch (Exception e2) {
             log.error("Exception at ExceptionHandler", e2);
         }

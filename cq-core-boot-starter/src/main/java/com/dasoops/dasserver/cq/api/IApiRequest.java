@@ -1,11 +1,11 @@
-package com.dasoops.dasserver.cq.bot;
+package com.dasoops.dasserver.cq.api;
 
 
 import com.alibaba.fastjson2.JSONObject;
 
 /**
  * @Title: IApiRequest
- * @ClassPath com.dasoops.dasserver.cq.bot.IApiRequest
+ * @ClassPath com.dasoops.dasserver.cq.api.IApiRequest
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/11/03
  * @Version 1.0.0

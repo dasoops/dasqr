@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.pluginwrapper;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
 
 /**

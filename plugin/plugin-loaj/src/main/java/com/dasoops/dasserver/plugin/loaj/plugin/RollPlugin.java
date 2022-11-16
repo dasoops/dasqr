@@ -55,7 +55,7 @@ public class RollPlugin extends CqPlugin {
             //获取群roll点集合
             Set<String> keys = stringRedisTemplate.keys(prefix);
             //全部设置为5分钟过期
-            Assert.notNull(keys, () -> keys.forEach(key -> stringRedisTemplate.boundSetOps(key).expire(5L, TimeUnit.MINUTES)));
+            Assert.ifNotNull(keys, () -> keys.forEach(key -> stringRedisTemplate.boundSetOps(key).expire(5L, TimeUnit.MINUTES)));
             //添加
             stringRedisTemplate.opsForSet().add(redisKey, String.valueOf(i));
             cqTemplate.sendGroupMsg(event.getGroupId(), CqCodeUtil.at(event.getUserId()) + "你roll到了: " + i, false);
@@ -79,7 +79,7 @@ public class RollPlugin extends CqPlugin {
                 Map<String, Integer> resMap = new HashMap<>(16);
                 keys.forEach(key -> resMap.put(
                         key.substring(key.lastIndexOf(":") + 1),
-                        Assert.notNull(stringRedisTemplate.opsForSet().members(key),
+                        Assert.ifNotNull(stringRedisTemplate.opsForSet().members(key),
                                 //取最大值
                                 res -> res.stream().map(Integer::parseInt).max(Comparator.comparingInt(Integer::valueOf)).orElse(null))
                 ));

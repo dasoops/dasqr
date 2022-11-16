@@ -63,6 +63,16 @@
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-sys-pluginWrapper</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-authWrapper</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-wsWrapper</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

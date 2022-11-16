@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.cq.bot;
+package com.dasoops.dasserver.cq.api;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.IdUtil;
@@ -130,7 +130,7 @@ public class ApiHandler {
         JSONObject apiJson = new JSONObject();
         apiJson.put("action", apiEnum.getUrl());
         apiJson.put("echo", IdUtil.fastSimpleUUID());
-        if (!params.isEmpty()) {
+        if (params != null && !params.isEmpty()) {
             apiJson.put("params", params);
         }
         return apiJson;

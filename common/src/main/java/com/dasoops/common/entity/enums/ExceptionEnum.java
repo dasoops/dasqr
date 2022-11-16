@@ -66,7 +66,8 @@ public enum ExceptionEnum implements IExceptionEnum {
     IMAGE_SAVE_ERROR(8001, "图片存储异常"),
     OCR_ERROR(8002, "ocr服务异常"),
     IMAGE_PART_SAVE_KEY_NOT_NULL(8003, "imageKey获取失败,可能是消息间隔太长"),
-    TEST_EXCEPTION(8004, "这是一个测试异常");
+    TEST_EXCEPTION(8004, "这是一个测试异常"),
+    CRAZY_TEST_EXCEPTION(8005, "CrazyThursDayPayMe50");
 
     /**
      * 错误代码

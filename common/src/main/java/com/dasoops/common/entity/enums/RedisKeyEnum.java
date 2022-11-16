@@ -19,11 +19,11 @@ public enum RedisKeyEnum implements IRedisKeyEnum{
     /**
      * 未加载插件
      */
-    UN_LOAD_PLUGIN(CORE_PLUGIN + "un_load_plugin"),
+    UN_LOAD_PLUGIN(PLUGIN + "un_load_plugin"),
     /**
      * 已加载插件
      */
-    LOAD_PLUGIN(CORE_PLUGIN + "load_plugin");
+    LOAD_PLUGIN(PLUGIN + "load_plugin");
 
     /**
      * 描述

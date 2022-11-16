@@ -1,6 +1,8 @@
 package com.dasoops.dasserver.plugin.loaj;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @Title: AutoConfiguration
@@ -11,8 +13,9 @@ import org.springframework.context.annotation.ComponentScan;
  * @Description: 自动配置
  */
 @ComponentScan("com.dasoops.dasserver.plugin.loaj")
+@MapperScan("com.dasoops.dasserver.plugin.loaj.mapper")
+@EnableTransactionManagement
 public class AutoConfiguration {
-
 
 
 }

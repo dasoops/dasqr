@@ -1,11 +1,13 @@
 package com.dasoops.dasserver.plugin.image.entity.enums;
 
 import com.dasoops.common.entity.enums.IRedisKeyEnum;
-import com.dasoops.dasserver.cq.bot.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
+import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.Arrays;
 
 
 /**
@@ -34,15 +36,16 @@ public enum ImageRedisKeyEnum implements IRedisKeyEnum {
     }
 
     public String getPartSaveImageKeyByPrivate(Long userId) {
-        return this + "user:" + userId;
+        return this.getKey() + "user:" + userId;
     }
 
     public String getPartSaveImageKey(CqMessageEvent event) {
         if (event instanceof CqGroupMessageEvent) {
-            return this.getKey() + "group:" + ((CqGroupMessageEvent)event).getGroupId();
-        } else {
-            return this + "user:" + event.getUserId();
+            return this.getKey() + "group:" + ((CqGroupMessageEvent) event).getGroupId();
+        } else if (event instanceof CqPrivateMessageEvent) {
+            return this.getKey() + "user:" + event.getUserId();
         }
+        return Arrays.toString(Thread.currentThread().getStackTrace());
     }
 
 }

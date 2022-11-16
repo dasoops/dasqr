@@ -1,13 +1,11 @@
 package com.dasoops.dasserver.cq.websocket;
 
-import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.dasoops.common.entity.enums.RedisKeyEnum;
 import com.dasoops.common.exception.BaseCustomException;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqGlobal;
-import com.dasoops.dasserver.cq.bot.ApiHandler;
+import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.bot.CqFactory;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.bot.EventHandler;
@@ -23,7 +21,6 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -48,8 +45,9 @@ public class WsHandler extends TextWebSocketHandler {
     private final ExecutorService executor;
     private final CqProperties cqProperties;
     private final ExceptionWrapper exceptionWrapper;
+    private final WsWrapper wsWrapper;
 
-    public WsHandler(CqFactory cqFactory, ApiHandler apiHandler, EventHandler eventHandler, EventProperties eventProperties, ExceptionWrapper exceptionWrapper, CqProperties cqProperties) {
+    public WsHandler(CqFactory cqFactory, ApiHandler apiHandler, EventHandler eventHandler, EventProperties eventProperties, ExceptionWrapper exceptionWrapper, CqProperties cqProperties, WsWrapper wsWrapper) {
         this.cqFactory = cqFactory;
         this.apiHandler = apiHandler;
         this.eventHandler = eventHandler;
@@ -62,6 +60,7 @@ public class WsHandler extends TextWebSocketHandler {
                 new NamedThreadFactory("wsHandler"));
         this.cqProperties = cqProperties;
         this.exceptionWrapper = exceptionWrapper;
+        this.wsWrapper = wsWrapper;
     }
 
     /**
@@ -79,6 +78,7 @@ public class WsHandler extends TextWebSocketHandler {
         CqTemplate cqTemplate = cqFactory.create(qid, session);
         CqGlobal.robots.put(qid, cqTemplate);
 
+        Assert.ifNotNull(wsWrapper, () -> wsWrapper.afterConnectionEstablishedWrapper(cqTemplate));
 /*
         插件通知 预计迁移至增强插件
         List<String> unLoadPluginList = stringRedisTemplate.opsForList().range(RedisKeyEnum.UN_LOAD_PLUGIN.getKey(), 0, -1);
@@ -121,6 +121,7 @@ public class WsHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus closeStatus) {
         Long qid = getQid(session);
         log.info("{} close connection", qid);
+        Assert.ifNotNull(wsWrapper, () -> wsWrapper.afterConnectionClosedWrapper(CqGlobal.robots.get(qid)));
 
         CqGlobal.robots.remove(qid);
     }
@@ -146,6 +147,7 @@ public class WsHandler extends TextWebSocketHandler {
 
         JSONObject messageObj = JSON.parseObject(message.getPayload());
         if (isReturn(messageObj)) {
+            log.debug("handleTextMessage: {}", message.getPayload().replace("\n", ""));
             //是返回消息 触发唤醒事件
             apiHandler.onReceiveApiMessage(messageObj);
         } else {
@@ -156,10 +158,10 @@ public class WsHandler extends TextWebSocketHandler {
                     eventHandler.handle(finalCqTemplate, messageObj);
                 } catch (Exception e) {
                     //异常处理
-                    Assert.isTrue(cqProperties.isConsolePrintStack(), () -> {
-                        Assert.isTrueOrElse(cqProperties.isNativePrintStack(), e::printStackTrace, () -> log.error("消息处理发生异常: {}", e instanceof BaseCustomException ? ((BaseCustomException) e).getStackMessage() : e));
+                    Assert.ifTrue(cqProperties.isConsolePrintStack(), () -> {
+                        Assert.ifTrueOrElse(cqProperties.isNativePrintStack(), e::printStackTrace, () -> log.error("消息处理发生异常: {}", e instanceof BaseCustomException ? ((BaseCustomException) e).getStackMessage() : e));
                     });
-                    Assert.notNull(exceptionWrapper, () -> exceptionWrapper.invoke(e));
+                    Assert.ifNotNull(exceptionWrapper, () -> exceptionWrapper.invoke(e));
                 }
             });
         }

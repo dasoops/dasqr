@@ -20,7 +20,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID,
+        ID
+        ,
         KEYWORD,CLASS_PATH,`ORDER`,
         `LEVEL`,DESCRIPTION,
         ENABLE,IS_DELETE,CREATE_USER,
@@ -31,6 +32,12 @@
         FROM TB_CORE_PLUGIN
         WHERE ENABLE = TRUE
         ORDER BY `ORDER`
+    </select>
+    <select id="getMaxOrder" resultType="java.lang.Integer">
+        SELECT `ORDER`
+        FROM TB_CORE_PLUGIN
+        WHERE IS_DELETE = 0
+        ORDER BY `ORDER` LIMIT 1
     </select>
 
 

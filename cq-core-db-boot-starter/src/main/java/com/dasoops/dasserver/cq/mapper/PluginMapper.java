@@ -23,6 +23,12 @@ public interface PluginMapper extends BaseMapper<PluginPo> {
      */
     List<String> selectAllClassPathOrderByOrder();
 
+    /**
+     * 得到最大序号
+     *
+     * @return {@link Integer}
+     */
+    Integer getMaxOrder();
 }
 
 

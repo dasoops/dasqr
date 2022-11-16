@@ -9,7 +9,6 @@ import com.dasoops.dasserver.cq.exception.wrapper.ExceptionWrapper;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.EventUtil;
 import com.dasoops.dasserver.cq.utils.entity.EventInfo;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
@@ -25,11 +24,11 @@ import java.util.Date;
  * @see ExceptionWrapper
  */
 @Component
-public class CustomExceptionWrapper implements ExceptionWrapper {
+public class ExceptionWrapperImpl implements ExceptionWrapper {
 
     private final MongoTemplate mongoTemplate;
 
-    public CustomExceptionWrapper(@SuppressWarnings("all") MongoTemplate mongoTemplate) {
+    public ExceptionWrapperImpl(@SuppressWarnings("all") MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 

@@ -43,7 +43,7 @@ public class ConfigCache {
         redisTemplate.delete(ConfigKeyEnum.CONFIG.getKey());
 
         List<ConfigPo> configList = configService.list();
-        Assert.dbExecuteReturnNotNull(configList);
+        Assert.dbExecuteReturnMustNotNull(configList);
         configList.forEach(config -> {
             redisTemplate.opsForHash().put(ConfigKeyEnum.CONFIG.getKey(), config.getKeyword(), config.getValue());
         });
@@ -51,7 +51,7 @@ public class ConfigCache {
 
     public String getConfig() {
         String localVersion = redisTemplate.opsForValue().get(ConfigKeyEnum.LOCAL_VERSION.getKey());
-        Assert.notNull(localVersion, ExceptionUtil::buildRedisDataNotNull);
+        Assert.ifNotNull(localVersion, ExceptionUtil::buildRedisDataNotNull);
         return localVersion;
     }
 

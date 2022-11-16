@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -229,9 +228,9 @@ public class ImagePlugin extends CqPlugin {
                 return "这张图的关键词重复了捏";
             }
 
-            Assert.isFalse(imageService.saveImage(event, key, url), ExceptionUtil::buildImageSaveError);
+            Assert.ifFalse(imageService.saveImage(event, key, url), ExceptionUtil::buildImageSaveError);
             log.debug("(ImagePlugin) 存图逻辑执行完毕 - 分片存图 + ocr 分支 part2");
-            return "知悉,图意: " + key;
+            return "好了捏,现在可以用 " + key + "取出这张图辽";
         }
 
         //普通分片分支
@@ -284,7 +283,7 @@ public class ImagePlugin extends CqPlugin {
         imageService.saveImage(event, keyword, url);
 
         log.debug("(ImagePlugin) 存图逻辑执行完毕 - ocr分支");
-        return "知悉,图意: " + result.getData();
+        return "好了捏,现在可以用 " + result.getData() + "取出这张图辽";
     }
 
     /**

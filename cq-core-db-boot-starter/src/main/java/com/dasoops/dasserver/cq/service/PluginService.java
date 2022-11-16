@@ -57,4 +57,11 @@ public interface PluginService extends IService<PluginPo> {
      * @return {@link List}<{@link Integer}>
      */
     List<Integer> getIdListByMinLevel(Integer minLevel);
+
+    /**
+     * 得到最大排序
+     *
+     * @return {@link Integer}
+     */
+    Integer getMaxOrder();
 }

@@ -16,6 +16,8 @@ import com.dasoops.dasserver.cq.utils.EventUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 
+import java.util.Optional;
+
 
 /**
  * @Title: EventHandler
@@ -33,10 +35,12 @@ public class EventHandler {
 
     private final ApplicationContext applicationContext;
 
-    private final CqPlugin defaultPlugin = new CqPlugin();
+    //    private final CqPlugin defaultPlugin = new CqPlugin();
+    private final AuthWrapper authWrapper;
 
-    public EventHandler(ApplicationContext applicationContext) {
+    public EventHandler(ApplicationContext applicationContext, AuthWrapper authWrapper) {
         this.applicationContext = applicationContext;
+        this.authWrapper = authWrapper;
     }
 
     /**
@@ -47,7 +51,6 @@ public class EventHandler {
      */
     public void handle(CqTemplate cq, JSONObject eventJson) {
         EventUtil.set(eventJson);
-        Assert.allNotNull(cq.getPluginList());
 
         String postType = eventJson.getString("post_type");
         switch (postType) {
@@ -81,19 +84,31 @@ public class EventHandler {
                 //初始化值,存入参数
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
+                    //无权限返回为空,判断直接进入下一个
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
                     //非阻塞赋值,后续调用使用改对象的参数
-                    if (!((passObj = getPlugin(pluginClass).onPrivateMessage(cq, (CqPrivateMessageEvent) passObj.getParam().orElse(null))).isPass())) {
+                    passObj = authPluginOpt.get().onPrivateMessage(cq, (CqPrivateMessageEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         //阻塞直接break
                         break;
                     }
                 }
                 break;
             }
+
             case "group": {
                 var event = eventJson.to(CqGroupMessageEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!((passObj = getPlugin(pluginClass).onGroupMessage(cq, (CqGroupMessageEvent) passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onGroupMessage(cq, (CqGroupMessageEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
@@ -103,7 +118,12 @@ public class EventHandler {
                 var event = eventJson.to(CqDiscussMessageEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!((passObj = getPlugin(pluginClass).onDiscussMessage(cq, (CqDiscussMessageEvent) passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onDiscussMessage(cq, (CqDiscussMessageEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
@@ -125,7 +145,12 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupUploadNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!((passObj = getPlugin(pluginClass).onGroupUploadNotice(cq, (CqGroupUploadNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onGroupUploadNotice(cq, (CqGroupUploadNoticeEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
@@ -135,7 +160,12 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupAdminNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!((passObj = getPlugin(pluginClass).onGroupAdminNotice(cq, (CqGroupAdminNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onGroupAdminNotice(cq, (CqGroupAdminNoticeEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
@@ -145,7 +175,12 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupDecreaseNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!((passObj = getPlugin(pluginClass).onGroupDecreaseNotice(cq, (CqGroupDecreaseNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onGroupDecreaseNotice(cq, (CqGroupDecreaseNoticeEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
@@ -155,7 +190,12 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupIncreaseNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!((passObj = getPlugin(pluginClass).onGroupIncreaseNotice(cq, (CqGroupIncreaseNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onGroupIncreaseNotice(cq, (CqGroupIncreaseNoticeEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
@@ -165,7 +205,12 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupBanNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!((passObj = getPlugin(pluginClass).onGroupBanNotice(cq, (CqGroupBanNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onGroupBanNotice(cq, (CqGroupBanNoticeEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
@@ -175,7 +220,12 @@ public class EventHandler {
                 var event = eventJson.to(CqFriendAddNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!((passObj = getPlugin(pluginClass).onFriendAddNotice(cq, (CqFriendAddNoticeEvent) passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onFriendAddNotice(cq, (CqFriendAddNoticeEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
@@ -198,7 +248,12 @@ public class EventHandler {
                 var event = eventJson.to(CqFriendRequestEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!((passObj = getPlugin(pluginClass).onFriendRequest(cq, (CqFriendRequestEvent) passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onFriendRequest(cq, (CqFriendRequestEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
@@ -208,7 +263,12 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupRequestEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                        if (!((passObj = getPlugin(pluginClass).onHeartBeatMeta(cq, (CqHeartBeatMetaEvent)passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onGroupRequest(cq, (CqGroupRequestEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
@@ -229,17 +289,26 @@ public class EventHandler {
                 var event = eventJson.to(CqHeartBeatMetaEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!((passObj = getPlugin(pluginClass).onHeartBeatMeta(cq, (CqHeartBeatMetaEvent)passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onHeartBeatMeta(cq, (CqHeartBeatMetaEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
                 break;
             }
             case "lifecycle": {
-                var event = eventJson.to(CqLifecycleMetaEvent.class);
-                passObj = PassObj.pass(event);
+                passObj = PassObj.pass(eventJson.to(CqLifecycleMetaEvent.class));
                 for (var pluginClass : cq.getPluginList()) {
-                    if (!((passObj = getPlugin(pluginClass).onLifecycleMeta(cq, (CqLifecycleMetaEvent) passObj.getParam().orElse(null))).isPass())) {
+                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    if (authPluginOpt.isEmpty()) {
+                        continue;
+                    }
+                    passObj = authPluginOpt.get().onLifecycleMeta(cq, (CqLifecycleMetaEvent) passObj.getEvent());
+                    if (!(passObj.isPass())) {
                         break;
                     }
                 }
@@ -250,12 +319,25 @@ public class EventHandler {
         }
     }
 
-    private CqPlugin getPlugin(Class<? extends CqPlugin> pluginClass) {
+
+    /**
+     * 获取可用插件
+     *
+     * @param pluginClass plugin类
+     * @return {@link CqPlugin}
+     */
+    private Optional<CqPlugin> getauthPlugin(Class<? extends CqPlugin> pluginClass) {
+        if (authWrapper != null) {
+            if (!authWrapper.auth()) {
+                return Optional.empty();
+            }
+        }
+
         try {
-            return applicationContext.getBean(pluginClass);
+            return Optional.of(applicationContext.getBean(pluginClass));
         } catch (Exception e) {
-            Assert.notNullOrElse(pluginClass, () -> ExceptionUtil.buildPluginNotFount(pluginClass.getName()), ExceptionUtil::buildPluginNotFount);
-            return defaultPlugin;
+            Assert.ifNotNullOrElse(pluginClass, () -> ExceptionUtil.buildPluginNotFount(pluginClass.getName()), ExceptionUtil::buildPluginNotFount);
+            return Optional.empty();
         }
     }
 }

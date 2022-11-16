@@ -2,9 +2,7 @@ package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.util.Assert;
-import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.CqPlugin;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.entity.po.BasePo;
 import com.dasoops.dasserver.cq.entity.po.PluginPo;
 import com.dasoops.dasserver.cq.entity.po.RegisterMtmPluginPo;
@@ -13,7 +11,6 @@ import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +39,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
     private final RegisterService registerService;
     private final RegisterMtmPluginService registerMtmPluginService;
 
-    public PluginServiceImpl(@Autowired(required = false) PluginMapper pluginMapper, @Lazy RegisterService registerService, RegisterMtmPluginService registerMtmPluginService) {
+    public PluginServiceImpl(@SuppressWarnings("all") PluginMapper pluginMapper, @Lazy RegisterService registerService, RegisterMtmPluginService registerMtmPluginService) {
         this.pluginMapper = pluginMapper;
         this.registerService = registerService;
         this.registerMtmPluginService = registerMtmPluginService;
@@ -81,12 +78,12 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(PluginPo pluginPo) {
-        Assert.allNotNull(pluginPo, pluginPo.getKeyword(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription(), pluginPo.getOrder());
-        Assert.allNull(pluginPo.getId());
+        Assert.allMustNotNull(pluginPo, pluginPo.getKeyword(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription(), pluginPo.getOrder());
+        Assert.allMustNull(pluginPo.getId());
 
         //默认启用,存储插件对象
         pluginPo.setEnable(1);
-        Assert.isTrue(super.save(pluginPo));
+        Assert.ifTrue(super.save(pluginPo));
 
         //注册用户对象Level >= 插件对象Level 赋予使用权限
         List<Integer> registerPoIdList = registerService.getIdListByMaxLevel(pluginPo.getLevel());
@@ -100,19 +97,24 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
         }).collect(Collectors.toList());
 
         //持久化
-        Assert.isTrue(registerMtmPluginService.saveBatch(rpList));
+        Assert.ifTrue(registerMtmPluginService.saveBatch(rpList));
         return true;
     }
 
     @Override
     public boolean updateByKeyword(PluginPo pluginPo) {
-        Assert.isTrue(super.lambdaUpdate().eq(PluginPo::getKeyword, pluginPo.getKeyword()).update(pluginPo));
+        Assert.ifTrue(super.lambdaUpdate().eq(PluginPo::getKeyword, pluginPo.getKeyword()).update(pluginPo));
         return true;
     }
 
     @Override
     public List<Integer> getIdListByMinLevel(Integer minLevel) {
         return this.lambdaQuery().le(PluginPo::getLevel, minLevel).list().stream().map(BasePo::getId).collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer getMaxOrder() {
+        return pluginMapper.getMaxOrder();
     }
 
 

@@ -39,11 +39,11 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterPo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(RegisterPo registerPo) {
-        Assert.allNotNull(registerPo, registerPo.getRegisterId(), registerPo.getType(), registerPo.getLevel());
-        Assert.allNull(registerPo.getId());
+        Assert.allMustNotNull(registerPo, registerPo.getRegisterId(), registerPo.getType(), registerPo.getLevel());
+        Assert.allMustNull(registerPo.getId());
 
         //存储注册对象
-        Assert.isTrue(super.save(registerPo));
+        Assert.ifTrue(super.save(registerPo));
 
         //插件对象Level <= 注册用户对象Level 赋予使用权限
         List<Integer> pluginPoIdList = pluginService.getIdListByMinLevel(registerPo.getLevel());
@@ -56,7 +56,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterPo>
         }).collect(Collectors.toList());
 
         //持久化
-        Assert.isTrue(registerMtmPluginService.saveBatch(rpList));
+        Assert.ifTrue(registerMtmPluginService.saveBatch(rpList));
         return true;
     }
 

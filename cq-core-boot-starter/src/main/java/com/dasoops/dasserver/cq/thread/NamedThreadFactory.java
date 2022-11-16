@@ -30,7 +30,7 @@ public class NamedThreadFactory implements ThreadFactory {
 
     @Override
     public Thread newThread(@NonNull Runnable r) {
-        Thread t = new Thread(group, r, namePrefix + Assert.notNullOrElse(EventUtil.get(), EventInfo::getMessageId, res -> "sys"), 0);
+        Thread t = new Thread(group, r, namePrefix + Assert.ifNotNullOrElse(EventUtil.get(), EventInfo::getMessageId, res -> "sys"), 0);
         if (t.isDaemon()) {
             t.setDaemon(false);
         }

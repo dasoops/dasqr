@@ -40,7 +40,7 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigPo>
         //获取版本号对象,获取版本号,增加后更新
         int version = Integer.parseInt(getConfig(ConfigEnum.VERSION));
         int endVersion = version + addVersion;
-        Assert.isTrue(super.lambdaUpdate().eq(ConfigPo::getKeyword, ConfigEnum.VERSION.getKey()).set(ConfigPo::getValue, endVersion).update(), ExceptionUtil::buildDbExecuteReturnNotFalse);
+        Assert.ifTrue(super.lambdaUpdate().eq(ConfigPo::getKeyword, ConfigEnum.VERSION.getKey()).set(ConfigPo::getValue, endVersion).update(), ExceptionUtil::buildDbExecuteReturnNotFalse);
         return endVersion;
     }
 

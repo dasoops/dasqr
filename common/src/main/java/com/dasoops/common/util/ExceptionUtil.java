@@ -105,4 +105,8 @@ public class ExceptionUtil {
     public static void buildTestException() {
         throw new BaseCustomException(ExceptionEnum.TEST_EXCEPTION);
     }
+
+    public static void buildCrazyException() {
+        throw new BaseCustomException(ExceptionEnum.CRAZY_TEST_EXCEPTION);
+    }
 }

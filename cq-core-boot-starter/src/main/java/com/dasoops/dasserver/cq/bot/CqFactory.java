@@ -2,6 +2,7 @@ package com.dasoops.dasserver.cq.bot;
 
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqPlugin;
+import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -21,7 +22,7 @@ public class CqFactory {
 
     public CqFactory(ApiHandler apiHandler, CqProperties cqProperties) {
         this.apiHandler = apiHandler;
-        Assert.notNull(cqProperties, () -> pluginList = cqProperties.getPluginList());
+        Assert.ifNotNull(cqProperties, () -> pluginList = cqProperties.getPluginList());
     }
 
     public CqFactory(ApiHandler apiHandler, List<Class<? extends CqPlugin>> pluginList) {

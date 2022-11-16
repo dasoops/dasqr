@@ -2,7 +2,6 @@ package com.dasoops.dasserver.cq.bot;
 
 import com.dasoops.dasserver.cq.entity.event.CqEvent;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Optional;
 
@@ -26,7 +25,7 @@ public class PassObj {
      * 参数
      */
     @Getter
-    private Optional<CqEvent> param;
+    private CqEvent event;
 
     private PassObj() {
 
@@ -35,13 +34,13 @@ public class PassObj {
     /**
      * 带参放行,参数将传递给下一个拦截器
      *
-     * @param param 参数
+     * @param event event
      * @return {@link PassObj}
      */
-    public static PassObj pass(CqEvent param) {
+    public static PassObj pass(CqEvent event) {
         PassObj passObj = new PassObj();
         passObj.isPass = true;
-        passObj.param = Optional.of(param);
+        passObj.event = event;
         return passObj;
     }
 

@@ -19,11 +19,11 @@ public enum ConfigKeyEnum implements IRedisKeyEnum {
     /**
      * config Hash<keyword,value>
      */
-    CONFIG(CORE_CONFIG + "config"),
+    CONFIG(IRedisKeyEnum.CONFIG + "config"),
     /**
      * 本地版本号
      */
-    LOCAL_VERSION(CORE_CONFIG + "localVersion"),
+    LOCAL_VERSION(IRedisKeyEnum.CONFIG + "localVersion"),
     ;
 
     final String key;

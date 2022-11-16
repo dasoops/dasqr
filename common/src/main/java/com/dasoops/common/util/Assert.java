@@ -14,11 +14,11 @@ import java.util.function.Function;
  */
 public class Assert {
     /**
-     * 对象非空
+     * 对象必须全部为空
      *
      * @param obj obj
      */
-    public static void allNull(Object... obj) {
+    public static void allMustNull(Object... obj) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             ExceptionUtil.buildParameterIsNull();
         }
@@ -30,22 +30,22 @@ public class Assert {
     }
 
     /**
-     * 对象非空
+     * 如果为空
      *
      * @param obj obj
      */
-    public static <T> void isNull(T obj, NoneFunction function) {
+    public static <T> void ifNull(T obj, NoneFunction function) {
         if (ObjUtil.isNull(obj) || ObjUtil.isEmpty(obj)) {
             function.invoke();
         }
     }
 
     /**
-     * 对象非空
+     * 如果为空
      *
      * @param obj obj
      */
-    public static <T, R> R isNullOrElse(T obj, Function<T, R> function, Function<T, R> orElseFunction) {
+    public static <T, R> R ifNullOrElse(T obj, Function<T, R> function, Function<T, R> orElseFunction) {
         if (ObjUtil.isNull(obj) || ObjUtil.isEmpty(obj)) {
             function.apply(obj);
         }
@@ -57,7 +57,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static void allNotNull(Object... obj) {
+    public static void allMustNotNull(Object... obj) {
         if (ObjUtil.isNull(obj) || ObjUtil.isEmpty(obj)) {
             ExceptionUtil.buildParameterIsNull();
         }
@@ -73,7 +73,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static <T> void notNull(T obj, NoneFunction function) {
+    public static <T> void ifNotNull(T obj, NoneFunction function) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             function.invoke();
         }
@@ -84,7 +84,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static <T, R> R notNull(T obj, Function<T, R> function) {
+    public static <T, R> R ifNotNull(T obj, Function<T, R> function) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             return function.apply(obj);
         }
@@ -96,7 +96,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static <T, R> R notNullOrElse(T obj, Function<T, R> function, Function<T, R> orElseFunction) {
+    public static <T, R> R ifNotNullOrElse(T obj, Function<T, R> function, Function<T, R> orElseFunction) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             return function.apply(obj);
         }
@@ -108,7 +108,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static <T> void notNullOrElse(T obj, NoneFunction function, NoneFunction orElseFunction) {
+    public static <T> void ifNotNullOrElse(T obj, NoneFunction function, NoneFunction orElseFunction) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             function.invoke();
         }
@@ -120,7 +120,7 @@ public class Assert {
      *
      * @param bool boolean
      */
-    public static void isTrue(Boolean bool) {
+    public static void ifTrue(Boolean bool) {
         if (bool) {
             ExceptionUtil.buildIsTrue();
         }
@@ -132,7 +132,7 @@ public class Assert {
      * @param bool     boolean
      * @param function 函数
      */
-    public static void isTrue(Boolean bool, NoneFunction function) {
+    public static void ifTrue(Boolean bool, NoneFunction function) {
         if (bool) {
             function.invoke();
         }
@@ -144,7 +144,7 @@ public class Assert {
      * @param bool     boolean
      * @param function 函数
      */
-    public static void isTrueOrElse(Boolean bool, NoneFunction function, NoneFunction orElseFunction) {
+    public static void ifTrueOrElse(Boolean bool, NoneFunction function, NoneFunction orElseFunction) {
         if (bool) {
             function.invoke();
         } else {
@@ -157,7 +157,7 @@ public class Assert {
      *
      * @param bool boolean
      */
-    public static void isFalse(Boolean bool) {
+    public static void ifFalse(Boolean bool) {
         if (!bool) {
             ExceptionUtil.buildIsFalse();
         }
@@ -169,7 +169,7 @@ public class Assert {
      * @param bool     boolean
      * @param function 函数
      */
-    public static void isFalse(Boolean bool, NoneFunction function) {
+    public static void ifFalse(Boolean bool, NoneFunction function) {
         if (!bool) {
             function.invoke();
         }
@@ -180,7 +180,7 @@ public class Assert {
      *
      * @param bool 保龄球
      */
-    public static void dbExecuteSuccess(Boolean bool) {
+    public static void dbExecuteMustSuccess(Boolean bool) {
         if (!bool) {
             ExceptionUtil.buildDbExecuteFailed();
         }
@@ -191,8 +191,8 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static void dbExecuteReturnNotNull(Object obj) {
-        if (ObjUtil.isNull(obj)){
+    public static void dbExecuteReturnMustNotNull(Object obj) {
+        if (ObjUtil.isNull(obj)) {
             ExceptionUtil.buildDbExecuteReturnNotNull();
         }
     }

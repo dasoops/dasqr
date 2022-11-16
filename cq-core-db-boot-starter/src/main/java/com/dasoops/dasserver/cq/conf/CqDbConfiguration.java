@@ -1,12 +1,11 @@
 package com.dasoops.dasserver.cq.conf;
 
-import com.dasoops.dasserver.cq.bot.ApiHandler;
+import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.bot.CqFactory;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.service.PluginService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.*;
 

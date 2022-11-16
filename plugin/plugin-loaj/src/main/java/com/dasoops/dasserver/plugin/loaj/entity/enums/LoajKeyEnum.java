@@ -22,7 +22,7 @@ public enum LoajKeyEnum implements IRedisKeyEnum {
     ROLL(PLUGIN + "loaj:" + "roll"),
 
 
-    ;
+    REPLY(PLUGIN + "loaj:" + "reply");
 
     final String key;
 }
