@@ -59,6 +59,7 @@ public enum ExceptionEnum implements IExceptionEnum {
      * 系统异常
      */
     PLUGIN_NOT_FOUNT(7001, "插件装配异常"),
+    TYPE_CONVERT(7002, "类型转换异常"),
 
     /**
      * 插件自定义异常
@@ -67,7 +68,10 @@ public enum ExceptionEnum implements IExceptionEnum {
     OCR_ERROR(8002, "ocr服务异常"),
     IMAGE_PART_SAVE_KEY_NOT_NULL(8003, "imageKey获取失败,可能是消息间隔太长"),
     TEST_EXCEPTION(8004, "这是一个测试异常"),
-    CRAZY_TEST_EXCEPTION(8005, "CrazyThursDayPayMe50");
+    CRAZY_TEST_EXCEPTION(8005, "CrazyThursDayPayMe50"),
+
+    ;
+
 
     /**
      * 错误代码

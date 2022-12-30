@@ -3,9 +3,9 @@ package com.dasoops.dasserver.cq.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqPlugin;
-import com.dasoops.dasserver.cq.entity.po.BasePo;
-import com.dasoops.dasserver.cq.entity.po.PluginPo;
-import com.dasoops.dasserver.cq.entity.po.RegisterMtmPluginPo;
+import com.dasoops.common.entity.dbo.base.BaseDo;
+import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
+import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
 import com.dasoops.dasserver.cq.mapper.PluginMapper;
 import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
@@ -32,14 +32,14 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
+public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
         implements PluginService {
 
     private final PluginMapper pluginMapper;
     private final RegisterService registerService;
     private final RegisterMtmPluginService registerMtmPluginService;
 
-    public PluginServiceImpl(@SuppressWarnings("all") PluginMapper pluginMapper, @Lazy RegisterService registerService, RegisterMtmPluginService registerMtmPluginService) {
+    public PluginServiceImpl(@Lazy @SuppressWarnings("all") PluginMapper pluginMapper, @Lazy RegisterService registerService, @Lazy RegisterMtmPluginService registerMtmPluginService) {
         this.pluginMapper = pluginMapper;
         this.registerService = registerService;
         this.registerMtmPluginService = registerMtmPluginService;
@@ -71,13 +71,13 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
     }
 
     @Override
-    public Optional<PluginPo> getByKeyWord(String keyWord) {
-        return this.lambdaQuery().eq(PluginPo::getKeyword, keyWord).oneOpt();
+    public Optional<PluginDo> getByKeyWord(String keyWord) {
+        return super.lambdaQuery().eq(PluginDo::getKeyword, keyWord).oneOpt();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean save(PluginPo pluginPo) {
+    public boolean save(PluginDo pluginPo) {
         Assert.allMustNotNull(pluginPo, pluginPo.getKeyword(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription(), pluginPo.getOrder());
         Assert.allMustNull(pluginPo.getId());
 
@@ -86,11 +86,11 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
         Assert.ifTrue(super.save(pluginPo));
 
         //注册用户对象Level >= 插件对象Level 赋予使用权限
-        List<Integer> registerPoIdList = registerService.getIdListByMaxLevel(pluginPo.getLevel());
+        List<Long> registerPoIdList = registerService.getIdListByMaxLevel(pluginPo.getLevel());
 
         //构建registerPo对象
-        List<RegisterMtmPluginPo> rpList = registerPoIdList.stream().map(registerPoId -> {
-            RegisterMtmPluginPo po = new RegisterMtmPluginPo();
+        List<RegisterMtmPluginDo> rpList = registerPoIdList.stream().map(registerPoId -> {
+            RegisterMtmPluginDo po = new RegisterMtmPluginDo();
             po.setPluginId(pluginPo.getId());
             po.setRegisterId(registerPoId);
             return po;
@@ -102,14 +102,14 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginPo>
     }
 
     @Override
-    public boolean updateByKeyword(PluginPo pluginPo) {
-        Assert.ifTrue(super.lambdaUpdate().eq(PluginPo::getKeyword, pluginPo.getKeyword()).update(pluginPo));
+    public boolean updateByKeyword(PluginDo pluginPo) {
+        Assert.ifTrue(super.lambdaUpdate().eq(PluginDo::getKeyword, pluginPo.getKeyword()).update(pluginPo));
         return true;
     }
 
     @Override
-    public List<Integer> getIdListByMinLevel(Integer minLevel) {
-        return this.lambdaQuery().le(PluginPo::getLevel, minLevel).list().stream().map(BasePo::getId).collect(Collectors.toList());
+    public List<Long> getIdListByMinLevel(Integer minLevel) {
+        return super.lambdaQuery().le(PluginDo::getLevel, minLevel).list().stream().map(BaseDo::getId).collect(Collectors.toList());
     }
 
     @Override

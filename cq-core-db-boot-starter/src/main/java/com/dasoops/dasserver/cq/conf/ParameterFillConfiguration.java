@@ -21,16 +21,28 @@ public class ParameterFillConfiguration implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.strictInsertFill(metaObject, "createTime", Date.class, new Date());
-        this.strictInsertFill(metaObject, "createUser", String.class, String.valueOf(EventUtil.get().getAuthorId()));
         this.strictInsertFill(metaObject, "isDelete", String.class, "0");
+
+        this.strictInsertFill(metaObject, "createTime", Date.class, new Date());
+
+        if (!EventUtil.isEmpty()) {
+            this.strictInsertFill(metaObject, "createUser", String.class, String.valueOf(EventUtil.get().getAuthorId()));
+        } else {
+            this.strictInsertFill(metaObject, "createUser", String.class, "sys");
+        }
+
         updateFill(metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         this.strictUpdateFill(metaObject, "updateTime", Date.class, new Date());
-        this.strictUpdateFill(metaObject, "updateUser", String.class, String.valueOf(EventUtil.get().getAuthorId()));
+
+        if (!EventUtil.isEmpty()) {
+            this.strictUpdateFill(metaObject, "updateUser", String.class, String.valueOf(EventUtil.get().getAuthorId()));
+        } else {
+            this.strictUpdateFill(metaObject, "updateUser", String.class, "sys");
+        }
     }
 
 }

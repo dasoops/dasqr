@@ -2,12 +2,14 @@ package com.dasoops.dasserver.cq.bot;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.TypeReference;
+import com.dasoops.common.exception.BaseCustomException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.api.IApiRequest;
 import com.dasoops.dasserver.cq.entity.entity.CqGroupAnonymous;
 import com.dasoops.dasserver.cq.entity.entity.CqStatus;
 import com.dasoops.dasserver.cq.entity.enums.ApiEnum;
+import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.retdata.*;
@@ -88,6 +90,8 @@ public class CqTemplate {
 
         ApiData<MessageData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<MessageData>>() {
         });
+
+        checkResultCode(result);
         return result;
     }
 
@@ -103,6 +107,7 @@ public class CqTemplate {
 
         ApiEnum action = ApiEnum.SEND_GROUP_MSG;
 
+
         JSONObject params = new JSONObject();
         params.put("group_id", groupId);
         params.put("message", message);
@@ -111,6 +116,9 @@ public class CqTemplate {
 
         ApiData<MessageData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<MessageData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -132,6 +140,9 @@ public class CqTemplate {
 
         ApiData<MessageData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<MessageData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -148,6 +159,9 @@ public class CqTemplate {
         params.put("message_id", messageId);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -166,6 +180,9 @@ public class CqTemplate {
         params.put("times", times);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -186,6 +203,9 @@ public class CqTemplate {
         params.put("reject_add_request", rejectAddRequest);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -206,6 +226,9 @@ public class CqTemplate {
         params.put("duration", duration);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -226,6 +249,8 @@ public class CqTemplate {
         params.put("duration", duration);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+        checkResultCode(result);
         return result;
     }
 
@@ -246,6 +271,8 @@ public class CqTemplate {
         params.put("duration", duration);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+        checkResultCode(result);
         return result;
     }
 
@@ -263,6 +290,8 @@ public class CqTemplate {
         params.put("enable", enable);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+        checkResultCode(result);
         return result;
     }
 
@@ -283,6 +312,8 @@ public class CqTemplate {
         params.put("enable", enable);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+        checkResultCode(result);
         return result;
     }
 
@@ -301,6 +332,9 @@ public class CqTemplate {
         params.put("enable", enable);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -321,6 +355,9 @@ public class CqTemplate {
         params.put("card", card);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -337,6 +374,9 @@ public class CqTemplate {
         params.put("is_dismiss", isDismiss);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -359,6 +399,9 @@ public class CqTemplate {
         params.put("duration", duration);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -375,6 +418,9 @@ public class CqTemplate {
         params.put("discuss_id", discussId);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -395,6 +441,9 @@ public class CqTemplate {
         params.put("remark", remark);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -417,6 +466,9 @@ public class CqTemplate {
         params.put("reason", reason);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -430,6 +482,9 @@ public class CqTemplate {
 
         ApiData<LoginInfoData> result = apiHandler.sendApiMessage(botSession, action, null).to(new TypeReference<ApiData<LoginInfoData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -450,6 +505,9 @@ public class CqTemplate {
 
         ApiData<StrangerInfoData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<StrangerInfoData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -462,6 +520,8 @@ public class CqTemplate {
         ApiEnum action = ApiEnum.GET_FRIEND_LIST;
         ApiListData<FriendData> result = apiHandler.sendApiMessage(botSession, action, null).to(new TypeReference<ApiListData<FriendData>>() {
         });
+
+        checkResultCode(result);
         return result;
     }
 
@@ -475,6 +535,9 @@ public class CqTemplate {
 
         ApiListData<GroupData> result = apiHandler.sendApiMessage(botSession, action, null).to(new TypeReference<ApiListData<GroupData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -492,6 +555,9 @@ public class CqTemplate {
         params.put("no_cache", noCache);
         ApiData<GroupInfoData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<GroupInfoData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -513,6 +579,9 @@ public class CqTemplate {
 
         ApiData<GroupMemberInfoData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<GroupMemberInfoData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -532,6 +601,8 @@ public class CqTemplate {
         ApiListData<GroupMemberInfoData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiListData<GroupMemberInfoData>>() {
         });
 
+
+        checkResultCode(result);
         return result;
     }
 
@@ -550,6 +621,9 @@ public class CqTemplate {
 
         ApiData<CookiesData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<CookiesData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -563,6 +637,9 @@ public class CqTemplate {
 
         ApiData<CsrfTokenData> result = apiHandler.sendApiMessage(botSession, action, null).to(new TypeReference<ApiData<CsrfTokenData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -581,6 +658,9 @@ public class CqTemplate {
 
         ApiData<CredentialsData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<CredentialsData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -602,6 +682,9 @@ public class CqTemplate {
 
         ApiData<FileData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<FileData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -619,6 +702,9 @@ public class CqTemplate {
 
         ApiData<FileData> result = apiHandler.sendApiMessage(botSession, action, params).to(new TypeReference<ApiData<FileData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -632,6 +718,9 @@ public class CqTemplate {
 
         ApiData<BooleanData> result = apiHandler.sendApiMessage(botSession, action, null).to(new TypeReference<ApiData<BooleanData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -645,6 +734,9 @@ public class CqTemplate {
 
         ApiData<BooleanData> result = apiHandler.sendApiMessage(botSession, action, null).to(new TypeReference<ApiData<BooleanData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -658,6 +750,9 @@ public class CqTemplate {
 
         ApiData<CqStatus> result = apiHandler.sendApiMessage(botSession, action, null).to(new TypeReference<ApiData<CqStatus>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -672,6 +767,9 @@ public class CqTemplate {
 
         ApiData<VersionInfoData> result = apiHandler.sendApiMessage(botSession, action, null).to(new TypeReference<ApiData<VersionInfoData>>() {
         });
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -688,6 +786,9 @@ public class CqTemplate {
         params.put("delay", delay);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -704,6 +805,9 @@ public class CqTemplate {
         params.put("data_dir", dataDir);
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, params).to(ApiRawData.class);
+
+
+        checkResultCode(result);
         return result;
     }
 
@@ -716,7 +820,27 @@ public class CqTemplate {
         ApiEnum action = ApiEnum.CLEAN_PLUGIN_LOG;
 
         ApiRawData result = apiHandler.sendApiMessage(botSession, action, null).to(ApiRawData.class);
+
+        checkResultCode(result);
         return result;
     }
 
+
+    private void checkResultCode(ApiListData<?> result) {
+        if (result.getRetcode() != 0) {
+            throw new BaseCustomException(CqExceptionEnum.RESPONSE_ERROR);
+        }
+    }
+
+    private void checkResultCode(ApiData<?> result) {
+        if (result.getRetcode() != 0) {
+            throw new BaseCustomException(CqExceptionEnum.RESPONSE_ERROR);
+        }
+    }
+
+    private void checkResultCode(ApiRawData result) {
+        if (result.getRetcode() != 0) {
+            throw new BaseCustomException(CqExceptionEnum.RESPONSE_ERROR);
+        }
+    }
 }

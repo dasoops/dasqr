@@ -1,25 +1,20 @@
 package com.dasoops.dasserver.plugin.pluginwrapper.plugin;
 
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.bot.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
-import com.dasoops.dasserver.cq.entity.po.PluginPo;
+import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.service.PluginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @Title: plugin
@@ -56,7 +51,7 @@ public class GetPluginPlugin extends CqPlugin {
         final String keyword = "getPlugin";
         if (StrUtil.equalsIgnoreCase(message, keyword)) {
             //获取所有插件
-            List<PluginPo> pluginList = pluginService.list();
+            List<PluginDo> pluginList = pluginService.list();
             //加载的插件
             Map<String, CqPlugin> loadPluginMap = context.getBeansOfType(CqPlugin.class);
 

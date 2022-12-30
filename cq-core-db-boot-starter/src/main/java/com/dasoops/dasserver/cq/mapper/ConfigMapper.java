@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dasoops.dasserver.cq.entity.po.ConfigPo;
+import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 
 /**
  * @Title: ConfigMapper
@@ -12,7 +12,7 @@ import com.dasoops.dasserver.cq.entity.po.ConfigPo;
  * @Description: 针对表【TB_CORE_CONFIG(配置表,储存配置信息,如:version,mutation等)】的数据库操作Mapper
  * @see BaseMapper
  */
-public interface ConfigMapper extends BaseMapper<ConfigPo> {
+public interface ConfigMapper extends BaseMapper<ConfigDo> {
 
 }
 

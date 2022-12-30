@@ -1,0 +1,71 @@
+package com.dasoops.common.util;
+
+import cn.hutool.core.bean.BeanUtil;
+import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.exception.BaseCustomException;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+/**
+ * @Title: Convert
+ * @ClassPath com.dasoops.common.util.Convert
+ * @Author DasoopsNicole@Gmail.com
+ * @Date 2022/12/28
+ * @Version 1.0.0
+ * @Description: 转换工具类
+ */
+public class Convert {
+
+    /**
+     * 简单转stringMap,方便redis使用
+     *
+     * @param toConvertMap 需要转换的map
+     * @return {@link Map}<{@link String}, {@link String}>
+     */
+    public static Map<String, String> toStrMap(Map<?, ?> toConvertMap) {
+        return toConvertMap.entrySet().stream().collect(Collectors.toMap(
+                entry -> String.valueOf(entry.getKey()),
+                entry -> String.valueOf(entry.getValue())
+        ));
+    }
+
+    /**
+     * 来
+     * 简单类型转换
+     *
+     * @param clazz clazz
+     * @param t     t
+     * @return {@link R}
+     */
+    public static <R, T> R to(T t, Class<R> clazz) {
+        R r;
+        try {
+            r = clazz.getConstructor(clazz).newInstance();
+            BeanUtil.copyProperties(t, r);
+        } catch (Exception e) {
+            throw new BaseCustomException(ExceptionEnum.TYPE_CONVERT);
+        }
+        return r;
+    }
+
+    /**
+     * 简单类型转换
+     *
+     * @param clazz clazz
+     * @param tList obj集合
+     * @return {@link List}<{@link E}>
+     */
+    public static <E, T> List<E> to(List<T> tList, Class<E> clazz) {
+        return tList.stream().map(t -> {
+            try {
+                E e = clazz.getConstructor().newInstance();
+                BeanUtil.copyProperties(t, e);
+                return e;
+            } catch (Exception e) {
+                throw new BaseCustomException(ExceptionEnum.TYPE_CONVERT);
+            }
+        }).collect(Collectors.toList());
+    }
+}

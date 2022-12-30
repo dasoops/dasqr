@@ -13,8 +13,9 @@ public interface AuthWrapper {
     /**
      * 身份验证
      *
+     * @param classPath 类路径
      * @return boolean
      */
-    boolean auth();
 
+    boolean auth(String classPath);
 }

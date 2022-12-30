@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.cq.websocket;
 
 import com.dasoops.dasserver.cq.bot.CqTemplate;
+import org.springframework.scheduling.annotation.Async;
 
 /**
  * @Title: WsWrapper
@@ -26,4 +27,10 @@ public interface WsWrapper {
      */
     void afterConnectionClosedWrapper(CqTemplate cqTemplate);
 
+    /**
+     * 获取排序
+     *
+     * @return {@link Integer}
+     */
+    Integer getOrder();
 }

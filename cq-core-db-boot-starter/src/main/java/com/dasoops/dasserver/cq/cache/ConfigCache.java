@@ -1,10 +1,11 @@
 package com.dasoops.dasserver.cq.cache;
 
+import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.util.Assert;
 import com.dasoops.common.util.ExceptionUtil;
 import com.dasoops.dasserver.cq.entity.enums.ConfigKeyEnum;
-import com.dasoops.dasserver.cq.entity.enums.ConfigEnum;
-import com.dasoops.dasserver.cq.entity.po.ConfigPo;
+import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
+import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.service.ConfigService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,12 @@ import java.util.List;
  * @Description: 配置缓存
  */
 @Service
-public class ConfigCache {
+public class ConfigCache extends BaseCache {
 
-    private final StringRedisTemplate redisTemplate;
     private final ConfigService configService;
 
-    public ConfigCache(@SuppressWarnings("all") StringRedisTemplate stringRedisTemplate, ConfigService configService) {
-        this.redisTemplate = stringRedisTemplate;
+    public ConfigCache(StringRedisTemplate stringRedisTemplate,ConfigService configService) {
+        super(stringRedisTemplate);
         this.configService = configService;
     }
 
@@ -40,22 +40,22 @@ public class ConfigCache {
      * 初始化配置
      */
     public void initConfig() {
-        redisTemplate.delete(ConfigKeyEnum.CONFIG.getKey());
+        super.remove(ConfigKeyEnum.CONFIG);
 
-        List<ConfigPo> configList = configService.list();
+        List<ConfigDo> configList = configService.list();
         Assert.dbExecuteReturnMustNotNull(configList);
         configList.forEach(config -> {
-            redisTemplate.opsForHash().put(ConfigKeyEnum.CONFIG.getKey(), config.getKeyword(), config.getValue());
+            super.hset(ConfigKeyEnum.CONFIG,config.getKeyword(),config.getValue());
         });
     }
 
-    public String getConfig() {
-        String localVersion = redisTemplate.opsForValue().get(ConfigKeyEnum.LOCAL_VERSION.getKey());
-        Assert.ifNotNull(localVersion, ExceptionUtil::buildRedisDataNotNull);
-        return localVersion;
+    public String getConfig(ConfigHashKeyEnum configHashKeyEnum) {
+        String value = super.hget(ConfigKeyEnum.CONFIG,configHashKeyEnum.getKey());
+        Assert.ifNull(value, ExceptionUtil::buildRedisDataNotNull);
+        return value;
     }
 
-    public void setLocalVersion(Integer version) {
-        redisTemplate.opsForHash().put(ConfigKeyEnum.CONFIG.getKey(), ConfigEnum.LOCAL_VERSION.getKey(), String.valueOf(version));
+    public void setConfig(ConfigHashKeyEnum configHashKeyEnum, String value) {
+        super.hset(ConfigKeyEnum.CONFIG,configHashKeyEnum.getKey(),value);
     }
 }

@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.image.mapper;
 
-import com.dasoops.dasserver.plugin.image.entity.po.ImagePo;
+import com.dasoops.dasserver.plugin.image.entity.po.ImageDo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,7 +12,7 @@ import java.util.List;
 * @createDate 2022-11-07 15:23:49
 * @Entity com.dasoops.dasserver.plugin.image.entity.po.ImagePo
 */
-public interface ImageMapper extends BaseMapper<ImagePo> {
+public interface ImageMapper extends BaseMapper<ImageDo> {
 
     /**
      * 查询关联关键字

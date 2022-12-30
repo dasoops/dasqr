@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.loaj.task;
 
 import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajKeyEnum;
-import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyPo;
+import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -33,12 +33,12 @@ public class InitTask {
      */
     @PostConstruct
     public void initOrUpdateRelayMap() {
-        List<ReplyPo> list = replyService.list();
+        List<ReplyDo> list = replyService.list();
         if (list.size() <= 0) {
             return;
         }
         //获取料塔关键词回复映射集合
-        Map<String, String> map = list.stream().collect(Collectors.toMap(ReplyPo::getKeyword, ReplyPo::getReply));
+        Map<String, String> map = list.stream().collect(Collectors.toMap(ReplyDo::getKeyword, ReplyDo::getReply));
         stringRedisTemplate.opsForHash().putAll(LoajKeyEnum.REPLY.getKey(), map);
     }
 

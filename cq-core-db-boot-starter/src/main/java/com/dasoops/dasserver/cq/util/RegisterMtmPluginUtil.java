@@ -1,0 +1,41 @@
+package com.dasoops.dasserver.cq.util;
+
+import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
+import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
+import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
+import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
+import org.springframework.stereotype.Component;
+
+/**
+ * @Title: RegisterMtmPluginUtil
+ * @ClassPath com.dasoops.dasserver.cq.util.RegisterMtmPluginUtil
+ * @Author DasoopsNicole@Gmail.com
+ * @Date 2022/12/27
+ * @Version 1.0.0
+ * @Description: 注册用户 插件 多对多 工具类
+ */
+@Component
+public class RegisterMtmPluginUtil {
+    /**
+     * 构建新do
+     *
+     * @param registerDo 注册对象do
+     * @param pluginDo   插件do
+     * @return {@link RegisterMtmPluginDo}
+     */
+    public static RegisterMtmPluginDo buildNewRegisterMtmPluginDo(RegisterDo registerDo, PluginDo pluginDo) {
+        RegisterMtmPluginDo registerMtmPluginDo = new RegisterMtmPluginDo();
+        registerMtmPluginDo.setRegisterId(registerDo.getRegisterId());
+        registerMtmPluginDo.setPluginId(pluginDo.getId());
+
+        Integer pluginLevel = pluginDo.getLevel();
+        Integer registerLevel = registerDo.getLevel();
+        if (registerLevel <= pluginLevel) {
+            registerMtmPluginDo.setIsPass(RegisterMtmPluginIsPassEnum.TRUE.getDbValue());
+        } else {
+            registerMtmPluginDo.setIsPass(RegisterMtmPluginIsPassEnum.FALSE.getDbValue());
+        }
+        return registerMtmPluginDo;
+    }
+
+}

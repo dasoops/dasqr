@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.loaj.service;
 
-import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyPo;
+import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -12,6 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @Description: 针对表【TB_PLUGIN_LOAJ_REPLY】的数据库操作Service
  * @see IService
  */
-public interface ReplyService extends IService<ReplyPo> {
+public interface ReplyService extends IService<ReplyDo> {
 
 }

@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.loaj.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyPo;
+import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
 import com.dasoops.dasserver.plugin.loaj.mapper.ReplyMapper;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @see ReplyService
  */
 @Service
-public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyPo>
+public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
     implements ReplyService{
 
 

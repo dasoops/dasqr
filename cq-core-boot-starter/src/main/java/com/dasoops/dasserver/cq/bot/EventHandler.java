@@ -85,7 +85,7 @@ public class EventHandler {
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
                     //无权限返回为空,判断直接进入下一个
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getAuthPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -103,7 +103,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupMessageEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getAuthPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -118,7 +118,7 @@ public class EventHandler {
                 var event = eventJson.to(CqDiscussMessageEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getAuthPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -145,7 +145,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupUploadNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getAuthPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -160,7 +160,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupAdminNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getAuthPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -175,7 +175,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupDecreaseNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getAuthPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -190,7 +190,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupIncreaseNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getAuthPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -205,7 +205,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupBanNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getAuthPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -220,7 +220,7 @@ public class EventHandler {
                 var event = eventJson.to(CqFriendAddNoticeEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getAuthPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -248,7 +248,7 @@ public class EventHandler {
                 var event = eventJson.to(CqFriendRequestEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getAuthPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -263,7 +263,7 @@ public class EventHandler {
                 var event = eventJson.to(CqGroupRequestEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getAuthPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -289,7 +289,7 @@ public class EventHandler {
                 var event = eventJson.to(CqHeartBeatMetaEvent.class);
                 passObj = PassObj.pass(event);
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -303,7 +303,7 @@ public class EventHandler {
             case "lifecycle": {
                 passObj = PassObj.pass(eventJson.to(CqLifecycleMetaEvent.class));
                 for (var pluginClass : cq.getPluginList()) {
-                    Optional<CqPlugin> authPluginOpt = getauthPlugin(pluginClass);
+                    Optional<CqPlugin> authPluginOpt = getPlugin(pluginClass);
                     if (authPluginOpt.isEmpty()) {
                         continue;
                     }
@@ -326,13 +326,28 @@ public class EventHandler {
      * @param pluginClass plugin类
      * @return {@link CqPlugin}
      */
-    private Optional<CqPlugin> getauthPlugin(Class<? extends CqPlugin> pluginClass) {
+    private Optional<CqPlugin> getAuthPlugin(Class<? extends CqPlugin> pluginClass) {
         if (authWrapper != null) {
-            if (!authWrapper.auth()) {
+            if (!authWrapper.auth(pluginClass.getName())) {
                 return Optional.empty();
             }
         }
 
+        try {
+            return Optional.of(applicationContext.getBean(pluginClass));
+        } catch (Exception e) {
+            Assert.ifNotNullOrElse(pluginClass, () -> ExceptionUtil.buildPluginNotFount(pluginClass.getName()), ExceptionUtil::buildPluginNotFount);
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * 获取可用插件
+     *
+     * @param pluginClass plugin类
+     * @return {@link CqPlugin}
+     */
+    private Optional<CqPlugin> getPlugin(Class<? extends CqPlugin> pluginClass) {
         try {
             return Optional.of(applicationContext.getBean(pluginClass));
         } catch (Exception e) {

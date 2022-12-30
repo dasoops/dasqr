@@ -11,7 +11,7 @@ import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.DqUtil;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajKeyEnum;
-import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyPo;
+import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -67,7 +67,7 @@ public class AddRelayPlugin extends CqPlugin {
         String keyword = paramStrList.get(0);
         String reply = paramStrList.get(1);
         // 组装 持久化
-        ReplyPo replyPo = new ReplyPo();
+        ReplyDo replyPo = new ReplyDo();
         replyPo.setKeyword(keyword);
         replyPo.setReply(reply);
         replyService.save(replyPo);

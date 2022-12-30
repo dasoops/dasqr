@@ -63,7 +63,7 @@ public class BaseCustomException extends RuntimeException {
      * @return {@link String}
      */
     private String getStackInfo() {
-        final int excludeLine = 3;
+        final int excludeLine = 0;
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         StringBuilder sb = new StringBuilder();
         //未知异常情况

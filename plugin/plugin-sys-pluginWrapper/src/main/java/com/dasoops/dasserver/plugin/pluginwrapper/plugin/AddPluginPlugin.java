@@ -9,7 +9,7 @@ import com.dasoops.dasserver.cq.bot.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
-import com.dasoops.dasserver.cq.entity.po.PluginPo;
+import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.DqUtil;
@@ -72,7 +72,7 @@ public class AddPluginPlugin extends CqPlugin {
 
         Integer maxOrder = pluginService.getMaxOrder();
 
-        PluginPo po = new PluginPo();
+        PluginDo po = new PluginDo();
         po.setKeyword(keyword);
         po.setClassPath(classPath);
         po.setDescription(description);

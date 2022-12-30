@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dasoops.dasserver.cq.entity.po.PluginPo;
+import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @Description: 针对表【TB_CORE_PLUGIN(插件表,储存插件注册信息,权限,描述,启用状态等)】的数据库操作Mapper
  * @see BaseMapper
  */
-public interface PluginMapper extends BaseMapper<PluginPo> {
+public interface PluginMapper extends BaseMapper<PluginDo> {
 
     /**
      * 获取所有插件全类名路径

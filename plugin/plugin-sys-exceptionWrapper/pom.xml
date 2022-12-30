@@ -27,6 +27,10 @@
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>cq-core-mongo-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.dasoops</groupId>
+            <artifactId>common-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

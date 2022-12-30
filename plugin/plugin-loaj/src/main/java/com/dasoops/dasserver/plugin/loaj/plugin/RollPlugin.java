@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 /**
  * @Title: rollPlugin
@@ -81,7 +82,7 @@ public class RollPlugin extends CqPlugin {
                         key.substring(key.lastIndexOf(":") + 1),
                         Assert.ifNotNull(stringRedisTemplate.opsForSet().members(key),
                                 //取最大值
-                                res -> res.stream().map(Integer::parseInt).max(Comparator.comparingInt(Integer::valueOf)).orElse(null))
+                                (Function<Set<String>, Integer>) res -> res.stream().map(Integer::valueOf).max(Comparator.comparingInt(Integer::valueOf)).orElse(null))
                 ));
 
                 //获取最高分对象

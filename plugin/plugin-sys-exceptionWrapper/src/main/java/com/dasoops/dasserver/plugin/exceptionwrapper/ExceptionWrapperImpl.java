@@ -3,8 +3,10 @@ package com.dasoops.dasserver.plugin.exceptionwrapper;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.BaseCustomException;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
+import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.exception.wrapper.ExceptionWrapper;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.EventUtil;
@@ -27,9 +29,11 @@ import java.util.Date;
 public class ExceptionWrapperImpl implements ExceptionWrapper {
 
     private final MongoTemplate mongoTemplate;
+    private final CqProperties cqProperties;
 
-    public ExceptionWrapperImpl(@SuppressWarnings("all") MongoTemplate mongoTemplate) {
+    public ExceptionWrapperImpl(@SuppressWarnings("all") MongoTemplate mongoTemplate, CqProperties cqProperties) {
         this.mongoTemplate = mongoTemplate;
+        this.cqProperties = cqProperties;
     }
 
     @Override
@@ -49,16 +53,22 @@ public class ExceptionWrapperImpl implements ExceptionWrapper {
         exceptionPo.setStackMessage(finalException.getStackMessage());
         exceptionPo = mongoTemplate.save(exceptionPo);
 
-        //发送错误通知
+        //非逻辑异常发送错误通知
         //todo 待改进
-        sendNoticeMsg(EventUtil.get(), exceptionPo);
+        if (!(e instanceof LogicException)) {
+            sendNoticeMsg(EventUtil.get(), exceptionPo);
+        }
 
     }
 
     private void sendNoticeMsg(EventInfo eventInfo, ExceptionPo exceptionPo) {
         CqTemplate cqTemplate = CqGlobal.findFirst().orElseThrow(() -> new BaseCustomException(ExceptionEnum.NO_CQ_CONNECTION));
+        //网页访问/定时任务 产生的异常汇报管理群
+        if (EventUtil.isEmpty()) {
+            cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), buildNoticeMsg(false, true, cqProperties, exceptionPo), false);
+            return;
+        }
         String messageType = eventInfo.getMessageType();
-
         switch (messageType) {
             case "private":
                 //私聊发送
@@ -74,7 +84,7 @@ public class ExceptionWrapperImpl implements ExceptionWrapper {
                 break;
             default:
                 //群聊普通消息
-                cqTemplate.sendGroupMsg(eventInfo.getAuthorId(), buildNoticeMsg(false, true, eventInfo, exceptionPo), false);
+                cqTemplate.sendGroupMsg(eventInfo.getGroupId(), buildNoticeMsg(false, true, eventInfo, exceptionPo), false);
                 break;
         }
     }
@@ -86,6 +96,17 @@ public class ExceptionWrapperImpl implements ExceptionWrapper {
                 isAdminNotice ? "(此条为管理群通知)" : "",
                 exceptionPo.getType(),
                 eventInfo.getMessageId(),
+                exceptionPo.getId().toHexString()
+        );
+        return msg;
+    }
+
+    private String buildNoticeMsg(boolean hasAt, boolean isAdminNotice, CqProperties cqProperties, ExceptionPo exceptionPo) {
+        String msgTemplate = "{}消息解析发生异常{}\r\ntype: {}\r\nerrorId: {}";
+        String msg = StrUtil.format(msgTemplate,
+                hasAt ? CqCodeUtil.at(cqProperties.getDevUserId()) : "",
+                isAdminNotice ? "(此条为管理群通知)" : "",
+                exceptionPo.getType(),
                 exceptionPo.getId().toHexString()
         );
         return msg;

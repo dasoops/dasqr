@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    com.dasoops.dasserver.plugin.authwrapper.AutoConfiguration
+    com.dasoops.dasserver.plugin.authwrapper.conf.AutoConfiguration

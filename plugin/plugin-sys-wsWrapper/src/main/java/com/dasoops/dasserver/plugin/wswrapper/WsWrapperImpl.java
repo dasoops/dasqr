@@ -22,15 +22,14 @@ import java.util.stream.Collectors;
 public class WsWrapperImpl implements WsWrapper {
 
     @Override
-    @Async
     public void afterConnectionEstablishedWrapper(CqTemplate cqTemplate) {
-
-        ApiListData<GroupData> groupList = cqTemplate.getGroupList();
-        ApiListData<FriendData> friendList = cqTemplate.getFriendList();
-        ApiData<LoginInfoData> loginInfo = cqTemplate.getLoginInfo();
-        System.out.println( groupList.getData().stream().map(GroupData::getGroupId).collect(Collectors.toList()));
-        System.out.println(friendList.getData().toString());
-        System.out.println(loginInfo.getData().toString());
+        //todo
+//        ApiListData<GroupData> groupList = cqTemplate.getGroupList();
+//        ApiListData<FriendData> friendList = cqTemplate.getFriendList();
+//        ApiData<LoginInfoData> loginInfo = cqTemplate.getLoginInfo();
+//        System.out.println( groupList.getData().stream().map(GroupData::getGroupId).collect(Collectors.toList()));
+//        System.out.println(friendList.getData().toString());
+//        System.out.println(loginInfo.getData().toString());
     }
 
     @Override
@@ -38,4 +37,8 @@ public class WsWrapperImpl implements WsWrapper {
 
     }
 
+    @Override
+    public Integer getOrder() {
+        return 10;
+    }
 }

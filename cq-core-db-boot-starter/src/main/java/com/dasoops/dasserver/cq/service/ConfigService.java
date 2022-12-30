@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.service;
 
-import com.dasoops.dasserver.cq.entity.enums.ConfigEnum;
-import com.dasoops.dasserver.cq.entity.po.ConfigPo;
+import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
+import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Optional;
@@ -15,7 +15,7 @@ import java.util.Optional;
  * @Description: 针对表【TB_CORE_CONFIG(配置表,储存配置信息,如:version,mutation等)】的数据库操作Service
  * @see IService
  */
-public interface ConfigService extends IService<ConfigPo> {
+public interface ConfigService extends IService<ConfigDo> {
 
     /**
      * 获取配置
@@ -23,7 +23,7 @@ public interface ConfigService extends IService<ConfigPo> {
      * @param config 配置
      * @return {@link Optional}<{@link String}>
      */
-    String getConfig(ConfigEnum config);
+    String getConfig(ConfigHashKeyEnum config);
 
     /**
      * 更新版本

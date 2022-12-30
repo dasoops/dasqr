@@ -7,11 +7,10 @@ import com.dasoops.common.util.ExceptionUtil;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
-import com.dasoops.dasserver.plugin.image.entity.po.ImagePo;
+import com.dasoops.dasserver.plugin.image.entity.po.ImageDo;
 import com.dasoops.dasserver.plugin.image.service.ImageService;
 import com.dasoops.dasserver.plugin.image.mapper.ImageMapper;
 import com.dasoops.minio.MinioTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +27,7 @@ import java.util.Optional;
  * @see ImageService
  */
 @Service
-public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImagePo>
+public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         implements ImageService {
 
     private final MinioTemplate minioTemplate;
@@ -42,7 +41,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImagePo>
 
     @Override
     public boolean keywordIsRepeat(String keyword) {
-        return super.lambdaQuery().eq(ImagePo::getKeyword, keyword).count() > 0;
+        return super.lambdaQuery().eq(ImageDo::getKeyword, keyword).count() > 0;
     }
 
     @Override
@@ -70,7 +69,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImagePo>
         String filename = filenameOpt.orElseThrow(() -> new BaseCustomException(ExceptionEnum.IMAGE_SAVE_ERROR));
 
 
-        ImagePo imagePo = new ImagePo();
+        ImageDo imagePo = new ImageDo();
         imagePo.setKeyword(keyword);
         imagePo.setFileName(filename);
         imagePo.setGroupId(groupId);
@@ -79,7 +78,6 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImagePo>
         //信息持久化
         return save(imagePo);
     }
-
 
     @Override
     public boolean saveImage(Long authorId, String keyword, String url) {
@@ -95,13 +93,13 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImagePo>
     }
 
     @Override
-    public ImagePo getImageByKeyword(String keyword) {
-        return super.lambdaQuery().eq(ImagePo::getKeyword, keyword).one();
+    public ImageDo getImageByKeyword(String keyword) {
+        return super.lambdaQuery().eq(ImageDo::getKeyword, keyword).one();
     }
 
     @Override
     public Optional<String> getImageCqCode(String keyword) {
-        ImagePo imageInfo = this.getImageByKeyword(keyword);
+        ImageDo imageInfo = this.getImageByKeyword(keyword);
         if (imageInfo == null) {
             return Optional.empty();
         }

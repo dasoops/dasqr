@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dasoops.dasserver.cq.entity.po.RegisterPo;
+import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 
 /**
  * @Title: RegisterMapper
@@ -12,7 +12,7 @@ import com.dasoops.dasserver.cq.entity.po.RegisterPo;
  * @Description: 针对表【TB_CORE_REGISTER(注册表,储存用户注册信息,初始权限,群组注册信息)】的数据库操作Mapper
  * @see BaseMapper
  */
-public interface RegisterMapper extends BaseMapper<RegisterPo> {
+public interface RegisterMapper extends BaseMapper<RegisterDo> {
 
 }
 

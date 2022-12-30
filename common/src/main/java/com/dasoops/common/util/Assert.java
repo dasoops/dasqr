@@ -10,7 +10,7 @@ import java.util.function.Function;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/11/01
  * @Version 1.0.0
- * @Description: 断言
+ * @Description: 断言工具类
  */
 public class Assert {
     /**

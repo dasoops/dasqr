@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.cq.service;
 
-import com.dasoops.dasserver.cq.entity.po.RegisterPo;
+import com.dasoops.dasserver.cq.bot.CqTemplate;
+import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * @Description: 针对表【TB_CORE_REGISTER(注册表,储存用户注册信息,初始权限,群组注册信息)】的数据库操作Service
  * @see IService
  */
-public interface RegisterService extends IService<RegisterPo> {
+public interface RegisterService extends IService<RegisterDo> {
 
     /**
      * 根据最高等级获取注册者id集合 maxLevel >= RegisterLevel
@@ -22,5 +23,12 @@ public interface RegisterService extends IService<RegisterPo> {
      * @param maxLevel 最大水平
      * @return {@link List}<{@link Integer}>
      */
-    List<Integer> getIdListByMaxLevel(Integer maxLevel);
+    List<Long> getIdListByMaxLevel(Integer maxLevel);
+
+    /**
+     * 初始化或更新 注册集合
+     *
+     * @param cqTemplate cqTemplate
+     */
+    void initOrUpdateRegisterList(CqTemplate cqTemplate);
 }

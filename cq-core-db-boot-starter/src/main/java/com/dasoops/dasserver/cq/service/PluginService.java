@@ -2,7 +2,7 @@ package com.dasoops.dasserver.cq.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.CqPlugin;
-import com.dasoops.dasserver.cq.entity.po.PluginPo;
+import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +16,7 @@ import java.util.Optional;
  * @Description: 针对表【TB_CORE_PLUGIN(插件表,储存插件注册信息,权限,描述,启用状态等)】的数据库操作Service
  * @see IService
  */
-public interface PluginService extends IService<PluginPo> {
+public interface PluginService extends IService<PluginDo> {
 
     /**
      * 获取所有插件类
@@ -29,9 +29,9 @@ public interface PluginService extends IService<PluginPo> {
      * 通过关键字获取插件对象
      *
      * @param keyWord 关键字
-     * @return {@link Optional}<{@link PluginPo}>
+     * @return {@link Optional}<{@link PluginDo}>
      */
-    Optional<PluginPo> getByKeyWord(String keyWord);
+    Optional<PluginDo> getByKeyWord(String keyWord);
 
     /**
      * 保存配置,包含处理新增插件的中间表处理操作
@@ -40,7 +40,7 @@ public interface PluginService extends IService<PluginPo> {
      * @return boolean
      */
     @Override
-    boolean save(PluginPo pluginPo);
+    boolean save(PluginDo pluginPo);
 
     /**
      * 通过关键字更新
@@ -48,7 +48,7 @@ public interface PluginService extends IService<PluginPo> {
      * @param pluginPo 插件
      * @return boolean
      */
-    boolean updateByKeyword(PluginPo pluginPo);
+    boolean updateByKeyword(PluginDo pluginPo);
 
     /**
      * 根据最小level获取插件id集合
@@ -56,7 +56,7 @@ public interface PluginService extends IService<PluginPo> {
      * @param minLevel 最小level
      * @return {@link List}<{@link Integer}>
      */
-    List<Integer> getIdListByMinLevel(Integer minLevel);
+    List<Long> getIdListByMinLevel(Integer minLevel);
 
     /**
      * 得到最大排序

@@ -71,4 +71,18 @@ public final class EventUtil {
         eventInfo.setAuthorId(paramObj.getLong("user_id"));
         return eventInfo;
     }
+
+    /**
+     * 是否为群组消息
+     *
+     * @return boolean
+     */
+    public static boolean isGroup() {
+        EventInfo eventInfo = EventUtil.get();
+        Long groupId = eventInfo.getGroupId();
+        if (groupId == null) {
+            return true;
+        }
+        return false;
+    }
 }

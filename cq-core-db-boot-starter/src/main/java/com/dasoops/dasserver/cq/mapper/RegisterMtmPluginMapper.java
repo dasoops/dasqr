@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dasoops.dasserver.cq.entity.po.RegisterMtmPluginPo;
+import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
 
 /**
  * @Title: RegisterMtmPluginMapper
@@ -12,7 +12,7 @@ import com.dasoops.dasserver.cq.entity.po.RegisterMtmPluginPo;
  * @Description: 针对表【TB_CORE_REGISTER_MTM_PLUGIN】的数据库操作Mapper
  * @see BaseMapper
  */
-public interface RegisterMtmPluginMapper extends BaseMapper<RegisterMtmPluginPo> {
+public interface RegisterMtmPluginMapper extends BaseMapper<RegisterMtmPluginDo> {
 
 }
 

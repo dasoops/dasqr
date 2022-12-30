@@ -2,17 +2,24 @@ package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.util.Assert;
-import com.dasoops.dasserver.cq.entity.po.BasePo;
-import com.dasoops.dasserver.cq.entity.po.RegisterMtmPluginPo;
-import com.dasoops.dasserver.cq.entity.po.RegisterPo;
+import com.dasoops.dasserver.cq.bot.CqTemplate;
+import com.dasoops.common.entity.dbo.base.BaseDo;
+import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
+import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
+import com.dasoops.dasserver.cq.entity.enums.RegisterTypeEnum;
+import com.dasoops.dasserver.cq.entity.retdata.FriendData;
+import com.dasoops.dasserver.cq.entity.retdata.GroupData;
+import com.dasoops.dasserver.cq.entity.retdata.GroupMemberInfoData;
 import com.dasoops.dasserver.cq.mapper.RegisterMapper;
 import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dasoops.dasserver.cq.util.RegisterUtil;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,18 +34,21 @@ import java.util.stream.Collectors;
  * @see RegisterService
  */
 @Service
-public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterPo>
+public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         implements RegisterService {
 
-    @Autowired
-    private PluginService pluginService;
-    @Autowired
-    private RegisterMtmPluginService registerMtmPluginService;
+    private final PluginService pluginService;
+    private final RegisterMtmPluginService registerMtmPluginService;
+
+    public RegisterServiceImpl(@Lazy PluginService pluginService,@Lazy  RegisterMtmPluginService registerMtmPluginService) {
+        this.pluginService = pluginService;
+        this.registerMtmPluginService = registerMtmPluginService;
+    }
 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean save(RegisterPo registerPo) {
+    public boolean save(RegisterDo registerPo) {
         Assert.allMustNotNull(registerPo, registerPo.getRegisterId(), registerPo.getType(), registerPo.getLevel());
         Assert.allMustNull(registerPo.getId());
 
@@ -46,12 +56,12 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterPo>
         Assert.ifTrue(super.save(registerPo));
 
         //插件对象Level <= 注册用户对象Level 赋予使用权限
-        List<Integer> pluginPoIdList = pluginService.getIdListByMinLevel(registerPo.getLevel());
+        List<Long> pluginPoIdList = pluginService.getIdListByMinLevel(registerPo.getLevel());
 
-        List<RegisterMtmPluginPo> rpList = pluginPoIdList.stream().map(pluginPoId -> {
-            RegisterMtmPluginPo po = new RegisterMtmPluginPo();
+        List<RegisterMtmPluginDo> rpList = pluginPoIdList.stream().map(pluginPoId -> {
+            RegisterMtmPluginDo po = new RegisterMtmPluginDo();
             po.setPluginId(pluginPoId);
-            po.setRegisterId(Math.toIntExact(registerPo.getId()));
+            po.setRegisterId(registerPo.getId());
             return po;
         }).collect(Collectors.toList());
 
@@ -61,8 +71,69 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterPo>
     }
 
     @Override
-    public List<Integer> getIdListByMaxLevel(Integer maxLevel) {
-        return this.lambdaQuery().ge(RegisterPo::getLevel, maxLevel).list().stream().map(BasePo::getId).collect(Collectors.toList());
+    public List<Long> getIdListByMaxLevel(Integer maxLevel) {
+        return super.lambdaQuery().ge(RegisterDo::getLevel, maxLevel).list().stream().map(BaseDo::getId).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void initOrUpdateRegisterList(CqTemplate cqTemplate) {
+        //全表扫描
+        List<RegisterDo> registerDoList = super.list();
+        //获取为注册用户集合
+        List<RegisterDo> noExistRegisterDoList = new ArrayList<>();
+        //已注册用户id集合
+        List<Long> userIdList = new ArrayList<>();
+        //已注册群组id集合
+        List<Long> groupIdList = new ArrayList<>();
+        registerDoList.forEach(registerDo -> {
+            Long registerId = registerDo.getRegisterId();
+            if (registerDo.getType().equals(RegisterTypeEnum.USER.getDbValue())) {
+                userIdList.add(registerId);
+            } else {
+                groupIdList.add(registerId);
+            }
+        });
+
+        //好友列表集合检查
+        List<FriendData> friendDataList = cqTemplate.getFriendList().getData();
+        friendDataList.forEach(friendData -> {
+            long userId = friendData.getUserId();
+            //不存在注册
+            if (!userIdList.contains(userId)) {
+                RegisterDo registerDo = RegisterUtil.buildNewRegisterDo(userId, RegisterTypeEnum.USER);
+                userIdList.add(userId);
+                noExistRegisterDoList.add(registerDo);
+            }
+        });
+
+        //群组集合检查
+        List<GroupData> groupDataList = cqTemplate.getGroupList().getData();
+        groupDataList.forEach(groupData -> {
+            long groupId = groupData.getGroupId();
+
+            //不存在注册
+            if (!groupIdList.contains(groupId)) {
+                RegisterDo registerDo = RegisterUtil.buildNewRegisterDo(groupId, RegisterTypeEnum.GROUP);
+                groupIdList.add(groupId);
+                noExistRegisterDoList.add(registerDo);
+            }
+
+            //群组内用户集合检查
+            List<GroupMemberInfoData> groupMemberListDataList = cqTemplate.getGroupMemberList(groupId).getData();
+            groupMemberListDataList.forEach(groupMemberListData -> {
+                long userId = groupMemberListData.getUserId();
+                //不存在注册
+                if (!userIdList.contains(userId)) {
+                    RegisterDo registerDo = RegisterUtil.buildNewRegisterDo(userId, RegisterTypeEnum.USER);
+                    userIdList.add(userId);
+                    noExistRegisterDoList.add(registerDo);
+                }
+            });
+        });
+
+        //持久化
+        super.saveBatch(noExistRegisterDoList);
     }
 
 }

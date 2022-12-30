@@ -20,6 +20,11 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  * @Title: CqBeanConfiguration
  * @ClassPath com.dasoops.dasserver.cq.boot.CqBeanConfiguration
@@ -50,11 +55,12 @@ public class CqBeanConfiguration {
             EventHandler eventHandler,
             EventProperties eventProperties,
             CqProperties cqProperties,
-            @Autowired(required = false) ExceptionWrapper exceptionWrapper,
-            @Autowired(required = false) WsWrapper wsWrapper
+            @Autowired(required = false) ExceptionWrapper exceptionWrapper
 
     ) {
-        return new WsHandler(cqFactory, apiHandler, eventHandler, eventProperties, exceptionWrapper, cqProperties, wsWrapper);
+        List<WsWrapper> wsWrapperList = applicationContext.getBeansOfType(WsWrapper.class).values().stream().sorted(Comparator.comparingInt(WsWrapper::getOrder)).collect(Collectors.toList());
+
+        return new WsHandler(cqFactory, apiHandler, eventHandler, eventProperties, exceptionWrapper, cqProperties, wsWrapperList);
     }
 
     @Bean

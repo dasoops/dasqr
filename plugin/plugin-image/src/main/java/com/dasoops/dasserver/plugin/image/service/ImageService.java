@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.image.service;
 
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
-import com.dasoops.dasserver.plugin.image.entity.po.ImagePo;
+import com.dasoops.dasserver.plugin.image.entity.po.ImageDo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.Optional;
 * @description 针对表【TB_PLUGIN_IMAGE(图片信息)】的数据库操作Service
 * @createDate 2022-11-07 15:23:49
 */
-public interface ImageService extends IService<ImagePo> {
+public interface ImageService extends IService<ImageDo> {
 
     /**
      * 关键字是否重复
@@ -68,12 +68,12 @@ public interface ImageService extends IService<ImagePo> {
      * 根据关键词获取图片
      *
      * @param keyword 关键字
-     * @return {@link ImagePo}
+     * @return {@link ImageDo}
      */
-    ImagePo getImageByKeyword(String keyword);
+    ImageDo getImageByKeyword(String keyword);
 
     /**
-     * 根据关键词获取图片CoCode
+     * 根据关键词获取图片CqCode
      *
      * @param keyword 关键字
      * @return {@link Optional}<{@link String}>

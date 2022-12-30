@@ -19,13 +19,17 @@ public interface IRedisKeyEnum {
      */
     String CONFIG = CORE + "config:";
     /**
+     * 系统级插件(默认增强等)
+     */
+    String SYS_PLUGIN = CORE + "plugin:";
+    /**
+     * 权限
+     */
+    String AUTH = CORE + "auth:";
+    /**
      * 插件
      */
     String PLUGIN = "plugin:";
-    /**
-     * 系统级插件(默认增强等)
-     */
-    String CORE_SYS_PLUGIN = CORE + "sys:plugin:";
 
     /**
      * 获取key
