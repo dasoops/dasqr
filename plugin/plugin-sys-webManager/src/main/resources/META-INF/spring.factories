@@ -1,3 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.dasoops.dasserver.Configuration,\
-  com.dasoops.dasserver.InterceptorConfiguration
+  com.dasoops.dasserver.plugin.webManager.AutoConfiguration

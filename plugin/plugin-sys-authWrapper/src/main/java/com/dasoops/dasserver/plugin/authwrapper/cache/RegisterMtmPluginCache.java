@@ -6,7 +6,7 @@ import com.dasoops.common.util.Convert;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
 import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
 import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
-import com.dasoops.dasserver.plugin.authwrapper.entity.enums.AuthRedisKeyAuthListShamEnum;
+import com.dasoops.dasserver.entity.enums.AuthRedisKeyAuthListShamEnum;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -33,10 +33,10 @@ public class RegisterMtmPluginCache extends BaseCache {
     }
 
 
-    public void initOrUpdateAuthMap() {
+    public void initOrUpdateAuthIdOtmIsPassMap2Cache() {
         List<RegisterMtmPluginDo> registerMtmPluginDoAllList = registerMtmPluginService.list();
         //按注册角色id分组
-        Map<Long, List<RegisterMtmPluginDo>> groupByRegisterIdMap = registerMtmPluginDoAllList.stream().collect(Collectors.groupingBy(RegisterMtmPluginDo::getRegisterId));
+        Map<Long, List<RegisterMtmPluginDo>> groupByRegisterIdMap = registerMtmPluginDoAllList.stream().collect(Collectors.groupingBy(RegisterMtmPluginDo::getRegisterRowId));
         //replace
         super.remove4Prefix(IRedisKeyEnum.AUTH);
         //遍历,缓存数据
@@ -49,13 +49,13 @@ public class RegisterMtmPluginCache extends BaseCache {
         });
     }
 
-    public void saveAuthMap(Long registerId, Map<Long, Integer> pluginIdIsPassMap) {
-        AuthRedisKeyAuthListShamEnum redisKeyEnum = new AuthRedisKeyAuthListShamEnum(registerId);
+    public void saveAuthMap(Long registerRowId, Map<Long, Integer> pluginIdIsPassMap) {
+        AuthRedisKeyAuthListShamEnum redisKeyEnum = new AuthRedisKeyAuthListShamEnum(registerRowId);
         Map<String, String> valueMap = Convert.toStrMap(pluginIdIsPassMap);
         super.hset(redisKeyEnum, valueMap);
     }
 
-    public boolean auth(Long registerId, Long pluginId) {
+    public boolean getPluginIsPassByRegisterRowIdAndPluginId(Long registerId, Long pluginId) {
         AuthRedisKeyAuthListShamEnum redisKeyEnum = new AuthRedisKeyAuthListShamEnum(registerId);
         String isPass = super.hget(redisKeyEnum, String.valueOf(pluginId));
         //判断是否为TRUE

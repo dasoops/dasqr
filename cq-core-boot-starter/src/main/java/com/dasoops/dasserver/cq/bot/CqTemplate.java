@@ -2,7 +2,7 @@ package com.dasoops.dasserver.cq.bot;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.TypeReference;
-import com.dasoops.common.exception.BaseCustomException;
+import com.dasoops.dasserver.cq.exception.CqLogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.api.IApiRequest;
@@ -828,19 +828,19 @@ public class CqTemplate {
 
     private void checkResultCode(ApiListData<?> result) {
         if (result.getRetcode() != 0) {
-            throw new BaseCustomException(CqExceptionEnum.RESPONSE_ERROR);
+            throw new CqLogicException(CqExceptionEnum.RESPONSE_ERROR);
         }
     }
 
     private void checkResultCode(ApiData<?> result) {
         if (result.getRetcode() != 0) {
-            throw new BaseCustomException(CqExceptionEnum.RESPONSE_ERROR);
+            throw new CqLogicException(CqExceptionEnum.RESPONSE_ERROR);
         }
     }
 
     private void checkResultCode(ApiRawData result) {
         if (result.getRetcode() != 0) {
-            throw new BaseCustomException(CqExceptionEnum.RESPONSE_ERROR);
+            throw new CqLogicException(CqExceptionEnum.RESPONSE_ERROR);
         }
     }
 }

@@ -2,14 +2,13 @@ package com.dasoops.dasserver.plugin.image.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.exception.BaseCustomException;
-import com.dasoops.common.util.ExceptionUtil;
+import com.dasoops.dasserver.cq.exception.CqLogicException;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.plugin.image.entity.po.ImageDo;
-import com.dasoops.dasserver.plugin.image.service.ImageService;
 import com.dasoops.dasserver.plugin.image.mapper.ImageMapper;
+import com.dasoops.dasserver.plugin.image.service.ImageService;
 import com.dasoops.minio.MinioTemplate;
 import org.springframework.stereotype.Service;
 
@@ -64,9 +63,9 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         try {
             filenameOpt = minioTemplate.saveImage(url);
         } catch (Exception e) {
-            ExceptionUtil.buildImageSaveError();
+            throw new CqLogicException(ExceptionEnum.IMAGE_SAVE_ERROR);
         }
-        String filename = filenameOpt.orElseThrow(() -> new BaseCustomException(ExceptionEnum.IMAGE_SAVE_ERROR));
+        String filename = filenameOpt.orElseThrow(() -> new CqLogicException(ExceptionEnum.IMAGE_SAVE_ERROR));
 
 
         ImageDo imagePo = new ImageDo();

@@ -18,6 +18,9 @@ import java.util.List;
 @Data
 public class BaseEasyPageDto<T> extends BaseDto {
 
+    /**
+     * 数据
+     */
     private List<T> data;
 
     /**

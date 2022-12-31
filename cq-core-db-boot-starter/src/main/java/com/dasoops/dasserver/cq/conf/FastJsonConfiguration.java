@@ -7,6 +7,7 @@ import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageCo
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.charset.StandardCharsets;
@@ -39,5 +40,4 @@ public class FastJsonConfiguration implements WebMvcConfigurer {
         converter.setSupportedMediaTypes(supportedMediaTypes);
         converters.add(0, converter);
     }
-
 }

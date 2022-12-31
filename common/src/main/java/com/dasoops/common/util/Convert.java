@@ -2,7 +2,7 @@ package com.dasoops.common.util;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.exception.BaseCustomException;
+import com.dasoops.common.exception.LogicException;
 
 import java.util.List;
 import java.util.Map;
@@ -32,7 +32,6 @@ public class Convert {
     }
 
     /**
-     * 来
      * 简单类型转换
      *
      * @param clazz clazz
@@ -45,7 +44,7 @@ public class Convert {
             r = clazz.getConstructor(clazz).newInstance();
             BeanUtil.copyProperties(t, r);
         } catch (Exception e) {
-            throw new BaseCustomException(ExceptionEnum.TYPE_CONVERT);
+            throw new LogicException(ExceptionEnum.TYPE_CONVERT);
         }
         return r;
     }
@@ -64,7 +63,7 @@ public class Convert {
                 BeanUtil.copyProperties(t, e);
                 return e;
             } catch (Exception e) {
-                throw new BaseCustomException(ExceptionEnum.TYPE_CONVERT);
+                throw new LogicException(ExceptionEnum.TYPE_CONVERT);
             }
         }).collect(Collectors.toList());
     }

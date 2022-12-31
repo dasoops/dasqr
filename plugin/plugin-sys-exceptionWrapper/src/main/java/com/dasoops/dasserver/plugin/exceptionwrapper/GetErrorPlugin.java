@@ -1,8 +1,6 @@
 package com.dasoops.dasserver.plugin.exceptionwrapper;
 
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.exception.BaseCustomException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.bot.PassObj;

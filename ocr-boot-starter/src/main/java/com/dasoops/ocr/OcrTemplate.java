@@ -1,6 +1,6 @@
 package com.dasoops.ocr;
 
-import com.dasoops.common.entity.Result;
+import com.dasoops.common.entity.vo.result.Result;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
@@ -9,7 +9,6 @@ import com.tencentcloudapi.ocr.v20181119.OcrClient;
 import com.tencentcloudapi.ocr.v20181119.models.GeneralAccurateOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.GeneralAccurateOCRResponse;
 import com.tencentcloudapi.ocr.v20181119.models.TextDetection;
-import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 

@@ -18,6 +18,7 @@ public interface WsWrapper {
      *
      * @param cqTemplate cqTemplate
      */
+    @Async
     void afterConnectionEstablishedWrapper(CqTemplate cqTemplate);
 
     /**
@@ -25,6 +26,7 @@ public interface WsWrapper {
      *
      * @param cqTemplate cqTemplate
      */
+    @Async
     void afterConnectionClosedWrapper(CqTemplate cqTemplate);
 
     /**

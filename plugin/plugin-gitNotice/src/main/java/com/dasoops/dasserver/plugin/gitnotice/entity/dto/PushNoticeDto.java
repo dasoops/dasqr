@@ -2,6 +2,7 @@ package com.dasoops.dasserver.plugin.gitnotice.entity.dto;
 
 
 import com.alibaba.fastjson2.annotation.JSONField;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @Description: gitPush数据传输对象
  */
 @Data
+@ApiModel(value = "PushNoticeDto",description = "gitee 上报dto")
 public class PushNoticeDto {
     @JSONField(name = "hook_name")
     private String hookName;

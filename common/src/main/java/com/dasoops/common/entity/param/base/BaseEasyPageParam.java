@@ -1,5 +1,6 @@
 package com.dasoops.common.entity.param.base;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,15 +20,18 @@ public class BaseEasyPageParam extends BaseParam {
     /**
      * 每页显示数量
      */
+    @ApiModelProperty(value = "每页显示数量", notes = "每页显示数量", required = false)
     private Integer size = 10;
 
     /**
      * 当前页码
      */
+    @ApiModelProperty(value = "当前页码", notes = "当前页码", required = false)
     private Integer current = 1;
 
     /**
-     * 总数
+     * 总记录数
      */
+    @ApiModelProperty(value = "总记录数", notes = "总记录数", required = false)
     private Integer total;
 }

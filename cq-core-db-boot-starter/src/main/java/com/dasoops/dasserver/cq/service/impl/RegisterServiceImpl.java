@@ -1,11 +1,10 @@
 package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dasoops.common.util.Assert;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.common.entity.dbo.base.BaseDo;
-import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
+import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
+import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
 import com.dasoops.dasserver.cq.entity.enums.RegisterTypeEnum;
 import com.dasoops.dasserver.cq.entity.retdata.FriendData;
 import com.dasoops.dasserver.cq.entity.retdata.GroupData;
@@ -15,12 +14,14 @@ import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.cq.util.RegisterUtil;
+import com.dasoops.dasserver.cq.utils.CqAssert;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -40,7 +41,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
     private final PluginService pluginService;
     private final RegisterMtmPluginService registerMtmPluginService;
 
-    public RegisterServiceImpl(@Lazy PluginService pluginService,@Lazy  RegisterMtmPluginService registerMtmPluginService) {
+    public RegisterServiceImpl(@Lazy PluginService pluginService, @Lazy RegisterMtmPluginService registerMtmPluginService) {
         this.pluginService = pluginService;
         this.registerMtmPluginService = registerMtmPluginService;
     }
@@ -49,11 +50,11 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(RegisterDo registerPo) {
-        Assert.allMustNotNull(registerPo, registerPo.getRegisterId(), registerPo.getType(), registerPo.getLevel());
-        Assert.allMustNull(registerPo.getId());
+        CqAssert.allMustNotNull(registerPo, registerPo.getRegisterId(), registerPo.getType(), registerPo.getLevel());
+        CqAssert.allMustNull(registerPo.getId());
 
         //存储注册对象
-        Assert.ifTrue(super.save(registerPo));
+        CqAssert.isTrue(super.save(registerPo));
 
         //插件对象Level <= 注册用户对象Level 赋予使用权限
         List<Long> pluginPoIdList = pluginService.getIdListByMinLevel(registerPo.getLevel());
@@ -61,12 +62,12 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         List<RegisterMtmPluginDo> rpList = pluginPoIdList.stream().map(pluginPoId -> {
             RegisterMtmPluginDo po = new RegisterMtmPluginDo();
             po.setPluginId(pluginPoId);
-            po.setRegisterId(registerPo.getId());
+            po.setRegisterRowId(registerPo.getId());
             return po;
         }).collect(Collectors.toList());
 
         //持久化
-        Assert.ifTrue(registerMtmPluginService.saveBatch(rpList));
+        CqAssert.isTrue(registerMtmPluginService.saveBatch(rpList));
         return true;
     }
 
@@ -136,6 +137,12 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         super.saveBatch(noExistRegisterDoList);
     }
 
+    @Override
+    public Map<Long, Integer> getRegisterIdOtoTypeMap() {
+        List<RegisterDo> registerDoList = super.list();
+        Map<Long, Integer> map = registerDoList.stream().collect(Collectors.toMap(RegisterDo::getId, RegisterDo::getType));
+        return map;
+    }
 }
 
 

@@ -2,8 +2,7 @@ package com.dasoops.dasserver.cq.websocket;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.dasoops.common.exception.BaseCustomException;
-import com.dasoops.common.util.Assert;
+import com.dasoops.common.exception.AbstractBaseCustomException;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.bot.CqFactory;
@@ -13,6 +12,7 @@ import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.conf.properties.EventProperties;
 import com.dasoops.dasserver.cq.exception.wrapper.ExceptionWrapper;
 import com.dasoops.dasserver.cq.thread.NamedThreadFactory;
+import com.dasoops.dasserver.cq.utils.CqAssert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.web.socket.CloseStatus;
@@ -21,6 +21,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -61,7 +62,7 @@ public class WsHandler extends TextWebSocketHandler {
                 new NamedThreadFactory("wsHandler"));
         this.cqProperties = cqProperties;
         this.exceptionWrapper = exceptionWrapper;
-        this.wsWrapperList = wsWrapperList;
+        this.wsWrapperList = wsWrapperList.stream().sorted(Comparator.comparingInt(WsWrapper::getOrder)).toList();
     }
 
     /**
@@ -79,9 +80,9 @@ public class WsHandler extends TextWebSocketHandler {
         CqTemplate cqTemplate = cqFactory.create(qid, session);
         CqGlobal.robots.put(qid, cqTemplate);
 
-        Assert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream().forEach(wsWrapper -> {
-            wsWrapper.afterConnectionEstablishedWrapper(cqTemplate);
-        }));
+        CqAssert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
+                .forEach(wsWrapper -> wsWrapper.afterConnectionEstablishedWrapper(cqTemplate))
+        );
 
 
 /*
@@ -108,8 +109,8 @@ public class WsHandler extends TextWebSocketHandler {
             });
         }
 
-        Assert.notNull(loadPluginList, () -> sb.append(StrUtil.format("成功加载插件 {} 个\r\n", loadPluginList.size())));
-        Assert.notNull(unLoadPluginList, () -> sb.append(StrUtil.format("未成功加载插件 {} 个\r\n", unLoadPluginList.size())));
+        CqAssert.notNull(loadPluginList, () -> sb.append(StrUtil.format("成功加载插件 {} 个\r\n", loadPluginList.size())));
+        CqAssert.notNull(unLoadPluginList, () -> sb.append(StrUtil.format("未成功加载插件 {} 个\r\n", unLoadPluginList.size())));
 
         cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), sb.toString(), false);
         */
@@ -126,7 +127,8 @@ public class WsHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus closeStatus) {
         Long qid = getQid(session);
         log.info("{} close connection", qid);
-        Assert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream().forEach(wsWrapper -> wsWrapper.afterConnectionClosedWrapper(CqGlobal.robots.get(qid))));
+        CqAssert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
+                .forEach(wsWrapper -> wsWrapper.afterConnectionClosedWrapper(CqGlobal.robots.get(qid))));
 
         CqGlobal.robots.remove(qid);
     }
@@ -163,10 +165,10 @@ public class WsHandler extends TextWebSocketHandler {
                     eventHandler.handle(finalCqTemplate, messageObj);
                 } catch (Exception e) {
                     //异常处理
-                    Assert.ifTrue(cqProperties.isConsolePrintStack(), () -> {
-                        Assert.ifTrueOrElse(cqProperties.isNativePrintStack(), e::printStackTrace, () -> log.error("消息处理发生异常: {}", e instanceof BaseCustomException ? ((BaseCustomException) e).getStackMessage() : e));
+                    CqAssert.ifTrue(cqProperties.isConsolePrintStack(), () -> {
+                        CqAssert.ifTrueOrElse(cqProperties.isNativePrintStack(), e::printStackTrace, () -> log.error("消息处理发生异常: {}", e instanceof AbstractBaseCustomException ? ((AbstractBaseCustomException) e).getStackMessage() : e));
                     });
-                    Assert.ifNotNull(exceptionWrapper, () -> exceptionWrapper.invoke(e));
+                    CqAssert.ifNotNull(exceptionWrapper, () -> exceptionWrapper.invoke(e));
                 }
             });
         }

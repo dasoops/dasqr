@@ -5,6 +5,7 @@
         <module>common</module>
         <module>common-boot-starter</module>
         <module>core</module>
+        <module>cq-core-enums</module>
         <module>minio-boot-starter</module>
         <module>ocr-boot-starter</module>
         <module>cq-core-boot-starter</module>
@@ -13,13 +14,16 @@
         <module>plugin/plugin-core</module>
         <module>plugin/plugin-gitNotice</module>
         <module>plugin/plugin-sys-exceptionWrapper</module>
+        <module>plugin/plugin-log</module>
         <module>plugin/plugin-loaj</module>
         <module>plugin/plugin-style</module>
         <module>plugin/plugin-image</module>
+        <module>plugin/plugin-imageWebManager</module>
         <module>plugin/plugin-sys-pluginWrapper</module>
         <module>plugin/plugin-sys-authWrapper</module>
         <module>plugin/plugin-sys-wsWrapper</module>
         <module>plugin/plugin-sys-webManager</module>
+        <module>plugin/plugin-sys-webAuth</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -34,11 +38,11 @@
     <packaging>pom</packaging>
     <description>dasServer parent</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <cq.version>0.0.1</cq.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
         <lombok.version>1.18.24</lombok.version>
         <fastjson2.version>2.0.15</fastjson2.version>
         <fastjson2-extension.version>2.0.15</fastjson2-extension.version>
@@ -46,6 +50,10 @@
         <log4j.version>1.2.17</log4j.version>
         <tencentSdk.version>3.1.625</tencentSdk.version>
         <knife4j.version>4.0.0</knife4j.version>
+        <easyExcel.version>3.1.4</easyExcel.version>
+        <okio.version>2.8.0</okio.version>
+        <commons-compress.version>1.21</commons-compress.version>
+        <jwt.version>4.2.1</jwt.version>
     </properties>
 
 
@@ -60,6 +68,13 @@
             </dependency>
 
             <!-- 自定义组件 -->
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>cq-core-enums</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>cq-core-boot-starter</artifactId>
@@ -168,6 +183,18 @@
                 <version>${cq.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-imageWebManager</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-sys-webAuth</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
             <!-- 通用组件 -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -203,7 +230,7 @@
 
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
 
@@ -213,6 +240,41 @@
                 <artifactId>tencentcloud-sdk-java-ocr</artifactId>
                 <version>${tencentSdk.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyExcel.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>1.70</version>
+                <scope>compile</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.squareup.okio</groupId>
+                <artifactId>okio</artifactId>
+                <version>${okio.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
         </dependencies>
 
     </dependencyManagement>

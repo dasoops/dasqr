@@ -2,10 +2,10 @@ package com.dasoops.dasserver.plugin.authwrapper.cache;
 
 import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.exception.BaseCustomException;
+import com.dasoops.dasserver.cq.exception.CqLogicException;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
-import com.dasoops.dasserver.cq.entity.enums.PluginRedisKeyEnum;
 import com.dasoops.dasserver.cq.service.PluginService;
+import com.dasoops.dasserver.entity.enums.PluginRedisKeyEnum;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +32,7 @@ public class PluginCache extends BaseCache {
         this.pluginService = pluginService;
     }
 
-    public void initOrUpdatePluginClassNameIdMap() {
+    public void initOrUpdatePluginClassNameOtoIdMap2Cache() {
         //全表
         List<PluginDo> pluginDoList = pluginService.list();
         Map<String, Long> pluginClassPathIdMap = pluginDoList.stream().collect(Collectors.toMap(PluginDo::getClassPath, PluginDo::getId));
@@ -53,7 +53,7 @@ public class PluginCache extends BaseCache {
     public Long getIdByPluginClassPath(String classPath) {
         String value = super.hget(PluginRedisKeyEnum.PLUGIN_CALSSPATH_OTO_ID, classPath);
         if (value == null || value.isEmpty()) {
-            throw new BaseCustomException(ExceptionEnum.REDIS_DATA_NOT_NULL);
+            throw new CqLogicException(ExceptionEnum.REDIS_DATA_NOT_NULL);
         }
         return Long.valueOf(value);
     }

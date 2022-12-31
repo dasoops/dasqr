@@ -32,13 +32,14 @@ public enum ExceptionEnum implements IExceptionEnum {
      */
     IS_TRUE(3001, "值必须为true"),
     IS_FALSE(3002, "值必须为false"),
+    SIZE_ZERO(3003, "数据不可为空"),
 
     /**
      * 参数异常
      */
     PARAMETER_NOT_NULL(4001, "参数不可为空"),
     PARAMETER_IS_NULL(4002, "参数必须为空"),
-    PARAMETER_OUT_OF_SCOPE(4003, "参数超出界定范围"),
+    PARAMETER_OUT_OF_SCOPE(4003, "超出界定范围的参数"),
     PARAMETER_RESLOVE_ERROR(4004, "输入参数解析异常"),
 
     /**

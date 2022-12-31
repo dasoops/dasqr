@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.dasoops.dasserver.plugin.webAuth.AutoConfiguration,\
+  com.dasoops.dasserver.plugin.webAuth.InterceptorConfiguration

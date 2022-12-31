@@ -1,5 +1,6 @@
 package com.dasoops.common.entity.vo.result;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,8 +19,16 @@ import java.util.List;
 @Data
 public class EasyPageResult<T> extends BaseResult {
 
+    /**
+     * 返回数据
+     */
+    @ApiModelProperty(value = "返回数据", notes = "返回数据", example = "[{\"id\":1,\"name\":\"A\"},{\"id\":2,\"name\":\"B\"}]", required = true)
     public List<T> data;
 
+    /**
+     * 总记录数
+     */
+    @ApiModelProperty(value = "总记录数", notes = "总记录数", example = "100", required = true)
     public Integer total;
 
     /**

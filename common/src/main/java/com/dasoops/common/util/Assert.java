@@ -1,6 +1,8 @@
 package com.dasoops.common.util;
 
 import cn.hutool.core.util.ObjUtil;
+import com.dasoops.common.util.entity.AssertReslover;
+import com.dasoops.common.util.entity.DefaultAssertReslover;
 
 import java.util.function.Function;
 
@@ -13,20 +15,11 @@ import java.util.function.Function;
  * @Description: 断言工具类
  */
 public class Assert {
-    /**
-     * 对象必须全部为空
-     *
-     * @param obj obj
-     */
-    public static void allMustNull(Object... obj) {
-        if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
-            ExceptionUtil.buildParameterIsNull();
-        }
-        for (Object o : obj) {
-            if (!ObjUtil.isNull(o) && !ObjUtil.isEmpty(o)) {
-                ExceptionUtil.buildParameterIsNull();
-            }
-        }
+
+    private static AssertReslover reslover = new DefaultAssertReslover();
+
+    protected static void setReslover(AssertReslover reslover) {
+        Assert.reslover = reslover;
     }
 
     /**
@@ -50,22 +43,6 @@ public class Assert {
             function.apply(obj);
         }
         return orElseFunction.apply(obj);
-    }
-
-    /**
-     * 对象非空
-     *
-     * @param obj obj
-     */
-    public static void allMustNotNull(Object... obj) {
-        if (ObjUtil.isNull(obj) || ObjUtil.isEmpty(obj)) {
-            ExceptionUtil.buildParameterIsNull();
-        }
-        for (Object o : obj) {
-            if (ObjUtil.isNull(o) || ObjUtil.isEmpty(o)) {
-                ExceptionUtil.buildParameterNotNull();
-            }
-        }
     }
 
     /**
@@ -118,17 +95,6 @@ public class Assert {
     /**
      * 结果为真
      *
-     * @param bool boolean
-     */
-    public static void ifTrue(Boolean bool) {
-        if (bool) {
-            ExceptionUtil.buildIsTrue();
-        }
-    }
-
-    /**
-     * 结果为真
-     *
      * @param bool     boolean
      * @param function 函数
      */
@@ -155,23 +121,67 @@ public class Assert {
     /**
      * 结果为假
      *
-     * @param bool boolean
-     */
-    public static void ifFalse(Boolean bool) {
-        if (!bool) {
-            ExceptionUtil.buildIsFalse();
-        }
-    }
-
-    /**
-     * 结果为假
-     *
      * @param bool     boolean
      * @param function 函数
      */
     public static void ifFalse(Boolean bool, NoneFunction function) {
         if (!bool) {
             function.invoke();
+        }
+    }
+
+
+    /**
+     * 对象必须全部为空
+     *
+     * @param obj obj
+     */
+    public static void allMustNull(Object... obj) {
+        if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
+            reslover.allMustNull();
+        }
+        for (Object o : obj) {
+            if (!ObjUtil.isNull(o) && !ObjUtil.isEmpty(o)) {
+                reslover.allMustNull();
+            }
+        }
+    }
+
+    /**
+     * 对象非空
+     *
+     * @param obj obj
+     */
+    public static void allMustNotNull(Object... obj) {
+        if (ObjUtil.isNull(obj) || ObjUtil.isEmpty(obj)) {
+            reslover.allMustNotNull();
+        }
+        for (Object o : obj) {
+            if (ObjUtil.isNull(o) || ObjUtil.isEmpty(o)) {
+                reslover.allMustNotNull();
+            }
+        }
+    }
+
+    /**
+     * 结果为真
+     *
+     * @param bool boolean
+     */
+    public static void isTrue(Boolean bool) {
+        if (bool) {
+            reslover.isTrue();
+        }
+    }
+
+    /**
+     * 结果为假
+     *
+     * @param bool boolean
+     */
+    public static void isFalse(Boolean bool) {
+        if (!bool) {
+            reslover.isFalse();
         }
     }
 
@@ -182,7 +192,7 @@ public class Assert {
      */
     public static void dbExecuteMustSuccess(Boolean bool) {
         if (!bool) {
-            ExceptionUtil.buildDbExecuteFailed();
+            reslover.dbExecuteMustSuccess();
         }
     }
 
@@ -193,7 +203,7 @@ public class Assert {
      */
     public static void dbExecuteReturnMustNotNull(Object obj) {
         if (ObjUtil.isNull(obj)) {
-            ExceptionUtil.buildDbExecuteReturnNotNull();
+            reslover.dbExecuteReturnMustNotNull();
         }
     }
 
@@ -204,20 +214,13 @@ public class Assert {
      */
     public static void dbExecuteResNotZero(Integer count) {
         if (count <= 0) {
-            ExceptionUtil.buildDbExecuteReturnIsZero();
-        }
-    }
-
-    public static void isNotFailed(String status, String message) {
-        String failed = "failed";
-        if (failed.equals(status)) {
-            ExceptionUtil.buildCqReturnFailed(message);
+            reslover.dbExecuteResNotZero();
         }
     }
 
     /**
      * @Title: noneFunction
-     * @ClassPath com.dasoops.dasserver.core.util.Assert.noneFunction
+     * @ClassPath com.dasoops.dasserver.core.util.CqAssert.noneFunction
      * @Author DasoopsNicole@Gmail.com
      * @Date 2022/11/01
      * @Version 1.0.0

@@ -4,19 +4,21 @@ import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.exception.BaseCustomException;
-import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.entity.retdata.ApiData;
 import com.dasoops.dasserver.cq.entity.retdata.MessageData;
+import com.dasoops.dasserver.cq.exception.CqLogicException;
 import com.dasoops.dasserver.cq.service.ConfigService;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.plugin.gitnotice.GitNoticeProperties;
 import com.dasoops.dasserver.plugin.gitnotice.entity.dto.Commits;
 import com.dasoops.dasserver.plugin.gitnotice.entity.dto.PushNoticeDto;
 import com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitNoticeTypeEnum;
+import com.github.xiaoymin.knife4j.annotations.ApiSupport;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +37,8 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/git")
+@Api(tags = "plugin-gitNotice")
+@ApiSupport(author = "DasoopsNicole@gmail.com")
 public class GitController {
 
     private final CqProperties cqProperties;
@@ -48,8 +52,8 @@ public class GitController {
     }
 
     @PostMapping("/push")
+    @ApiOperation(value = "gitPush 消息上报",notes = "gitPush 消息上报")
     public void pushNotice(@RequestBody PushNoticeDto pushNoticeDto) {
-
         //获取当前配置的用户信息
         Optional<GitNoticeTypeEnum> noticeTypeEnumOpt = getEnum();
         if (noticeTypeEnumOpt.isEmpty()) {
@@ -58,7 +62,7 @@ public class GitController {
         GitNoticeTypeEnum noticeTypeEnum = noticeTypeEnumOpt.get();
 
         //无cq连接抛出异常
-        CqTemplate cqTemplate = CqGlobal.findFirst().orElseThrow(() -> new BaseCustomException(ExceptionEnum.NO_CQ_CONNECTION));
+        CqTemplate cqTemplate = CqGlobal.findFirst().orElseThrow(() -> new CqLogicException(ExceptionEnum.NO_CQ_CONNECTION));
 
         //发送git通知
         sendNotice(cqTemplate, noticeTypeEnum, buildCommitNoticeStr(pushNoticeDto));
@@ -128,7 +132,11 @@ public class GitController {
                 break;
         }
 
-        Assert.isNotFailed(resApiData.getStatus(), JSON.toJSONString(resApiData));
+        final String failed = "failed";
+        if (failed.equals(resApiData.getStatus())) {
+            throw new CqLogicException(ExceptionEnum.CQ_RETURN_FAILED,JSON.toJSONString(resApiData));
+        }
+
     }
 
 

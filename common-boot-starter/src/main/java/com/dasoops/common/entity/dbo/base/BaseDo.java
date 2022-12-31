@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Date;
  * @Description: sqlDo基类
  */
 @Data
-public class BaseDo {
+public class BaseDo implements Serializable {
     /**
      * 主键id
      */
@@ -54,4 +55,7 @@ public class BaseDo {
     @JSONField(serialize = false)
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateUser;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
 }

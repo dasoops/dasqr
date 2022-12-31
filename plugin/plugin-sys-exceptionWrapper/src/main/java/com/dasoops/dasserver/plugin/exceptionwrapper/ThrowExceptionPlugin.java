@@ -1,13 +1,13 @@
 package com.dasoops.dasserver.plugin.exceptionwrapper;
 
-import com.dasoops.common.util.ExceptionUtil;
+import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.exception.WebLogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.bot.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
-import com.dasoops.dasserver.cq.entity.retdata.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -39,13 +39,11 @@ public class ThrowExceptionPlugin extends CqPlugin {
         final String crazyKeyword = "throwCrazyException";
 
         if (normalKeyword.equals(event.getMessage())) {
-            ExceptionUtil.buildTestException();
-            return PassObj.block();
+            throw new WebLogicException(ExceptionEnum.TEST_EXCEPTION);
         }
 
         if (crazyKeyword.equals(event.getMessage())) {
-            ExceptionUtil.buildCrazyException();
-            return PassObj.block();
+            throw new WebLogicException(ExceptionEnum.CRAZY_TEST_EXCEPTION);
         }
         return PassObj.pass(event);
     }

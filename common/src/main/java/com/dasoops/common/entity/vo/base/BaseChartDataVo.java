@@ -1,5 +1,6 @@
 package com.dasoops.common.entity.vo.base;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,6 +21,7 @@ public class BaseChartDataVo extends BaseVo{
     /**
      * 索引
      */
+    @ApiModelProperty(value = "索引", notes = "索引", example = "[1号,2号,3号]", required = true)
     private List<String> indexList;
 
 }

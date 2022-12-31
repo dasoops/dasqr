@@ -1,13 +1,9 @@
 package com.dasoops.dasserver.plugin.wswrapper;
 
 import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.entity.retdata.*;
 import com.dasoops.dasserver.cq.websocket.WsWrapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 /**
  * @Title: WsWrapperImpl
@@ -24,12 +20,6 @@ public class WsWrapperImpl implements WsWrapper {
     @Override
     public void afterConnectionEstablishedWrapper(CqTemplate cqTemplate) {
         //todo
-//        ApiListData<GroupData> groupList = cqTemplate.getGroupList();
-//        ApiListData<FriendData> friendList = cqTemplate.getFriendList();
-//        ApiData<LoginInfoData> loginInfo = cqTemplate.getLoginInfo();
-//        System.out.println( groupList.getData().stream().map(GroupData::getGroupId).collect(Collectors.toList()));
-//        System.out.println(friendList.getData().toString());
-//        System.out.println(loginInfo.getData().toString());
     }
 
     @Override

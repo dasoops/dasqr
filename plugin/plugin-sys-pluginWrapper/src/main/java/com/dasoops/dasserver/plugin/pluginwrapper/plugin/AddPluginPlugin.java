@@ -2,15 +2,15 @@ package com.dasoops.dasserver.plugin.pluginwrapper.plugin;
 
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.bot.PassObj;
+import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
-import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.service.PluginService;
+import com.dasoops.dasserver.cq.utils.CqAssert;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.DqUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -79,7 +79,7 @@ public class AddPluginPlugin extends CqPlugin {
         po.setEnable(1);
         po.setLevel(9);
         po.setOrder(maxOrder);
-        Assert.dbExecuteMustSuccess(pluginService.save(po));
+        CqAssert.dbExecuteMustSuccess(pluginService.save(po));
         return PassObj.block();
     }
 }

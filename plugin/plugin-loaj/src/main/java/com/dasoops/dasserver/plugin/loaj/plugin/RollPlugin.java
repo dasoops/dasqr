@@ -3,11 +3,11 @@ package com.dasoops.dasserver.plugin.loaj.plugin;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.bot.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
+import com.dasoops.dasserver.cq.utils.CqAssert;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajKeyEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +56,7 @@ public class RollPlugin extends CqPlugin {
             //获取群roll点集合
             Set<String> keys = stringRedisTemplate.keys(prefix);
             //全部设置为5分钟过期
-            Assert.ifNotNull(keys, () -> keys.forEach(key -> stringRedisTemplate.boundSetOps(key).expire(5L, TimeUnit.MINUTES)));
+            CqAssert.ifNotNull(keys, () -> keys.forEach(key -> stringRedisTemplate.boundSetOps(key).expire(5L, TimeUnit.MINUTES)));
             //添加
             stringRedisTemplate.opsForSet().add(redisKey, String.valueOf(i));
             cqTemplate.sendGroupMsg(event.getGroupId(), CqCodeUtil.at(event.getUserId()) + "你roll到了: " + i, false);
@@ -80,7 +80,7 @@ public class RollPlugin extends CqPlugin {
                 Map<String, Integer> resMap = new HashMap<>(16);
                 keys.forEach(key -> resMap.put(
                         key.substring(key.lastIndexOf(":") + 1),
-                        Assert.ifNotNull(stringRedisTemplate.opsForSet().members(key),
+                        CqAssert.ifNotNull(stringRedisTemplate.opsForSet().members(key),
                                 //取最大值
                                 (Function<Set<String>, Integer>) res -> res.stream().map(Integer::valueOf).max(Comparator.comparingInt(Integer::valueOf)).orElse(null))
                 ));

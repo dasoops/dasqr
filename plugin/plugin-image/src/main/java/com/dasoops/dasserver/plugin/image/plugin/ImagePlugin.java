@@ -1,15 +1,17 @@
 package com.dasoops.dasserver.plugin.image.plugin;
 
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.entity.Result;
+import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.entity.vo.result.Result;
+import com.dasoops.common.exception.WebLogicException;
 import com.dasoops.common.util.Assert;
-import com.dasoops.common.util.ExceptionUtil;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.bot.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
+import com.dasoops.dasserver.cq.exception.CqLogicException;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.DqUtil;
 import com.dasoops.dasserver.plugin.image.entity.enums.ImageRedisKeyEnum;
@@ -219,7 +221,7 @@ public class ImagePlugin extends CqPlugin {
         if (FLAG.equals(key)) {
             //ocr分支
             Result<String> result = ocrTemplate.forTencent(url);
-            if (!result.isSuccess()) {
+            if (!result.getCode().equals(200)) {
                 return "存图失败,ocr识别服务异常: " + result.getMsg();
             }
             key = result.getData();
@@ -228,7 +230,9 @@ public class ImagePlugin extends CqPlugin {
                 return "这张图的关键词重复了捏";
             }
 
-            Assert.ifFalse(imageService.saveImage(event, key, url), ExceptionUtil::buildImageSaveError);
+            Assert.ifFalse(imageService.saveImage(event, key, url),() -> {
+                throw new CqLogicException(ExceptionEnum.IMAGE_SAVE_ERROR);
+            });
             log.debug("(ImagePlugin) 存图逻辑执行完毕 - 分片存图 + ocr 分支 part2");
             return "好了捏,现在可以用 " + key + "取出这张图辽";
         }
@@ -268,7 +272,7 @@ public class ImagePlugin extends CqPlugin {
 
         //调用ocr
         Result<String> result = ocrTemplate.forTencent(url);
-        if (!result.isSuccess()) {
+        if (!result.getCode().equals(200)) {
             return "存图失败,ocr识别服务异常: " + result.getMsg();
         }
 
@@ -315,7 +319,7 @@ public class ImagePlugin extends CqPlugin {
             saveImage = imageService.saveImage(event.getUserId(), keyword, url);
         }
         if (!saveImage) {
-            ExceptionUtil.buildImageSaveError();
+            throw new WebLogicException(ExceptionEnum.IMAGE_SAVE_ERROR);
         }
     }
 

@@ -5,6 +5,7 @@ import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Title: RegisterService
@@ -31,4 +32,11 @@ public interface RegisterService extends IService<RegisterDo> {
      * @param cqTemplate cqTemplate
      */
     void initOrUpdateRegisterList(CqTemplate cqTemplate);
+
+    /**
+     * 获取注册表id 类型 映射集合
+     *
+     * @return {@link Map}<{@link Long}, {@link Integer}>
+     */
+    Map<Long, Integer> getRegisterIdOtoTypeMap();
 }

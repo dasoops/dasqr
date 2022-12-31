@@ -3,8 +3,7 @@ package com.dasoops.dasserver.core;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.entity.enums.IExceptionEnum;
 import com.dasoops.common.entity.vo.result.SimpleResult;
-import com.dasoops.common.exception.BaseCustomException;
-import com.dasoops.common.util.Assert;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.exception.wrapper.ExceptionWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -15,12 +14,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @Title: ExceptionHandler
- * @ClassPath com.dasoops.dasserver.core.ExceptionHandler
+ * @Title: GlobalExceptionHandler
+ * @ClassPath com.dasoops.dasserver.core.GlobalExceptionHandler
  * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/03
+ * @Date 2022/12/31
  * @Version 1.0.0
- * @Description: 异常处理程序
+ * @Description: 全局异常处理程序
  */
 @Slf4j
 @Component
@@ -49,16 +48,16 @@ public class GlobalExceptionHandler {
                 if (cqProperties.isNativePrintStack()) {
                     e.printStackTrace();
                 } else {
-                    if (e instanceof BaseCustomException) {
-                        IExceptionEnum exceptionEnum = ((BaseCustomException) e).getExceptionEnum();
-                        log.error("消息处理发生异常: {}", ((BaseCustomException) e).getStackMessage());
+                    if (e instanceof LogicException) {
+                        IExceptionEnum exceptionEnum = ((LogicException) e).getExceptionEnum();
+                        log.error("消息处理发生异常: {}", ((LogicException) e).getStackMessage());
                         return SimpleResult.fail(exceptionEnum);
                     } else {
                         log.error("消息处理发生异常: ", e);
                     }
                 }
             }
-            Assert.ifNotNull(exceptionWrapper, () -> exceptionWrapper.invoke(e));
+//            CqAssert.ifNotNull(exceptionWrapper, () -> exceptionWrapper.invoke(e));
         } catch (Exception e2) {
             log.error("Exception at ExceptionHandler", e2);
             return SimpleResult.fail(ExceptionEnum.UN_EXPECTED);

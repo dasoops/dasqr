@@ -1,9 +1,9 @@
 package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqPlugin;
-import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
 import com.dasoops.dasserver.cq.mapper.PluginMapper;
@@ -83,7 +83,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
 
         //默认启用,存储插件对象
         pluginPo.setEnable(1);
-        Assert.ifTrue(super.save(pluginPo));
+        Assert.isTrue(super.save(pluginPo));
 
         //注册用户对象Level >= 插件对象Level 赋予使用权限
         List<Long> registerPoIdList = registerService.getIdListByMaxLevel(pluginPo.getLevel());
@@ -92,18 +92,18 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
         List<RegisterMtmPluginDo> rpList = registerPoIdList.stream().map(registerPoId -> {
             RegisterMtmPluginDo po = new RegisterMtmPluginDo();
             po.setPluginId(pluginPo.getId());
-            po.setRegisterId(registerPoId);
+            po.setRegisterRowId(registerPoId);
             return po;
         }).collect(Collectors.toList());
 
         //持久化
-        Assert.ifTrue(registerMtmPluginService.saveBatch(rpList));
+        Assert.isTrue(registerMtmPluginService.saveBatch(rpList));
         return true;
     }
 
     @Override
     public boolean updateByKeyword(PluginDo pluginPo) {
-        Assert.ifTrue(super.lambdaUpdate().eq(PluginDo::getKeyword, pluginPo.getKeyword()).update(pluginPo));
+        Assert.isTrue(super.lambdaUpdate().eq(PluginDo::getKeyword, pluginPo.getKeyword()).update(pluginPo));
         return true;
     }
 

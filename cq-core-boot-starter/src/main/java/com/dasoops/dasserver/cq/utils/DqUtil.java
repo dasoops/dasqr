@@ -3,7 +3,8 @@ package com.dasoops.dasserver.cq.utils;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.util.ExceptionUtil;
+import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.dasserver.cq.exception.CqLogicException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,7 +38,7 @@ public class DqUtil {
         //消除前缀
         final String space = ignorePrefixSpace ? "" : "{2}";
         if (!StrUtil.startWithIgnoreCase(message, prefix + space)) {
-            ExceptionUtil.buildParameterResloveError();
+            throw new CqLogicException(ExceptionEnum.PARAMETER_RESLOVE_ERROR);
         }
 
         message = message.replaceFirst(prefix + space, "");

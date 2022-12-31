@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.cq.thread;
 
-import com.dasoops.common.util.Assert;
+import com.dasoops.dasserver.cq.utils.CqAssert;
 import com.dasoops.dasserver.cq.utils.EventUtil;
 import com.dasoops.dasserver.cq.utils.entity.EventInfo;
 import lombok.NonNull;
@@ -30,7 +30,7 @@ public class NamedThreadFactory implements ThreadFactory {
 
     @Override
     public Thread newThread(@NonNull Runnable r) {
-        Thread t = new Thread(group, r, namePrefix + Assert.ifNotNullOrElse(EventUtil.get(), EventInfo::getMessageId, res -> "sys"), 0);
+        Thread t = new Thread(group, r, namePrefix + CqAssert.ifNotNullOrElse(EventUtil.get(), EventInfo::getMessageId, res -> "sys"), 0);
         if (t.isDaemon()) {
             t.setDaemon(false);
         }

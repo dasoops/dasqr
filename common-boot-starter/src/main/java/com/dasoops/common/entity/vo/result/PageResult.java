@@ -2,6 +2,7 @@ package com.dasoops.common.entity.vo.result;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dasoops.common.util.Convert;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,8 +21,16 @@ import java.util.List;
 @Data
 public class PageResult<T> extends EasyPageResult<T> {
 
+    /**
+     * 返回数据
+     */
+    @ApiModelProperty(value = "返回数据", notes = "返回数据", required = false)
     public List<T> data;
 
+    /**
+     * 总记录数
+     */
+    @ApiModelProperty(value = "总记录数", notes = "总记录数", required = false)
     public Integer total;
 
     /**

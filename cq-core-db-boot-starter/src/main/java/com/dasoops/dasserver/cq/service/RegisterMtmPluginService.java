@@ -14,8 +14,4 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RegisterMtmPluginService extends IService<RegisterMtmPluginDo> {
 
-    /**
-     * 初始化/更新 多对多关系集合
-     */
-    void initOrUpdateRegisterMtmPluginList();
 }

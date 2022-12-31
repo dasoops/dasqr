@@ -1,8 +1,6 @@
 package com.dasoops.dasserver.cq.api;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
 import com.alibaba.fastjson2.JSONObject;
-import com.dasoops.common.exception.BaseCustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;

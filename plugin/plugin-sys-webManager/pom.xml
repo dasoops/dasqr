@@ -12,8 +12,8 @@
     <artifactId>plugin-sys-webManager</artifactId>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
 
@@ -29,8 +29,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.dasoops</groupId>
-            <artifactId>common-boot-starter</artifactId>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-webAuth</artifactId>
         </dependency>
 
     </dependencies>

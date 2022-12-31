@@ -13,15 +13,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>com.dasoops</groupId>
             <artifactId>common-boot-starter</artifactId>
-            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>cq-core-enums</artifactId>
         </dependency>
 
         <dependency>
@@ -43,6 +48,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops</groupId>
+            <artifactId>common-boot-starter</artifactId>
         </dependency>
     </dependencies>
 </project>

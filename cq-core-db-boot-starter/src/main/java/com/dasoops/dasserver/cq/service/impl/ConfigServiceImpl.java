@@ -1,12 +1,13 @@
 package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dasoops.common.util.Assert;
-import com.dasoops.common.util.ExceptionUtil;
-import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
+import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.exception.WebLogicException;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
-import com.dasoops.dasserver.cq.service.ConfigService;
 import com.dasoops.dasserver.cq.mapper.ConfigMapper;
+import com.dasoops.dasserver.cq.service.ConfigService;
+import com.dasoops.dasserver.cq.utils.CqAssert;
+import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,7 +31,7 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
         //获取配置对象
         Optional<ConfigDo> configPoOpt = super.lambdaQuery().eq(ConfigDo::getKeyword, config.getKey()).oneOpt();
         if (configPoOpt.isEmpty()) {
-            ExceptionUtil.buildDbExecuteReturnNotNull();
+            throw new WebLogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_NULL);
         }
         return configPoOpt.get().getValue();
     }
@@ -40,7 +41,9 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
         //获取版本号对象,获取版本号,增加后更新
         int version = Integer.parseInt(getConfig(ConfigHashKeyEnum.VERSION));
         int endVersion = version + addVersion;
-        Assert.ifTrue(super.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.VERSION.getKey()).set(ConfigDo::getValue, endVersion).update(), ExceptionUtil::buildDbExecuteReturnNotFalse);
+        CqAssert.ifTrue(super.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.VERSION.getKey()).set(ConfigDo::getValue, endVersion).update(), ()->{
+            throw new WebLogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_FALSE);
+        });
         return endVersion;
     }
 

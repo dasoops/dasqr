@@ -1,8 +1,7 @@
 package com.dasoops.dasserver.cq.bot;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.dasoops.common.util.Assert;
-import com.dasoops.common.util.ExceptionUtil;
+import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.event.message.CqDiscussMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
@@ -12,6 +11,8 @@ import com.dasoops.dasserver.cq.entity.event.meta.CqLifecycleMetaEvent;
 import com.dasoops.dasserver.cq.entity.event.notice.*;
 import com.dasoops.dasserver.cq.entity.event.request.CqFriendRequestEvent;
 import com.dasoops.dasserver.cq.entity.event.request.CqGroupRequestEvent;
+import com.dasoops.dasserver.cq.exception.CqLogicException;
+import com.dasoops.dasserver.cq.utils.CqAssert;
 import com.dasoops.dasserver.cq.utils.EventUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
@@ -333,12 +334,7 @@ public class EventHandler {
             }
         }
 
-        try {
-            return Optional.of(applicationContext.getBean(pluginClass));
-        } catch (Exception e) {
-            Assert.ifNotNullOrElse(pluginClass, () -> ExceptionUtil.buildPluginNotFount(pluginClass.getName()), ExceptionUtil::buildPluginNotFount);
-            return Optional.empty();
-        }
+        return getPlugin(pluginClass);
     }
 
     /**
@@ -351,7 +347,11 @@ public class EventHandler {
         try {
             return Optional.of(applicationContext.getBean(pluginClass));
         } catch (Exception e) {
-            Assert.ifNotNullOrElse(pluginClass, () -> ExceptionUtil.buildPluginNotFount(pluginClass.getName()), ExceptionUtil::buildPluginNotFount);
+            CqAssert.ifNotNullOrElse(pluginClass, () -> {
+                throw new CqLogicException(ExceptionEnum.PLUGIN_NOT_FOUNT, pluginClass.getName());
+            }, () -> {
+                throw new CqLogicException(ExceptionEnum.PLUGIN_NOT_FOUNT);
+            });
             return Optional.empty();
         }
     }

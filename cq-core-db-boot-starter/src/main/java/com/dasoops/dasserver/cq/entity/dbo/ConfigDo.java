@@ -1,6 +1,5 @@
 package com.dasoops.dasserver.cq.entity.dbo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import lombok.Data;
@@ -42,7 +41,4 @@ public class ConfigDo extends BaseDo implements Serializable {
      * 是否支持web端修改(0:false;1:true)
      */
     private Integer canEdit;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

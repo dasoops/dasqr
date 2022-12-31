@@ -1,5 +1,6 @@
 package com.dasoops.common.entity.vo.result;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,10 +17,10 @@ import lombok.EqualsAndHashCode;
 @Data
 public class Result<T> extends BaseResult {
 
-
     /**
      * 返回数据
      */
+    @ApiModelProperty(value = "返回数据", notes = "返回数据", example = "{\"id\":1,\"name\":\"A\"}", required = true)
     private T data;
 
 

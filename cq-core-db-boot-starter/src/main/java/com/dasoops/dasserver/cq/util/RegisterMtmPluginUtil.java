@@ -25,7 +25,7 @@ public class RegisterMtmPluginUtil {
      */
     public static RegisterMtmPluginDo buildNewRegisterMtmPluginDo(RegisterDo registerDo, PluginDo pluginDo) {
         RegisterMtmPluginDo registerMtmPluginDo = new RegisterMtmPluginDo();
-        registerMtmPluginDo.setRegisterId(registerDo.getRegisterId());
+        registerMtmPluginDo.setRegisterRowId(registerDo.getId());
         registerMtmPluginDo.setPluginId(pluginDo.getId());
 
         Integer pluginLevel = pluginDo.getLevel();

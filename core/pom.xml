@@ -13,7 +13,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
@@ -80,8 +79,24 @@
         </dependency>
 
         <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-imageWebManager</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-webAuth</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.dasoops</groupId>
             <artifactId>common-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

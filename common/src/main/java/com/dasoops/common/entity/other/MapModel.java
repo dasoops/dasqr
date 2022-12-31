@@ -1,5 +1,6 @@
 package com.dasoops.common.entity.other;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -16,10 +17,12 @@ public class MapModel<K, V> {
     /**
      * 键
      */
+    @ApiModelProperty(value = "键", notes = "键", required = false)
     private K key;
 
     /**
      * 值
      */
+    @ApiModelProperty(value = "值", notes = "值", required = false)
     private V value;
 }
