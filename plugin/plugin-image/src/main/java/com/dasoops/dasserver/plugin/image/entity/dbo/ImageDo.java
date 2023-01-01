@@ -1,12 +1,12 @@
-package com.dasoops.dasserver.plugin.image.entity.po;
+package com.dasoops.dasserver.plugin.image.entity.dbo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * @Title: ImagePo

@@ -3,9 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>dasServer</artifactId>
+        <artifactId>parent</artifactId>
         <groupId>com.dasoops.dasserver</groupId>
         <version>0.0.1</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>core</artifactId>
     <version>0.0.1</version>
@@ -76,11 +77,6 @@
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-sys-webManager</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>plugin-imageWebManager</artifactId>
         </dependency>
 
         <dependency>

@@ -4,8 +4,8 @@ import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.util.RegisterMtmPluginUtil;
 import com.dasoops.dasserver.cq.utils.EventUtil;
 import com.dasoops.dasserver.cq.utils.entity.EventInfo;
-import com.dasoops.dasserver.plugin.authwrapper.cache.PluginCache;
-import com.dasoops.dasserver.plugin.authwrapper.cache.RegisterMtmPluginCache;
+import com.dasoops.dasserver.plugin.authwrapper.cache.AuthWrapperPluginCache;
+import com.dasoops.dasserver.plugin.authwrapper.cache.AuthWrapperRegisterMtmPluginCache;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,13 +20,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthUtil {
 
-    private static RegisterMtmPluginCache registerMtmPluginCache;
-    private static PluginCache pluginCache;
+    private static AuthWrapperRegisterMtmPluginCache authWrapperRegisterMtmPluginCache;
+    private static AuthWrapperPluginCache authWrapperPluginCache;
     private static RegisterCache registerCache;
 
-    public AuthUtil(RegisterMtmPluginCache registerMtmPluginCache, PluginCache pluginCache, RegisterCache registerCache) {
-        AuthUtil.registerMtmPluginCache = registerMtmPluginCache;
-        AuthUtil.pluginCache = pluginCache;
+    public AuthUtil(AuthWrapperRegisterMtmPluginCache authWrapperRegisterMtmPluginCache, AuthWrapperPluginCache authWrapperPluginCache, RegisterCache registerCache) {
+        AuthUtil.authWrapperRegisterMtmPluginCache = authWrapperRegisterMtmPluginCache;
+        AuthUtil.authWrapperPluginCache = authWrapperPluginCache;
         AuthUtil.registerCache = registerCache;
     }
 
@@ -37,13 +37,13 @@ public class AuthUtil {
      * @return boolean
      */
     public static boolean auth(String classPath) {
-        Long pluginId = pluginCache.getIdByPluginClassPath(classPath);
+        Long pluginId = authWrapperPluginCache.getIdByPluginClassPath(classPath);
 
         EventInfo eventInfo = EventUtil.get();
         if (EventUtil.isGroup()) {
             Long groupId = eventInfo.getGroupId();
             Long groupRowId = registerCache.getGroupRowIdByRegisterId(groupId);
-            boolean isPass = registerMtmPluginCache.getPluginIsPassByRegisterRowIdAndPluginId(groupRowId, pluginId);
+            boolean isPass = authWrapperRegisterMtmPluginCache.getPluginIsPassByRegisterRowIdAndPluginId(groupRowId, pluginId);
             if (!isPass) {
                 return false;
             }
@@ -51,7 +51,7 @@ public class AuthUtil {
 
         Long userId = eventInfo.getAuthorId();
         Long userRowId = registerCache.getUserRowIdByRegisterId(userId);
-        return registerMtmPluginCache.getPluginIsPassByRegisterRowIdAndPluginId(userRowId, pluginId);
+        return authWrapperRegisterMtmPluginCache.getPluginIsPassByRegisterRowIdAndPluginId(userRowId, pluginId);
     }
 
 }

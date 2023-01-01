@@ -23,7 +23,7 @@
         IS_DELETE,CREATE_USER,CREATE_TIME,
         UPDATE_USER,UPDATE_TIME
     </sql>
-    <select id="queryMaxId" resultType="java.lang.Long">
+    <select id="selectMaxId" resultType="java.lang.Long">
         SELECT MAX(ID)
         FROM `TB_CORE_CONFIG`;
     </select>

@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @Data
 public class BasePageParam extends BaseEasyPageParam {
 
-    public <T extends BaseDo> IPage<T> getSelectPage(Class<T> clazz) {
+    public <T extends BaseDo> IPage<T> getSelectPage() {
         Page<T> page = new Page<>(super.getCurrent(),super.getSize());
         return page;
     }

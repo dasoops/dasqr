@@ -1,16 +1,14 @@
 package com.dasoops.dasserver.plugin.authwrapper.cache;
 
 import com.dasoops.common.cache.BaseCache;
-import com.dasoops.common.entity.enums.IRedisKeyEnum;
+import com.dasoops.common.entity.enums.BaseRedisKeyEnum;
 import com.dasoops.common.util.Convert;
-import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
 import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
 import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import com.dasoops.dasserver.entity.enums.AuthRedisKeyAuthListShamEnum;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -23,33 +21,17 @@ import java.util.stream.Collectors;
  * @Description: 注册mtm插件缓存
  */
 @Component
-public class RegisterMtmPluginCache extends BaseCache {
+public class AuthWrapperRegisterMtmPluginCache extends BaseCache {
 
     private final RegisterMtmPluginService registerMtmPluginService;
 
-    public RegisterMtmPluginCache(StringRedisTemplate stringRedisTemplate, RegisterMtmPluginService registerMtmPluginService) {
+    public AuthWrapperRegisterMtmPluginCache(StringRedisTemplate stringRedisTemplate, RegisterMtmPluginService registerMtmPluginService) {
         super(stringRedisTemplate);
         this.registerMtmPluginService = registerMtmPluginService;
     }
 
-
-    public void initOrUpdateAuthIdOtmIsPassMap2Cache() {
-        List<RegisterMtmPluginDo> registerMtmPluginDoAllList = registerMtmPluginService.list();
-        //按注册角色id分组
-        Map<Long, List<RegisterMtmPluginDo>> groupByRegisterIdMap = registerMtmPluginDoAllList.stream().collect(Collectors.groupingBy(RegisterMtmPluginDo::getRegisterRowId));
-        //replace
-        super.remove4Prefix(IRedisKeyEnum.AUTH);
-        //遍历,缓存数据
-        groupByRegisterIdMap.forEach((registerId, registerMtmPluginDoList) -> {
-            Map<Long, Integer> pluginIdIsPassMap = registerMtmPluginDoList.stream().collect(Collectors.toMap(
-                    RegisterMtmPluginDo::getPluginId,
-                    RegisterMtmPluginDo::getIsPass
-            ));
-            saveAuthMap(registerId, pluginIdIsPassMap);
-        });
-    }
-
-    public void saveAuthMap(Long registerRowId, Map<Long, Integer> pluginIdIsPassMap) {
+    public void setAuthMap(Long registerRowId, Map<Long, Integer> pluginIdIsPassMap) {
+        super.remove4Prefix(BaseRedisKeyEnum.AUTH.getKey());
         AuthRedisKeyAuthListShamEnum redisKeyEnum = new AuthRedisKeyAuthListShamEnum(registerRowId);
         Map<String, String> valueMap = Convert.toStrMap(pluginIdIsPassMap);
         super.hset(redisKeyEnum, valueMap);

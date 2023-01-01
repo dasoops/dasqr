@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.cq.task;
 
-import com.dasoops.dasserver.cq.cache.RegisterCache;
+import com.dasoops.dasserver.cq.service.RegisterService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -14,12 +14,12 @@ import javax.annotation.PostConstruct;
  * @Description: 初始化任务
  */
 @Component
-public class CqCoreInitTask{
+public class CqCoreInitTask {
 
-    private final RegisterCache registerCache;
+    private final RegisterService registerService;
 
-    public CqCoreInitTask(RegisterCache registerCache) {
-        this.registerCache = registerCache;
+    public CqCoreInitTask(RegisterService registerService) {
+        this.registerService = registerService;
     }
 
     @PostConstruct
@@ -28,8 +28,8 @@ public class CqCoreInitTask{
     }
 
     public void initOrUpdateRegisterIdOtoTypeMap2Cache() {
-        registerCache.initOrUpdateRegisterIdOtoTypeMap2Cache();
-        registerCache.initOrUpdateRegisterTypeRegisterIdOtoId2Cache();
+        registerService.initOrUpdateRegisterIdOtoTypeMap2Cache();
+        registerService.initOrUpdateRegisterTypeRegisterIdOtoId2Cache();
     }
 
 }

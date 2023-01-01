@@ -18,6 +18,7 @@ import java.util.Optional;
  */
 public interface PluginService extends IService<PluginDo> {
 
+
     /**
      * 获取所有插件类
      *

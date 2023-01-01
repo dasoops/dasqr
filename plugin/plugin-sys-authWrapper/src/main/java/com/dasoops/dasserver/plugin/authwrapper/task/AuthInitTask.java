@@ -1,11 +1,11 @@
 package com.dasoops.dasserver.plugin.authwrapper.task;
 
 import com.dasoops.dasserver.cq.bot.CqTemplate;
+import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.cq.task.CqCoreInitTask;
-import com.dasoops.dasserver.plugin.authwrapper.cache.PluginCache;
-import com.dasoops.dasserver.plugin.authwrapper.cache.RegisterMtmPluginCache;
-import com.dasoops.dasserver.plugin.authwrapper.service.RegisterMtmPluginAuthWrapperService;
+import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperPluginService;
+import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperRegisterMtmPluginService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,16 +20,14 @@ import org.springframework.stereotype.Component;
 public class AuthInitTask {
 
     private final RegisterService registerService;
-    private final RegisterMtmPluginAuthWrapperService registerMtmPluginWsWrapperService;
-    private final RegisterMtmPluginCache registerMtmPluginCache;
-    private final PluginCache pluginCache;
+    private final AuthWrapperRegisterMtmPluginService authWrapperRegisterMtmPluginService;
+    private final AuthWrapperPluginService authWrapperPluginService;
     private final CqCoreInitTask cqCoreInitTask;
 
-    public AuthInitTask(RegisterService registerService, RegisterMtmPluginAuthWrapperService registerMtmPluginWsWrapperService, RegisterMtmPluginCache registerMtmPluginCache, PluginCache pluginCache, CqCoreInitTask cqCoreInitTask) {
+    public AuthInitTask(RegisterService registerService, AuthWrapperRegisterMtmPluginService authWrapperRegisterMtmPluginService, AuthWrapperPluginService authWrapperPluginService, CqCoreInitTask cqCoreInitTask, PluginService pluginService) {
         this.registerService = registerService;
-        this.registerMtmPluginWsWrapperService = registerMtmPluginWsWrapperService;
-        this.registerMtmPluginCache = registerMtmPluginCache;
-        this.pluginCache = pluginCache;
+        this.authWrapperRegisterMtmPluginService = authWrapperRegisterMtmPluginService;
+        this.authWrapperPluginService = authWrapperPluginService;
         this.cqCoreInitTask = cqCoreInitTask;
     }
 
@@ -52,10 +50,10 @@ public class AuthInitTask {
      * 初始化或更新注册表多对多插件集合
      */
     public void initOrUpdateRegisterMtmPluginList() {
-        registerMtmPluginWsWrapperService.initOrUpdateRegisterMtmPluginList();
+        authWrapperRegisterMtmPluginService.initOrUpdateRegisterMtmPluginList2Cache();
         cqCoreInitTask.initOrUpdateAll();
-        registerMtmPluginCache.initOrUpdateAuthIdOtmIsPassMap2Cache();
-        pluginCache.initOrUpdatePluginClassNameOtoIdMap2Cache();
+        authWrapperRegisterMtmPluginService.initOrUpdateAuthIdOtmIsPassMap2Cache();
+        authWrapperPluginService.initOrUpdatePluginClassNameOtoIdMap2Cache();
     }
 
 }

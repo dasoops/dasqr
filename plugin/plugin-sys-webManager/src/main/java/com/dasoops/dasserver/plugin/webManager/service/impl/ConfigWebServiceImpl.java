@@ -55,7 +55,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         IPage<ConfigDo> page = super.lambdaQuery()
                 .like(keyword != null && !"".equals(keyword), ConfigDo::getKeyword, keyword)
                 .like(description != null && !"".equals(description), ConfigDo::getDescription, description)
-                .page(param.getSelectPage(ConfigDo.class));
+                .page(param.getSelectPage());
 
         return page;
     }
@@ -93,7 +93,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
 
     @Override
     public GetNextIdVo getNextId() {
-        Long id = configWebMapper.queryMaxId() + 1;
+        Long id = configWebMapper.selectMaxId() + 1;
         GetNextIdVo getNextIdVo = new GetNextIdVo();
         getNextIdVo.setId(id);
         return getNextIdVo;

@@ -19,7 +19,7 @@ public interface ConfigWebMapper extends BaseMapper<ConfigDo> {
      *
      * @return {@link Long}
      */
-    Long queryMaxId();
+    Long selectMaxId();
 
 
 }

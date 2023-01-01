@@ -14,11 +14,10 @@ import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.DqUtil;
-import com.dasoops.dasserver.plugin.image.entity.enums.ImageRedisKeyEnum;
+import com.dasoops.dasserver.plugin.image.cache.ImageCache;
 import com.dasoops.dasserver.plugin.image.service.ImageService;
 import com.dasoops.ocr.OcrTemplate;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -42,12 +41,12 @@ public class ImagePlugin extends CqPlugin {
 
     private final ImageService imageService;
     private final OcrTemplate ocrTemplate;
-    private final StringRedisTemplate stringRedisTemplate;
+    private final ImageCache imageCache;
 
-    public ImagePlugin(ImageService imageService, OcrTemplate ocrTemplate, @SuppressWarnings("all") StringRedisTemplate stringRedisTemplate) {
+    public ImagePlugin(ImageService imageService, OcrTemplate ocrTemplate, ImageCache imageCache) {
         this.imageService = imageService;
         this.ocrTemplate = ocrTemplate;
-        this.stringRedisTemplate = stringRedisTemplate;
+        this.imageCache = imageCache;
     }
 
     @Override
@@ -63,12 +62,12 @@ public class ImagePlugin extends CqPlugin {
     /**
      * 处理消息
      *
-     * @param cqTemplate cqTemplate
-     * @param event      事件
+     * @param cqTemplate     cqTemplate
+     * @param cqMessageEvent 事件
      * @return {@link PassObj}
      */
-    private PassObj onMessage(CqTemplate cqTemplate, CqMessageEvent event) {
-        String message = event.getMessage();
+    private PassObj onMessage(CqTemplate cqTemplate, CqMessageEvent cqMessageEvent) {
+        String message = cqMessageEvent.getMessage();
         final String getImagePrefix = "取图";
         final String getImageSuffix = ".jpg";
         final String saveImagePrefix = "存图";
@@ -78,14 +77,14 @@ public class ImagePlugin extends CqPlugin {
             log.debug("(ImagePlugin) 进入取图逻辑");
 
             List<String> paramStrList = DqUtil.getParamStr(message, getImagePrefix);
-            cqTemplate.sendMsg(event, getImage(paramStrList));
+            cqTemplate.sendMsg(cqMessageEvent, getImage(paramStrList));
 
             return PassObj.block();
         } else if (StrUtil.endWithIgnoreCase(message, getImageSuffix)) {
             //取图逻辑
             log.debug("(ImagePlugin) 进入取图逻辑");
 
-            cqTemplate.sendMsg(event, getImage(message.substring(0, message.length() - 4)));
+            cqTemplate.sendMsg(cqMessageEvent, getImage(message.substring(0, message.length() - 4)));
 
             return PassObj.block();
 
@@ -94,30 +93,27 @@ public class ImagePlugin extends CqPlugin {
             log.debug("(ImagePlugin) 进入存图逻辑");
 
             List<String> paramStrList = DqUtil.getParamStr(message, saveImagePrefix);
-            cqTemplate.sendMsg(event, saveImage(event, paramStrList));
+            cqTemplate.sendMsg(cqMessageEvent, saveImage(cqMessageEvent, paramStrList));
 
             return PassObj.block();
         } else {
             //分片存图 part.2 逻辑
             String key;
-            if (event instanceof CqGroupMessageEvent) {
-                String groupKey = ImageRedisKeyEnum.PART_SAVE_IMAGE.getPartSaveImageKeyByGroup(((CqGroupMessageEvent) event).getGroupId());
-                String userId = String.valueOf(event.getUserId());
+            if (cqMessageEvent instanceof CqGroupMessageEvent event) {
                 //是否有标记
-                if (!stringRedisTemplate.opsForHash().hasKey(groupKey, userId)) {
-                    return PassObj.pass(event);
+                key = imageCache.hgetAndDeleteImagePartSaveFlag(event.getGroupId(), event.getUserId());
+                if (key == null) {
+                    return PassObj.pass(cqMessageEvent);
                 }
-                key = (String) stringRedisTemplate.opsForHash().get(groupKey, userId);
-                stringRedisTemplate.opsForHash().delete(groupKey, userId);
             } else {
                 //是否有标记
-                key = stringRedisTemplate.opsForValue().getAndDelete(ImageRedisKeyEnum.PART_SAVE_IMAGE.getPartSaveImageKeyByPrivate(event.getUserId()));
+                key = imageCache.getAndDeleteImagePartSaveFlag(cqMessageEvent.getUserId());
                 if (key == null) {
-                    return PassObj.pass(event);
+                    return PassObj.pass(cqMessageEvent);
                 }
             }
             log.debug("(ImagePlugin) 进入存图逻辑 - 分片逻辑");
-            cqTemplate.sendMsg(event, part2SaveImage(event, key, DqUtil.getParamStr(message, "").get(0)));
+            cqTemplate.sendMsg(cqMessageEvent, part2SaveImage(cqMessageEvent, key, DqUtil.getParamStr(message, "").get(0)));
             return PassObj.block();
         }
 
@@ -155,11 +151,11 @@ public class ImagePlugin extends CqPlugin {
 
         StringBuilder sb = new StringBuilder("没有这张图捏");
 
-        Optional<List<String>> fantasyKeywordListOpt = imageService.getFantasyKeyword(keyword);
-        fantasyKeywordListOpt.ifPresent(fantasyKeywordList -> {
+        List<String> fantasyKeywordList = imageService.getFantasyKeyword4Cache(keyword);
+        if (fantasyKeywordList != null) {
             sb.append(",相关关键词有: ");
             fantasyKeywordList.forEach(sb::append);
-        });
+        }
         log.debug("(ImagePlugin) 取图逻辑执行完毕 - 无图分支");
         return sb.toString();
 
@@ -198,15 +194,15 @@ public class ImagePlugin extends CqPlugin {
      *
      * @return {@link String}
      */
-    private String partSaveImage(CqMessageEvent event, String key) {
+    private String partSaveImage(CqMessageEvent cqMessageEvent, String key) {
         if (imageService.keywordIsRepeat(key)) {
             log.debug("(ImagePlugin) 存图逻辑执行完毕 - 分片存图+ 预输入关键词分支 part1 关键词重复");
             return "关键词有了捏";
         }
-        if (event instanceof CqGroupMessageEvent) {
-            stringRedisTemplate.opsForHash().put(ImageRedisKeyEnum.PART_SAVE_IMAGE.getPartSaveImageKeyByGroup(((CqGroupMessageEvent) event).getGroupId()), String.valueOf(event.getUserId()), key);
+        if (cqMessageEvent instanceof CqGroupMessageEvent event) {
+            imageCache.setGroupImagePartSave(event.getGroupId(), event.getUserId(), key);
         }
-        stringRedisTemplate.opsForValue().set(ImageRedisKeyEnum.PART_SAVE_IMAGE.getPartSaveImageKeyByPrivate(event.getUserId()), key);
+        imageCache.setUserImagePartSave(cqMessageEvent.getUserId(), key);
         log.debug("(ImagePlugin) 存图逻辑执行完毕 - 分片存图 + 预输入关键词分支 part1");
         return "图来";
     }
@@ -230,7 +226,7 @@ public class ImagePlugin extends CqPlugin {
                 return "这张图的关键词重复了捏";
             }
 
-            Assert.ifFalse(imageService.saveImage(event, key, url),() -> {
+            Assert.ifFalse(imageService.saveImage(event, key, url), () -> {
                 throw new CqLogicException(ExceptionEnum.IMAGE_SAVE_ERROR);
             });
             log.debug("(ImagePlugin) 存图逻辑执行完毕 - 分片存图 + ocr 分支 part2");
@@ -291,22 +287,12 @@ public class ImagePlugin extends CqPlugin {
     }
 
     /**
-     * 分片存图 + OCR 逻辑 (存图 / image)
+     * 分片存图 + OCR 逻辑 (存图 / image) part1
      *
      * @return {@link String}
      */
-    private String ocrPartSaveImage(CqMessageEvent event) {
-        if (event instanceof CqGroupMessageEvent) {
-            String groupKey = ImageRedisKeyEnum.PART_SAVE_IMAGE.getPartSaveImageKeyByGroup(((CqGroupMessageEvent) event).getGroupId());
-            stringRedisTemplate.opsForHash().put(groupKey, String.valueOf(event.getUserId()), FLAG);
-            stringRedisTemplate.expire(groupKey, 1, TimeUnit.MINUTES);
-        } else {
-            String userKey = ImageRedisKeyEnum.PART_SAVE_IMAGE.getPartSaveImageKeyByPrivate(event.getUserId());
-            stringRedisTemplate.opsForValue().set(userKey, FLAG);
-            stringRedisTemplate.expire(userKey, 1, TimeUnit.MINUTES);
-        }
-
-        stringRedisTemplate.expire(ImageRedisKeyEnum.PART_SAVE_IMAGE.getPartSaveImageKey(event), 1, TimeUnit.MINUTES);
+    private String ocrPartSaveImage(CqMessageEvent cqMessageEvent) {
+        imageCache.setImagePartSaveAndExpire(cqMessageEvent, FLAG, 1L, TimeUnit.MINUTES);
         log.debug("(ImagePlugin) 存图逻辑执行完毕 - 分片存图 + OCR 分支 part1");
         return "图来";
     }

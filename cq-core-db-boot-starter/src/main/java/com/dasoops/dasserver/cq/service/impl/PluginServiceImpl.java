@@ -45,7 +45,6 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
         this.registerMtmPluginService = registerMtmPluginService;
     }
 
-
     @Override
     @SuppressWarnings("unchecked")
     public Optional<List<Class<? extends CqPlugin>>> getAllPluginClass() {

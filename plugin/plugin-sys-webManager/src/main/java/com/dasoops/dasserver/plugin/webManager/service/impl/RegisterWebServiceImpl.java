@@ -3,6 +3,7 @@ package com.dasoops.dasserver.plugin.webManager.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.exception.WebLogicException;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
+import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.dasoops.dasserver.cq.entity.enums.RegisterTypeEnum;
 import com.dasoops.dasserver.cq.service.RegisterService;
@@ -33,10 +34,12 @@ public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, Regis
         implements RegisterWebService {
 
     private final ConfigCache configCache;
+    private final RegisterCache registerCache;
     private final RegisterWebCache registerWebCache;
 
-    public RegisterWebServiceImpl(ConfigCache configCache, RegisterWebCache registerWebCache) {
+    public RegisterWebServiceImpl(ConfigCache configCache, RegisterCache registerCache, RegisterWebCache registerWebCache) {
         this.configCache = configCache;
+        this.registerCache = registerCache;
         this.registerWebCache = registerWebCache;
     }
 
@@ -73,7 +76,7 @@ public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, Regis
         authUserDto.setId(registerDo.getId());
         Long registerId = registerDo.getRegisterId();
         authUserDto.setRegisterId(registerId);
-        authUserDto.setName(registerWebCache.getRegisterNameById(registerId));
+        authUserDto.setName(registerWebCache.getRegisterNameByRowId(registerCache.getUserRowIdByRegisterId(registerId)));
         loginVo.setToken(JwtUtil.createToken(authUserDto));
         return loginVo;
 

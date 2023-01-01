@@ -3,6 +3,7 @@ package com.dasoops.dasserver.cq.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
+import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
 import com.dasoops.dasserver.cq.entity.enums.RegisterTypeEnum;
@@ -40,10 +41,12 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
 
     private final PluginService pluginService;
     private final RegisterMtmPluginService registerMtmPluginService;
+    private final RegisterCache registerCache;
 
-    public RegisterServiceImpl(@Lazy PluginService pluginService, @Lazy RegisterMtmPluginService registerMtmPluginService) {
+    public RegisterServiceImpl(@Lazy PluginService pluginService, @Lazy RegisterMtmPluginService registerMtmPluginService, RegisterCache registerCache) {
         this.pluginService = pluginService;
         this.registerMtmPluginService = registerMtmPluginService;
+        this.registerCache = registerCache;
     }
 
 
@@ -142,6 +145,27 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         List<RegisterDo> registerDoList = super.list();
         Map<Long, Integer> map = registerDoList.stream().collect(Collectors.toMap(RegisterDo::getId, RegisterDo::getType));
         return map;
+    }
+
+
+    @Override
+    public void initOrUpdateRegisterIdOtoTypeMap2Cache() {
+        Map<Long, Integer> registerIdOtoTypeMap = this.getRegisterIdOtoTypeMap();
+        registerCache.setRegisterIdOtoTypeMap(registerIdOtoTypeMap);
+    }
+
+    @Override
+    public void initOrUpdateRegisterTypeRegisterIdOtoId2Cache() {
+        List<RegisterDo> registerDoList = super.list();
+        Map<Integer, List<RegisterDo>> groupByTypeRegisterDoMap = registerDoList.stream().collect(Collectors.groupingBy(RegisterDo::getType));
+
+        List<RegisterDo> userRegisterDoList = groupByTypeRegisterDoMap.get(RegisterTypeEnum.USER.getDbValue());
+        Map<Long, Long> userValueMap = userRegisterDoList.stream().collect(Collectors.toMap(RegisterDo::getRegisterId, RegisterDo::getId));
+        registerCache.setUserRegisterIdOtoRowIdMap(userValueMap);
+
+        List<RegisterDo> groupRegisterDoList = groupByTypeRegisterDoMap.get(RegisterTypeEnum.GROUP.getDbValue());
+        Map<Long, Long> groupValueMap = groupRegisterDoList.stream().collect(Collectors.toMap(RegisterDo::getRegisterId, RegisterDo::getId));
+        registerCache.setGroupRegisterIdOtoRowIdMap(groupValueMap);
     }
 }
 

@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseTimePageParam extends BaseParam {
+public class BaseEasyTimePageParam extends BaseEasyPageParam {
 
     /**
      * 开始时间
@@ -29,16 +29,4 @@ public class BaseTimePageParam extends BaseParam {
      */
     @ApiModelProperty(value = "结束时间", notes = "结束时间", required = false)
     private String endTime;
-
-    /**
-     * 每页显示数量
-     */
-    @ApiModelProperty(value = "每页显示数量", notes = "每页显示数量", required = false)
-    private Integer size = 10;
-
-    /**
-     * 当前页码
-     */
-    @ApiModelProperty(value = "当前页码", notes = "当前页码", required = false)
-    private Integer current = 1;
 }

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dasoops.dasserver.plugin.image.mapper.ImageMapper">
 
-    <resultMap id="BaseResultMap" type="com.dasoops.dasserver.plugin.image.entity.po.ImageDo">
+    <resultMap id="BaseResultMap" type="com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo">
         <id property="id" column="ID" jdbcType="BIGINT"/>
         <result property="keyword" column="KEYWORD" jdbcType="VARCHAR"/>
         <result property="fileName" column="FILE_NAME" jdbcType="VARCHAR"/>
@@ -25,8 +25,16 @@
         UPDATE_TIME
     </sql>
     <select id="selectLikeKeyword" resultType="java.lang.String">
-        SELECT KEYWORD
-        FROM TB_PLUGIN_IMAGE
-        WHERE INSTR(KEYWORD, #{keyword});
+        SELECT `KEYWORD`
+        FROM `TB_PLUGIN_IMAGE`
+        WHERE `KEYWORD` LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT MAX(`ID`)
+        FROM `TB_PLUGIN_IMAGE`;
+    </select>
+    <select id="selectKeywordList" resultType="java.lang.String">
+        SELECT `KEYWORD`
+        FROM `TB_PLUGIN_IMAGE`
     </select>
 </mapper>

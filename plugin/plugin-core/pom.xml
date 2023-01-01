@@ -3,15 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>dasServer</artifactId>
+        <artifactId>parent</artifactId>
         <groupId>com.dasoops.dasserver</groupId>
         <version>0.0.1</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>plugin-core</artifactId>
     <version>0.0.1</version>
     <description>dasQServer cq模块核心</description>
     <modelVersion>4.0.0</modelVersion>
+
 
     <properties>
         <maven.compiler.source>${java.version}</maven.compiler.source>

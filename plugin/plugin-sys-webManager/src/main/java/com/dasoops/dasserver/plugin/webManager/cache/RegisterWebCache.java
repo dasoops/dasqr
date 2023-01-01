@@ -34,7 +34,7 @@ public class RegisterWebCache extends BaseCache {
      * @param valueMap 值映射
      */
     public void setRegisterIdOtoNameMap(Map<Long, String> valueMap) {
-        super.hset(RegisterRedisKeyEnum.REGISTER_ID_OTO_NAME_MAP, Convert.toStrMap(valueMap));
+        super.hset(RegisterRedisKeyEnum.REGISTER_USER_ID_OTO_NAME_MAP, Convert.toStrMap(valueMap));
     }
 
     /**
@@ -43,8 +43,8 @@ public class RegisterWebCache extends BaseCache {
      * @param id id
      * @return {@link String}
      */
-    public String getRegisterNameById(Long id) {
-        return super.hget(RegisterRedisKeyEnum.REGISTER_ID_OTO_NAME_MAP, String.valueOf(id));
+    public String getRegisterNameByRowId(Long id) {
+        return super.hget(RegisterRedisKeyEnum.REGISTER_USER_ID_OTO_NAME_MAP, String.valueOf(id));
     }
 
 
@@ -68,5 +68,15 @@ public class RegisterWebCache extends BaseCache {
                 .forEach(userInfoDataList -> userInfoDataList.forEach(userInfoData -> registerIdOtoNameMap.put(userInfoData.getUserId(), userInfoData.getNickname())));
 
         this.setRegisterIdOtoNameMap(registerIdOtoNameMap);
+    }
+
+    /**
+     * 获取所有注册表用户
+     *
+     * @return {@link Map}<{@link String}, {@link String}>
+     */
+    public Map<String, String> getAllRegisterUser() {
+        Map<String, String> entries = super.entries(RegisterRedisKeyEnum.REGISTER_USER_ID_OTO_NAME_MAP);
+        return entries;
     }
 }

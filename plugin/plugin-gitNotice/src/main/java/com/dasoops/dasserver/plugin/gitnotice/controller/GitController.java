@@ -37,7 +37,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/git")
-@Api(tags = "plugin-gitNotice")
+@Api(tags = "PLUGIN - GIT_NOTICE")
 @ApiSupport(author = "DasoopsNicole@gmail.com")
 public class GitController {
 

@@ -4,6 +4,8 @@ import com.dasoops.common.entity.enums.IRedisKeyEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import static com.dasoops.common.entity.enums.BaseRedisKeyEnum.SYS_PLUGIN;
+
 /**
  * @Title: PluginRedisKeyEnum
  * @ClassPath com.dasoops.dasserver.entity.enums.PluginRedisKeyEnum
@@ -20,9 +22,13 @@ public enum PluginRedisKeyEnum implements IRedisKeyEnum {
      * 插件calsspath - id映射
      * hash<classPath,id>
      */
-    PLUGIN_CALSSPATH_OTO_ID(SYS_PLUGIN + "classPath_oto_id"),
+    PLUGIN_CALSSPATH_OTO_ID(getBasePath() + "classPath_oto_id"),
 
     ;
 
     final String key;
+
+    private static String getBasePath(){
+        return SYS_PLUGIN.getKey();
+    }
 }

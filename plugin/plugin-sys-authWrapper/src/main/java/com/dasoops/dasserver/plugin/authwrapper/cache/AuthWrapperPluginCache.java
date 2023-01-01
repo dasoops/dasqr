@@ -3,13 +3,10 @@ package com.dasoops.dasserver.plugin.authwrapper.cache;
 import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
-import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
-import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.entity.enums.PluginRedisKeyEnum;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -23,26 +20,15 @@ import java.util.stream.Collectors;
  * @see BaseCache
  */
 @Component
-public class PluginCache extends BaseCache {
+public class AuthWrapperPluginCache extends BaseCache {
 
-    private final PluginService pluginService;
 
-    public PluginCache(StringRedisTemplate stringRedisTemplate, PluginService pluginService) {
+    public AuthWrapperPluginCache(StringRedisTemplate stringRedisTemplate) {
         super(stringRedisTemplate);
-        this.pluginService = pluginService;
-    }
-
-    public void initOrUpdatePluginClassNameOtoIdMap2Cache() {
-        //全表
-        List<PluginDo> pluginDoList = pluginService.list();
-        Map<String, Long> pluginClassPathIdMap = pluginDoList.stream().collect(Collectors.toMap(PluginDo::getClassPath, PluginDo::getId));
-
-        //replace
-        super.remove(PluginRedisKeyEnum.PLUGIN_CALSSPATH_OTO_ID);
-        setPluginClassPathIdMap(pluginClassPathIdMap);
     }
 
     public void setPluginClassPathIdMap(Map<String, Long> pluginClassPathIdMap) {
+        super.remove(PluginRedisKeyEnum.PLUGIN_CALSSPATH_OTO_ID);
         Map<String, String> valueMap = pluginClassPathIdMap.entrySet().stream().collect(Collectors.toMap(
                 Map.Entry::getKey,
                 entry -> String.valueOf(entry.getValue())

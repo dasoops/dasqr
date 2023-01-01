@@ -9,7 +9,8 @@ import com.dasoops.dasserver.cq.mapper.RegisterMtmPluginMapper;
 import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.cq.util.RegisterMtmPluginUtil;
-import com.dasoops.dasserver.plugin.authwrapper.service.RegisterMtmPluginAuthWrapperService;
+import com.dasoops.dasserver.plugin.authwrapper.cache.AuthWrapperRegisterMtmPluginCache;
+import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperRegisterMtmPluginService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,23 +26,25 @@ import java.util.stream.Collectors;
  * @Date 2022/12/31
  * @Version 1.0.0
  * @Description: 注册mtm插件身份验证条件构造器impl
- * @see RegisterMtmPluginAuthWrapperService
+ * @see AuthWrapperRegisterMtmPluginService
  */
 @Service
-public class RegisterMtmPluginAuthWrapperServiceImpl extends ServiceImpl<RegisterMtmPluginMapper, RegisterMtmPluginDo>
-        implements RegisterMtmPluginAuthWrapperService {
+public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<RegisterMtmPluginMapper, RegisterMtmPluginDo>
+        implements AuthWrapperRegisterMtmPluginService {
 
     private final RegisterService registerService;
     private final PluginService pluginService;
+    private final AuthWrapperRegisterMtmPluginCache authWrapperRegisterMtmPluginCache;
 
-    public RegisterMtmPluginAuthWrapperServiceImpl(RegisterService registerService, PluginService pluginService) {
+    public AuthWrapperRegisterMtmPluginServiceImpl(RegisterService registerService, PluginService pluginService, AuthWrapperRegisterMtmPluginCache authWrapperRegisterMtmPluginCache) {
         this.registerService = registerService;
         this.pluginService = pluginService;
+        this.authWrapperRegisterMtmPluginCache = authWrapperRegisterMtmPluginCache;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void initOrUpdateRegisterMtmPluginList() {
+    public void initOrUpdateRegisterMtmPluginList2Cache() {
 
         List<RegisterMtmPluginDo> noExistRegisterMtmPluginDoList = new ArrayList<>();
 
@@ -102,4 +105,21 @@ public class RegisterMtmPluginAuthWrapperServiceImpl extends ServiceImpl<Registe
 
         this.removeBatchByIds(superfluousIdList);
     }
+
+    @Override
+    public void initOrUpdateAuthIdOtmIsPassMap2Cache() {
+        List<RegisterMtmPluginDo> registerMtmPluginDoAllList = super.list();
+        //按注册角色id分组
+        Map<Long, List<RegisterMtmPluginDo>> groupByRegisterIdMap = registerMtmPluginDoAllList.stream().collect(Collectors.groupingBy(RegisterMtmPluginDo::getRegisterRowId));
+        //replace
+        //遍历,缓存数据
+        groupByRegisterIdMap.forEach((registerId, registerMtmPluginDoList) -> {
+            Map<Long, Integer> pluginIdIsPassMap = registerMtmPluginDoList.stream().collect(Collectors.toMap(
+                    RegisterMtmPluginDo::getPluginId,
+                    RegisterMtmPluginDo::getIsPass
+            ));
+            authWrapperRegisterMtmPluginCache.setAuthMap(registerId, pluginIdIsPassMap);
+        });
+    }
+
 }

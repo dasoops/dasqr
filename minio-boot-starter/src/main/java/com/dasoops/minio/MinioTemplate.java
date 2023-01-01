@@ -3,10 +3,7 @@ package com.dasoops.minio;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.http.HttpUtil;
-import io.minio.GetObjectArgs;
-import io.minio.GetObjectResponse;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
+import io.minio.*;
 import io.minio.errors.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -107,6 +104,25 @@ public class MinioTemplate {
             log.error("downloadImageError,{}", e.getMessage());
         }
         return bytes;
+    }
+
+    /**
+     * 检查文件是否存在
+     *
+     * @param fileName 文件名称
+     * @return boolean
+     */
+    public boolean checkFileIsExists(String fileName) {
+        try {
+        StatObjectArgs statObjectArgs = StatObjectArgs.builder()
+                .bucket(properties.getBucket())
+                .object(fileName)
+                .build();
+            minioClient.statObject(statObjectArgs);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**

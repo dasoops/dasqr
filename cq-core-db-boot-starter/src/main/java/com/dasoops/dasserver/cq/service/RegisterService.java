@@ -39,4 +39,14 @@ public interface RegisterService extends IService<RegisterDo> {
      * @return {@link Map}<{@link Long}, {@link Integer}>
      */
     Map<Long, Integer> getRegisterIdOtoTypeMap();
+
+    /**
+     * 初始化或更新 注册 id类型映射表
+     */
+    void initOrUpdateRegisterIdOtoTypeMap2Cache();
+
+    /**
+     * 初始化或更新 注册表类型 注册表id 单对单 id toCache
+     */
+    void initOrUpdateRegisterTypeRegisterIdOtoId2Cache();
 }

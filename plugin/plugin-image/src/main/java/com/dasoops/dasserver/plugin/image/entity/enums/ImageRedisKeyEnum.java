@@ -1,13 +1,10 @@
 package com.dasoops.dasserver.plugin.image.entity.enums;
 
 import com.dasoops.common.entity.enums.IRedisKeyEnum;
-import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
-import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
-import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Arrays;
+import static com.dasoops.common.entity.enums.BaseRedisKeyEnum.PLUGIN;
 
 
 /**
@@ -20,32 +17,25 @@ import java.util.Arrays;
  * @see Enum
  * @see IRedisKeyEnum
  */
-@Getter
 @AllArgsConstructor
 public enum ImageRedisKeyEnum implements IRedisKeyEnum {
 
     /**
      * 分片存图标记
      */
-    PART_SAVE_IMAGE(PLUGIN + "image:" + "partFlag:");
+    PART_SAVE_IMAGE(getBasePath() + "partFlag:"),
 
+    /**
+     * 关键字集合
+     */
+    KEYWORD_LIST(getBasePath() + "image");
+
+    @Getter
     final String key;
 
-    public String getPartSaveImageKeyByGroup(Long groupId) {
-        return this.getKey() + "group:" + groupId;
+    private static String getBasePath() {
+        return PLUGIN + "image:";
     }
 
-    public String getPartSaveImageKeyByPrivate(Long userId) {
-        return this.getKey() + "user:" + userId;
-    }
-
-    public String getPartSaveImageKey(CqMessageEvent event) {
-        if (event instanceof CqGroupMessageEvent) {
-            return this.getKey() + "group:" + ((CqGroupMessageEvent) event).getGroupId();
-        } else if (event instanceof CqPrivateMessageEvent) {
-            return this.getKey() + "user:" + event.getUserId();
-        }
-        return Arrays.toString(Thread.currentThread().getStackTrace());
-    }
 
 }

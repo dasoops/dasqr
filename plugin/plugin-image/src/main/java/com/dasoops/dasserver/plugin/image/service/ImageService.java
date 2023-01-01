@@ -1,8 +1,15 @@
 package com.dasoops.dasserver.plugin.image.service;
 
-import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
-import com.dasoops.dasserver.plugin.image.entity.po.ImageDo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
+import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo;
+import com.dasoops.dasserver.plugin.image.entity.dto.ExportImageInfoDto;
+import com.dasoops.dasserver.plugin.image.entity.param.*;
+import com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyKeywordVo;
+import com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyUserVo;
+import com.dasoops.dasserver.plugin.image.entity.vo.GetImageVo;
+import com.dasoops.dasserver.plugin.webManager.entity.vo.GetNextIdVo;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,8 +35,7 @@ public interface ImageService extends IService<ImageDo> {
      * @param keyword 关键字
      * @return {@link List}<{@link String}>
      */
-    Optional<List<String>> getFantasyKeyword(String keyword);
-
+    List<String> getFantasyKeyword(String keyword);
 
     /**
      * 保存图像
@@ -79,4 +85,76 @@ public interface ImageService extends IService<ImageDo> {
      * @return {@link Optional}<{@link String}>
      */
     Optional<String> getImageCqCode(String keyword);
+
+    /**
+     * 获取图片页面数据
+     *
+     * @param param param
+     * @return {@link IPage}<{@link GetImageVo}>
+     */
+    IPage<GetImageVo> getImagePageData(GetImageInfoPageParam param);
+
+    /**
+     * 获取联想关键字 forCache
+     *
+     * @param param param
+     * @return {@link GetFantastyKeywordVo}
+     */
+    GetFantastyKeywordVo getFantasyKeyword4Cache(GetFantastyKeywordParam param);
+
+    /**
+     * 获取联想关键字 forCache
+     *
+     * @param keyword 关键字
+     * @return {@link List}<{@link String}>
+     */
+    List<String> getFantasyKeyword4Cache(String keyword);
+
+    /**
+     * 获取联想用户
+     *
+     * @param param param
+     * @return {@link GetFantastyUserVo}
+     */
+    GetFantastyUserVo getFantasyUser(GetFantastyUserParam param);
+
+    /**
+     * 编辑图片信息
+     *
+     * @param param param
+     */
+    void editImageInfo(EditImageInfoParam param);
+
+    /**
+     * 获取下一个id
+     *
+     * @return {@link GetNextIdVo}
+     */
+    GetNextIdVo getNextId();
+
+    /**
+     * 添加图片
+     *
+     * @param param param
+     */
+    void addImage(AddImageParam param);
+
+    /**
+     * 删除图片
+     *
+     * @param param param
+     */
+    void deleteImage(DeleteImageParam param);
+
+    /**
+     * 导出所有图片信息
+     *
+     * @return {@link List}<{@link ExportImageInfoDto}>
+     */
+    List<ExportImageInfoDto> exportAllImageInfo();
+
+    /**
+     * 初始化或更新图片关键字集合
+     */
+    void initOrUpdateImageKeywordList();
 }
