@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "联想用户dto", description = "联想用户dto")
-public class FantasyUserDto extends BaseDto {
+public class FantastyUserDto extends BaseDto {
 
     /**
      * 用户注册id

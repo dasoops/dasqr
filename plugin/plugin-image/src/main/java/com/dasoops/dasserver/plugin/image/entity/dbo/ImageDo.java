@@ -1,6 +1,5 @@
 package com.dasoops.dasserver.plugin.image.entity.dbo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import lombok.Data;
@@ -21,7 +20,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value ="TB_PLUGIN_IMAGE")
 @Data
-public class ImageDo extends BaseDo implements Serializable {
+public class ImageDo extends BaseDo {
 
     /**
      * 存/取 关键词
@@ -42,8 +41,4 @@ public class ImageDo extends BaseDo implements Serializable {
      * 创建人ID
      */
     private Long authorId;
-
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

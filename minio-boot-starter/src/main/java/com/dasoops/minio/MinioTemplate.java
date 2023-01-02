@@ -48,21 +48,36 @@ public class MinioTemplate {
      * @throws XmlParserException        xml解析器异常
      * @throws InternalException         内部异常
      */
-    public Optional<String> saveImage(File file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+    public String saveImage(File file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         String uuid = UUID.fastUUID().toString();
         String type = FileUtil.getType(file);
         InputStream inputStream = FileUtil.getInputStream(file);
+        String filename = uuid + "." + type;
         PutObjectArgs putObjectArgs = PutObjectArgs.builder()
                 .contentType(type)
                 .bucket(properties.getBucket())
-                .contentType("image/" + FileUtil.getType(file))
-                .object(uuid + "." + type)
+                .contentType("image/" + type)
+                .object(filename)
                 .stream(inputStream, inputStream.available(), -1)
                 .build();
         minioClient.putObject(putObjectArgs);
-        String filename = uuid + "." + type;
         log.info("minio putObject({})", filename);
-        return Optional.of(filename);
+        return filename;
+    }
+
+    public String saveImage(InputStream inputStream, String contentType) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        String uuid = UUID.fastUUID().toString();
+        String type = contentType.substring(contentType.lastIndexOf("/") + 1);
+        String filename = uuid + "." + type;
+        PutObjectArgs putObjectArgs = PutObjectArgs.builder()
+                .contentType(contentType)
+                .bucket(properties.getBucket())
+                .object(filename)
+                .stream(inputStream, inputStream.available(), -1)
+                .build();
+        minioClient.putObject(putObjectArgs);
+        log.info("minio putObject({})", filename);
+        return filename;
     }
 
     /**
@@ -80,7 +95,7 @@ public class MinioTemplate {
      * @throws XmlParserException        xml解析器异常
      * @throws InternalException         内部异常
      */
-    public Optional<String> saveImage(String url) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+    public String saveImage(String url) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         File file = HttpUtil.downloadFileFromUrl(url, properties.getTempDownloadPath());
         return saveImage(file);
     }
@@ -114,10 +129,10 @@ public class MinioTemplate {
      */
     public boolean checkFileIsExists(String fileName) {
         try {
-        StatObjectArgs statObjectArgs = StatObjectArgs.builder()
-                .bucket(properties.getBucket())
-                .object(fileName)
-                .build();
+            StatObjectArgs statObjectArgs = StatObjectArgs.builder()
+                    .bucket(properties.getBucket())
+                    .object(fileName)
+                    .build();
             minioClient.statObject(statObjectArgs);
         } catch (Exception e) {
             return false;

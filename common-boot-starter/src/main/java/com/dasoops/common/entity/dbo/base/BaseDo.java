@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -30,7 +31,7 @@ public class BaseDo implements Serializable {
      */
     @JSONField(serialize = false)
     @TableField(fill = FieldFill.INSERT)
-    private boolean isDelete;
+    private Integer isDelete;
     /**
      * 创建时间
      */
@@ -42,7 +43,7 @@ public class BaseDo implements Serializable {
      */
     @JSONField(serialize = false)
     @TableField(fill = FieldFill.INSERT)
-    private String createUser;
+    private Long createUser;
     /**
      * 更新时间
      */
@@ -54,8 +55,9 @@ public class BaseDo implements Serializable {
      */
     @JSONField(serialize = false)
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private String updateUser;
+    private Long updateUser;
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

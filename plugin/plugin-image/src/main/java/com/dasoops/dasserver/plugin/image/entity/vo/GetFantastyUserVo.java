@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.image.entity.vo;
 
 import com.dasoops.common.entity.vo.base.BaseVo;
-import com.dasoops.dasserver.plugin.image.entity.dto.FantasyUserDto;
+import com.dasoops.dasserver.plugin.image.entity.dto.FantastyUserDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -26,6 +26,6 @@ public class GetFantastyUserVo extends BaseVo {
      * 联想用户集合
      */
     @ApiModelProperty(value = "联想用户集合", notes = "联想用户集合", example = "{\"registerId\":\"776465218\",\"name\":\"Das\"}", required = false)
-    private List<FantasyUserDto> fantasyUserList;
+    private List<FantastyUserDto> fantastyUserList;
 
 }

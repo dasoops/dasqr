@@ -10,7 +10,7 @@
             <result property="type" column="TYPE" jdbcType="TINYINT"/>
             <result property="level" column="LEVEL" jdbcType="TINYINT"/>
             <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
-            <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+            <result property="createUser" column="CREATE_USER" jdbcType="BIGINT"/>
             <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
             <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
             <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>

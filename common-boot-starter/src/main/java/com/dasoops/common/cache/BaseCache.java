@@ -123,8 +123,12 @@ public class BaseCache {
             return null;
         }
         String str = hash().get(redisKeyEnum.getKey(), hashKey);
-        hash().delete(redisKeyEnum.getKey(), hashKey);
+        hdelete(redisKeyEnum, hashKey);
         return str;
+    }
+
+    protected void hdelete(IRedisKeyEnum redisKeyEnum, String hashKey) {
+        hash().delete(redisKeyEnum.getKey(), hashKey);
     }
 
     /* -- Hash End -- */

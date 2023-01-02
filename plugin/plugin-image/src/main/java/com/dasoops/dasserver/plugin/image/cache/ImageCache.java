@@ -158,6 +158,25 @@ public class ImageCache extends BaseCache {
         return super.hgetAndDelete(redisKeyEnum, String.valueOf(userId));
     }
 
+    public void removeImagePartSaveFlag(Long groupId, Long userId) {
+        ImagePartSaveRedisKeyShamEnum redisKeyEnum = ImagePartSaveRedisKeyShamEnum.group(groupId);
+        super.hdelete(redisKeyEnum, String.valueOf(userId));
+    }
+
+    public void removeImagePartSaveFlag(Long userId) {
+        super.remove(ImagePartSaveRedisKeyShamEnum.user(userId));
+    }
+
+    public void removeImagePartSaveFlag(CqMessageEvent cqMessageEvent) {
+        if (cqMessageEvent instanceof CqGroupMessageEvent event) {
+            this.removeImagePartSaveFlag(event.getGroupId(), event.getUserId());
+        } else if (cqMessageEvent instanceof CqPrivateMessageEvent event) {
+            this.removeImagePartSaveFlag(event.getUserId());
+        } else {
+            throw new LogicException(ExceptionEnum.UN_EXPECTED);
+        }
+    }
+
     /**
      * 添加关键字
      *

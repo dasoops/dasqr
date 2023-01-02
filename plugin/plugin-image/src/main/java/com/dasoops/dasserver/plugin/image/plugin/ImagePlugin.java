@@ -4,14 +4,12 @@ import cn.hutool.core.util.StrUtil;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.entity.vo.result.Result;
 import com.dasoops.common.exception.WebLogicException;
-import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.bot.CqTemplate;
 import com.dasoops.dasserver.cq.bot.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
-import com.dasoops.dasserver.cq.exception.CqLogicException;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.DqUtil;
 import com.dasoops.dasserver.plugin.image.cache.ImageCache;
@@ -226,9 +224,8 @@ public class ImagePlugin extends CqPlugin {
                 return "这张图的关键词重复了捏";
             }
 
-            Assert.ifFalse(imageService.saveImage(event, key, url), () -> {
-                throw new CqLogicException(ExceptionEnum.IMAGE_SAVE_ERROR);
-            });
+            imageService.saveImage(event, key, url);
+            imageCache.removeImagePartSaveFlag(event);
             log.debug("(ImagePlugin) 存图逻辑执行完毕 - 分片存图 + ocr 分支 part2");
             return "好了捏,现在可以用 " + key + "取出这张图辽";
         }
@@ -253,6 +250,7 @@ public class ImagePlugin extends CqPlugin {
             return "关键词有了捏";
         }
         imageService.saveImage(event, keyword, CqCodeUtil.getImgUrl(imgCqCode));
+        imageCache.removeImagePartSaveFlag(event);
         log.debug("(ImagePlugin) 存图逻辑执行完毕 - 单片存图分支");
         return "已阅";
     }
@@ -281,6 +279,7 @@ public class ImagePlugin extends CqPlugin {
         }
         //持久化
         imageService.saveImage(event, keyword, url);
+        imageCache.removeImagePartSaveFlag(event);
 
         log.debug("(ImagePlugin) 存图逻辑执行完毕 - ocr分支");
         return "好了捏,现在可以用 " + result.getData() + "取出这张图辽";

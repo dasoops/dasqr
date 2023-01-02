@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/12/31
  * @Version 1.0.0
- * @Description: 获取分页图像信息
+ * @Description: 获取分页图像信息参数
  * @see BaseEasyTimePageParam
  */
 @Data

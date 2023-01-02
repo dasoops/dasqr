@@ -10,10 +10,10 @@
         <result property="fileName" column="FILE_NAME" jdbcType="VARCHAR"/>
         <result property="groupId" column="GROUP_ID" jdbcType="BIGINT"/>
         <result property="authorId" column="AUTHOR_ID" jdbcType="BIGINT"/>
-        <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
-        <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+        <result property="isDelete" column="IS_DELETE" jdbcType="TINYINT"/>
+        <result property="createUser" column="CREATE_USER" jdbcType="BIGINT"/>
         <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
-        <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
+        <result property="updateUser" column="UPDATE_USER" jdbcType="BIGINT"/>
         <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
     </resultMap>
 

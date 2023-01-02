@@ -33,6 +33,12 @@ public class GetImageVo extends BaseVo {
     private String keyword;
 
     /**
+     * 图片名称
+     */
+    @ApiModelProperty(value = "图片名称", notes = "图片名称", example = "5efd9177-259c-4aee-b005-3343684da3df.jpg", required = true)
+    private String fileName;
+
+    /**
      * 图片路径
      */
     @ApiModelProperty(value = "图片路径", notes = "图片路径", example = "http://106.13.5.29:9000/dasserver/5efd9177-259c-4aee-b005-3343684da3df.jpg", required = true)
@@ -57,9 +63,15 @@ public class GetImageVo extends BaseVo {
     private String authorName;
 
     /**
-     * 创建时间
+     * 更新时间
      */
-    @ApiModelProperty(value = "创建时间", notes = "创建时间", example = "2022-10-12 16:22:53", required = true)
-    private String createTime;
+    @ApiModelProperty(value = "更新时间", notes = "更新时间", example = "2022-10-12 16:22:53", required = true)
+    private String updateTime;
+
+    /**
+     * 是否可编辑
+     */
+    @ApiModelProperty(value = "是否可编辑", notes = "是否可编辑(0:false;1:true)", example = "1", required = true)
+    private Integer canEdit;
 
 }

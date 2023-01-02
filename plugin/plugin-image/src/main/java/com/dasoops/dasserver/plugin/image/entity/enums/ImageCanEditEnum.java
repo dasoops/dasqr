@@ -1,21 +1,22 @@
-package com.dasoops.dasserver.cq.entity.enums;
+package com.dasoops.dasserver.plugin.image.entity.enums;
+
 
 import com.dasoops.common.entity.enums.IDbColumnEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: ConfigCanEditEnum
- * @ClassPath com.dasoops.dasserver.cq.entity.enums.ConfigCanEditEnum
+ * @Title: ImageCanEditEnum
+ * @ClassPath com.dasoops.dasserver.plugin.image.entity.enums.ImageCanEditEnum
  * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/30
+ * @Date 2023/01/02
  * @Version 1.0.0
- * @Description: 配置可以编辑枚举
+ * @Description: 图片是否可以编辑枚举
  * @see Enum
  */
 @Getter
 @AllArgsConstructor
-public enum ConfigCanEditEnum implements IDbColumnEnum {
+public enum ImageCanEditEnum implements IDbColumnEnum {
     /**
      * 否
      */
@@ -27,5 +28,4 @@ public enum ConfigCanEditEnum implements IDbColumnEnum {
     ;
 
     final Integer dbValue;
-
 }

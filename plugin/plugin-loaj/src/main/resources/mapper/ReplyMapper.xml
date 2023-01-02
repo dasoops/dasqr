@@ -9,7 +9,7 @@
             <result property="keyword" column="KEYWORD" jdbcType="VARCHAR"/>
             <result property="reply" column="REPLY" jdbcType="VARCHAR"/>
             <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
-            <result property="createUser" column="CREATE_USER" jdbcType="VARCHAR"/>
+            <result property="createUser" column="CREATE_USER" jdbcType="BIGINT"/>
             <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
             <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
             <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>

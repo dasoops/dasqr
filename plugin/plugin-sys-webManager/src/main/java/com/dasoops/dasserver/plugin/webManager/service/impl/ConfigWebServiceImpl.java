@@ -55,7 +55,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         IPage<ConfigDo> page = super.lambdaQuery()
                 .like(keyword != null && !"".equals(keyword), ConfigDo::getKeyword, keyword)
                 .like(description != null && !"".equals(description), ConfigDo::getDescription, description)
-                .page(param.getSelectPage());
+                .page(param.buildSelectPage());
 
         return page;
     }

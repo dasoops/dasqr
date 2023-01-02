@@ -9,7 +9,9 @@ import com.dasoops.dasserver.plugin.image.entity.param.*;
 import com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyKeywordVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyUserVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.GetImageVo;
+import com.dasoops.dasserver.plugin.image.entity.vo.UploadImageVo;
 import com.dasoops.dasserver.plugin.webManager.entity.vo.GetNextIdVo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -92,7 +94,7 @@ public interface ImageService extends IService<ImageDo> {
      * @param param param
      * @return {@link IPage}<{@link GetImageVo}>
      */
-    IPage<GetImageVo> getImagePageData(GetImageInfoPageParam param);
+    IPage<GetImageVo> getImageInfoPage(GetImageInfoPageParam param);
 
     /**
      * 获取联想关键字 forCache
@@ -157,4 +159,12 @@ public interface ImageService extends IService<ImageDo> {
      * 初始化或更新图片关键字集合
      */
     void initOrUpdateImageKeywordList();
+
+    /**
+     * 上传图片
+     *
+     * @param file 文件
+     * @return {@link UploadImageVo}
+     */
+    UploadImageVo uploadImage(MultipartFile file);
 }

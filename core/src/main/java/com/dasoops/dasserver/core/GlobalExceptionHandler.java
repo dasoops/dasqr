@@ -8,6 +8,7 @@ import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.exception.wrapper.ExceptionWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -48,10 +49,12 @@ public class GlobalExceptionHandler {
                 if (cqProperties.isNativePrintStack()) {
                     e.printStackTrace();
                 } else {
-                    if (e instanceof LogicException) {
-                        IExceptionEnum exceptionEnum = ((LogicException) e).getExceptionEnum();
-                        log.error("消息处理发生异常: {}", ((LogicException) e).getStackMessage());
+                    if (e instanceof LogicException tempE) {
+                        IExceptionEnum exceptionEnum = tempE.getExceptionEnum();
+                        log.error("消息处理发生异常: {}", tempE.getStackMessage());
                         return SimpleResult.fail(exceptionEnum);
+                    } else if (e instanceof HttpMessageNotReadableException) {
+                        return SimpleResult.fail(ExceptionEnum.PARAMETER_RESLOVE_ERROR);
                     } else {
                         log.error("消息处理发生异常: ", e);
                     }

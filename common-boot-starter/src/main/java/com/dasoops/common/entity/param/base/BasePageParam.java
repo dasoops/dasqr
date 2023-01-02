@@ -19,8 +19,8 @@ import lombok.EqualsAndHashCode;
 @Data
 public class BasePageParam extends BaseEasyPageParam {
 
-    public <T extends BaseDo> IPage<T> getSelectPage() {
-        Page<T> page = new Page<>(super.getCurrent(),super.getSize());
+    public <T extends BaseDo> IPage<T> buildSelectPage() {
+        Page<T> page = new Page<>(super.getCurrent(), super.getSize());
         return page;
     }
 

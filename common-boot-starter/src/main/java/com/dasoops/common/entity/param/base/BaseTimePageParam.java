@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @Title: BasePageParam
@@ -21,20 +22,23 @@ import lombok.EqualsAndHashCode;
 @Data
 public class BaseTimePageParam extends BaseEasyTimePageParam {
 
-    public <T> QueryWrapper<T> getTimeQueryWrapper(String column) {
+    @ApiIgnore
+    public <T> QueryWrapper<T> buildTimeQueryWrapper(String column) {
         QueryWrapper<T> wrapper = new QueryWrapper<>();
         String beginTimeStr = super.getBeginTime();
         String endTimeStr = super.getEndTime();
-        wrapper.ge(beginTimeStr == null || "".equals(beginTimeStr), column, DateUtil.parse(beginTimeStr));
-        wrapper.le(endTimeStr == null || "".equals(beginTimeStr), column, DateUtil.parse(beginTimeStr));
+        wrapper.ge(beginTimeStr != null && !"".equals(beginTimeStr), column, DateUtil.parse(beginTimeStr));
+        wrapper.le(endTimeStr != null && !"".equals(beginTimeStr), column, DateUtil.parse(beginTimeStr));
         return wrapper;
     }
 
-    public <T> QueryWrapper<T> getTimeQueryWrapper() {
-        return this.getTimeQueryWrapper("CREATE_TIME");
+    @ApiIgnore
+    public <T> QueryWrapper<T> buildTimeQueryWrapper() {
+        return this.buildTimeQueryWrapper("CREATE_TIME");
     }
 
-    public <T extends BaseDo> IPage<T> getSelectPage() {
+    @ApiIgnore
+    public <T extends BaseDo> IPage<T> buildSelectPage() {
         Page<T> page = new Page<>(super.getCurrent(),super.getSize());
         return page;
     }
