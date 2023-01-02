@@ -108,28 +108,16 @@ public class GitController {
     private void sendNotice(CqTemplate cqTemplate, GitNoticeTypeEnum noticeTypeEnum, String str) {
         ApiData<MessageData> resApiData;
         switch (noticeTypeEnum) {
-            case GROUP:
-                resApiData = cqTemplate.sendGroupMsg(gitNoticeProperties.getNoticeGroupId(), str, false);
-                break;
-            case PRIVATE:
-                resApiData = cqTemplate.sendPrivateMsg(gitNoticeProperties.getNoticeUserId(), str, false);
-                break;
-            case GROUP_AT_USER:
-                resApiData = cqTemplate.sendGroupMsg(gitNoticeProperties.getNoticeGroupId(), CqCodeUtil.at(gitNoticeProperties.getNoticeUserId()) + str, false);
-                break;
-            case CORE_GROUP:
-                resApiData = cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), str, false);
-                break;
-            case CORE_PRIVATE:
-                resApiData = cqTemplate.sendPrivateMsg(cqProperties.getDevUserId(), str, false);
-                break;
-            case CORE_GROUP_AT_USER:
-                resApiData = cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), CqCodeUtil.at(cqProperties.getDevUserId()) + str, false);
-                break;
-            default:
+            case GROUP -> resApiData = cqTemplate.sendGroupMsg(gitNoticeProperties.getNoticeGroupId(), str, false);
+            case PRIVATE -> resApiData = cqTemplate.sendPrivateMsg(gitNoticeProperties.getNoticeUserId(), str, false);
+            case GROUP_AT_USER -> resApiData = cqTemplate.sendGroupMsg(gitNoticeProperties.getNoticeGroupId(), CqCodeUtil.at(gitNoticeProperties.getNoticeUserId()) + str, false);
+            case CORE_GROUP -> resApiData = cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), str, false);
+            case CORE_PRIVATE -> resApiData = cqTemplate.sendPrivateMsg(cqProperties.getDevUserId(), str, false);
+            case CORE_GROUP_AT_USER -> resApiData = cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), CqCodeUtil.at(cqProperties.getDevUserId()) + str, false);
+            default -> {
                 resApiData = new ApiData<>();
                 resApiData.setStatus("failed");
-                break;
+            }
         }
 
         final String failed = "failed";
@@ -147,7 +135,6 @@ public class GitController {
      * @return {@link String}
      */
     private String buildCommitNoticeStr(PushNoticeDto pushNoticeDto) {
-        int k = 1 / 0;
         String[] refSplit = pushNoticeDto.getRef().split("/");
         String branch = refSplit[refSplit.length - 1].replace("/", "");
 
