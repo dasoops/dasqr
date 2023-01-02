@@ -30,7 +30,7 @@
         WHERE `KEYWORD` LIKE CONCAT('%', #{keyword}, '%')
     </select>
     <select id="selectMaxId" resultType="java.lang.Long">
-        SELECT MAX(`ID`)
+        SELECT MAX(`row_id`)
         FROM `tb_plugin_image`;
     </select>
     <select id="selectKeywordList" resultType="java.lang.String">

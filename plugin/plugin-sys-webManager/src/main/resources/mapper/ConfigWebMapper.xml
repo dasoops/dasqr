@@ -24,7 +24,7 @@
         update_user,update_time
     </sql>
     <select id="selectMaxId" resultType="java.lang.Long">
-        SELECT MAX(ID)
+        SELECT MAX(`row_id`)
         FROM `tb_core_config`;
     </select>
 </mapper>

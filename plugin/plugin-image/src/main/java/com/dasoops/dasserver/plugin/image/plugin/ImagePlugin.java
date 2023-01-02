@@ -235,6 +235,7 @@ public class ImagePlugin extends CqPlugin {
             log.debug("(ImagePlugin) 存图逻辑执行完毕 - 分片存图 分支 part2 关键词重复");
             return "关键词有了捏";
         }
+        imageService.saveImage(event, key, url);
         log.debug("(ImagePlugin) 存图逻辑执行完毕 - 分片存图 分支 part2");
         return "已阅";
     }
