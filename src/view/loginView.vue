@@ -30,10 +30,10 @@
 <script lang="ts">
 import {defineComponent, reactive, ref, toRefs} from "vue";
 import {useRouter} from "vue-router";
-import {LoginData} from "@/entity/loginModel";
+import {LoginData, LoginRes} from "@/entity/loginEntity";
 import {FormInstance, FormRules} from "element-plus";
-import { login } from "@/request/ConfigRequest";
-import { useStore } from "@/conf/store";
+import {login} from "@/request/RegisterRequest";
+import {useStore} from "@/conf/store";
 
 
 export default defineComponent({
@@ -75,7 +75,7 @@ export default defineComponent({
         if (!isValid) {
           return false;
         }
-        login(data.formData).then((res) => {
+        login(data.formData).then((res: LoginRes) => {
           localStorage.setItem('token', res.data.token);
           router.push('/config');
           console.log(store);

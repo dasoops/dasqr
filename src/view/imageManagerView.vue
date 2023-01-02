@@ -1,15 +1,28 @@
 <template>
   <div style="height: 5%">
-    <el-form :model="getConfigParam" class="searchForm" @keydown.enter="loadData">
+    <el-form :model="getImageInfoPageParam" class="searchForm" @keydown.enter="loadData">
       <el-row :gutter="35">
         <el-col :offset="1" :span="6">
           <el-form-item label="keyword like" class="text-color">
-            <el-input v-model="getConfigParam.keyword" placeholder="% enter %" class="input-line" clearable/>
+            <el-input v-model="getImageInfoPageParam.keyword" placeholder="% enter %" class="input-line" clearable/>
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="description like">
-            <el-input v-model="getConfigParam.description" placeholder="% enter %" class="input-line" clearable/>
+          <el-form-item label="createUser">
+            <el-autocomplete
+                v-model="fantastyUserKeyword"
+                :fetch-suggestions="queryFantastyUser"
+                placeholder="% enter %"
+                @select="handleSelectFantastyUser"
+                @change="handleSelectFantastyUser"
+                class="input-line"
+                value-key="author"
+                debounce="500"
+                :hide-loading="true"
+                clearable
+                :fit-input-width="true"
+                width="100%"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -21,7 +34,7 @@
             <span>&nbsp;&nbsp;</span>
             <el-button :icon="Plus" @click="toAdd" circle/>
             <span>&nbsp;&nbsp;</span>
-            <el-button :icon="Download" circle/>
+            <el-button :icon="Download" @click="handleExport" circle/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -39,51 +52,63 @@
           resizable
           stripe
       >
-          <el-table-column
-              prop="id"
-              label="id"
-              width="50"
-              header-align="center"
-              align="center"
-          >
-          </el-table-column>
-          <el-table-column
-              prop="keyword"
-              label="keyword"
-              width="220">
-          </el-table-column>
-          <el-table-column
-              prop="value"
-              label="value"
-              width="260">
-          </el-table-column>
-          <el-table-column
-              prop="description"
-              label="description"
-          >
-          </el-table-column>
-          <el-table-column
-              width="110"
-          >
-            <template v-slot="scope">
-              <el-button
-                  color="#ffffff"
-                  size="small"
-                  plain
-                  @click="toDelete(scope.row)"
-                  :disabled="scope.row.canEdit === 0"
-                  :icon="Delete"
-              />
-              <el-button
-                  color="#ffffff"
-                  size="small"
-                  plain
-                  @click="toEdit(scope.row)"
-                  :disabled="scope.row.canEdit === 0"
-                  :icon="Edit"
-              />
-            </template>
-          </el-table-column>
+        <el-table-column
+            prop="id"
+            label="id"
+            width="50"
+            header-align="center"
+            align="center"
+        >
+        </el-table-column>
+        <el-table-column
+            prop="keyword"
+            label="keyword"
+            width="280">
+        </el-table-column>
+        <el-table-column
+            prop="author"
+            label="author"
+            width="320"
+        >
+        </el-table-column>
+        <el-table-column
+            prop="updateTime"
+            label="updateTime"
+        >
+        </el-table-column>
+        <el-table-column
+            width="160"
+        >
+          <template v-slot="scope">
+            <el-button
+                color="#ffffff"
+                size="small"
+                plain
+                @click="toDelete(scope.row)"
+                :disabled="scope.row.canEdit === 0"
+                :icon="Delete"
+            />
+            <el-button
+                color="#ffffff"
+                size="small"
+                plain
+                @click="toEdit(scope.row)"
+                :disabled="scope.row.canEdit === 0"
+                :icon="Edit"
+            />
+            <el-popover placement="left" width="auto" trigger="hover" effect="dark">
+              <template #reference>
+                <el-button
+                    color="#ffffff"
+                    size="small"
+                    plain
+                    :icon="View"
+                />
+              </template>
+              <el-image style="max-height: 600px;max-width: 600px" :src="getViewPath(scope.row)" fit="scale-down"/>
+            </el-popover>
+          </template>
+        </el-table-column>
       </el-table>
     </el-row>
   </div>
@@ -91,8 +116,8 @@
   <div style="height: 5%">
     <el-row justify="end" class="pageRow">
       <el-pagination
-          v-model:current-page="getConfigParam.current"
-          v-model:page-size="getConfigParam.size"
+          v-model:current-page="getImageInfoPageParam.current"
+          v-model:page-size="getImageInfoPageParam.size"
           :page-sizes="[15, 30, 50, 100]"
           small
           background
@@ -112,55 +137,71 @@
         align-center
         draggable
     >
-      <el-form :model="editConfigParam" class="searchForm" label-position="top">
+      <el-form :model="editImageInfoParam" class="searchForm" label-position="top">
         <el-form-item label="keyword" class="text-color">
-          <el-input v-model="editConfigParam.keyword" placeholder="" class="input-line" clearable/>
+          <el-input v-model="editImageInfoParam.keyword" placeholder="" class="input-line" clearable/>
         </el-form-item>
-        <el-form-item label="vulue" class="text-color">
-          <el-input v-model="editConfigParam.value" placeholder="" class="input-line" clearable/>
-        </el-form-item>
-        <el-form-item label="description">
-          <el-input v-model="editConfigParam.description" placeholder="" class="input-line" clearable/>
-        </el-form-item>
+        <el-upload
+            :drag="true"
+            list-type="picture"
+            class="avatar-uploader"
+            accept=".jpeg,.png,.jpg,.bmp,.gif"
+            :action="uploadImageUrl"
+            :method="uploadImageMethod"
+            :headers="requestHeaders"
+            :show-file-list="false"
+            :on-success="handleEditUploadSuccess"
+            :before-upload="checkFileType"
+        >
+          <el-image style="max-height: 100%;max-width: 100%" :src="editImageShowFilePath" fit="scale-down"/>
+        </el-upload>
       </el-form>
       <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="showEditDialog = false">Cancel</el-button>
-        <el-button @click="handleEdit">
-          Confirm
-        </el-button>
-      </span>
+          <span class="dialog-footer">
+            <el-button @click="showEditDialog = false">Cancel</el-button>
+            <el-button @click="handleEdit">
+              Confirm
+            </el-button>
+          </span>
       </template>
     </el-dialog>
     <el-dialog
         v-model="showAddDialog"
-        :title="AddTitle"
+        :title="addTitle"
         width="30%"
         align-center
         draggable
     >
-      <el-form :model="addConfigParam" class="searchForm" label-position="top">
+      <el-form :model="addImageParam" class="searchForm" label-position="top">
         <el-form-item label="keyword" class="text-color">
-          <el-input v-model="addConfigParam.keyword" placeholder="" class="input-line" clearable/>
+          <el-input v-model="addImageParam.keyword" placeholder="" class="input-line" clearable/>
         </el-form-item>
-        <el-form-item label="vulue" class="text-color">
-          <el-input v-model="addConfigParam.value" placeholder="" class="input-line" clearable/>
-        </el-form-item>
-        <el-form-item label="description">
-          <el-input v-model="addConfigParam.description" placeholder="" class="input-line" clearable/>
-        </el-form-item>
-        <el-form-item label="canEdit" label-postion="left">
-          <el-switch
-              v-model="addConfigParam.canEdit"
-              class="mt-2"
-              size="large"
-              style="margin-left: 24px; --el-switch-on-color: black; --el-switch-off-color: black"
-              inline-prompt
-              :active-value="1"
-              :inactive-value="0"
-              :active-icon="Check"
-              :inactive-icon="Close"
-          />
+        <el-form-item>
+          <el-upload
+              :drag="true"
+              list-type="picture"
+              class="avatar-uploader"
+              accept=".jpeg,.png,.jpg,.bmp,.gif"
+              :action="uploadImageUrl"
+              :method="uploadImageMethod"
+              :headers="requestHeaders"
+              :show-file-list="false"
+              :on-success="handleAddUploadSuccess"
+              :before-upload="checkFileType"
+              multiple
+              style="width: 100%"
+          >
+            <el-image style="max-height: 100%;max-width: 100%" v-if="addImageShowFilePath" :src="addImageShowFilePath"
+                      fit="scale-down"/>
+            <div v-else>
+              <el-icon :size="40" color="#FFFFFF">
+                <Upload-filled/>
+              </el-icon>
+              <div class="el-upload__text" style="color: white">
+                Drop file here or <em style="color: yellowgreen">click to upload</em>
+              </div>
+            </div>
+          </el-upload>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -175,103 +216,193 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import {defineComponent, reactive, toRefs} from "vue";
-import {AddConfigParam, ConfigData, EditConfigParam, GetConfigParam} from "@/entity/configModel";
-import {Check, Close, Delete, Download, Edit, Plus, Search} from '@element-plus/icons-vue'
-import {addConfig, deleteConfig, editConfig, exportAllConfig, getConfigPage, getNextConfigId} from "@/request/ConfigRequest";
-import {ElMessageBox} from "element-plus";
-import {threedUtil} from "@/util/ThreedUtil";
+import {UploadFilled, Check, Close, Delete, Download, Edit, Plus, Search, View} from '@element-plus/icons-vue'
+import {ElMessage, ElMessageBox} from "element-plus";
+import {
+  AddImageParam, DeleteImageParam,
+  EditImageInfoParam, FantastyUserRes,
+  GetFantastyUserParam,
+  GetImageInfoPageParam,
+  ImageData, UploadImageRes
+} from "@/entity/ImageEntity";
+import {
+  addImage,
+  deleteImage,
+  editImageInfo,
+  exportAllImageInfo,
+  getFantasyUser,
+  getImageInfoPage, getNextId,
+  uploadImageMethod,
+  uploadImageUrl
+} from "@/request/ImageRequest";
+import {UploadRawFile} from "element-plus/lib/components";
+import {AxiosHeaders} from "axios";
+import {Result} from "@/entity/BaseEntity";
+import {getFileNameForDisposition} from "@/util/StringUtil";
 
 export default defineComponent({
-  name: "configManagerView",
+  name: "imageManagerView",
   setup() {
-    let tableData: Array<ConfigData> = reactive([]);
-    const getConfigParam: GetConfigParam = reactive({
-      keyword: undefined,
-      description: undefined,
+    let tableData: Array<ImageData> = reactive([]);
+    const getImageInfoPageParam: GetImageInfoPageParam = reactive({
       size: 15,
       current: 1
     });
-    const editConfigParam: EditConfigParam = reactive({
+    const editImageInfoParam: EditImageInfoParam = reactive({
       id: 0,
+      fileName: '',
       keyword: '',
-      value: '',
-      description: ''
     });
-    const addConfigParam: AddConfigParam = reactive({
+    const addImageParam: AddImageParam = reactive({
       keyword: '',
-      value: '',
-      description: '',
-      canEdit: 1,
+      fileName: ''
     })
     let total = 0;
     let showEditDialog = false;
     let showAddDialog = false;
     let loading = false;
-    let AddTitle = '';
+    let addTitle = '';
+    let fantastyUserList: string[] = [];
+    let viewImagePath = '';
+    let fantastyUserKeyword = '';
+    let editImageShowFilePath = '';
+    let addImageShowFilePath = '';
+    const temp = 'white';
+    const requestHeaders = new AxiosHeaders({"Authorization": localStorage.getItem("token")})
 
     const loadData = async function () {
       dataMap.loading = true;
-      getConfigPage(getConfigParam).then(res => {
+      getImageInfoPage(getImageInfoPageParam).then(res => {
         dataMap.tableData = reactive(res.data);
+        dataMap.tableData.forEach(rowData => {
+          rowData.author = "(" + rowData.authorId + ") " + rowData.authorName;
+        })
         dataMap.total = res.total;
         dataMap.loading = false;
       })
     }
     const handleEdit = function () {
-      editConfig(dataMap.editConfigParam).then(() => {
+      editImageInfo(dataMap.editImageInfoParam).then(() => {
         dataMap.showEditDialog = false;
         loadData();
       })
     }
     const handleAdd = function () {
-      addConfig(dataMap.addConfigParam).then(() => {
+      addImage(dataMap.addImageParam).then(() => {
         dataMap.showAddDialog = false;
         loadData();
       })
     }
-    const handleExport = function () {
-      exportAllConfig().then(() => {
-        console.log("handleExport");
-      })
+    const handleEditUploadSuccess = function (res: Result<UploadImageRes>) {
+      let data = res.data;
+      dataMap.editImageShowFilePath = data.filePath;
+      dataMap.editImageInfoParam.fileName = data.fileName;
+    }
+    const handleAddUploadSuccess = function (res: Result<UploadImageRes>) {
+      let data = res.data;
+      dataMap.addImageShowFilePath = data.filePath;
+      dataMap.addImageParam.fileName = data.fileName;
     }
     const handleCurrentChange = function (current: number) {
-      dataMap.getConfigParam.current = current;
+      dataMap.getImageInfoPageParam.current = current;
       loadData();
     }
     const handleSizeChange = function (size: number) {
-      dataMap.getConfigParam.size = size;
+      dataMap.getImageInfoPageParam.size = size;
       loadData();
     }
-    const toEdit = function (rowData: ConfigData) {
-      dataMap.editConfigParam.id = rowData.id;
-      dataMap.editConfigParam.keyword = rowData.keyword;
-      dataMap.editConfigParam.value = rowData.value;
-      dataMap.editConfigParam.description = rowData.description;
+    const handleSelectFantastyUser = function (res: FantastyUserRes) {
+      dataMap.getImageInfoPageParam.createUser = res.registerId;
+    }
+    const handleExport = function () {
+      exportAllImageInfo().then(res => {
+        let data = res.data;
+        if (!data) {
+          return
+        }
+
+        let url = window.URL.createObjectURL(new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}))
+        let a = document.createElement('a')
+        a.style.display = 'none'
+        a.href = url
+
+        //文件名
+        let fileName = getFileNameForDisposition(res.headers['content-disposition']);
+        a.setAttribute('download', fileName)
+
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(a.href)
+        document.body.removeChild(a)
+      })
+
+    }
+    const queryFantastyUser = async function () {
+      const matchRexStr = /\([1-9][0-9]{4,}\)[\w]*\s/g;
+      let userEnterKeyword = dataMap.fantastyUserKeyword;
+      if (matchRexStr.test(userEnterKeyword)) {
+        await getFantasyUser(new class implements GetFantastyUserParam {
+          keyword = dataMap.getImageInfoPageParam.createUser ? dataMap.getImageInfoPageParam.createUser.toString() : "";
+        }).then(function (res) {
+          for (let fantastyUserListElement of res.data.fantastyUserList) {
+            fantastyUserListElement.author = "(" + fantastyUserListElement.registerId + ") " + fantastyUserListElement.name;
+          }
+          dataMap.fantastyUserList = res.data.fantastyUserList;
+        })
+      } else {
+        await getFantasyUser(new class implements GetFantastyUserParam {
+          keyword = dataMap.fantastyUserKeyword;
+        }).then(function (res) {
+          for (let fantastyUserListElement of res.data.fantastyUserList) {
+            fantastyUserListElement.author = "(" + fantastyUserListElement.registerId + ") " + fantastyUserListElement.name;
+          }
+          dataMap.fantastyUserList = res.data.fantastyUserList;
+        })
+      }
+      return dataMap.fantastyUserList;
+    }
+    const toEdit = function (rowData: ImageData) {
+      dataMap.editImageInfoParam.id = rowData.id;
+      dataMap.editImageInfoParam.keyword = rowData.keyword;
+      dataMap.editImageShowFilePath = rowData.filePath;
+      dataMap.editImageInfoParam.fileName = rowData.fileName;
       dataMap.showEditDialog = true;
     }
     const toAdd = function () {
-      loadAddTitle();
-      dataMap.addConfigParam.keyword = '';
-      dataMap.addConfigParam.value = '';
-      dataMap.addConfigParam.canEdit = 1;
-      dataMap.addConfigParam.description = '';
+      getNextId().then(res => {
+        dataMap.addTitle = 'Add ( ' + res.data.id + ' )';
+      })
+      dataMap.addImageParam.keyword = '';
+      dataMap.addImageParam.fileName = '';
+      dataMap.addImageShowFilePath = '';
       dataMap.showAddDialog = true;
     }
-    const loadAddTitle = function () {
-      getNextConfigId().then(res => {
-        dataMap.AddTitle = 'Add ( ' + res.data.id + ' )';
-      })
+    const getViewPath = function (rowData: ImageData) {
+      return rowData.filePath;
     }
     const getEditTitle = function () {
-      return 'Edit ( ' + dataMap.editConfigParam.id + ' )';
+      return 'Edit ( ' + dataMap.editImageInfoParam.id + ' )';
     }
     const init = function () {
       loadData();
     }
-    const toDelete = function (rowData: ConfigData) {
+    const checkFileType = function (file: UploadRawFile) {
+      const fileName = file.name;
+      const fileType = fileName.substring(fileName.lastIndexOf('.'));
+      if (
+          fileType != '.jpg' &&
+          fileType != '.png' &&
+          fileType != '.jpeg' &&
+          fileType != '.bmp' &&
+          fileType != '.gif'
+      ) {
+        ElMessage.error('不是,jpeg,.png,.jpg,.bmp,.gif文件,请上传正确的图片类型');
+        return false;
+      }
+    }
+    const toDelete = function (rowData: ImageData) {
       ElMessageBox.confirm(
           'You could lose him for a long time. Continue?',
           'Warning',
@@ -281,40 +412,55 @@ export default defineComponent({
             type: 'warning',
           }
       ).then(function () {
-        deleteConfig(rowData.id).then(() => {
+        deleteImage(new class implements DeleteImageParam {
+          id = rowData.id;
+        }).then(() => {
           loadData();
         })
       })
     }
-
     const dataMap = reactive({
       tableData,
-      getConfigParam,
+      getImageInfoPageParam,
       total,
       showEditDialog,
       showAddDialog,
       loading,
-      editConfigParam,
-      addConfigParam,
-      AddTitle
+      temp,
+      addImageShowFilePath,
+      fantastyUserKeyword,
+      fantastyUserList,
+      editImageInfoParam,
+      editImageShowFilePath,
+      addImageParam,
+      viewImagePath,
+      addTitle,
+      uploadImageUrl,
+      uploadImageMethod,
+      requestHeaders,
     })
     const functionMap = {
       handleCurrentChange,
       handleSizeChange,
+      queryFantastyUser,
+      getViewPath,
+      handleExport,
+      handleEditUploadSuccess,
+      handleAddUploadSuccess,
+      handleSelectFantastyUser,
+      checkFileType,
       toEdit,
       getEditTitle,
-      loadAddTitle,
       loadData,
       handleEdit,
       handleAdd,
-      handleExport,
       toDelete,
       toAdd,
     }
 
     init();
 
-    return {...toRefs(dataMap), ...functionMap, Download, Search, Plus, Edit, Delete, Close, Check};
+    return {...toRefs(dataMap), ...functionMap, UploadFilled, View, Download, Search, Plus, Edit, Delete, Close, Check};
   }
 })
 </script>
@@ -323,11 +469,15 @@ export default defineComponent({
 /* searchForm */
 .searchForm {
 
-  .el-input :deep .el-input__wrapper.is-focus {
+  :deep .el-autocomplete {
+    width: 100%;
+  }
+
+  :deep .el-input .el-input__wrapper.is-focus {
     border-bottom: 1px solid greenyellow;
   }
 
-  .el-input :deep .el-input__wrapper {
+  :deep .el-input .el-input__wrapper {
     background-color: rgba(255, 255, 255, 0);
     color: white;
     border-radius: 0;
@@ -335,7 +485,7 @@ export default defineComponent({
     box-shadow: 0 0;
   }
 
-  .el-input :deep .el-input__inner {
+  :deep .el-input .el-input__inner {
     color: white;
   }
 
@@ -453,6 +603,10 @@ export default defineComponent({
       color: white; //文字颜色
     }
 
+    .el-pager li.is-active {
+      color: greenyellow;
+    }
+
     .btn-prev,
     .btn-next,
     .el-pager li,
@@ -480,8 +634,16 @@ export default defineComponent({
     color: white;
   }
 
+  .el-icon {
+    color: white;
+  }
+
   .el-dialog {
     background: #2b2b2b;
+  }
+
+  .el-upload-dragger {
+    background: transparent;
   }
 
   .el-button {
@@ -500,5 +662,10 @@ export default defineComponent({
   .el-button:active {
     border: 1px solid greenyellow;
   }
+
+  .el-upload-dragger:hover{
+    border-color: yellowgreen;
+  }
 }
+
 </style>

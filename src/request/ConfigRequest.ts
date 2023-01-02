@@ -1,32 +1,42 @@
-import {AddConfigParam, EditConfigParam, GetConfigParam} from "@/entity/configModel";
+import {AddConfigParam, DeleteConfigParam, EditConfigParam, GetConfigPageParam} from "@/entity/configEntity";
 import axiosClient from "@/conf/axiosClient";
 
 /**
  * 获取分页配置信息
- * @param getConfigParam
+ * @param {string} param.current 当前页码
+ * @param {string} param.description 描述
+ * @param {string} param.keyword 关键字
+ * @param {string} param.size 每页显示数量
+ * @returns
  */
-export const getConfigPage = function (getConfigParam: GetConfigParam) {
+export const getConfigPage = function (param: GetConfigPageParam) {
     return axiosClient({
         url: "/config/getConfigPage",
         method: "GET",
-        params: getConfigParam
+        params: param
     })
 }
 
 /**
  * 编辑配置
- * @param editConfigParam
+ * @param {object} param 编辑配置参数
+ * @param {string} param.description 描述
+ * @param {number} param.id id
+ * @param {string} param.keyword 配置项关键词
+ * @param {string} param.value 配置项属性值
+ * @returns
  */
-export const editConfig = function (editConfigParam: EditConfigParam) {
+export const editConfig = function (param: EditConfigParam) {
     return axiosClient({
         url: "/config/editConfig",
         method: "POST",
-        data: editConfigParam
+        data: param
     });
 }
 
 /**
  * 获取下一个自增主键id
+ * @returns
  */
 export const getNextConfigId = function () {
     return axiosClient({
@@ -37,30 +47,38 @@ export const getNextConfigId = function () {
 
 /**
  * 新增配置
- * @param addConfigParam
+ * @param {object} param param
+ * @param {number} param.canEdit 是否支持编辑,可用值:0,1
+ * @param {string} param.description 描述
+ * @param {string} param.keyword 配置项关键词
+ * @param {string} param.value 配置项属性值
+ * @returns
  */
-export const addConfig = function (addConfigParam: AddConfigParam) {
+export const addConfig = function (param: AddConfigParam) {
     return axiosClient({
         url: "/config/addConfig",
         method: "POST",
-        data: addConfigParam
+        data: param
     });
 }
 
 /**
  * 删除配置
- * @param id
+ * @param {object} param 删除配置参数
+ * @param {number} param.id id
+ * @returns
  */
-export const deleteConfig = function (id: number) {
+export const deleteConfig = function (param: DeleteConfigParam) {
     return axiosClient({
         url: "/config/deleteConfig",
         method: "POST",
-        data: {"id": id}
+        data: param
     });
 }
 
 /**
  * 导出所有配置
+ * @returns
  */
 export const exportAllConfig = function () {
     return axiosClient({

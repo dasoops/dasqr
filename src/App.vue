@@ -92,4 +92,14 @@ html, body, #app {
   }
 
 }
+
+.el-autocomplete-suggestion li{
+  background: #2b2b2b;
+  color: white;
+}
+
+.el-autocomplete-suggestion li:hover{
+  background: #363636FF;
+  color: greenyellow;
+}
 </style>

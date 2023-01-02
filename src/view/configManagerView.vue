@@ -21,7 +21,7 @@
             <span>&nbsp;&nbsp;</span>
             <el-button :icon="Plus" @click="toAdd" circle/>
             <span>&nbsp;&nbsp;</span>
-            <el-button :icon="Download" @click="Export" circle/>
+            <el-button :icon="Download" @click="handleExport" circle/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -178,9 +178,22 @@
 
 <script lang="ts">
 import {defineComponent, reactive, toRefs} from "vue";
-import {AddConfigParam, ConfigData, EditConfigParam, GetConfigParam} from "@/entity/configModel";
+import {
+  AddConfigParam,
+  ConfigData,
+  DeleteConfigParam,
+  EditConfigParam,
+  GetConfigPageParam
+} from "@/entity/configEntity";
 import {Check, Close, Delete, Download, Edit, Plus, Search} from '@element-plus/icons-vue'
-import {addConfig, deleteConfig, editConfig, exportAllConfig, getConfigPage, getNextConfigId} from "@/request/ConfigRequest";
+import {
+  addConfig,
+  deleteConfig,
+  editConfig,
+  exportAllConfig,
+  getConfigPage,
+  getNextConfigId
+} from "@/request/ConfigRequest";
 import {ElMessageBox} from "element-plus";
 import {getFileNameForDisposition} from "@/util/StringUtil";
 
@@ -188,7 +201,7 @@ export default defineComponent({
   name: "configManagerView",
   setup() {
     let tableData: Array<ConfigData> = reactive([]);
-    const getConfigParam: GetConfigParam = reactive({
+    const getConfigParam: GetConfigPageParam = reactive({
       keyword: undefined,
       description: undefined,
       size: 15,
@@ -230,11 +243,6 @@ export default defineComponent({
       addConfig(dataMap.addConfigParam).then(() => {
         dataMap.showAddDialog = false;
         loadData();
-      })
-    }
-    const handleExport = function () {
-      exportAllConfig().then(() => {
-        console.log("handleExport");
       })
     }
     const handleCurrentChange = function (current: number) {
@@ -281,12 +289,14 @@ export default defineComponent({
             type: 'warning',
           }
       ).then(function () {
-        deleteConfig(rowData.id).then(() => {
+        deleteConfig(new class implements DeleteConfigParam {
+          id = rowData.id
+        }).then(() => {
           loadData();
         })
       })
     }
-    const Export = function () {
+    const handleExport = function () {
       exportAllConfig().then(res => {
         let data = res.data;
         if (!data) {
@@ -300,7 +310,7 @@ export default defineComponent({
 
         //文件名
         let fileName = getFileNameForDisposition(res.headers['content-disposition']);
-        a.setAttribute('download',fileName)
+        a.setAttribute('download', fileName)
 
         document.body.appendChild(a)
         a.click()
@@ -330,10 +340,9 @@ export default defineComponent({
       loadData,
       handleEdit,
       handleAdd,
-      handleExport,
       toDelete,
       toAdd,
-      Export,
+      handleExport,
     }
 
     init();

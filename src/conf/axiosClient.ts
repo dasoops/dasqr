@@ -16,7 +16,6 @@ client.interceptors.request.use((config) => {
     config.headers = config.headers ? config.headers : {};
     const token = localStorage.getItem("token");
     if (token) {
-        console.log(config.headers);
         config.headers['Authorization'] = "Bearer " + token;
     }
     return config;
@@ -37,7 +36,7 @@ client.interceptors.response.use(
             }
             return Promise.reject(res.data);
         }
-        ElMessage.success(res.data.msg);
+        // ElMessage.success(res.data.msg);
         return res.data;
     },
     (err) => {
