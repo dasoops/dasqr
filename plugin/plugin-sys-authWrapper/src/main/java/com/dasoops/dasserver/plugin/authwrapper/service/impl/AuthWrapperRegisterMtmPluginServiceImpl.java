@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.plugin.authwrapper.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
@@ -11,6 +12,7 @@ import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.cq.util.RegisterMtmPluginUtil;
 import com.dasoops.dasserver.plugin.authwrapper.cache.AuthWrapperRegisterMtmPluginCache;
 import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperRegisterMtmPluginService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
  * @see AuthWrapperRegisterMtmPluginService
  */
 @Service
+@Slf4j
 public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<RegisterMtmPluginMapper, RegisterMtmPluginDo>
         implements AuthWrapperRegisterMtmPluginService {
 
@@ -118,6 +121,7 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
                     RegisterMtmPluginDo::getPluginId,
                     RegisterMtmPluginDo::getIsPass
             ));
+            log.debug("initOrUpdateAuthIdOtmIsPassMap2Cache():{}", JSON.toJSONString(pluginIdIsPassMap));
             authWrapperRegisterMtmPluginCache.setAuthMap(registerId, pluginIdIsPassMap);
         });
     }
