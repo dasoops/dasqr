@@ -1,7 +1,6 @@
 package com.dasoops.dasserver.plugin.authwrapper.cache;
 
 import com.dasoops.common.cache.BaseCache;
-import com.dasoops.common.entity.enums.BaseRedisKeyEnum;
 import com.dasoops.common.util.Convert;
 import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
 import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
@@ -31,8 +30,8 @@ public class AuthWrapperRegisterMtmPluginCache extends BaseCache {
     }
 
     public void setAuthMap(Long registerRowId, Map<Long, Integer> pluginIdIsPassMap) {
-        super.remove4Prefix(BaseRedisKeyEnum.AUTH.getKey());
         AuthRedisKeyAuthListShamEnum redisKeyEnum = new AuthRedisKeyAuthListShamEnum(registerRowId);
+        super.remove(redisKeyEnum);
         Map<String, String> valueMap = Convert.toStrMap(pluginIdIsPassMap);
         super.hset(redisKeyEnum, valueMap);
     }

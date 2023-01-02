@@ -112,6 +112,7 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
     @Override
     public void initOrUpdateAuthIdOtmIsPassMap2Cache() {
         List<RegisterMtmPluginDo> registerMtmPluginDoAllList = super.list();
+        log.debug("initOrUpdateAuthIdOtmIsPassMap2Cache():{}", JSON.toJSONString(registerMtmPluginDoAllList));
         //按注册角色id分组
         Map<Long, List<RegisterMtmPluginDo>> groupByRegisterIdMap = registerMtmPluginDoAllList.stream().collect(Collectors.groupingBy(RegisterMtmPluginDo::getRegisterRowId));
         //replace
@@ -121,7 +122,6 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
                     RegisterMtmPluginDo::getPluginId,
                     RegisterMtmPluginDo::getIsPass
             ));
-            log.debug("initOrUpdateAuthIdOtmIsPassMap2Cache():{}", JSON.toJSONString(pluginIdIsPassMap));
             authWrapperRegisterMtmPluginCache.setAuthMap(registerId, pluginIdIsPassMap);
         });
     }
