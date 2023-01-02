@@ -66,7 +66,7 @@ public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, Regis
 
         //登录最低权限需求
         final Integer loginLessThanLevel = Integer.valueOf(configCache.getConfig(ConfigHashKeyEnum.LOGIN_NEED_MIN_LEVEL));
-        if (registerDo.getLevel() <= loginLessThanLevel) {
+        if (registerDo.getLevel() > loginLessThanLevel) {
             throw new WebLogicException(RegisterExceptionEnum.NEED_HIGH_LEVEL);
         }
 

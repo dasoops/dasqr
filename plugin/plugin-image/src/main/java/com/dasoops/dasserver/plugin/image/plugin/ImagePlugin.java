@@ -150,7 +150,7 @@ public class ImagePlugin extends CqPlugin {
         StringBuilder sb = new StringBuilder("没有这张图捏");
 
         List<String> fantasyKeywordList = imageService.getFantasyKeyword4Cache(keyword);
-        if (fantasyKeywordList != null) {
+        if (fantasyKeywordList != null && fantasyKeywordList.size() > 0) {
             sb.append(",相关关键词有: ");
             fantasyKeywordList.forEach(sb::append);
         }
