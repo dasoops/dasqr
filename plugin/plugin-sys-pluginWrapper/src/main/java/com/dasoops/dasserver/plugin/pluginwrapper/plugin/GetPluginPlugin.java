@@ -93,7 +93,7 @@ public class GetPluginPlugin extends CqPlugin {
                         break;
                 }
 
-                String id = String.valueOf(pluginPo.getId());
+                String id = String.valueOf(pluginPo.getRowId());
                 String description = pluginPo.getDescription();
 
                 //拼接

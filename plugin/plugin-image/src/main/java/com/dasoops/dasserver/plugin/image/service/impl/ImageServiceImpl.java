@@ -72,7 +72,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
     }
 
     private boolean keywordIsRepeat(String keyword, Long id) {
-        return super.lambdaQuery().ne(ImageDo::getId, id).eq(ImageDo::getKeyword, keyword).count() > 0;
+        return super.lambdaQuery().ne(ImageDo::getRowId, id).eq(ImageDo::getKeyword, keyword).count() > 0;
     }
 
     @Override
@@ -153,7 +153,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
             Long registerId = imageDo.getAuthorId();
             String fileName = imageDo.getFileName();
             GetImageVo resVo = new GetImageVo();
-            resVo.setId(imageDo.getId());
+            resVo.setId(imageDo.getRowId());
             resVo.setKeyword(imageDo.getKeyword());
             resVo.setFileName(fileName);
             resVo.setFilePath(minioTemplate.buildImagePath(fileName));
@@ -243,7 +243,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         }
 
         ImageDo newImageDo = new ImageDo();
-        newImageDo.setId(id);
+        newImageDo.setRowId(id);
         newImageDo.setKeyword(keyword);
         newImageDo.setFileName(fileName);
         super.updateById(newImageDo);
@@ -306,7 +306,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         List<ImageDo> imageDoList = super.list();
         return imageDoList.stream().map(imageDo -> {
             ExportImageInfoDto dto = new ExportImageInfoDto();
-            dto.setId(imageDo.getId());
+            dto.setId(imageDo.getRowId());
             dto.setKeyword(imageDo.getKeyword());
             dto.setFilePath(minioTemplate.buildImagePath(imageDo.getFileName()));
             Long authorId = imageDo.getAuthorId();

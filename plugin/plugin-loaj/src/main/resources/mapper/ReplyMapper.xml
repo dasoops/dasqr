@@ -16,7 +16,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID,KEYWORD,REPLY,
+        row_id,KEYWORD,REPLY,
         IS_DELETE,CREATE_USER,CREATE_TIME,
         UPDATE_USER,UPDATE_TIME
     </sql>

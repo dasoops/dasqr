@@ -5,20 +5,21 @@
 <mapper namespace="com.dasoops.dasserver.cq.mapper.RegisterMapper">
 
     <resultMap id="BaseResultMap" type="com.dasoops.dasserver.cq.entity.dbo.RegisterDo">
-            <id property="id" column="ID" jdbcType="INTEGER"/>
-            <result property="registerId" column="REGISTER_ID" jdbcType="BIGINT"/>
-            <result property="type" column="TYPE" jdbcType="TINYINT"/>
-            <result property="level" column="LEVEL" jdbcType="TINYINT"/>
-            <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
-            <result property="createUser" column="CREATE_USER" jdbcType="BIGINT"/>
-            <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
-            <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
-            <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <id property="rowId" column="row_id" jdbcType="BIGINT"/>
+        <result property="registerId" column="register_id" jdbcType="BIGINT"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
+        <result property="level" column="level" jdbcType="TINYINT"/>
+        <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID,REGISTER_ID,TYPE,
-        LEVEL,IS_DELETE,CREATE_USER,
-        CREATE_TIME,UPDATE_USER,UPDATE_TIME
+        row_id
+        ,register_id,`type`,
+        `level`,is_delete,create_user,
+        create_time,update_user,update_time
     </sql>
 </mapper>

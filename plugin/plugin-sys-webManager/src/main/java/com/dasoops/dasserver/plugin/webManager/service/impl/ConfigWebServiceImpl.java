@@ -68,12 +68,12 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         Long id = param.getId();
 
         //不同id是否有相同关键字
-        Long count = super.lambdaQuery().eq(ConfigDo::getKeyword, keyword).ne(ConfigDo::getId, id).count();
+        Long count = super.lambdaQuery().eq(ConfigDo::getKeyword, keyword).ne(ConfigDo::getRowId, id).count();
         if (count > 0) {
             throw new WebLogicException(ConfigExceptionEnum.REPEAT_KEYWORD);
         }
 
-        ConfigDo oldConfigDo = super.lambdaQuery().eq(ConfigDo::getId, id).one();
+        ConfigDo oldConfigDo = super.lambdaQuery().eq(ConfigDo::getRowId, id).one();
         if (oldConfigDo == null) {
             throw new WebLogicException(ConfigExceptionEnum.UNDEFINED_ID);
         }
@@ -82,7 +82,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         }
 
         ConfigDo newConfigDo = new ConfigDo();
-        newConfigDo.setId(id);
+        newConfigDo.setRowId(id);
         newConfigDo.setKeyword(keyword);
         newConfigDo.setValue(param.getValue());
         newConfigDo.setDescription(param.getDescription());
@@ -147,7 +147,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         List<ConfigDo> doList = super.list();
         List<ExportConfigDto> resList = doList.stream().map(configDo -> {
             ExportConfigDto dto = new ExportConfigDto();
-            dto.setId(configDo.getId());
+            dto.setId(configDo.getRowId());
             dto.setKeyword(configDo.getKeyword());
             dto.setValue(configDo.getValue());
             dto.setDescription(configDo.getDescription());

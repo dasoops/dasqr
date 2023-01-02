@@ -2,12 +2,11 @@ package com.dasoops.dasserver.cq.entity.dbo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serializable;
-
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * @Title: Plugin
@@ -37,7 +36,7 @@ public class PluginDo extends BaseDo implements Serializable {
     /**
      * 排序
      */
-    @TableField("`ORDER`")
+    @TableField("`order`")
     private Integer order;
 
     /**

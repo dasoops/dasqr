@@ -5,27 +5,26 @@
 <mapper namespace="com.dasoops.dasserver.plugin.webManager.mapper.PluginWebMapper">
 
     <resultMap id="BaseResultMap" type="com.dasoops.dasserver.cq.entity.dbo.PluginDo">
-        <id property="id" column="ID" jdbcType="INTEGER"/>
-        <result property="keyword" column="KEYWORD" jdbcType="VARCHAR"/>
-        <result property="classPath" column="CLASS_PATH" jdbcType="VARCHAR"/>
-        <result property="order" column="ORDER" jdbcType="INTEGER"/>
-        <result property="level" column="LEVEL" jdbcType="TINYINT"/>
-        <result property="description" column="DESCRIPTION" jdbcType="VARCHAR"/>
-        <result property="enable" column="ENABLE" jdbcType="TINYINT"/>
-        <result property="isDelete" column="IS_DELETE" jdbcType="TINYINT"/>
-        <result property="createUser" column="CREATE_USER" jdbcType="BIGINT"/>
-        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
-        <result property="updateUser" column="UPDATE_USER" jdbcType="BIGINT"/>
-        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <id property="rowId" column="row_id" jdbcType="BIGINT"/>
+        <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
+        <result property="classPath" column="class_path" jdbcType="VARCHAR"/>
+        <result property="order" column="order" jdbcType="INTEGER"/>
+        <result property="level" column="level" jdbcType="TINYINT"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="enable" column="enable" jdbcType="TINYINT"/>
+        <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID
-        ,
-        KEYWORD,CLASS_PATH,`ORDER`,
-        `LEVEL`,DESCRIPTION,
-        ENABLE,IS_DELETE,CREATE_USER,
-        CREATE_TIME,UPDATE_USER,UPDATE_TIME
+        row_id,
+        keyword,class_path,`order`,
+        `level`,description,
+        enable,is_delete,create_user,
+        create_time,update_user,update_time
     </sql>
 
 

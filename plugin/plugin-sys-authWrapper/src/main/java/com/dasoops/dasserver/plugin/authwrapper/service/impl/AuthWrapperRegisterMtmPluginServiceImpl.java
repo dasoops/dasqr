@@ -57,7 +57,7 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
         Map<Long, List<RegisterMtmPluginDo>> groupByRegisterIdMap = registerMtmPluginDoAllList.stream().collect(Collectors.groupingBy(RegisterMtmPluginDo::getRegisterRowId));
 
         registerDoList.forEach(registerDo -> {
-            List<RegisterMtmPluginDo> registerMtmPluginDoList = groupByRegisterIdMap.get(registerDo.getId());
+            List<RegisterMtmPluginDo> registerMtmPluginDoList = groupByRegisterIdMap.get(registerDo.getRowId());
             if (CollectionUtil.isEmpty(registerMtmPluginDoList)) {
                 //全空,全补全
                 noExistRegisterMtmPluginDoList.addAll(
@@ -68,7 +68,7 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
                 pluginDoList.forEach(pluginDo -> {
                     //是否有记录
                     boolean isExist = registerMtmPluginDoList.stream().anyMatch(mtmDo ->
-                            mtmDo.getPluginId().equals(pluginDo.getId())
+                            mtmDo.getPluginId().equals(pluginDo.getRowId())
                     );
                     if (!isExist) {
                         noExistRegisterMtmPluginDoList.add(
@@ -92,14 +92,14 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
         //删除多余数据
         List<Long> superfluousIdList = new ArrayList<>();
 
-        List<Long> pluginIdList = pluginDoList.stream().map(PluginDo::getId).toList();
-        List<Long> registerIdList = registerDoList.stream().map(RegisterDo::getId).toList();
+        List<Long> pluginIdList = pluginDoList.stream().map(PluginDo::getRowId).toList();
+        List<Long> registerIdList = registerDoList.stream().map(RegisterDo::getRowId).toList();
 
         //有插件/注册用户不存在(被删除)的即为多余数据
         for (RegisterMtmPluginDo mtmDo : registerMtmPluginDoAllNewList) {
             boolean isSuperfluous = !pluginIdList.contains(mtmDo.getPluginId()) || !registerIdList.contains(mtmDo.getRegisterRowId());
             if (isSuperfluous) {
-                superfluousIdList.add(mtmDo.getId());
+                superfluousIdList.add(mtmDo.getRowId());
             }
         }
 

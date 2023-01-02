@@ -25,7 +25,7 @@ public class BaseDo implements Serializable {
      * 主键id
      */
     @TableId(type = IdType.AUTO)
-    private Long id;
+    private Long rowId;
     /**
      * 逻辑删除(true为删除)
      */

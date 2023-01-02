@@ -39,7 +39,7 @@ public class AuthWrapperPluginServiceImpl extends ServiceImpl<PluginMapper, Plug
     public void initOrUpdatePluginClassNameOtoIdMap2Cache() {
         //全表
         List<PluginDo> pluginDoList = super.list();
-        Map<String, Long> pluginClassPathIdMap = pluginDoList.stream().collect(Collectors.toMap(PluginDo::getClassPath, PluginDo::getId));
+        Map<String, Long> pluginClassPathIdMap = pluginDoList.stream().collect(Collectors.toMap(PluginDo::getClassPath, PluginDo::getRowId));
 
         //replace
         authWrapperPluginCache.setPluginClassPathIdMap(pluginClassPathIdMap);

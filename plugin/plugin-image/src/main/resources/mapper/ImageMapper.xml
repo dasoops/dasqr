@@ -5,8 +5,8 @@
 <mapper namespace="com.dasoops.dasserver.plugin.image.mapper.ImageMapper">
 
     <resultMap id="BaseResultMap" type="com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo">
-        <id property="id" column="ID" jdbcType="BIGINT"/>
-        <result property="keyword" column="KEYWORD" jdbcType="VARCHAR"/>
+        <id property="rowId" column="row_id" jdbcType="BIGINT"/>
+        <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
         <result property="fileName" column="FILE_NAME" jdbcType="VARCHAR"/>
         <result property="groupId" column="GROUP_ID" jdbcType="BIGINT"/>
         <result property="authorId" column="AUTHOR_ID" jdbcType="BIGINT"/>
@@ -18,7 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID
+        row_id
         ,KEYWORD,FILE_NAME,
         GROUP_ID,AUTHOR_ID,IS_DELETE,
         CREATE_USER,CREATE_TIME,UPDATE_USER,

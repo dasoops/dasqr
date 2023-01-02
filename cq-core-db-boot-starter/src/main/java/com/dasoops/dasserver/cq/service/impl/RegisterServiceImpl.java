@@ -54,7 +54,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
     @Transactional(rollbackFor = Exception.class)
     public boolean save(RegisterDo registerPo) {
         CqAssert.allMustNotNull(registerPo, registerPo.getRegisterId(), registerPo.getType(), registerPo.getLevel());
-        CqAssert.allMustNull(registerPo.getId());
+        CqAssert.allMustNull(registerPo.getRowId());
 
         //存储注册对象
         CqAssert.isTrue(super.save(registerPo));
@@ -65,7 +65,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         List<RegisterMtmPluginDo> rpList = pluginPoIdList.stream().map(pluginPoId -> {
             RegisterMtmPluginDo po = new RegisterMtmPluginDo();
             po.setPluginId(pluginPoId);
-            po.setRegisterRowId(registerPo.getId());
+            po.setRegisterRowId(registerPo.getRowId());
             return po;
         }).collect(Collectors.toList());
 
@@ -76,7 +76,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
 
     @Override
     public List<Long> getIdListByMaxLevel(Integer maxLevel) {
-        return super.lambdaQuery().ge(RegisterDo::getLevel, maxLevel).list().stream().map(BaseDo::getId).collect(Collectors.toList());
+        return super.lambdaQuery().ge(RegisterDo::getLevel, maxLevel).list().stream().map(BaseDo::getRowId).collect(Collectors.toList());
     }
 
     @Override
@@ -143,7 +143,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
     @Override
     public Map<Long, Integer> getRegisterIdOtoTypeMap() {
         List<RegisterDo> registerDoList = super.list();
-        Map<Long, Integer> map = registerDoList.stream().collect(Collectors.toMap(RegisterDo::getId, RegisterDo::getType));
+        Map<Long, Integer> map = registerDoList.stream().collect(Collectors.toMap(RegisterDo::getRowId, RegisterDo::getType));
         return map;
     }
 
@@ -160,11 +160,11 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         Map<Integer, List<RegisterDo>> groupByTypeRegisterDoMap = registerDoList.stream().collect(Collectors.groupingBy(RegisterDo::getType));
 
         List<RegisterDo> userRegisterDoList = groupByTypeRegisterDoMap.get(RegisterTypeEnum.USER.getDbValue());
-        Map<Long, Long> userValueMap = userRegisterDoList.stream().collect(Collectors.toMap(RegisterDo::getRegisterId, RegisterDo::getId));
+        Map<Long, Long> userValueMap = userRegisterDoList.stream().collect(Collectors.toMap(RegisterDo::getRegisterId, RegisterDo::getRowId));
         registerCache.setUserRegisterIdOtoRowIdMap(userValueMap);
 
         List<RegisterDo> groupRegisterDoList = groupByTypeRegisterDoMap.get(RegisterTypeEnum.GROUP.getDbValue());
-        Map<Long, Long> groupValueMap = groupRegisterDoList.stream().collect(Collectors.toMap(RegisterDo::getRegisterId, RegisterDo::getId));
+        Map<Long, Long> groupValueMap = groupRegisterDoList.stream().collect(Collectors.toMap(RegisterDo::getRegisterId, RegisterDo::getRowId));
         registerCache.setGroupRegisterIdOtoRowIdMap(groupValueMap);
     }
 }

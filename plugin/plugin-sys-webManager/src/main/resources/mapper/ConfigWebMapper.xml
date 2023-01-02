@@ -5,23 +5,23 @@
 <mapper namespace="com.dasoops.dasserver.plugin.webManager.mapper.ConfigWebMapper">
 
     <resultMap id="BaseResultMap" type="com.dasoops.dasserver.cq.entity.dbo.ConfigDo">
-        <id property="id" column="ID" jdbcType="INTEGER"/>
-        <result property="keyword" column="KEYWORD" jdbcType="VARCHAR"/>
-        <result property="value" column="VALUE" jdbcType="VARCHAR"/>
-        <result property="description" column="DESCRIPTION" jdbcType="VARCHAR"/>
-        <result property="canEdit" column="CAN_EDIT" jdbcType="INTEGER"/>
-        <result property="isDelete" column="IS_DELETE" jdbcType="TINYINT"/>
-        <result property="createUser" column="CREATE_USER" jdbcType="BIGINT"/>
-        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
-        <result property="updateUser" column="UPDATE_USER" jdbcType="BIGINT"/>
-        <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <id property="rowId" column="row_id" jdbcType="BIGINT"/>
+        <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
+        <result property="value" column="value" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="canEdit" column="can_edit" jdbcType="INTEGER"/>
+        <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID
-        ,KEYWORD,`VALUE`,CAN_EDIT
-        IS_DELETE,CREATE_USER,CREATE_TIME,
-        UPDATE_USER,UPDATE_TIME
+        row_id
+        ,keyword,`value`,description,can_edit
+        is_delete,create_user,create_time,
+        update_user,update_time
     </sql>
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT MAX(ID)

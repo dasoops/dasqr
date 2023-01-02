@@ -78,7 +78,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
     @Transactional(rollbackFor = Exception.class)
     public boolean save(PluginDo pluginPo) {
         Assert.allMustNotNull(pluginPo, pluginPo.getKeyword(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription(), pluginPo.getOrder());
-        Assert.allMustNull(pluginPo.getId());
+        Assert.allMustNull(pluginPo.getRowId());
 
         //默认启用,存储插件对象
         pluginPo.setEnable(1);
@@ -90,7 +90,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
         //构建registerPo对象
         List<RegisterMtmPluginDo> rpList = registerPoIdList.stream().map(registerPoId -> {
             RegisterMtmPluginDo po = new RegisterMtmPluginDo();
-            po.setPluginId(pluginPo.getId());
+            po.setPluginId(pluginPo.getRowId());
             po.setRegisterRowId(registerPoId);
             return po;
         }).collect(Collectors.toList());
@@ -108,7 +108,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
 
     @Override
     public List<Long> getIdListByMinLevel(Integer minLevel) {
-        return super.lambdaQuery().le(PluginDo::getLevel, minLevel).list().stream().map(BaseDo::getId).collect(Collectors.toList());
+        return super.lambdaQuery().le(PluginDo::getLevel, minLevel).list().stream().map(BaseDo::getRowId).collect(Collectors.toList());
     }
 
     @Override
