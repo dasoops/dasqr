@@ -45,7 +45,7 @@ import java.util.Optional;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/11/07
  * @Version 1.0.0
- * @Description: 针对表【TB_PLUGIN_IMAGE(图片信息)】的数据库操作Service实现
+ * @Description: 针对表【tb_plugin_image(图片信息)】的数据库操作Service实现
  * @see ServiceImpl
  * @see ImageService
  */

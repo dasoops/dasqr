@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @see Serializable
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value ="TB_PLUGIN_IMAGE")
+@TableName(value ="tb_plugin_image")
 @Data
 public class ImageDo extends BaseDo {
 

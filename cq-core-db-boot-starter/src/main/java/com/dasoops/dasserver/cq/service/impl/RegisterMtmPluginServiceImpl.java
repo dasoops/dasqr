@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/11/01
  * @Version 1.0.0
- * @Description: 针对表【TB_CORE_REGISTER_MTM_PLUGIN】的数据库操作Service实现
+ * @Description: 针对表【tb_core_register_mtm_plugin】的数据库操作Service实现
  * @see ServiceImpl
  * @see RegisterMtmPluginService
  */

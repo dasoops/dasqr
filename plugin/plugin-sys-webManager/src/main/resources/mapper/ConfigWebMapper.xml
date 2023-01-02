@@ -25,6 +25,6 @@
     </sql>
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT MAX(ID)
-        FROM `TB_CORE_CONFIG`;
+        FROM `tb_core_config`;
     </select>
 </mapper>

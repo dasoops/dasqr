@@ -26,15 +26,15 @@
     </sql>
     <select id="selectLikeKeyword" resultType="java.lang.String">
         SELECT `KEYWORD`
-        FROM `TB_PLUGIN_IMAGE`
+        FROM `tb_plugin_image`
         WHERE `KEYWORD` LIKE CONCAT('%', #{keyword}, '%')
     </select>
     <select id="selectMaxId" resultType="java.lang.Long">
         SELECT MAX(`ID`)
-        FROM `TB_PLUGIN_IMAGE`;
+        FROM `tb_plugin_image`;
     </select>
     <select id="selectKeywordList" resultType="java.lang.String">
         SELECT `KEYWORD`
-        FROM `TB_PLUGIN_IMAGE`
+        FROM `tb_plugin_image`
     </select>
 </mapper>

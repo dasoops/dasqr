@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @see Serializable
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value ="TB_CORE_CONFIG")
+@TableName(value ="tb_core_config")
 @Data
 public class ConfigDo extends BaseDo implements Serializable {
 

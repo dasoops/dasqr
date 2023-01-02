@@ -14,12 +14,12 @@ import java.io.Serializable;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/11/01
  * @Version 1.0.0
- * @Description: TB_CORE_REGISTER_MTM_PLUGIN
+ * @Description: tb_core_register_mtm_plugin
  * @see BaseDo
  * @see Serializable
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "TB_CORE_REGISTER_MTM_PLUGIN")
+@TableName(value = "tb_core_register_mtm_plugin")
 @Data
 public class RegisterMtmPluginDo extends BaseDo implements Serializable {
 

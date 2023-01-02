@@ -9,7 +9,7 @@ import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/11/01
  * @Version 1.0.0
- * @Description: 针对表【TB_CORE_REGISTER_MTM_PLUGIN】的数据库操作Mapper
+ * @Description: 针对表【tb_core_register_mtm_plugin】的数据库操作Mapper
  * @see BaseMapper
  */
 public interface RegisterMtmPluginWebMapper extends BaseMapper<RegisterMtmPluginDo> {

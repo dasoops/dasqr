@@ -18,7 +18,7 @@ import java.util.Optional;
 
 /**
 * @author Administrator
-* @description 针对表【TB_PLUGIN_IMAGE(图片信息)】的数据库操作Service
+* @description 针对表【tb_plugin_image(图片信息)】的数据库操作Service
 * @createDate 2022-11-07 15:23:49
 */
 public interface ImageService extends IService<ImageDo> {

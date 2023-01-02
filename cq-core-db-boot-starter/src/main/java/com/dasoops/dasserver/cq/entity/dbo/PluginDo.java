@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
  * @see Serializable
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "TB_CORE_PLUGIN")
+@TableName(value = "tb_core_plugin")
 @Data
 public class PluginDo extends BaseDo implements Serializable {
 

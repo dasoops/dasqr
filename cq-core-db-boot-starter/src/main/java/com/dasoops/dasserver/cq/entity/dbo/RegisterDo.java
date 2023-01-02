@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
  * @see Serializable
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value ="TB_CORE_REGISTER")
+@TableName(value ="tb_core_register")
 @Data
 public class RegisterDo extends BaseDo implements Serializable {
 

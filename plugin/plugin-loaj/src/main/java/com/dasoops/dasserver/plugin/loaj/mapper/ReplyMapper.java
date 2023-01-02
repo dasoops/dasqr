@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/11/11
  * @Version 1.0.0
- * @Description: 针对表【TB_PLUGIN_LOAJ_REPLY】的数据库操作Mapper
+ * @Description: 针对表【tb_plugin_loaj_reply】的数据库操作Mapper
  * @see BaseMapper
  */
 public interface ReplyMapper extends BaseMapper<ReplyDo> {

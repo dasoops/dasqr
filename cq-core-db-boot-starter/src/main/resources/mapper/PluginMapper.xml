@@ -29,13 +29,13 @@
     </sql>
     <select id="selectAllClassPathOrderByOrder" resultType="java.lang.String">
         SELECT CLASS_PATH
-        FROM TB_CORE_PLUGIN
+        FROM tb_core_plugin
         WHERE ENABLE = TRUE
         ORDER BY `ORDER`
     </select>
     <select id="getMaxOrder" resultType="java.lang.Integer">
         SELECT `ORDER`
-        FROM TB_CORE_PLUGIN
+        FROM tb_core_plugin
         WHERE IS_DELETE = 0
         ORDER BY `ORDER` LIMIT 1
     </select>

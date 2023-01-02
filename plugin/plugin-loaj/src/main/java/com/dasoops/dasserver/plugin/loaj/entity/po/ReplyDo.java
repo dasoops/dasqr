@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
  * @see Serializable
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value ="TB_PLUGIN_LOAJ_REPLY")
+@TableName(value ="tb_plugin_loaj_reply")
 @Data
 public class ReplyDo extends BaseDo implements Serializable {
 
