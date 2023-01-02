@@ -8,6 +8,7 @@ import com.dasoops.dasserver.plugin.webManager.entity.param.AddConfigParam;
 import com.dasoops.dasserver.plugin.webManager.entity.param.DeleteConfigParam;
 import com.dasoops.dasserver.plugin.webManager.entity.param.EditConfigParam;
 import com.dasoops.dasserver.plugin.webManager.entity.param.GetConfigPageParam;
+import com.dasoops.dasserver.plugin.webManager.entity.vo.GetConfigVo;
 import com.dasoops.dasserver.plugin.webManager.entity.vo.GetNextIdVo;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public interface ConfigWebService extends IService<ConfigDo> {
      * @param param 参数
      * @return {@link IPage}<{@link ConfigDo}>
      */
-    IPage<ConfigDo> getConfigPageData(GetConfigPageParam param);
+    IPage<GetConfigVo> getConfigPageData(GetConfigPageParam param);
 
     /**
      * 编辑配置项

@@ -45,8 +45,8 @@ public class ConfigController {
     @GetMapping("getConfigPage")
     @ApiOperation(value = "获取分页配置信息", notes = "获取分页配置信息")
     public PageResult<GetConfigVo> getConfigPage(GetConfigPageParam param) {
-        IPage<ConfigDo> configDoPage = configWebService.getConfigPageData(param);
-        return PageResult.success(configDoPage, GetConfigVo.class);
+        IPage<GetConfigVo> configDoPage = configWebService.getConfigPageData(param);
+        return PageResult.success(configDoPage);
     }
 
     @PostMapping("editConfig")

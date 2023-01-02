@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.webManager.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.ExceptionEnum;
@@ -14,6 +15,7 @@ import com.dasoops.dasserver.plugin.webManager.entity.param.AddConfigParam;
 import com.dasoops.dasserver.plugin.webManager.entity.param.DeleteConfigParam;
 import com.dasoops.dasserver.plugin.webManager.entity.param.EditConfigParam;
 import com.dasoops.dasserver.plugin.webManager.entity.param.GetConfigPageParam;
+import com.dasoops.dasserver.plugin.webManager.entity.vo.GetConfigVo;
 import com.dasoops.dasserver.plugin.webManager.entity.vo.GetNextIdVo;
 import com.dasoops.dasserver.plugin.webManager.mapper.ConfigWebMapper;
 import com.dasoops.dasserver.plugin.webManager.service.ConfigWebService;
@@ -47,15 +49,21 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
     }
 
     @Override
-    public IPage<ConfigDo> getConfigPageData(GetConfigPageParam param) {
+    public IPage<GetConfigVo> getConfigPageData(GetConfigPageParam param) {
         WebAssert.allMustNotNull(param);
         String keyword = param.getKeyword();
         String description = param.getDescription();
 
-        IPage<ConfigDo> page = super.lambdaQuery()
+        IPage<GetConfigVo> page = super.lambdaQuery()
                 .like(keyword != null && !"".equals(keyword), ConfigDo::getKeyword, keyword)
                 .like(description != null && !"".equals(description), ConfigDo::getDescription, description)
-                .page(param.buildSelectPage());
+                .page(param.buildSelectPage())
+                .convert(configDo -> {
+                    GetConfigVo getConfigVo = new GetConfigVo();
+                    getConfigVo.setId(configDo.getRowId());
+                    BeanUtil.copyProperties(configDo, getConfigVo);
+                    return getConfigVo;
+                });
 
         return page;
     }
