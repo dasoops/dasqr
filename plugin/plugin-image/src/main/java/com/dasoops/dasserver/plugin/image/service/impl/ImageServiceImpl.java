@@ -102,7 +102,6 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         imagePo.setAuthorId(authorId);
 
         //信息持久化
-        boolean save = save(imagePo);
         imageCache.addKeyword(keyword);
         return save(imagePo);
     }

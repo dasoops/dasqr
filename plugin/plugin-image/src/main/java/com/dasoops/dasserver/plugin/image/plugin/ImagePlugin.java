@@ -98,13 +98,13 @@ public class ImagePlugin extends CqPlugin {
             //分片存图 part.2 逻辑
             String key;
             if (cqMessageEvent instanceof CqGroupMessageEvent event) {
-                //是否有标记
+                //群组分片
                 key = imageCache.hgetAndDeleteImagePartSaveFlag(event.getGroupId(), event.getUserId());
                 if (key == null) {
                     return PassObj.pass(cqMessageEvent);
                 }
             } else {
-                //是否有标记
+                //单人分片
                 key = imageCache.getAndDeleteImagePartSaveFlag(cqMessageEvent.getUserId());
                 if (key == null) {
                     return PassObj.pass(cqMessageEvent);
