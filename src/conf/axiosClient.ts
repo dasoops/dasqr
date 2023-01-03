@@ -1,15 +1,14 @@
 import axios from "axios";
 import {ElMessage} from "element-plus";
 import {useRouter} from "vue-router";
-
-export const baseUrl = "http://127.0.0.1:4901";
+import {getBaseUrl} from "@/request/initRequest";
 
 const client = axios.create({
-    baseURL: baseUrl,
+    baseURL: getBaseUrl(),
     timeout: 5000,
     headers: {
         "content-type": "application/json;charset=utf-8"
-    }
+    },
 });
 
 client.interceptors.request.use((config) => {

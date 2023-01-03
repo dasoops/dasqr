@@ -1,4 +1,4 @@
-import axiosClient, {baseUrl} from "@/conf/axiosClient";
+import axiosClient from "@/conf/axiosClient";
 import {
     AddImageParam,
     DeleteImageParam,
@@ -6,6 +6,7 @@ import {
     GetFantasyKeywordParam,
     GetImageInfoPageParam
 } from "@/entity/ImageEntity";
+import {getBaseUrl} from "@/request/initRequest";
 
 /**
  * 获取分页配置信息
@@ -132,5 +133,5 @@ export const getNextId = function () {
     })
 }
 
-export const uploadImageUrl = baseUrl + "/image/uploadImage";
+export const uploadImageUrl = getBaseUrl() + "/image/uploadImage";
 export const uploadImageMethod = "POST";

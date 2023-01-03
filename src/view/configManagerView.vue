@@ -462,6 +462,10 @@ export default defineComponent({
       color: white;
     }
 
+    .el-pager li.is-active {
+      color: greenyellow;
+    }
+
     .el-pagination__jump, .el-pagination__sizes {
       .el-pagination__goto {
         color: white;

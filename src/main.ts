@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import {store, key} from './conf/store'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import {initConfig} from "@/request/initRequest";
 
 const app = createApp(App);
 app.use(router)
@@ -13,5 +14,6 @@ app.use(store, key)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+initConfig();
 app.mount('#app')
 

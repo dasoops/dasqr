@@ -17,7 +17,6 @@
                 @change="handleSelectFantastyUser"
                 class="input-line"
                 value-key="author"
-                debounce="500"
                 :hide-loading="true"
                 clearable
                 :fit-input-width="true"
