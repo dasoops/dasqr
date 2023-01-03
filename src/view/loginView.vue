@@ -41,7 +41,6 @@ export default defineComponent({
   setup() {
     let router = useRouter();
     let store = useStore();
-    console.log(useStore());
 
     const data = reactive(new LoginData());
     const rules = reactive<FormRules>({
@@ -78,7 +77,6 @@ export default defineComponent({
         login(data.formData).then((res: LoginRes) => {
           localStorage.setItem('token', res.data.token);
           router.push('/config');
-          console.log(store);
           store.commit("refresh");
         })
       }));
