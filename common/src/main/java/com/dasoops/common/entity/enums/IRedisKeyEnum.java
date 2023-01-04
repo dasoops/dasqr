@@ -10,7 +10,6 @@ package com.dasoops.common.entity.enums;
  */
 public interface IRedisKeyEnum {
 
-
     /**
      * 获取key
      *
