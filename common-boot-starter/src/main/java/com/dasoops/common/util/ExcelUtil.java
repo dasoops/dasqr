@@ -24,31 +24,11 @@ import java.util.List;
  */
 @Slf4j
 public class ExcelUtil {
-    /**
-     * xls的ContentType
-     */
-    public static final String XLS_CONTENT_TYPE = "application/vnd.ms-excel";
 
     /**
      * xlsx的ContentType
      */
     public static final String XLSX_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-
-    //发送响应流方法
-    public static void setResponseHeader(HttpServletResponse response, String fileName) {
-        try {
-            //设置表文件名的字符编码，不然中文文件名会乱码
-            fileName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
-            response.setContentType("application/octet-stream;charset=utf-8");
-            response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-            response.addHeader("Pargam", "no-cache");
-            response.addHeader("Cache-Control", "no-cache");
-            response.addHeader("Access-Control-Expose-Headers", "*");
-        } catch (Exception ex) {
-            log.error("发送响应流方法异常", ex);
-        }
-    }
 
 
     /**

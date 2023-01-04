@@ -76,7 +76,7 @@ public class CqCodeUtil {
 
             //获取参数集合
             List<String> paramStrList = ReUtil.findAll(paramRegex, cqCodeStr, 0, new ArrayList<>());
-            Map<String, String> paramMap = new HashMap<>();
+            Map<String, String> paramMap = new HashMap<>(4);
             paramStrList.forEach(paramStr -> {
                 String key = paramStr.substring(1, paramStr.indexOf("="));
                 String value = paramStr.substring(paramStr.indexOf("=") + 1);

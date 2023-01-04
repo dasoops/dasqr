@@ -10,7 +10,7 @@ import com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyKeywordVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyUserVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.GetImageVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.UploadImageVo;
-import com.dasoops.dasserver.plugin.webManager.entity.vo.GetNextIdVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

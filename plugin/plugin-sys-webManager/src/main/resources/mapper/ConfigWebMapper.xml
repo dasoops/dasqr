@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dasoops.dasserver.plugin.webManager.mapper.ConfigWebMapper">
+<mapper namespace="com.dasoops.dasserver.plugin.webmanager.mapper.ConfigWebMapper">
 
     <resultMap id="BaseResultMap" type="com.dasoops.dasserver.cq.entity.dbo.ConfigDo">
         <id property="rowId" column="row_id" jdbcType="BIGINT"/>

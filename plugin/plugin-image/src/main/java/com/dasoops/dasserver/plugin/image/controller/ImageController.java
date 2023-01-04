@@ -12,7 +12,7 @@ import com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyUserVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.GetImageVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.UploadImageVo;
 import com.dasoops.dasserver.plugin.image.service.ImageService;
-import com.dasoops.dasserver.plugin.webManager.entity.vo.GetNextIdVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

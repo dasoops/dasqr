@@ -37,6 +37,7 @@ public class EventHandler {
     private final ApplicationContext applicationContext;
 
     //    private final CqPlugin defaultPlugin = new CqPlugin();
+
     private final AuthWrapper authWrapper;
 
     public EventHandler(ApplicationContext applicationContext, AuthWrapper authWrapper) {
