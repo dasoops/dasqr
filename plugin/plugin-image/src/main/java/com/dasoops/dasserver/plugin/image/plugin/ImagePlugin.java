@@ -45,6 +45,7 @@ public class ImagePlugin extends CqPlugin {
         this.imageService = imageService;
         this.ocrTemplate = ocrTemplate;
         this.imageCache = imageCache;
+        System.out.println("oae321");
     }
 
     @Override

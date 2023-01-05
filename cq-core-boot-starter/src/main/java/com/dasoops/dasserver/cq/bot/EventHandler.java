@@ -17,6 +17,7 @@ import com.dasoops.dasserver.cq.utils.EventUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -54,6 +55,7 @@ public class EventHandler {
     public void handle(CqTemplate cq, JSONObject eventJson) {
         EventUtil.set(eventJson);
 
+        Map<String, CqPlugin> beansOfType = applicationContext.getBeansOfType(CqPlugin.class);
         String postType = eventJson.getString("post_type");
         switch (postType) {
             case "message": {

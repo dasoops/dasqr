@@ -27,6 +27,16 @@
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>ocr-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>minio-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
             <artifactId>cq-core-db-boot-starter</artifactId>
         </dependency>
 
@@ -57,8 +67,13 @@
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>plugin-image</artifactId>
+            <artifactId>plugin-sys-pluginLoader</artifactId>
         </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.dasoops.dasserver</groupId>-->
+        <!--            <artifactId>plugin-image</artifactId>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
@@ -83,6 +98,11 @@
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-sys-webAuth</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-pluginLoader</artifactId>
         </dependency>
 
         <dependency>

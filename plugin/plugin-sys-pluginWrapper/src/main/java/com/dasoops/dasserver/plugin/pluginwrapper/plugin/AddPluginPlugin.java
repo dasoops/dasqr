@@ -72,14 +72,14 @@ public class AddPluginPlugin extends CqPlugin {
 
         Integer maxOrder = pluginService.getMaxOrder();
 
-        PluginDo po = new PluginDo();
-        po.setKeyword(keyword);
-        po.setClassPath(classPath);
-        po.setDescription(description);
-        po.setEnable(1);
-        po.setLevel(9);
-        po.setOrder(maxOrder);
-        CqAssert.dbExecuteMustSuccess(pluginService.save(po));
+        PluginDo pluginDo = new PluginDo();
+        pluginDo.setKeyword(keyword);
+        pluginDo.setClassPath(classPath);
+        pluginDo.setDescription(description);
+        pluginDo.setEnable(1);
+        pluginDo.setLevel(9);
+        pluginDo.setOrder(maxOrder);
+        CqAssert.dbExecuteMustSuccess(pluginService.save(pluginDo));
         return PassObj.block();
     }
 }
