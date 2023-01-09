@@ -59,7 +59,10 @@ public class GetPluginPlugin extends CqPlugin {
         //说明有加载了但无数据库记录的插件
         if (loadPluginMap.size() > pluginDoList.size()) {
             List<String> pluginClassNameList = pluginDoList.stream().map(PluginDo::getClassPath).toList();
-            List<CqPlugin> noRecordButLoadPluginList = loadPluginMap.values().stream().filter(cqPlugin -> !pluginClassNameList.contains(cqPlugin.getClass().getName())).toList();
+            List<CqPlugin> noRecordButLoadPluginList = loadPluginMap.values().stream()
+                    .filter(cqPlugin ->
+                            !pluginClassNameList.contains(cqPlugin.getClass().getName())
+                    ).toList();
             noRecordButLoadPluginList.forEach(cqPlugin -> sb.append(buildUnkownPlugin(cqPlugin)));
         }
 

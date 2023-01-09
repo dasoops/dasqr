@@ -245,6 +245,7 @@ public class EventHandler {
                 return;
             }
         }
+//        log.debug("消息解析结束,执行器链:{}", pluginChainStringBuilder.append(" -> block"));
     }
 
 }

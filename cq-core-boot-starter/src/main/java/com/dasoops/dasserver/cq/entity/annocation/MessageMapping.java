@@ -51,6 +51,13 @@ public @interface MessageMapping {
     String separator() default ",";
 
     /**
+     * 是否忽略大小写
+     *
+     * @return boolean
+     */
+    boolean ignoreCase() default true;
+
+    /**
      * 是否忽略全角标点
      *
      * @return boolean

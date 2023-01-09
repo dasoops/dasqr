@@ -3,6 +3,7 @@ package com.dasoops.dasserver.cq.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.util.Assert;
+import com.dasoops.common.util.ClassNameUtil;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
@@ -61,12 +62,12 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
         //在数据库中有启用记录的才是需要加载的
         List<CqPlugin> needloadPluginList = loadPluginList.stream()
                 .filter(cqPlugin -> {
-                    boolean needLoad = allClassPathList.stream().anyMatch(classPath -> cqPlugin.getClass().getName().contains(classPath));
-                    Assert.ifFalse(needLoad, () -> log.error("存在未知插件({}),请及时添加数据库记录以加载该插件", cqPlugin.getClass().getName()));
+                    boolean needLoad = allClassPathList.stream().anyMatch(classPath -> ClassNameUtil.removeCglibSuffix(cqPlugin.getClass().getName()).equals(classPath));
+                    Assert.ifFalse(needLoad, () -> log.error("存在未知插件({}),请及时添加数据库记录以加载该插件", ClassNameUtil.removeCglibSuffix(cqPlugin.getClass().getName())));
                     return needLoad;
                 })
                 .sorted(Comparator.comparingInt(cqPlugin -> {
-                    String classPath = cqPlugin.getClass().getName();
+                    String classPath = ClassNameUtil.removeCglibSuffix(cqPlugin.getClass().getName());
                     return classPathOtoOrderMap.get(classPath);
                 })).toList();
 

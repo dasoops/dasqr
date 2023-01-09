@@ -41,7 +41,7 @@ public class AddPluginPlugin extends CqPlugin {
         pluginDo.setDescription(param.getDescription());
         pluginDo.setEnable(PluginEnableEnum.TRUE.getDbValue());
         pluginDo.setLevel(param.getLevel());
-        pluginDo.setOrder(maxOrder);
+        pluginDo.setOrder(maxOrder + 1);
         pluginService.save(pluginDo);
 
         return PluginResult.of("已阅");

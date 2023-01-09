@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.authwrapper.utils;
 
+import com.dasoops.common.util.ClassNameUtil;
 import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.util.RegisterMtmPluginUtil;
 import com.dasoops.dasserver.cq.EventUtil;
@@ -37,7 +38,7 @@ public class AuthUtil {
      * @return boolean
      */
     public static boolean auth(String classPath) {
-        Long pluginId = authWrapperPluginCache.getIdByPluginClassPath(classPath);
+        Long pluginId = authWrapperPluginCache.getIdByPluginClassPath(ClassNameUtil.removeCglibSuffix(classPath));
 
         EventInfo eventInfo = EventUtil.get();
         if (EventUtil.isGroup()) {

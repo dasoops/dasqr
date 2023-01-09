@@ -1,6 +1,8 @@
 package com.dasoops.dasserver.cq.bot;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
@@ -276,7 +278,7 @@ public class MessageMappingReslover {
         List<Field> sortedNeedSetFieldList = getSortedNeedSetField(paramFields);
         //调用dq码工具类获取paramString
         String message = messageEvent.getMessage();
-        List<String> paramStringList = DqCodeUtil.getParamStr(message, getMatchPrefix(message, annotation.prefix()), getMatchSuffix(message, annotation.suffix()), annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
+        List<String> paramStringList = DqCodeUtil.getParamStr(message, getMatchPrefix(message, annotation), getMatchSuffix(message, annotation), annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
         //开始调用set方法注入字段,考虑可选参数情况,取小的set,多的不赋值了
         int paramNeedSetFieldCount = sortedNeedSetFieldList.size();
         int insertParamCount = paramStringList.size();
@@ -322,16 +324,25 @@ public class MessageMappingReslover {
      * @return boolean
      */
     private static boolean checkMessageIsMatch(String message, MessageMapping annotation) {
+        if (annotation.ignoreDbc()) {
+            message = Convert.toDBC(message);
+        }
         //前缀匹配
         for (String prefix : annotation.prefix()) {
+            if (annotation.ignoreDbc()) {
+                prefix = Convert.toDBC(prefix);
+            }
             //匹配通过直接return
-            if (message.startsWith(prefix)) {
+            if (StrUtil.startWith(message, prefix, annotation.ignoreCase())) {
                 return true;
             }
         }
         //后缀匹配
         for (String suffix : annotation.suffix()) {
-            if (message.endsWith(suffix)) {
+            if (annotation.ignoreDbc()) {
+                suffix = Convert.toDBC(suffix);
+            }
+            if (StrUtil.endWith(message, suffix, annotation.ignoreCase())) {
                 return true;
             }
         }
@@ -345,20 +356,32 @@ public class MessageMappingReslover {
         return false;
     }
 
-    private static String getMatchPrefix(String message, String[] prefixs) {
-        for (String prefix : prefixs) {
+    private static String getMatchPrefix(String message, MessageMapping annotation) {
+        if (annotation.ignoreDbc()) {
+            message = Convert.toDBC(message);
+        }
+        for (String prefix : annotation.prefix()) {
+            if (annotation.ignoreDbc()) {
+                prefix = Convert.toDBC(prefix);
+            }
             //匹配通过直接return
-            if (message.startsWith(prefix)) {
+            if (StrUtil.startWith(message, prefix, annotation.ignoreCase())) {
                 return prefix;
             }
         }
         return "";
     }
 
-    private static String getMatchSuffix(String message, String[] suffixs) {
-        for (String suffix : suffixs) {
+    private static String getMatchSuffix(String message, MessageMapping annotation) {
+        if (annotation.ignoreDbc()) {
+            message = Convert.toDBC(message);
+        }
+        for (String suffix : annotation.suffix()) {
+            if (annotation.ignoreDbc()) {
+                suffix = Convert.toDBC(suffix);
+            }
             //匹配通过直接return
-            if (message.endsWith(suffix)) {
+            if (StrUtil.endWith(message, suffix, annotation.ignoreCase())) {
                 return suffix;
             }
         }

@@ -84,7 +84,6 @@ public class WsHandler extends TextWebSocketHandler {
         );
 
         initIsCompleted = true;
-        cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), "DasServer start,", false);
     }
 
     /**

@@ -10,9 +10,15 @@ package com.dasoops.common.util;
  */
 public class ClassNameUtil {
 
-    public String removeCglibSuffix(String classPath) {
-//        classPath.
-        return null;
+    public static String removeCglibSuffix(String classPath) {
+//        com.dasoops.dasserver.plugin.reboot.RebootPlugin$$EnhancerBySpringCGLIB$$17aa347c
+        final String cglibKeyword = "$$";
+        if (!classPath.contains(cglibKeyword)) {
+            return classPath;
+        }
+        int index = classPath.indexOf("$$");
+        String substring = classPath.substring(0, index);
+        return substring;
     }
 
 }
