@@ -30,6 +30,7 @@ import com.dasoops.dasserver.plugin.webmanager.cache.RegisterWebCache;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import com.dasoops.dasserver.plugin.webmanager.util.WebAssert;
 import com.dasoops.minio.MinioTemplate;
+import com.dasoops.minio.MinioUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -131,7 +132,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         if (imageInfo == null) {
             return Optional.empty();
         }
-        String url = minioTemplate.buildImagePath(imageInfo.getFileName());
+        String url = MinioUtil.buildImagePath(imageInfo.getFileName());
         return Optional.of(CqCodeUtil.image(url));
     }
 
@@ -156,7 +157,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
             resVo.setId(imageDo.getRowId());
             resVo.setKeyword(imageDo.getKeyword());
             resVo.setFileName(fileName);
-            resVo.setFilePath(minioTemplate.buildImagePath(fileName));
+            resVo.setFilePath(MinioUtil.buildImagePath(fileName));
             resVo.setGroupId(imageDo.getGroupId());
             resVo.setAuthorId(registerId);
             resVo.setAuthorName(registerWebCache.getRegisterNameByRowId(registerId));
@@ -308,7 +309,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
             ExportImageInfoDto dto = new ExportImageInfoDto();
             dto.setId(imageDo.getRowId());
             dto.setKeyword(imageDo.getKeyword());
-            dto.setFilePath(minioTemplate.buildImagePath(imageDo.getFileName()));
+            dto.setFilePath(MinioUtil.buildImagePath(imageDo.getFileName()));
             Long authorId = imageDo.getAuthorId();
             dto.setAuthorId(authorId);
             dto.setAuthorName(registerWebCache.getRegisterNameByRowId(authorId));
@@ -334,7 +335,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         }
         UploadImageVo uploadImageVo = new UploadImageVo();
         uploadImageVo.setFileName(fileName);
-        uploadImageVo.setFilePath(minioTemplate.buildImagePath(fileName));
+        uploadImageVo.setFilePath(MinioUtil.buildImagePath(fileName));
         return uploadImageVo;
     }
 }

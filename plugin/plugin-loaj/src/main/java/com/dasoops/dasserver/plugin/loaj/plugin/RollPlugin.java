@@ -40,8 +40,6 @@ public class RollPlugin extends CqPlugin {
     private final RollCache rollCache;
     private final ConfigCache configCache;
 
-    final String rollPrefix = "roll";
-
     @MessageMapping(prefix = "endRoll", type = MessageMappingTypeEnum.GROUP)
     public PluginResult endRoll(CqTemplate cqTemplate, EndRollParam param) {
         log.debug("(RollPlugin) 进入endRoll点逻辑");
@@ -89,6 +87,8 @@ public class RollPlugin extends CqPlugin {
         return result;
     }
 
+    final String rollPrefix = "roll";
+
     @MessageMapping(prefix = rollPrefix, type = MessageMappingTypeEnum.GROUP)
     public String roll(CqTemplate cqTemplate, RollParam param) {
         log.debug("(RollPlugin) 进入roll点逻辑");
@@ -104,5 +104,4 @@ public class RollPlugin extends CqPlugin {
         log.info("(RollPlugin) roll点逻辑执行完毕,阻塞后续插件");
         return CqCodeUtil.at(param.getUserId()) + "你roll到了: " + randomInt;
     }
-
 }

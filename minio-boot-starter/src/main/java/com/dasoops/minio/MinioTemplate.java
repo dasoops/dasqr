@@ -140,23 +140,4 @@ public class MinioTemplate {
         return true;
     }
 
-    /**
-     * 构建图片连接
-     *
-     * @param imageName 文件名
-     * @return {@link String}
-     */
-    public String buildImagePath(String imageName) {
-        return "http://" + properties.getUrl() + ":" + properties.getPort() + "/" + properties.getBucket() + "/" + imageName;
-    }
-
-    /**
-     * 获取服务器路径
-     *
-     * @return {@link String}
-     */
-    public String getServerPath() {
-        return properties.getUrl();
-    }
-
 }

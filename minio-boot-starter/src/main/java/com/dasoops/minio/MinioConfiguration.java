@@ -5,10 +5,10 @@ import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @Title: MinioConfiguration
@@ -43,6 +43,11 @@ public class MinioConfiguration {
     @Bean
     public MinioTemplate minioTemplate(MinioClient minioClient, MinioProperties minioProperties) {
         return new MinioTemplate(minioClient, minioProperties);
+    }
+
+    @PostConstruct
+    public void Injection(MinioProperties minioProperties) {
+        MinioUtil.setMinioProperties(minioProperties);
     }
 
 }
