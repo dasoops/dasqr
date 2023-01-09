@@ -2,15 +2,18 @@ package com.dasoops.dasserver.plugin.loaj.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.dasserver.plugin.loaj.cache.ReplyCache;
+import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;
+import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreCaseEnum;
+import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreDbcEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
-import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
 import com.dasoops.dasserver.plugin.loaj.mapper.ReplyMapper;
+import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -39,8 +42,16 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
             return;
         }
         //获取 关键词回复 映射集合
-        Map<String, String> map = list.stream().collect(Collectors.toMap(ReplyDo::getKeyword, ReplyDo::getReply));
-        replyCache.setReplyMap(map);
+        Set<ReplyRedisValueDto> replyRedisValueSet = list.stream().map(replyDo -> {
+            ReplyRedisValueDto dto = new ReplyRedisValueDto();
+            dto.setKeyword(replyDo.getKeyword());
+            dto.setReply(replyDo.getReply());
+            dto.setMetchType(replyDo.getMatchType());
+            dto.setIgnoreCase(replyDo.getIgnoreCase().equals(ReplyIgnoreCaseEnum.TRUE.getDbValue()));
+            dto.setIgnoreDbc(replyDo.getIgnoreDbc().equals(ReplyIgnoreDbcEnum.TRUE.getDbValue()));
+            return dto;
+        }).collect(Collectors.toSet());
+        replyCache.setReplySet(replyRedisValueSet);
     }
 }
 

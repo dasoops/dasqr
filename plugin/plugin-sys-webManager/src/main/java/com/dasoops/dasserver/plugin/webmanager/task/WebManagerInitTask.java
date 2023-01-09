@@ -1,7 +1,8 @@
 package com.dasoops.dasserver.plugin.webmanager.task;
 
+import com.dasoops.common.task.BaseInitTask;
 import com.dasoops.dasserver.cq.CqTemplate;
-import com.dasoops.dasserver.plugin.webmanager.cache.RegisterWebCache;
+import com.dasoops.dasserver.plugin.webmanager.service.RegisterWebService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,19 +14,20 @@ import org.springframework.stereotype.Component;
  * @Description: 初始化任务
  */
 @Component
-public class WebManagerInitTask {
+public class WebManagerInitTask extends BaseInitTask {
 
-    private final RegisterWebCache registerWebCache;
+    private final RegisterWebService registerWebService;
 
-    public WebManagerInitTask(RegisterWebCache registerWebCache) {
-        this.registerWebCache = registerWebCache;
+    public WebManagerInitTask(RegisterWebService registerWebService) {
+        this.registerWebService = registerWebService;
     }
+
 
     public void initOrUpdateAll(CqTemplate cqTemplate) {
         initOrUpdateRegisterIdOtoNameMap2Cache(cqTemplate);
     }
 
     public void initOrUpdateRegisterIdOtoNameMap2Cache(CqTemplate cqTemplate) {
-        registerWebCache.initOrUpdateRegisterRowIdOtoNameMap2Cache(cqTemplate);
+        registerWebService.initOrUpdateRegisterRowIdOtoNameMapAndRegisterUserIdOtoNameMap2Cache(cqTemplate);
     }
 }

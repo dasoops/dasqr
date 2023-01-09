@@ -5,7 +5,9 @@ import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
+import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
+import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
 import com.dasoops.dasserver.cq.mapper.PluginMapper;
 import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
@@ -16,9 +18,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -51,17 +51,24 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
     @Override
     public List<CqPlugin> getAllLoadPlugin() {
         //获取所有启用的类全路径
-        List<String> allClassPathList = pluginMapper.selectAllEnableClassPathOrderByOrder();
+        List<PluginDo> pluginDoList = super.list();
+        Map<String, Integer> classPathOtoOrderMap = pluginDoList.stream().collect(Collectors.toMap(PluginDo::getClassPath, PluginDo::getOrder));
+        List<String> allClassPathList = pluginDoList.stream().map(PluginDo::getClassPath).toList();
 
         //加载的所有插件
         Collection<CqPlugin> loadPluginList = applicationContext.getBeansOfType(CqPlugin.class).values();
 
         //在数据库中有启用记录的才是需要加载的
-        List<CqPlugin> needloadPluginList = loadPluginList.stream().filter(cqPlugin -> {
-            boolean needLoad = allClassPathList.stream().anyMatch(classPath -> cqPlugin.getClass().getName().contains(classPath));
-            Assert.ifFalse(needLoad, () -> log.error("存在未知插件({}),请及时添加数据库记录以加载该插件", cqPlugin.getClass().getName()));
-            return needLoad;
-        }).toList();
+        List<CqPlugin> needloadPluginList = loadPluginList.stream()
+                .filter(cqPlugin -> {
+                    boolean needLoad = allClassPathList.stream().anyMatch(classPath -> cqPlugin.getClass().getName().contains(classPath));
+                    Assert.ifFalse(needLoad, () -> log.error("存在未知插件({}),请及时添加数据库记录以加载该插件", cqPlugin.getClass().getName()));
+                    return needLoad;
+                })
+                .sorted(Comparator.comparingInt(cqPlugin -> {
+                    String classPath = cqPlugin.getClass().getName();
+                    return classPathOtoOrderMap.get(classPath);
+                })).toList();
 
         return needloadPluginList;
     }
@@ -79,21 +86,22 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
 
         //默认启用,存储插件对象
         pluginPo.setEnable(1);
-        Assert.isTrue(super.save(pluginPo));
+        super.save(pluginPo);
 
         //注册用户对象Level >= 插件对象Level 赋予使用权限
-        List<Long> registerPoIdList = registerService.getIdListByMaxLevel(pluginPo.getLevel());
+        List<RegisterDo> registerDoList = registerService.list();
 
         //构建registerPo对象
-        List<RegisterMtmPluginDo> rpList = registerPoIdList.stream().map(registerPoId -> {
-            RegisterMtmPluginDo po = new RegisterMtmPluginDo();
-            po.setPluginId(pluginPo.getRowId());
-            po.setRegisterRowId(registerPoId);
-            return po;
+        List<RegisterMtmPluginDo> resList = registerDoList.stream().map(registerDo -> {
+            RegisterMtmPluginDo registerMtmPluginDo = new RegisterMtmPluginDo();
+            registerMtmPluginDo.setPluginId(pluginPo.getRowId());
+            registerMtmPluginDo.setRegisterRowId(registerDo.getRowId());
+            registerMtmPluginDo.setIsPass(registerDo.getLevel() <= pluginPo.getLevel() ? RegisterMtmPluginIsPassEnum.TRUE.getDbValue() : RegisterMtmPluginIsPassEnum.FALSE.getDbValue());
+            return registerMtmPluginDo;
         }).collect(Collectors.toList());
 
         //持久化
-        Assert.isTrue(registerMtmPluginService.saveBatch(rpList));
+        registerMtmPluginService.saveBatch(resList);
         return true;
     }
 

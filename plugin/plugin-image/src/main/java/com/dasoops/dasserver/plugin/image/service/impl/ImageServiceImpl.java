@@ -160,7 +160,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
             resVo.setFilePath(MinioUtil.buildImagePath(fileName));
             resVo.setGroupId(imageDo.getGroupId());
             resVo.setAuthorId(registerId);
-            resVo.setAuthorName(registerWebCache.getRegisterNameByRowId(registerId));
+            resVo.setAuthorName(registerWebCache.getRegisterNameById(registerId));
             resVo.setUpdateTime(DateUtil.format(imageDo.getUpdateTime(), DatePattern.NORM_DATETIME_FORMAT));
             resVo.setCanEdit(authorId.equals(registerId) ? ImageCanEditEnum.TRUE.getDbValue() : ImageCanEditEnum.FALSE.getDbValue());
             return resVo;
@@ -191,7 +191,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
     public GetFantastyUserVo getFantasyUser(GetFantastyUserParam param) {
         WebAssert.allMustNotNull(param);
 
-        Map<String, String> allRegisterUser = registerWebCache.getAllRegisterUser();
+        Map<String, String> allRegisterUser = registerWebCache.getAllRegisterIdOtoNameMap();
 
         List<FantastyUserDto> fantasyUserList = new ArrayList<>();
 

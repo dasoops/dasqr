@@ -6,12 +6,15 @@ import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
-import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajRedisKeyEnum;
+import com.dasoops.dasserver.plugin.loaj.cache.ReplyCache;
+import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;
+import com.dasoops.dasserver.plugin.loaj.utils.MatchUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * @Title: rollPlugin
@@ -19,17 +22,14 @@ import java.util.Map;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/11/04
  * @Version 1.0.0
- * @Description: roll点插件
+ * @Description: 回复插件
  */
 @Component
 @Slf4j
-public class RelayPlugin extends CqPlugin {
+@RequiredArgsConstructor
+public class ReplyPlugin extends CqPlugin {
 
-    private final StringRedisTemplate stringRedisTemplate;
-
-    public RelayPlugin(@SuppressWarnings("all") StringRedisTemplate stringRedisTemplate) {
-        this.stringRedisTemplate = stringRedisTemplate;
-    }
+    private final ReplyCache replyCache;
 
     @Override
     public PassObj onPrivateMessage(CqTemplate cqTemplate, CqPrivateMessageEvent event) {
@@ -41,15 +41,14 @@ public class RelayPlugin extends CqPlugin {
         return onMessage(cqTemplate, event);
     }
 
-    private PassObj onMessage(CqTemplate cqTemplate, CqMessageEvent event) {
-        Map<Object, Object> entries = stringRedisTemplate.opsForHash().entries(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_MAP.getKey());
-
+    public PassObj onMessage(CqTemplate cqTemplate, CqMessageEvent event) {
         String message = event.getMessage();
-        if (entries.containsKey(message)) {
-            cqTemplate.sendMsg(event, (String) entries.get(message));
-            return PassObj.block();
+        Set<ReplyRedisValueDto> allReply = replyCache.getAllReply();
+        Optional<ReplyRedisValueDto> replyDtoOpt = allReply.stream().filter(dto -> MatchUtil.match(message, dto)).findFirst();
+        if (replyDtoOpt.isEmpty()) {
+            return PassObj.pass(event);
         }
-
-        return PassObj.pass(event);
+        cqTemplate.sendMsg(event, replyDtoOpt.get().getReply());
+        return PassObj.block();
     }
 }

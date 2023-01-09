@@ -36,9 +36,12 @@ public enum RegisterRedisKeyEnum implements IRedisKeyEnum {
      * 注册表(群组) 注册表id单对单id映射集合
      */
     REGISTER_GROUP_REGISTER_ID_OTO_ROW_ID_MAP(getBasePath() + "register_id_oto_row_id:group"),
-    ;
+    /**
+     * 注册表用户id 单对单 名称映射集合
+     */
+    REGISTER_ID_OTO_NAME_MAP(getBasePath() + "id_oto_name");
 
-    private static String getBasePath(){
+    private static String getBasePath() {
         return REGISTER.getKey();
     }
 

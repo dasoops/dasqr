@@ -2,10 +2,13 @@ package com.dasoops.dasserver.plugin.webmanager.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.exception.LogicException;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.dasoops.dasserver.cq.entity.enums.RegisterTypeEnum;
+import com.dasoops.dasserver.cq.entity.retdata.FriendData;
+import com.dasoops.dasserver.cq.entity.retdata.GroupData;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
 import com.dasoops.dasserver.plugin.webauth.entity.dto.AuthUserDto;
@@ -17,7 +20,12 @@ import com.dasoops.dasserver.plugin.webmanager.entity.vo.LoginVo;
 import com.dasoops.dasserver.plugin.webmanager.mapper.RegisterWebMapper;
 import com.dasoops.dasserver.plugin.webmanager.service.RegisterWebService;
 import com.dasoops.dasserver.plugin.webmanager.util.WebAssert;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Title: RegisterServiceImpl
@@ -30,6 +38,7 @@ import org.springframework.stereotype.Service;
  * @see RegisterService
  */
 @Service
+@Slf4j
 public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, RegisterDo>
         implements RegisterWebService {
 
@@ -60,7 +69,7 @@ public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, Regis
                 .eq(RegisterDo::getType, RegisterTypeEnum.USER.getDbValue())
                 .one();
 
-        if (registerDo == null){
+        if (registerDo == null) {
             throw new LogicException(RegisterExceptionEnum.LOGIN_FAIL);
         }
 
@@ -82,6 +91,35 @@ public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, Regis
 
     }
 
+    @Override
+    public void initOrUpdateRegisterRowIdOtoNameMapAndRegisterUserIdOtoNameMap2Cache(CqTemplate cqTemplate) {
+        log.info("初始化/更新 注册表rowId 单对单 插件集合 映射集合");
+        Map<Long, String> registerIdOtoNameMap = new HashMap<>(16);
+        Map<Long, String> registerRowIdOtoNameMap = new HashMap<>(16);
+
+        //好友
+        List<FriendData> friendDataList = cqTemplate.getFriendList().getData();
+        friendDataList.forEach(friendData -> {
+            registerRowIdOtoNameMap.put(registerCache.getUserRowIdByRegisterId(friendData.getUserId()), friendData.getNickname());
+            registerIdOtoNameMap.put(friendData.getUserId(), friendData.getNickname());
+        });
+
+
+        //群组
+        List<GroupData> groupDataList = cqTemplate.getGroupList().getData();
+        groupDataList.stream()
+                .mapToLong(GroupData::getGroupId)
+                .mapToObj(groupId -> cqTemplate.getGroupMemberList(groupId).getData())
+                .forEach(userInfoDataList -> userInfoDataList.forEach(userInfoData -> {
+                    registerRowIdOtoNameMap.put(registerCache.getUserRowIdByRegisterId(userInfoData.getUserId()), userInfoData.getNickname());
+                    registerIdOtoNameMap.put(userInfoData.getUserId(), userInfoData.getNickname());
+                }));
+
+        registerWebCache.removeRegisterRowIdOtoNameMap();
+        registerWebCache.removeRegisterIdOtoNameMap();
+        registerWebCache.setRegisterRowIdOtoNameMap(registerRowIdOtoNameMap);
+        registerWebCache.setRegisterIdOtoNameMap(registerIdOtoNameMap);
+    }
 }
 
 

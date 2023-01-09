@@ -20,7 +20,7 @@ public enum CqExceptionEnum implements IExceptionEnum {
 
     /***/
     CQ_GLOBAL_EMPTY(10001, "cq连接池为空"),
-    RESPONSE_ERROR(10002, "cq请求失败"), UNKNOWN_POST_TYPE(10003, "未知的postType");
+    RESPONSE_ERROR(10002, "cq请求失败"), UNKNOWN_POST_TYPE(10003, "未知的postType"), PARAM_RESLOVE_ERROR(10004, "参数解析失败");
 
     final Integer code;
     final String msg;

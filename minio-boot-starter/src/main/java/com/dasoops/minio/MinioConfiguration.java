@@ -7,8 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-
-import javax.annotation.PostConstruct;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @Title: MinioConfiguration
@@ -20,6 +19,7 @@ import javax.annotation.PostConstruct;
  */
 @Slf4j
 @EnableConfigurationProperties({MinioProperties.class})
+@ComponentScan("com.dasoops.minio")
 @ConditionalOnProperty(prefix = "minio", value = "enable", havingValue = "true")
 public class MinioConfiguration {
 
@@ -43,11 +43,6 @@ public class MinioConfiguration {
     @Bean
     public MinioTemplate minioTemplate(MinioClient minioClient, MinioProperties minioProperties) {
         return new MinioTemplate(minioClient, minioProperties);
-    }
-
-    @PostConstruct
-    public void Injection(MinioProperties minioProperties) {
-        MinioUtil.setMinioProperties(minioProperties);
     }
 
 }

@@ -35,4 +35,10 @@ public class AddPluginParam extends MessageParam {
      */
     @InjectionParam(order = 2)
     private String description;
+
+    /**
+     * 权限等级
+     */
+    @InjectionParam(order = 3)
+    private Integer level;
 }

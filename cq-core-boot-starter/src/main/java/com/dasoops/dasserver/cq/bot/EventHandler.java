@@ -225,11 +225,11 @@ public class EventHandler {
                 if (reslovePassObj != null) {
                     passObj = reslovePassObj;
                 } else {
-                    //没有解析,说明不符合，调用默认的
+                    //没有解析,说明不符合，调用默认的,gogogo
                     passObj = defaultFunction.handle(cqPlugin, cqTemplate, clazz.cast(passObj.getEvent()));
                 }
             } else {
-                //不需要解析,直接调用,gogogo
+                //非message,不需要解析,直接调用,gogogo
                 passObj = defaultFunction.handle(cqPlugin, cqTemplate, clazz.cast(passObj.getEvent()));
             }
             if (log.isDebugEnabled()) {
@@ -241,7 +241,7 @@ public class EventHandler {
 
             if (!(passObj.isPass())) {
                 //阻塞直接短路
-                log.debug("消息解析结束,执行器链:{}", pluginChainStringBuilder.append("-> block"));
+                log.debug("消息解析结束,执行器链:{}", pluginChainStringBuilder.append(" -> block"));
                 return;
             }
         }

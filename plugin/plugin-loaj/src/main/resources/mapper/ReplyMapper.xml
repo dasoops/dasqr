@@ -8,6 +8,8 @@
         <id property="rowId" column="row_id" jdbcType="BIGINT"/>
         <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
         <result property="reply" column="reply" jdbcType="VARCHAR"/>
+        <result property="ignoreCase" column="ignore_case" jdbcType="TINYINT"/>
+        <result property="ignoreDbc" column="ignore_dbc" jdbcType="TINYINT"/>
         <result property="matchType" column="matchType" jdbcType="TINYINT"/>
         <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
         <result property="createUser" column="create_user" jdbcType="BIGINT"/>
@@ -17,6 +19,6 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        row_id,keyword,reply,matchType,isDelete,createUser,createTime,updateUser,updateTime
+        row_id,keyword,reply,ignore_case,ignore_dbc,matchType,isDelete,createUser,createTime,updateUser,updateTime
     </sql>
 </mapper>

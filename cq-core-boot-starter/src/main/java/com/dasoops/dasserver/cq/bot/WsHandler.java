@@ -11,7 +11,7 @@ import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.conf.NamedThreadFactory;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.conf.properties.EventProperties;
-import com.dasoops.dasserver.cq.utils.CqAssert;
+import com.dasoops.dasserver.cq.utils.CqMessageAssert;
 import com.dasoops.dasserver.cq.wrapper.ExceptionWrapper;
 import com.dasoops.dasserver.cq.wrapper.WsWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +58,7 @@ public class WsHandler extends TextWebSocketHandler {
                 eventProperties.getKeepAliveTime(),
                 TimeUnit.MILLISECONDS,
                 new ArrayBlockingQueue<>(eventProperties.getWorkQueueSize()),
-                new NamedThreadFactory("wsHandler"));
+                new NamedThreadFactory("ws"));
         this.cqProperties = cqProperties;
     }
 
@@ -79,7 +79,7 @@ public class WsHandler extends TextWebSocketHandler {
 
         List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
 
-        CqAssert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
+        CqMessageAssert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
                 .forEach(wsWrapper -> wsWrapper.afterConnectionEstablishedWrapper(cqTemplate))
         );
 
@@ -129,7 +129,7 @@ public class WsHandler extends TextWebSocketHandler {
         Long qid = getQid(session);
         log.info("{} close connection", qid);
         List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
-        CqAssert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
+        CqMessageAssert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
                 .forEach(wsWrapper -> wsWrapper.afterConnectionClosedWrapper(CqGlobal.get(qid))));
 
         CqGlobal.remove(qid);
@@ -176,7 +176,7 @@ public class WsHandler extends TextWebSocketHandler {
                     eventHandler.handle(finalCqTemplate, messageObj);
                 } catch (Exception e) {
                     //异常处理
-                    CqAssert.ifTrue(cqProperties.isConsolePrintStack(), () -> CqAssert.ifTrueOrElse(cqProperties.isNativePrintStack(),
+                    CqMessageAssert.ifTrue(cqProperties.isConsolePrintStack(), () -> CqMessageAssert.ifTrueOrElse(cqProperties.isNativePrintStack(),
                             e::printStackTrace,
                             () -> log.error("消息处理发生异常: {}", e instanceof LogicException ? ((LogicException) e).getStackMessage() : e)
                     ));

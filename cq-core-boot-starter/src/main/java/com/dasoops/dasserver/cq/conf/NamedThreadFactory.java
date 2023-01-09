@@ -1,12 +1,8 @@
 package com.dasoops.dasserver.cq.conf;
 
-import com.dasoops.dasserver.cq.utils.CqAssert;
-import com.dasoops.dasserver.cq.EventUtil;
-import com.dasoops.dasserver.cq.utils.entity.EventInfo;
 import lombok.NonNull;
 
 import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Title: NamedThreadFactory
@@ -18,20 +14,20 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @see ThreadFactory
  */
 public class NamedThreadFactory implements ThreadFactory {
-    private static final AtomicInteger POOL_NUMBER = new AtomicInteger(1);
+    private static Integer poolNumber = 0;
     private final String namePrefix;
     private final ThreadGroup group;
 
     @SuppressWarnings("all")
     public NamedThreadFactory(String name) {
-        this.namePrefix = name + "-" + POOL_NUMBER.getAndIncrement() + "-thread-";
+        this.namePrefix = name + "-";
         SecurityManager s = System.getSecurityManager();
         group = (s != null) ? s.getThreadGroup() : Thread.currentThread().getThreadGroup();
     }
 
     @Override
     public Thread newThread(@NonNull Runnable r) {
-        Thread t = new Thread(group, r, namePrefix + CqAssert.ifNotNullOrElse(EventUtil.get(), EventInfo::getMessageId, res -> "sys"), 0);
+        Thread t = new Thread(group, r, namePrefix + NamedThreadFactory.poolNumber++, 0);
         if (t.isDaemon()) {
             t.setDaemon(false);
         }

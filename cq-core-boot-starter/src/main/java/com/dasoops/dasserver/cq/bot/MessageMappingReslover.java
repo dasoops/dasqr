@@ -7,6 +7,7 @@ import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
+import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.MessageParamResloveExceptionEnum;
@@ -71,7 +72,16 @@ public class MessageMappingReslover {
                 params = buildParams(paramClazzs, cqTemplate, messageEvent, messageParam);
             }
             //执行方法
-            Object result = ReflectUtil.invoke(cqPlugin, pluginMethod, params);
+            Object result;
+            //捕获断言抛出的参数异常
+            try {
+                result = ReflectUtil.invoke(cqPlugin, pluginMethod, params);
+            } catch (LogicException e) {
+                if (!e.getExceptionEnum().equals(CqExceptionEnum.PARAM_RESLOVE_ERROR)) {
+                    throw e;
+                }
+                result = PluginResult.fastFail();
+            }
             PassObj passObj = resloveInvokeResult(cqTemplate, messageEvent, result);
             if (passObj != null) {
                 return passObj;

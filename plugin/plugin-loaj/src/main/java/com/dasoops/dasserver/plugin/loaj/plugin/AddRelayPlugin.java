@@ -71,7 +71,7 @@ public class AddRelayPlugin extends CqPlugin {
         replyPo.setKeyword(keyword);
         replyPo.setReply(reply);
         replyService.save(replyPo);
-        stringRedisTemplate.opsForHash().put(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_MAP.getKey(), keyword, reply);
+        stringRedisTemplate.opsForHash().put(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_SET.getKey(), keyword, reply);
         cqTemplate.sendMsg(event, "已阅");
         return PassObj.block();
     }

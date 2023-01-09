@@ -15,7 +15,7 @@ import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.cq.util.RegisterUtil;
-import com.dasoops.dasserver.cq.utils.CqAssert;
+import com.dasoops.dasserver.cq.utils.CqMessageAssert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -55,11 +55,11 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(RegisterDo registerPo) {
-        CqAssert.allMustNotNull(registerPo, registerPo.getRegisterId(), registerPo.getType(), registerPo.getLevel());
-        CqAssert.allMustNull(registerPo.getRowId());
+        CqMessageAssert.allMustNotNull(registerPo, registerPo.getRegisterId(), registerPo.getType(), registerPo.getLevel());
+        CqMessageAssert.allMustNull(registerPo.getRowId());
 
         //存储注册对象
-        CqAssert.isTrue(super.save(registerPo));
+        CqMessageAssert.isTrue(super.save(registerPo));
 
         //插件对象Level <= 注册用户对象Level 赋予使用权限
         List<Long> pluginPoIdList = pluginService.getIdListByMinLevel(registerPo.getLevel());
@@ -72,7 +72,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         }).collect(Collectors.toList());
 
         //持久化
-        CqAssert.isTrue(registerMtmPluginService.saveBatch(rpList));
+        CqMessageAssert.isTrue(registerMtmPluginService.saveBatch(rpList));
         return true;
     }
 

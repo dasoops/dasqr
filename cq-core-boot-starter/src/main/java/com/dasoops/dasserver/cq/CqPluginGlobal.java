@@ -69,7 +69,7 @@ public class CqPluginGlobal {
     public static void refresh() {
         log.info("重新加载插件");
         CqPluginGlobal.pluginMap = reslover.refresh(applicationContext);
-        log.info("\n插件加载完成:\n\t{}", CollectionUtil.join(pluginMap.values(), "\n\t-"));
+        log.info("\n插件加载完成:\n\t-{}", CollectionUtil.join(pluginMap.values(), "\n\t-"));
     }
 
     public static void setApplicationContext(ApplicationContext applicationContext) {

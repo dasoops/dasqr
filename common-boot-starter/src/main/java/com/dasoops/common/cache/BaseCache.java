@@ -174,6 +174,9 @@ public class BaseCache {
     protected void sadd(IRedisKeyEnum redisKeyEnum, List<String> valueList) {
         set().add(redisKeyEnum.getKey(), valueList.toArray(new String[0]));
     }
+    protected void sadd(IRedisKeyEnum redisKeyEnum, Set<String> valueSet) {
+        set().add(redisKeyEnum.getKey(), valueSet.toArray(new String[0]));
+    }
 
     protected void sadd(IRedisKeyEnum redisKeyEnum, String value) {
         set().add(redisKeyEnum.getKey(), value);

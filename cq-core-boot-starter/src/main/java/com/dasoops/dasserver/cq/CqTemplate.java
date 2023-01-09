@@ -77,7 +77,7 @@ public class CqTemplate {
      * @return {@link ApiData}<{@link MessageData}>
      */
     public ApiData<MessageData> sendMsg(MessageParam param, String message) {
-        if (param.isGroup()) {
+        if (param.getIsGroup()) {
             return sendGroupMsg(param.getGroupId(), message, false);
         }
         return sendPrivateMsg(param.getUserId(), message, false);

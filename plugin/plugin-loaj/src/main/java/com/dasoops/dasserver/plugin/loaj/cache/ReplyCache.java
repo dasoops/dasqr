@@ -1,12 +1,15 @@
 package com.dasoops.dasserver.plugin.loaj.cache;
 
+import com.alibaba.fastjson2.JSON;
 import com.dasoops.common.cache.BaseCache;
+import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajRedisKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @Title: ReplyCache
@@ -24,11 +27,19 @@ public class ReplyCache extends BaseCache {
         super(stringRedisTemplate);
     }
 
-    public void setReplyMap(Map<String, String> replyMap) {
-        super.hset(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_MAP, replyMap);
+    public void setReplySet(Set<ReplyRedisValueDto> dtoSet) {
+        super.remove(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_SET);
+        Set<String> valueSet = dtoSet.stream().map(JSON::toJSONString).collect(Collectors.toSet());
+        super.sadd(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_SET, valueSet);
     }
 
-    public void getReply(String keyword) {
-        super.hget(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_MAP, keyword);
+    public ReplyRedisValueDto getReply(String keyword) {
+        String replyDtoJSONString = super.hget(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_SET, keyword);
+        return JSON.parseObject(replyDtoJSONString, ReplyRedisValueDto.class);
+    }
+
+    public Set<ReplyRedisValueDto> getAllReply() {
+        Set<String> valueSet = super.sget(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_SET);
+        return valueSet.stream().map(jsonString -> JSON.parseObject(jsonString, ReplyRedisValueDto.class)).collect(Collectors.toSet());
     }
 }

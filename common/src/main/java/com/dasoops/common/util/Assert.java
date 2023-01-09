@@ -146,15 +146,14 @@ public class Assert {
     /**
      * 对象必须全部为空
      *
-     * @param obj obj
+     * @param objs objs
      */
-    public static boolean allMustNull(Object... obj) {
-        if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
-            reslover.allMustNull();
-            return false;
+    public static boolean allMustNull(Object... objs) {
+        if (ObjUtil.isNull(objs) || ObjUtil.isEmpty(objs)) {
+            return true;
         }
-        for (Object o : obj) {
-            if (!ObjUtil.isNull(o) && !ObjUtil.isEmpty(o)) {
+        for (Object obj : objs) {
+            if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
                 reslover.allMustNull();
                 return false;
             }
