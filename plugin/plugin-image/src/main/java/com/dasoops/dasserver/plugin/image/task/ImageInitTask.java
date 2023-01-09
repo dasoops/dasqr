@@ -30,7 +30,6 @@ public class ImageInitTask extends BaseInitTask {
     @PostConstruct
     public void initOrUpdateAll() {
         initOrUpdateImageKeywordList();
-        log.info("oaie");
     }
 
     public void initOrUpdateImageKeywordList() {

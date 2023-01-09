@@ -2,7 +2,7 @@ package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.dbo.base.BaseDo;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
@@ -16,6 +16,7 @@ import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.cq.util.RegisterUtil;
 import com.dasoops.dasserver.cq.utils.CqAssert;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
  * @see RegisterService
  */
 @Service
+@Slf4j
 public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         implements RegisterService {
 
@@ -82,6 +84,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void initOrUpdateRegisterList(CqTemplate cqTemplate) {
+        log.info("初始化/更新 注册用户集合 缓存");
         //全表扫描
         List<RegisterDo> registerDoList = super.list();
         //获取为注册用户集合
@@ -150,12 +153,14 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
 
     @Override
     public void initOrUpdateRegisterIdOtoTypeMap2Cache() {
+        log.info("初始化/更新 注册表对象 单对单 注册表类型 缓存");
         Map<Long, Integer> registerIdOtoTypeMap = this.getRegisterIdOtoTypeMap();
         registerCache.setRegisterIdOtoTypeMap(registerIdOtoTypeMap);
     }
 
     @Override
     public void initOrUpdateRegisterTypeRegisterIdOtoId2Cache() {
+        log.info("初始化/更新 初始化或更新 注册表类型 用户idid 单对单 注册表id  缓存");
         List<RegisterDo> registerDoList = super.list();
         Map<Integer, List<RegisterDo>> groupByTypeRegisterDoMap = registerDoList.stream().collect(Collectors.groupingBy(RegisterDo::getType));
 

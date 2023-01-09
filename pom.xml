@@ -33,7 +33,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dasoops.dasserver</groupId>
     <artifactId>parent</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <name>parent</name>
     <packaging>pom</packaging>
     <description>dasServer parent</description>
@@ -41,7 +41,7 @@
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <cq.version>0.0.1</cq.version>
+        <cq.version>1.0.0</cq.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <lombok.version>1.18.24</lombok.version>
         <fastjson2.version>2.0.15</fastjson2.version>

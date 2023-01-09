@@ -1,15 +1,14 @@
 package com.dasoops.dasserver.cq.conf;
 
+import com.dasoops.dasserver.cq.CqPluginGlobal;
+import com.dasoops.dasserver.cq.WrapperGlobal;
 import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.bot.CqFactory;
 import com.dasoops.dasserver.cq.bot.EventHandler;
-import com.dasoops.dasserver.cq.bot.AuthWrapper;
+import com.dasoops.dasserver.cq.bot.WsHandler;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.conf.properties.EventProperties;
 import com.dasoops.dasserver.cq.conf.properties.WsProperties;
-import com.dasoops.dasserver.cq.exception.wrapper.ExceptionWrapper;
-import com.dasoops.dasserver.cq.websocket.WsHandler;
-import com.dasoops.dasserver.cq.websocket.WsWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,10 +19,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 
 /**
  * @Title: CqBeanConfiguration
@@ -38,12 +34,10 @@ public class CqBeanConfiguration {
 
     private final WsProperties wsProperties;
     private final ApplicationContext applicationContext;
-    private final AuthWrapper authWrapper;
 
-    public CqBeanConfiguration(WsProperties wsProperties, ApplicationContext applicationContext, @Autowired(required = false) AuthWrapper authWrapper) {
+    public CqBeanConfiguration(WsProperties wsProperties, ApplicationContext applicationContext) {
         this.wsProperties = wsProperties;
         this.applicationContext = applicationContext;
-        this.authWrapper = authWrapper;
     }
 
     @Bean
@@ -54,19 +48,15 @@ public class CqBeanConfiguration {
             ApiHandler apiHandler,
             EventHandler eventHandler,
             EventProperties eventProperties,
-            CqProperties cqProperties,
-            @Autowired(required = false) ExceptionWrapper exceptionWrapper
-
+            CqProperties cqProperties
     ) {
-        List<WsWrapper> wsWrapperList = applicationContext.getBeansOfType(WsWrapper.class).values().stream().sorted(Comparator.comparingInt(WsWrapper::getOrder)).collect(Collectors.toList());
-
-        return new WsHandler(cqFactory, apiHandler, eventHandler, eventProperties, exceptionWrapper, cqProperties, wsWrapperList);
+        return new WsHandler(cqFactory, apiHandler, eventHandler, eventProperties, cqProperties);
     }
 
     @Bean
     @ConditionalOnMissingBean
     public EventHandler createEventHandler() {
-        return new EventHandler(applicationContext, authWrapper);
+        return new EventHandler();
     }
 
     @Bean
@@ -87,10 +77,17 @@ public class CqBeanConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(prefix = "dasq.cq.core", name = "loadLocalPluginList", havingValue = "true", matchIfMissing = false)
+    @ConditionalOnProperty(prefix = "dasq.cq.core", name = "loadLocalPluginList", havingValue = "true")
     public CqFactory createCqFactory(
-            @Autowired(required = false) ApiHandler apiHandler,
-            @Autowired(required = false) CqProperties cqProperties) {
-        return new CqFactory(apiHandler, cqProperties.isLoadLocalPluginList() ? cqProperties.getPluginList() : null);
+            @Autowired(required = false) ApiHandler apiHandler) {
+        return new CqFactory(apiHandler);
+    }
+
+    @PostConstruct
+    public void setAndRefresh() {
+        WrapperGlobal.setApplicationContext(applicationContext);
+        CqPluginGlobal.setApplicationContext(applicationContext);
+        WrapperGlobal.refresh();
+        CqPluginGlobal.refresh();
     }
 }

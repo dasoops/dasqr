@@ -1,9 +1,10 @@
 package com.dasoops.dasserver.plugin.authwrapper.cache;
 
 import com.dasoops.common.cache.BaseCache;
+import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Convert;
 import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
-import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import com.dasoops.dasserver.entity.enums.AuthRedisKeyAuthListShamEnum;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -22,11 +23,8 @@ import java.util.stream.Collectors;
 @Component
 public class AuthWrapperRegisterMtmPluginCache extends BaseCache {
 
-    private final RegisterMtmPluginService registerMtmPluginService;
-
-    public AuthWrapperRegisterMtmPluginCache(StringRedisTemplate stringRedisTemplate, RegisterMtmPluginService registerMtmPluginService) {
+    public AuthWrapperRegisterMtmPluginCache(StringRedisTemplate stringRedisTemplate) {
         super(stringRedisTemplate);
-        this.registerMtmPluginService = registerMtmPluginService;
     }
 
     public void setAuthMap(Long registerRowId, Map<Long, Integer> pluginIdIsPassMap) {
@@ -39,6 +37,9 @@ public class AuthWrapperRegisterMtmPluginCache extends BaseCache {
     public boolean getPluginIsPassByRegisterRowIdAndPluginId(Long registerId, Long pluginId) {
         AuthRedisKeyAuthListShamEnum redisKeyEnum = new AuthRedisKeyAuthListShamEnum(registerId);
         String isPass = super.hget(redisKeyEnum, String.valueOf(pluginId));
+        if (isPass == null || "".equals(isPass)) {
+            throw new LogicException(ExceptionEnum.REDIS_DATA_NOT_NULL);
+        }
         //判断是否为TRUE
         return Integer.valueOf(isPass).equals(RegisterMtmPluginIsPassEnum.TRUE.getDbValue());
     }

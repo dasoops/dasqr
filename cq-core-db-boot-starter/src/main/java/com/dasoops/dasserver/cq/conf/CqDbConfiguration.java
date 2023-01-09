@@ -2,12 +2,14 @@ package com.dasoops.dasserver.cq.conf;
 
 import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.bot.CqFactory;
-import com.dasoops.dasserver.cq.conf.properties.CqProperties;
-import com.dasoops.dasserver.cq.service.PluginService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
  * @Title: CqAutoConfiguration
@@ -25,10 +27,13 @@ public class CqDbConfiguration {
     @ConditionalOnProperty(prefix = "dasq.cq.core", name = "loadLocalPluginList", havingValue = "false", matchIfMissing = true)
     @Lazy
     public CqFactory cqFactory(
-            @Autowired(required = false) ApiHandler apiHandler,
-            @Autowired(required = false) CqProperties cqProperties,
-            @Autowired(required = false) PluginService pluginService) {
-        return new CqFactory(apiHandler, cqProperties.isLoadLocalPluginList() ? cqProperties.getPluginList() : pluginService.getAllPluginClass().orElse(null));
+            @Autowired(required = false) ApiHandler apiHandler) {
+        return new CqFactory(apiHandler);
+    }
+
+    @Bean
+    public StringRedisTemplate stringRedisTemplate(@SuppressWarnings("all") RedisConnectionFactory connectionFactory) {
+        return new StringRedisTemplate(connectionFactory);
     }
 
 }

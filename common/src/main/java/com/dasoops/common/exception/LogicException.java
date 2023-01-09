@@ -37,7 +37,7 @@ public class LogicException extends AbstractBaseCustomException{
      */
     @Override
     public String getStackInfo() {
-        final int excludeLine = 0;
+        final int excludeLine = 5;
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         StringBuilder sb = new StringBuilder();
         sb.append(StrUtil.format("ERROR{{}:{}}{}  stack\r\n", super.getExceptionEnum().getCode(), super.getExceptionEnum().getMsg(), super.getStackMessage() == null ? "" : super.getStackMessage()));

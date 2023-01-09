@@ -9,16 +9,16 @@ import lombok.Getter;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/12/30
  * @Version 1.0.0
- * @Description: 导出异常枚举(91xx)
+ * @Description: 导出异常枚举(103xx)
  * @see IExceptionEnum
  */
 @Getter
 @AllArgsConstructor
 public enum ExportExceptionEnum implements IExceptionEnum {
     /***/
-    DATA_NULL(9101, "导出数据为空"),
-    URL_ENCODER_ERROR(9102, "导出部分url转码错误"),
-    DOWNLOAD_ERROR(9103, "文件下载失败,请重试"),
+    DATA_NULL(10301, "导出数据为空"),
+    URL_ENCODER_ERROR(10302, "导出部分url转码错误"),
+    DOWNLOAD_ERROR(10303, "文件下载失败,请重试"),
 
     ;
 

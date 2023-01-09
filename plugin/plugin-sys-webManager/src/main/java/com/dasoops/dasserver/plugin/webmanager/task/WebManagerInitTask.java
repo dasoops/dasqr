@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.webmanager.task;
 
-import com.dasoops.dasserver.cq.bot.CqTemplate;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.plugin.webmanager.cache.RegisterWebCache;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +26,6 @@ public class WebManagerInitTask {
     }
 
     public void initOrUpdateRegisterIdOtoNameMap2Cache(CqTemplate cqTemplate) {
-        registerWebCache.initOrUpdateRegisterIdOtoNameMap2Cache(cqTemplate);
+        registerWebCache.initOrUpdateRegisterRowIdOtoNameMap2Cache(cqTemplate);
     }
 }

@@ -1,6 +1,8 @@
 package com.dasoops.dasserver.cq.utils.entity;
 
 import com.alibaba.fastjson2.annotation.JSONField;
+import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
+import com.dasoops.dasserver.cq.entity.enums.PostTypeEnum;
 import lombok.Data;
 
 /**
@@ -49,4 +51,17 @@ public class EventInfo {
      */
     @JSONField(name = "message_type")
     private String messageType;
+
+    /**
+     * 上报类型
+     */
+    @JSONField(serialize = false)
+    private PostTypeEnum postTypeEnum;
+
+    /**
+     * 消息类型
+     */
+    @JSONField(serialize = false)
+    private EventTypeEnum eventTypeEnum;
+
 }

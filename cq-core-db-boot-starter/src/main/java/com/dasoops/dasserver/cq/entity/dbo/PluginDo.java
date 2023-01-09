@@ -55,6 +55,8 @@ public class PluginDo extends BaseDo implements Serializable {
      */
     private Integer enable;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    /**
+     * 加载jar路径
+     */
+    private String loadJarPath;
 }

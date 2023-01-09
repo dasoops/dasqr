@@ -1,14 +1,16 @@
 package com.dasoops.dasserver.plugin.exceptionwrapper;
 
+import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.dasserver.cq.CqGlobal;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
+import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
+import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
-import com.dasoops.dasserver.cq.exception.wrapper.ExceptionWrapper;
+import com.dasoops.dasserver.cq.wrapper.ExceptionWrapper;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
-import com.dasoops.dasserver.cq.utils.EventUtil;
+import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.utils.entity.EventInfo;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
@@ -58,21 +60,22 @@ public class ExceptionWrapperImpl implements ExceptionWrapper {
     }
 
     private void sendNoticeMsg(EventInfo eventInfo, ExceptionPo exceptionPo) {
-        CqTemplate cqTemplate = CqGlobal.findFirst().orElseThrow(() -> new CqLogicException(ExceptionEnum.NO_CQ_CONNECTION));
+        CqTemplate cqTemplate = CqGlobal.findFirst().orElseThrow(() -> new CqLogicException(CqExceptionEnum.CQ_GLOBAL_EMPTY));
         //网页访问/定时任务 产生的异常汇报管理群
         if (EventUtil.isEmpty()) {
             cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), buildNoticeMsg(false, true, cqProperties, exceptionPo), false);
             return;
         }
         String messageType = eventInfo.getMessageType();
-        switch (messageType) {
-            case "private" ->
+        EventTypeEnum eventTypeEnum = EnumUtil.getBy(EventTypeEnum::getKey, messageType);
+        switch (eventTypeEnum) {
+            case MESSAGE_PRIVATE ->
                     //私聊发送
                     cqTemplate.sendPrivateMsg(eventInfo.getAuthorId(), buildNoticeMsg(false, false, eventInfo, exceptionPo), false);
-            case "group" ->
+            case MESSAGE_GROUP ->
                     //群聊at
                     cqTemplate.sendGroupMsg(eventInfo.getGroupId(), buildNoticeMsg(true, false, eventInfo, exceptionPo), false);
-            case "httpRequest" ->
+            case HTTP_REQUEST ->
                     //群聊atAdmin
                     cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), buildNoticeMsg(true, true, eventInfo, exceptionPo), false);
             default ->
@@ -103,5 +106,10 @@ public class ExceptionWrapperImpl implements ExceptionWrapper {
                 exceptionPo.getId().toHexString()
         );
         return msg;
+    }
+
+    @Override
+    public Integer getOrder() {
+        return 10;
     }
 }

@@ -5,7 +5,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.dasoops.common.entity.enums.ExportExceptionEnum;
-import com.dasoops.common.exception.WebLogicException;
+import com.dasoops.common.exception.LogicException;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +40,7 @@ public class ExcelUtil {
      */
     public static <T> void simpleExport(HttpServletResponse response, List<T> exportDataDtoList, String fileName) {
         if (exportDataDtoList.size() == 0) {
-            throw new WebLogicException(ExportExceptionEnum.DATA_NULL);
+            throw new LogicException(ExportExceptionEnum.DATA_NULL);
         }
 
         Class<?> clazz = exportDataDtoList.stream().findFirst().get().getClass();
@@ -100,10 +100,10 @@ public class ExcelUtil {
             sheetBuilder.doWrite(exportDataVoList);
         } catch (UnsupportedEncodingException e) {
             log.error("导出部分url转码错误: ", e);
-            throw new WebLogicException(ExportExceptionEnum.URL_ENCODER_ERROR);
+            throw new LogicException(ExportExceptionEnum.URL_ENCODER_ERROR);
         } catch (IOException e) {
             log.error("io异常: ", e);
-            throw new WebLogicException(ExportExceptionEnum.DOWNLOAD_ERROR);
+            throw new LogicException(ExportExceptionEnum.DOWNLOAD_ERROR);
         }
     }
 
@@ -127,7 +127,7 @@ public class ExcelUtil {
             response.setCharacterEncoding("utf-8");
 
             //文件名
-            fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+            fileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
             response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
 
             if (StrUtil.isBlank(sheet)) {
@@ -146,10 +146,10 @@ public class ExcelUtil {
             sheetBuilder.doWrite(exportDataList);
         } catch (UnsupportedEncodingException e) {
             log.error("导出部分url转码错误: ", e);
-            throw new WebLogicException(ExportExceptionEnum.URL_ENCODER_ERROR);
+            throw new LogicException(ExportExceptionEnum.URL_ENCODER_ERROR);
         } catch (IOException e) {
             log.error("io异常: ", e);
-            throw new WebLogicException(ExportExceptionEnum.DOWNLOAD_ERROR);
+            throw new LogicException(ExportExceptionEnum.DOWNLOAD_ERROR);
         }
 
     }

@@ -5,12 +5,12 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>com.dasoops.dasserver</groupId>
-        <version>0.0.1</version>
+        <version>1.0.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>plugin-loaj</artifactId>
-    <version>0.0.1</version>
-    <description>dasServer plugin 旧世整合包</description>
+    <version>1.0.0</version>
+    <description>dasServer plugin 旧世 + 杂七杂八的东西 整合包</description>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 

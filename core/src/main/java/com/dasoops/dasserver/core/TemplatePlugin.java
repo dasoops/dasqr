@@ -1,8 +1,8 @@
 package com.dasoops.dasserver.core;
 
 import com.dasoops.dasserver.cq.CqPlugin;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.bot.PassObj;
+import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
 import lombok.extern.slf4j.Slf4j;

@@ -3,7 +3,6 @@ package com.dasoops.dasserver.plugin.gitnotice;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @Title: configuration
@@ -16,7 +15,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan("com.dasoops.dasserver.plugin.gitnotice.*")
 @MapperScan("com.dasoops.dasserver.plugin.gitnotice.mapper")
 @EnableConfigurationProperties(GitNoticeProperties.class)
-@EnableTransactionManagement
 public class AutoConfiguration {
-
 }

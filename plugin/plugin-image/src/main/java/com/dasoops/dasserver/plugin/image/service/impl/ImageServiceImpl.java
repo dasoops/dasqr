@@ -6,14 +6,13 @@ import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
+import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
-import com.dasoops.dasserver.cq.utils.EventUtil;
 import com.dasoops.dasserver.plugin.image.cache.ImageCache;
 import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo;
 import com.dasoops.dasserver.plugin.image.entity.dto.ExportImageInfoDto;
@@ -31,6 +30,7 @@ import com.dasoops.dasserver.plugin.webmanager.cache.RegisterWebCache;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import com.dasoops.dasserver.plugin.webmanager.util.WebAssert;
 import com.dasoops.minio.MinioTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,6 +50,7 @@ import java.util.Optional;
  * @see ImageService
  */
 @Service
+@Slf4j
 public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         implements ImageService {
 
@@ -91,7 +92,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         try {
             filename = minioTemplate.saveImage(url);
         } catch (Exception e) {
-            throw new CqLogicException(ExceptionEnum.IMAGE_SAVE_ERROR);
+            throw new CqLogicException(ImageExceptionEnum.IMAGE_SAVE_ERROR);
         }
 
 
@@ -318,6 +319,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
     @Override
     public void initOrUpdateImageKeywordList() {
+        log.info("初始化/更新 图片关键词集合 缓存");
         List<String> keywordList = imageMapper.selectKeywordList();
         imageCache.setImageKeywordList(keywordList);
     }

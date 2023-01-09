@@ -2,11 +2,12 @@ package com.dasoops.dasserver.plugin.webmanager.cache;
 
 import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.util.Convert;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.entity.retdata.FriendData;
 import com.dasoops.dasserver.cq.entity.retdata.GroupData;
 import com.dasoops.dasserver.entity.enums.RegisterRedisKeyEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,7 @@ import java.util.Map;
  * @Description: 注册web缓存
  */
 @Component
+@Slf4j
 public class RegisterWebCache extends BaseCache {
 
     private final RegisterCache registerCache;
@@ -57,7 +59,8 @@ public class RegisterWebCache extends BaseCache {
      *
      * @param cqTemplate cq模板
      */
-    public void initOrUpdateRegisterIdOtoNameMap2Cache(CqTemplate cqTemplate) {
+    public void initOrUpdateRegisterRowIdOtoNameMap2Cache(CqTemplate cqTemplate) {
+        log.info("初始化/更新 注册表rowId 单对单 插件集合 映射集合");
         Map<Long, String> registerIdOtoNameMap = new HashMap<>(16);
 
         //好友

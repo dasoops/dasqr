@@ -2,7 +2,7 @@ package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.exception.WebLogicException;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.mapper.ConfigMapper;
 import com.dasoops.dasserver.cq.service.ConfigService;
@@ -31,7 +31,7 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
         //获取配置对象
         Optional<ConfigDo> configPoOpt = super.lambdaQuery().eq(ConfigDo::getKeyword, config.getKey()).oneOpt();
         if (configPoOpt.isEmpty()) {
-            throw new WebLogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_NULL);
+            throw new LogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_NULL);
         }
         return configPoOpt.get().getValue();
     }
@@ -42,7 +42,7 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
         int version = Integer.parseInt(getConfig(ConfigHashKeyEnum.VERSION));
         int endVersion = version + addVersion;
         CqAssert.ifTrue(super.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.VERSION.getKey()).set(ConfigDo::getValue, endVersion).update(), ()->{
-            throw new WebLogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_FALSE);
+            throw new LogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_FALSE);
         });
         return endVersion;
     }

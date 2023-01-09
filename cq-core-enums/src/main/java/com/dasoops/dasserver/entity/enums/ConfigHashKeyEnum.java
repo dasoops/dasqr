@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.entity.enums;
 
+import com.dasoops.common.entity.enums.IRedisHashKeyEnum;
 import lombok.Getter;
 
 /**
@@ -11,7 +12,7 @@ import lombok.Getter;
  * @Description: 配置枚举
  * @see Enum
  */
-public enum ConfigHashKeyEnum {
+public enum ConfigHashKeyEnum implements IRedisHashKeyEnum {
 
     /**
      * 版本

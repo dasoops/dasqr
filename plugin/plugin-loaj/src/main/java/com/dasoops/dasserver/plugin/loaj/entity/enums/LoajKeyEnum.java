@@ -29,6 +29,6 @@ public enum LoajKeyEnum implements IRedisKeyEnum {
     final String key;
 
     private static String getBasePath() {
-        return PLUGIN.getKey() + "loaj";
+        return PLUGIN.getKey() + "loaj:";
     }
 }

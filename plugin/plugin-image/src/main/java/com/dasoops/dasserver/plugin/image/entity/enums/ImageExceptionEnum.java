@@ -23,6 +23,7 @@ public enum ImageExceptionEnum implements IExceptionEnum {
     FILE_UPLOAD_ERROR(10502, "图片上传失败"),
     ID_NOT_FOUND(10503, "未找到对应id"),
     NO_AUTH(10504, "没有对应的权限"),
+    IMAGE_SAVE_ERROR(10505, "图片存储异常"),
     ;
     final Integer code;
     final String msg;

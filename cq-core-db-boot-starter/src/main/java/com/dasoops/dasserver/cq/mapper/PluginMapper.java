@@ -17,11 +17,11 @@ import java.util.List;
 public interface PluginMapper extends BaseMapper<PluginDo> {
 
     /**
-     * 获取所有插件全类名路径
+     * 获取所有需要加载的插件全类名路径
      *
      * @return {@link List}<{@link String}>
      */
-    List<String> selectAllClassPathOrderByOrder();
+    List<String> selectAllEnableClassPathOrderByOrder();
 
     /**
      * 得到最大序号

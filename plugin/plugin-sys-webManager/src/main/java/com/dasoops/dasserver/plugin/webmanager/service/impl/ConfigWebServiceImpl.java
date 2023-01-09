@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.exception.WebLogicException;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.entity.enums.ConfigCanEditEnum;
@@ -78,15 +78,15 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         //不同id是否有相同关键字
         Long count = super.lambdaQuery().eq(ConfigDo::getKeyword, keyword).ne(ConfigDo::getRowId, id).count();
         if (count > 0) {
-            throw new WebLogicException(ConfigExceptionEnum.REPEAT_KEYWORD);
+            throw new LogicException(ConfigExceptionEnum.REPEAT_KEYWORD);
         }
 
         ConfigDo oldConfigDo = super.lambdaQuery().eq(ConfigDo::getRowId, id).one();
         if (oldConfigDo == null) {
-            throw new WebLogicException(ConfigExceptionEnum.UNDEFINED_ID);
+            throw new LogicException(ConfigExceptionEnum.UNDEFINED_ID);
         }
         if (oldConfigDo.getCanEdit().equals(ConfigCanEditEnum.FALSE.getDbValue())) {
-            throw new WebLogicException(ConfigExceptionEnum.CANT_EDIT);
+            throw new LogicException(ConfigExceptionEnum.CANT_EDIT);
         }
 
         ConfigDo newConfigDo = new ConfigDo();
@@ -114,12 +114,12 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         String keyword = param.getKeyword();
         Long count = super.lambdaQuery().eq(ConfigDo::getKeyword, keyword).count();
         if (count > 0) {
-            throw new WebLogicException(ConfigExceptionEnum.REPEAT_KEYWORD);
+            throw new LogicException(ConfigExceptionEnum.REPEAT_KEYWORD);
         }
 
         Integer canEdit = param.getCanEdit();
         if (!canEdit.equals(ConfigCanEditEnum.FALSE.getDbValue()) && !canEdit.equals(ConfigCanEditEnum.TRUE.getDbValue())) {
-            throw new WebLogicException(ExceptionEnum.PARAMETER_OUT_OF_SCOPE);
+            throw new LogicException(ExceptionEnum.PARAMETER_OUT_OF_SCOPE);
         }
 
         ConfigDo configDo = new ConfigDo();
@@ -139,11 +139,11 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         Long id = param.getId();
         ConfigDo configDo = super.getById(id);
         if (configDo == null) {
-            throw new WebLogicException(ConfigExceptionEnum.UNDEFINED_ID);
+            throw new LogicException(ConfigExceptionEnum.UNDEFINED_ID);
         }
 
         if (configDo.getCanEdit().equals(ConfigCanEditEnum.FALSE.getDbValue())) {
-            throw new WebLogicException(ConfigExceptionEnum.CANT_EDIT);
+            throw new LogicException(ConfigExceptionEnum.CANT_EDIT);
         }
 
         super.removeById(id);

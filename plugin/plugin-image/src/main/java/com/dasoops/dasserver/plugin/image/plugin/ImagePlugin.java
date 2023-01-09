@@ -1,18 +1,18 @@
 package com.dasoops.dasserver.plugin.image.plugin;
 
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.entity.vo.result.Result;
-import com.dasoops.common.exception.WebLogicException;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.bot.PassObj;
+import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
-import com.dasoops.dasserver.cq.utils.DqUtil;
+import com.dasoops.dasserver.cq.utils.DqCodeUtil;
 import com.dasoops.dasserver.plugin.image.cache.ImageCache;
+import com.dasoops.dasserver.plugin.image.entity.enums.ImageExceptionEnum;
 import com.dasoops.dasserver.plugin.image.service.ImageService;
 import com.dasoops.ocr.OcrTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,6 @@ public class ImagePlugin extends CqPlugin {
         this.imageService = imageService;
         this.ocrTemplate = ocrTemplate;
         this.imageCache = imageCache;
-        System.out.println("oae321");
     }
 
     @Override
@@ -75,7 +74,7 @@ public class ImagePlugin extends CqPlugin {
             //取图逻辑
             log.debug("(ImagePlugin) 进入取图逻辑");
 
-            List<String> paramStrList = DqUtil.getParamStr(message, getImagePrefix);
+            List<String> paramStrList = DqCodeUtil.getParamStr(message, getImagePrefix);
             cqTemplate.sendMsg(cqMessageEvent, getImage(paramStrList));
 
             return PassObj.block();
@@ -91,7 +90,7 @@ public class ImagePlugin extends CqPlugin {
             //存图逻辑
             log.debug("(ImagePlugin) 进入存图逻辑");
 
-            List<String> paramStrList = DqUtil.getParamStr(message, saveImagePrefix);
+            List<String> paramStrList = DqCodeUtil.getParamStr(message, saveImagePrefix);
             cqTemplate.sendMsg(cqMessageEvent, saveImage(cqMessageEvent, paramStrList));
 
             return PassObj.block();
@@ -112,7 +111,7 @@ public class ImagePlugin extends CqPlugin {
                 }
             }
             log.debug("(ImagePlugin) 进入存图逻辑 - 分片逻辑");
-            cqTemplate.sendMsg(cqMessageEvent, part2SaveImage(cqMessageEvent, key, DqUtil.getParamStr(message, "").get(0)));
+            cqTemplate.sendMsg(cqMessageEvent, part2SaveImage(cqMessageEvent, key, DqCodeUtil.getParamStr(message, "").get(0)));
             return PassObj.block();
         }
 
@@ -228,7 +227,7 @@ public class ImagePlugin extends CqPlugin {
             imageService.saveImage(event, key, url);
             imageCache.removeImagePartSaveFlag(event);
             log.debug("(ImagePlugin) 存图逻辑执行完毕 - 分片存图 + ocr 分支 part2");
-            return "好了捏,现在可以用 " + key + "取出这张图辽";
+            return "好了捏,现在可以用 " + key + " 取出这张图辽";
         }
 
         //普通分片分支
@@ -284,7 +283,7 @@ public class ImagePlugin extends CqPlugin {
         imageCache.removeImagePartSaveFlag(event);
 
         log.debug("(ImagePlugin) 存图逻辑执行完毕 - ocr分支");
-        return "好了捏,现在可以用 " + result.getData() + "取出这张图辽";
+        return "好了捏,现在可以用 " + result.getData() + " 取出这张图辽";
     }
 
     /**
@@ -306,7 +305,7 @@ public class ImagePlugin extends CqPlugin {
             saveImage = imageService.saveImage(event.getUserId(), keyword, url);
         }
         if (!saveImage) {
-            throw new WebLogicException(ExceptionEnum.IMAGE_SAVE_ERROR);
+            throw new LogicException(ImageExceptionEnum.IMAGE_SAVE_ERROR);
         }
     }
 

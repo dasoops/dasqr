@@ -3,13 +3,13 @@ package com.dasoops.dasserver.plugin.loaj.plugin;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasserver.cq.CqPlugin;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.bot.PassObj;
+import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
-import com.dasoops.dasserver.cq.utils.DqUtil;
+import com.dasoops.dasserver.cq.utils.DqCodeUtil;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajKeyEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
@@ -55,7 +55,7 @@ public class AddRelayPlugin extends CqPlugin {
         if (!StrUtil.startWithIgnoreCase(message, prefix)) {
             return PassObj.pass(event);
         }
-        List<String> paramStrList = DqUtil.getParamStr(message, prefix);
+        List<String> paramStrList = DqCodeUtil.getParamStr(message, prefix);
         //参数校验
         if (ObjUtil.isEmpty(paramStrList) || paramStrList.size() < 2) {
             cqTemplate.sendMsg(event, "怎么这都不会");

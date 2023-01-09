@@ -1,12 +1,8 @@
 package com.dasoops.dasserver.cq.bot;
 
-import com.dasoops.dasserver.cq.CqPlugin;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.api.ApiHandler;
-import com.dasoops.dasserver.cq.conf.properties.CqProperties;
-import com.dasoops.dasserver.cq.utils.CqAssert;
 import org.springframework.web.socket.WebSocketSession;
-
-import java.util.List;
 
 /**
  * @Title: CqTemplateFactor
@@ -18,19 +14,11 @@ import java.util.List;
  */
 public class CqFactory {
     private final ApiHandler apiHandler;
-    private List<Class<? extends CqPlugin>> pluginList;
 
-    public CqFactory(ApiHandler apiHandler, CqProperties cqProperties) {
+    public CqFactory(ApiHandler apiHandler) {
         this.apiHandler = apiHandler;
-        CqAssert.ifNotNull(cqProperties, () -> pluginList = cqProperties.getPluginList());
     }
-
-    public CqFactory(ApiHandler apiHandler, List<Class<? extends CqPlugin>> pluginList) {
-        this.apiHandler = apiHandler;
-        this.pluginList = pluginList;
-    }
-
     public CqTemplate create(Long selfId, WebSocketSession webSocketSession) {
-        return new CqTemplate(selfId, webSocketSession, apiHandler, pluginList);
+        return new CqTemplate(selfId, webSocketSession, apiHandler);
     }
 }

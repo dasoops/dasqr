@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.webmanager.wrapper;
 
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.websocket.WsWrapper;
+import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.wrapper.WsWrapper;
 import com.dasoops.dasserver.plugin.webmanager.task.WebManagerInitTask;
 import org.springframework.stereotype.Component;
 

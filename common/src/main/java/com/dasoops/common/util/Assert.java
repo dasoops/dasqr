@@ -5,6 +5,7 @@ import com.dasoops.common.util.entity.AssertReslover;
 import com.dasoops.common.util.entity.DefaultAssertReslover;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @Title: Assert
@@ -54,6 +55,18 @@ public class Assert {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             function.invoke();
         }
+    }
+
+    /**
+     * 对象非空时执行
+     *
+     * @param obj obj
+     */
+    public static <T, R> R ifNotNull(T obj, Supplier<R> function) {
+        if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
+            return function.get();
+        }
+        return null;
     }
 
     /**

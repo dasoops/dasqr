@@ -24,6 +24,7 @@ public enum GitNoticeTypeEnum {
     GROUP_AT_USER("groupAtUser"),
     GROUP("group"),
     PRIVATE("private"),
+    NONE("none"),
 
     ;
 

@@ -1,16 +1,16 @@
 package com.dasoops.dasserver.plugin.webmanager.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dasoops.common.exception.WebLogicException;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.dasoops.dasserver.cq.entity.enums.RegisterTypeEnum;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
-import com.dasoops.dasserver.plugin.webAuth.entity.dto.AuthUserDto;
-import com.dasoops.dasserver.plugin.webAuth.entity.enums.RegisterExceptionEnum;
-import com.dasoops.dasserver.plugin.webAuth.utils.JwtUtil;
+import com.dasoops.dasserver.plugin.webauth.entity.dto.AuthUserDto;
+import com.dasoops.dasserver.plugin.webauth.entity.enums.RegisterExceptionEnum;
+import com.dasoops.dasserver.plugin.webauth.utils.JwtUtil;
 import com.dasoops.dasserver.plugin.webmanager.cache.RegisterWebCache;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.LoginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.LoginVo;
@@ -52,7 +52,7 @@ public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, Regis
         String username = loginParam.getUsername();
         String password = loginParam.getPassword();
         if (!username.equals(password)) {
-            throw new WebLogicException(RegisterExceptionEnum.LOGIN_FAIL);
+            throw new LogicException(RegisterExceptionEnum.LOGIN_FAIL);
         }
 
         RegisterDo registerDo = super.lambdaQuery()
@@ -61,13 +61,13 @@ public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, Regis
                 .one();
 
         if (registerDo == null){
-            throw new WebLogicException(RegisterExceptionEnum.LOGIN_FAIL);
+            throw new LogicException(RegisterExceptionEnum.LOGIN_FAIL);
         }
 
         //登录最低权限需求
-        final Integer loginLessThanLevel = Integer.valueOf(configCache.getConfig(ConfigHashKeyEnum.LOGIN_NEED_MIN_LEVEL));
+        final Integer loginLessThanLevel = configCache.getIntegerConfig(ConfigHashKeyEnum.LOGIN_NEED_MIN_LEVEL);
         if (registerDo.getLevel() > loginLessThanLevel) {
-            throw new WebLogicException(RegisterExceptionEnum.NEED_HIGH_LEVEL);
+            throw new LogicException(RegisterExceptionEnum.NEED_HIGH_LEVEL);
         }
 
         LoginVo loginVo = new LoginVo();

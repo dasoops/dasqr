@@ -2,8 +2,8 @@ package com.dasoops.dasserver.plugin.pluginwrapper.plugin;
 
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasserver.cq.CqPlugin;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.bot.PassObj;
+import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
@@ -80,18 +80,11 @@ public class GetPluginPlugin extends CqPlugin {
                 String className = classPath.substring(classPath.lastIndexOf(".") + 1);
 
                 //启用状态
-                String statusStr;
-                switch (status) {
-                    case 1:
-                        statusStr = "-";
-                        break;
-                    case 2:
-                        statusStr = "√";
-                        break;
-                    default:
-                        statusStr = "×";
-                        break;
-                }
+                String statusStr = switch (status) {
+                    case 1 -> "-";
+                    case 2 -> "√";
+                    default -> "×";
+                };
 
                 String id = String.valueOf(pluginPo.getRowId());
                 String description = pluginPo.getDescription();

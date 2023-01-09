@@ -19,10 +19,18 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class GitNoticeProperties {
     /**
      * noticeType 消息上报类型
+     *
      * @see GitNoticeTypeEnum
      */
     private String noticeType = "coreGroupAtUser";
-
+    /**
+     * 通知分支
+     */
+    private String noticeRefs = "master";
+    /**
+     * 重启通知分支
+     */
+    private String rebootNoticeRefs = "master";
     /**
      * notice 群组id
      */

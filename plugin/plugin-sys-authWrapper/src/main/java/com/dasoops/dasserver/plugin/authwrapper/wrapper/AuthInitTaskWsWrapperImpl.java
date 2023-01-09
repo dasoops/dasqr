@@ -1,10 +1,9 @@
 package com.dasoops.dasserver.plugin.authwrapper.wrapper;
 
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.websocket.WsWrapper;
+import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.wrapper.WsWrapper;
 import com.dasoops.dasserver.plugin.authwrapper.task.AuthInitTask;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**

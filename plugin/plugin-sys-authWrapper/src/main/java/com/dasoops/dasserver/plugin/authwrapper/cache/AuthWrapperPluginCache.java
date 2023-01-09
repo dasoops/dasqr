@@ -2,7 +2,7 @@ package com.dasoops.dasserver.plugin.authwrapper.cache;
 
 import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.dasserver.cq.exception.CqLogicException;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.entity.enums.PluginRedisKeyEnum;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -39,7 +39,7 @@ public class AuthWrapperPluginCache extends BaseCache {
     public Long getIdByPluginClassPath(String classPath) {
         String value = super.hget(PluginRedisKeyEnum.PLUGIN_CALSSPATH_OTO_ID, classPath);
         if (value == null || value.isEmpty()) {
-            throw new CqLogicException(ExceptionEnum.REDIS_DATA_NOT_NULL);
+            throw new LogicException(ExceptionEnum.REDIS_DATA_NOT_NULL);
         }
         return Long.valueOf(value);
     }

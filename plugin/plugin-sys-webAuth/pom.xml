@@ -5,11 +5,11 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>com.dasoops.dasserver</groupId>
-        <version>0.0.1</version>
+        <version>1.0.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>plugin-sys-webAuth</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <description>dasServer plugin webAuth module</description>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>

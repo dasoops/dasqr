@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.pluginloader.core;
 
-import com.dasoops.dasserver.plugin.pluginloader.utils.ReflectUtil;
-import com.dasoops.dasserver.plugin.pluginloader.utils.SpringUtil;
+import com.dasoops.common.util.ReflectUtil;
+import com.dasoops.common.util.SpringBeanUtil;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -26,15 +26,12 @@ import java.util.*;
  * @date 2021-03-06
  * @blog https://www.cnblogs.com/rongdi
  */
+@SuppressWarnings("all")
 public class ModuleApplication {
 
     private final static String SINGLETON = "singleton";
 
-    private final static String DYNAMIC = "dynamic";
-
-    private final static String DYNAMIC_DOC_PACKAGE = "dynamic.swagger.doc.package";
-
-    private Set<RequestMappingInfo> extMappingInfos = new HashSet<>();
+    private final Set<RequestMappingInfo> extMappingInfos = new HashSet<>();
 
     private ApplicationContext applicationContext;
 
@@ -120,7 +117,7 @@ public class ModuleApplication {
         for (Map.Entry<String, Class> entry : cacheClassMap.entrySet()) {
             String className = entry.getKey();
             Class<?> clazz = entry.getValue();
-            if (SpringUtil.isSpringBeanClass(clazz)) {
+            if (SpringBeanUtil.isSpringBeanClass(clazz)) {
                 //将变量首字母置小写
                 String beanName = StringUtils.uncapitalize(className);
                 beanName = beanName.substring(beanName.lastIndexOf(".") + 1);

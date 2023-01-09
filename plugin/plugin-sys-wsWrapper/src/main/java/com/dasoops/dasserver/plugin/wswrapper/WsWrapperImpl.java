@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.wswrapper;
 
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.websocket.WsWrapper;
+import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.wrapper.WsWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

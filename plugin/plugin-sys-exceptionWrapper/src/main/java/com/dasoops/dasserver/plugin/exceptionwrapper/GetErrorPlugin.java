@@ -2,12 +2,12 @@ package com.dasoops.dasserver.plugin.exceptionwrapper;
 
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasserver.cq.CqPlugin;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.bot.PassObj;
+import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
-import com.dasoops.dasserver.cq.utils.DqUtil;
+import com.dasoops.dasserver.cq.utils.DqCodeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -53,7 +53,7 @@ public class GetErrorPlugin extends CqPlugin {
         for (String prefix : errorPrefixList) {
             if (StrUtil.startWithIgnoreCase(message, prefix)) {
                 log.debug("进入获取异常插件逻辑");
-                List<String> paramStrList = DqUtil.getParamStr(message, prefix);
+                List<String> paramStrList = DqCodeUtil.getParamStr(message, prefix);
                 if (paramStrList.isEmpty()) {
                     cqTemplate.sendMsg(event, "我辣么大个id呢?");
                     return PassObj.block();

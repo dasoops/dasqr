@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.webmanager.util;
 
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.exception.WebLogicException;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
 import com.dasoops.common.util.entity.AssertReslover;
 
@@ -20,37 +20,37 @@ public class WebAssert extends Assert {
         setReslover(new AssertReslover() {
             @Override
             public void allMustNull() {
-                throw new WebLogicException(ExceptionEnum.PARAMETER_IS_NULL);
+                throw new LogicException(ExceptionEnum.PARAMETER_IS_NULL);
             }
 
             @Override
             public void allMustNotNull() {
-                throw new WebLogicException(ExceptionEnum.PARAMETER_NOT_NULL);
+                throw new LogicException(ExceptionEnum.PARAMETER_NOT_NULL);
             }
 
             @Override
             public void isTrue() {
-                throw new WebLogicException(ExceptionEnum.IS_TRUE);
+                throw new LogicException(ExceptionEnum.IS_TRUE);
             }
 
             @Override
             public void isFalse() {
-                throw new WebLogicException(ExceptionEnum.IS_FALSE);
+                throw new LogicException(ExceptionEnum.IS_FALSE);
             }
 
             @Override
             public void dbExecuteMustSuccess() {
-                throw new WebLogicException(ExceptionEnum.DB_EXECUTE_FAILED);
+                throw new LogicException(ExceptionEnum.DB_EXECUTE_FAILED);
             }
 
             @Override
             public void dbExecuteReturnMustNotNull() {
-                throw new WebLogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_NULL);
+                throw new LogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_NULL);
             }
 
             @Override
             public void dbExecuteResNotZero() {
-                throw new WebLogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_ZERO);
+                throw new LogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_ZERO);
             }
         });
     }

@@ -1,15 +1,13 @@
 package com.dasoops.dasserver.core;
 
+import com.dasoops.common.config.BaseExceptionHandler;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.entity.enums.IExceptionEnum;
 import com.dasoops.common.entity.vo.result.SimpleResult;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
-import com.dasoops.dasserver.cq.exception.wrapper.ExceptionWrapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,16 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Description: 全局异常处理程序
  */
 @Slf4j
-@Component
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends BaseExceptionHandler {
 
     private final CqProperties cqProperties;
-    private final ExceptionWrapper exceptionWrapper;
 
-    public GlobalExceptionHandler(CqProperties cqProperties, @Autowired(required = false) ExceptionWrapper exceptionWrapper) {
+    public GlobalExceptionHandler(CqProperties cqProperties) {
         this.cqProperties = cqProperties;
-        this.exceptionWrapper = exceptionWrapper;
     }
 
     /**
@@ -40,6 +35,7 @@ public class GlobalExceptionHandler {
      *
      * @param e e
      */
+    @Override
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public SimpleResult exceptionHandler(Exception e) {

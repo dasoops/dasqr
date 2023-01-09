@@ -1,8 +1,7 @@
 package com.dasoops.dasserver.plugin.pluginloader.core;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -23,13 +22,14 @@ import java.util.jar.JarFile;
 
 /**
  * 动态加载外部jar包的自定义类加载器
+ *
  * @author rongdi
  * @date 2021-03-06
  * @blog https://www.cnblogs.com/rongdi
  */
+@Slf4j
+@SuppressWarnings("all")
 public class ModuleClassLoader extends URLClassLoader {
-
-    private Logger logger = LoggerFactory.getLogger(ModuleClassLoader.class);
 
     private final static String CLASS_SUFFIX = ".class";
 
@@ -63,7 +63,7 @@ public class ModuleClassLoader extends URLClassLoader {
         if (buf == null) {
             return super.findClass(name);
         }
-        if(classesMap.containsKey(name)) {
+        if (classesMap.containsKey(name)) {
             return classesMap.get(name);
         }
         /**
@@ -77,12 +77,13 @@ public class ModuleClassLoader extends URLClassLoader {
          * 这样之后mybatis那些xml里resultType，resultMap之类的需要访问扩展包的Class的就不会报错了。
          * 不过直接用现在这种骚操作，更加一劳永逸，不会有mybatis的问题了
          */
-        return loadClass(name,buf);
+        return loadClass(name, buf);
     }
 
     /**
      * 使用反射强行将类装载的归属给当前类加载器的父类加载器也就是AppClassLoader，如果报ClassNotFoundException
      * 则递归装载
+     *
      * @param name
      * @param bytes
      * @return
@@ -108,45 +109,45 @@ public class ModuleClassLoader extends URLClassLoader {
                             String.class, byte[].class, Integer.TYPE, Integer.TYPE);
                 }
             });
-            if(!classLoaderDefineClass.isAccessible()) {
+            if (!classLoaderDefineClass.isAccessible()) {
                 classLoaderDefineClass.setAccessible(true);
             }
-            return (Class<?>)classLoaderDefineClass.invoke(parent,args);
+            return (Class<?>) classLoaderDefineClass.invoke(parent, args);
         } catch (Exception e) {
-            if(e instanceof InvocationTargetException) {
+            if (e instanceof InvocationTargetException) {
                 String message = ((InvocationTargetException) e).getTargetException().getCause().toString();
                 /**
                  * 无奈，明明ClassNotFoundException是个异常，非要抛个InvocationTargetException，导致
                  * 我这里一个不太优雅的判断
                  */
-                if(message.startsWith("java.lang.ClassNotFoundException")) {
+                if (message.startsWith("java.lang.ClassNotFoundException")) {
                     String notClassName = message.split(":")[1];
-                    if(StringUtils.isEmpty(notClassName)) {
+                    if (StringUtils.isEmpty(notClassName)) {
                         throw new ClassNotFoundException(message);
                     }
                     notClassName = notClassName.trim();
                     byte[] bytes1 = classBytesMap.get(notClassName);
-                    if(bytes1 == null) {
+                    if (bytes1 == null) {
                         throw new ClassNotFoundException(message);
                     }
                     /**
                      * 递归装载未找到的类
                      */
                     Class<?> notClass = loadClass(notClassName, bytes1);
-                    if(notClass == null) {
+                    if (notClass == null) {
                         throw new ClassNotFoundException(message);
                     }
-                    classesMap.put(notClassName,notClass);
-                    return loadClass(name,bytes);
+                    classesMap.put(notClassName, notClass);
+                    return loadClass(name, bytes);
                 }
             } else {
-                logger.error("",e);
+                log.error("", e);
             }
         }
         return null;
     }
 
-    public Map<String,byte[]> getXmlBytesMap() {
+    public Map<String, byte[]> getXmlBytesMap() {
         return xmlBytesMap;
     }
 
@@ -178,7 +179,7 @@ public class ModuleClassLoader extends URLClassLoader {
                     }
                     byte[] classBytes = baos.toByteArray();
                     classBytesMap.put(className, classBytes);
-                } else if(name.endsWith(XML_SUFFIX) && name.startsWith(MAPPER_SUFFIX)) {
+                } else if (name.endsWith(XML_SUFFIX) && name.startsWith(MAPPER_SUFFIX)) {
                     input = jarFile.getInputStream(je);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     int bufferSize = 4096;
@@ -192,7 +193,7 @@ public class ModuleClassLoader extends URLClassLoader {
                 }
             }
         } catch (IOException e) {
-            logger.error("",e);
+            log.error("", e);
         } finally {
             if (input != null) {
                 try {
@@ -210,7 +211,7 @@ public class ModuleClassLoader extends URLClassLoader {
             try {
                 aClass = loadClass(key);
             } catch (ClassNotFoundException e) {
-                logger.error("",e);
+                log.error("", e);
             }
             cacheClassMap.put(key, aClass);
         }

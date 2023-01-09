@@ -11,6 +11,7 @@
         <result property="order" column="order" jdbcType="INTEGER"/>
         <result property="level" column="level" jdbcType="TINYINT"/>
         <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="loadJarPath" column="load_jar_path" jdbcType="VARCHAR"/>
         <result property="enable" column="enable" jdbcType="TINYINT"/>
         <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
         <result property="createUser" column="create_user" jdbcType="BIGINT"/>
@@ -20,13 +21,14 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        row_id,
+        row_id
+        ,
         keyword,class_path,`order`,
-        `level`,description,
+        `level`,description,loadJarPath,
         enable,is_delete,create_user,
         create_time,update_user,update_time
     </sql>
-    <select id="selectAllClassPathOrderByOrder" resultType="java.lang.String">
+    <select id="selectAllEnableClassPathOrderByOrder" resultType="java.lang.String">
         SELECT CLASS_PATH
         FROM tb_core_plugin
         WHERE ENABLE = TRUE

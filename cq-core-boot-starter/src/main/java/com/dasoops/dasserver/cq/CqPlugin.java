@@ -1,8 +1,5 @@
 package com.dasoops.dasserver.cq;
 
-import cn.hutool.core.util.StrUtil;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.bot.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqDiscussMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
@@ -11,8 +8,6 @@ import com.dasoops.dasserver.cq.entity.event.meta.CqLifecycleMetaEvent;
 import com.dasoops.dasserver.cq.entity.event.notice.*;
 import com.dasoops.dasserver.cq.entity.event.request.CqFriendRequestEvent;
 import com.dasoops.dasserver.cq.entity.event.request.CqGroupRequestEvent;
-import com.dasoops.dasserver.cq.entity.event.notice.*;
-import lombok.Getter;
 
 /**
  * @Title: CqPlugin
@@ -31,7 +26,7 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onPrivateMessage(CqTemplate cqTemplate, CqPrivateMessageEvent event) {
+    public PassObj onPrivateMessage(CqTemplate cqTemplate, CqPrivateMessageEvent event){
         return PassObj.pass(event);
     }
 
@@ -42,7 +37,7 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onGroupMessage(CqTemplate cqTemplate, CqGroupMessageEvent event) {
+    public PassObj onGroupMessage(CqTemplate cqTemplate, CqGroupMessageEvent event){
         return PassObj.pass(event);
     }
 
@@ -53,7 +48,40 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onDiscussMessage(CqTemplate cqTemplate, CqDiscussMessageEvent event) {
+    public PassObj onDiscussMessage(CqTemplate cqTemplate, CqDiscussMessageEvent event){
+        return PassObj.pass(event);
+    }
+
+    /**
+     * 收到bot发送私聊消息时调用此方法
+     *
+     * @param cqTemplate 机器人对象
+     * @param event      事件内容
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
+     */
+    public PassObj onBotSentPrivateMessage(CqTemplate cqTemplate, CqPrivateMessageEvent event){
+        return PassObj.pass(event);
+    }
+
+    /**
+     * 收到bot发送群消息时调用此方法
+     *
+     * @param cqTemplate 机器人对象
+     * @param event      事件内容
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
+     */
+    public PassObj onBotSentGroupMessage(CqTemplate cqTemplate, CqGroupMessageEvent event){
+        return PassObj.pass(event);
+    }
+
+    /**
+     * 收到bot发送讨论组消息时调用此方法
+     *
+     * @param cqTemplate 机器人对象
+     * @param event      事件内容
+     * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
+     */
+    public PassObj onBotSentDiscussMessage(CqTemplate cqTemplate, CqDiscussMessageEvent event){
         return PassObj.pass(event);
     }
 
@@ -65,7 +93,7 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onGroupUploadNotice(CqTemplate cqTemplate, CqGroupUploadNoticeEvent event) {
+    public PassObj onGroupUploadNotice(CqTemplate cqTemplate, CqGroupUploadNoticeEvent event){
         return PassObj.pass(event);
     }
 
@@ -76,7 +104,7 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onGroupAdminNotice(CqTemplate cqTemplate, CqGroupAdminNoticeEvent event) {
+    public PassObj onGroupAdminNotice(CqTemplate cqTemplate, CqGroupAdminNoticeEvent event){
         return PassObj.pass(event);
     }
 
@@ -87,7 +115,7 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onGroupDecreaseNotice(CqTemplate cqTemplate, CqGroupDecreaseNoticeEvent event) {
+    public PassObj onGroupDecreaseNotice(CqTemplate cqTemplate, CqGroupDecreaseNoticeEvent event){
         return PassObj.pass(event);
     }
 
@@ -98,7 +126,7 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onGroupIncreaseNotice(CqTemplate cqTemplate, CqGroupIncreaseNoticeEvent event) {
+    public PassObj onGroupIncreaseNotice(CqTemplate cqTemplate, CqGroupIncreaseNoticeEvent event){
         return PassObj.pass(event);
     }
 
@@ -109,7 +137,7 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onGroupBanNotice(CqTemplate cqTemplate, CqGroupBanNoticeEvent event) {
+    public PassObj onGroupBanNotice(CqTemplate cqTemplate, CqGroupBanNoticeEvent event){
         return PassObj.pass(event);
     }
 
@@ -120,7 +148,7 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onFriendAddNotice(CqTemplate cqTemplate, CqFriendAddNoticeEvent event) {
+    public PassObj onFriendAddNotice(CqTemplate cqTemplate, CqFriendAddNoticeEvent event){
         return PassObj.pass(event);
     }
 
@@ -131,7 +159,7 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onFriendRequest(CqTemplate cqTemplate, CqFriendRequestEvent event) {
+    public PassObj onFriendRequest(CqTemplate cqTemplate, CqFriendRequestEvent event){
         return PassObj.pass(event);
     }
 
@@ -142,7 +170,7 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onGroupRequest(CqTemplate cqTemplate, CqGroupRequestEvent event) {
+    public PassObj onGroupRequest(CqTemplate cqTemplate, CqGroupRequestEvent event){
         return PassObj.pass(event);
     }
 
@@ -154,7 +182,7 @@ public class CqPlugin {
      * @param event      事件内容
      * @return 是否继续处理下一个插件, PassObj.block()表示不继续,PassObj.pass(event)表示继续
      */
-    public PassObj onHeartBeatMeta(CqTemplate cqTemplate, CqHeartBeatMetaEvent event) {
+    public PassObj onHeartBeatMeta(CqTemplate cqTemplate, CqHeartBeatMetaEvent event){
         return PassObj.pass(event);
     }
 
@@ -165,7 +193,7 @@ public class CqPlugin {
      * @param event      事件
      * @return {@link PassObj}
      */
-    public PassObj onLifecycleMeta(CqTemplate cqTemplate, CqLifecycleMetaEvent event) {
+    public PassObj onLifecycleMeta(CqTemplate cqTemplate, CqLifecycleMetaEvent event){
         return PassObj.pass(event);
     }
 }

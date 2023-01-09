@@ -33,9 +33,9 @@ public class RegisterUtil {
     public static RegisterDo buildNewRegisterDo(Long registerId, RegisterTypeEnum registerTypeEnum) {
         int defaultLevel;
         if (registerTypeEnum.equals(RegisterTypeEnum.USER)) {
-            defaultLevel = Integer.parseInt(configCache.getConfig(ConfigHashKeyEnum.DEFAULT_USER_LEVEL));
+            defaultLevel = configCache.getIntegerConfig(ConfigHashKeyEnum.DEFAULT_USER_LEVEL);
         } else {
-            defaultLevel = Integer.parseInt(configCache.getConfig(ConfigHashKeyEnum.DEFAULT_GROUP_LEVEL));
+            defaultLevel = configCache.getIntegerConfig(ConfigHashKeyEnum.DEFAULT_GROUP_LEVEL);
         }
         RegisterDo registerDo = new RegisterDo();
         registerDo.setRegisterId(registerId);

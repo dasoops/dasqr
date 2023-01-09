@@ -1,12 +1,6 @@
 package com.dasoops.dasserver.cq;
 
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @Title: WsConnection
@@ -16,16 +10,59 @@ import java.util.Optional;
  * @Version 1.0.0
  * @Description: ws连接
  */
-@Getter
-@Setter
 public class CqGlobal {
     /**
      * cq集合
      * Map<QId,CqTemplate>
      */
-    public static Map<Long, CqTemplate> robots = new HashMap<>();
+    private static final Map<Long, CqTemplate> CQ_TEMPLATE_MAP = new HashMap<>();
 
-    public static Optional<CqTemplate> findFirst(){
-        return CqGlobal.robots.values().stream().findFirst();
+
+    /**
+     * cqTemplate 本地线程池
+     */
+    private static final ThreadLocal<CqTemplate> CQ_TEMPLATE_THREAD_LOCAL = new ThreadLocal<>();
+
+    /**
+     * 获取cqTemplate
+     *
+     * @return {@link CqTemplate}
+     */
+    public static CqTemplate get() {
+        return CQ_TEMPLATE_THREAD_LOCAL.get();
     }
+
+    /**
+     * 设置cqTemplate
+     *
+     * @param cqTemplate cqTemplate
+     */
+    public static void setThreadLocal(CqTemplate cqTemplate) {
+        CQ_TEMPLATE_THREAD_LOCAL.set(cqTemplate);
+    }
+
+    public static CqTemplate remove(Long id) {
+        return CqGlobal.CQ_TEMPLATE_MAP.remove(id);
+    }
+
+    public static void put(Long selfId, CqTemplate cqTemplate) {
+        CQ_TEMPLATE_MAP.put(selfId, cqTemplate);
+    }
+
+    public static CqTemplate get(Long key) {
+        return CqGlobal.CQ_TEMPLATE_MAP.get(key);
+    }
+
+    public static Optional<CqTemplate> findFirst() {
+        return CqGlobal.CQ_TEMPLATE_MAP.values().stream().findFirst();
+    }
+
+    public static List<CqTemplate> getAll() {
+        return CQ_TEMPLATE_MAP.values().stream().toList();
+    }
+
+    public static void removeThreadLocal() {
+        CQ_TEMPLATE_THREAD_LOCAL.remove();
+    }
+
 }

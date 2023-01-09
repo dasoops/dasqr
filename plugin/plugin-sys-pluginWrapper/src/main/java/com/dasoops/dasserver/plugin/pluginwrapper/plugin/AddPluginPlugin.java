@@ -3,19 +3,20 @@ package com.dasoops.dasserver.plugin.pluginwrapper.plugin;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasserver.cq.CqPlugin;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.bot.PassObj;
+import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.PassObj;
+import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
+import com.dasoops.dasserver.cq.entity.event.message.MessageParam;
 import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.utils.CqAssert;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
-import com.dasoops.dasserver.cq.utils.DqUtil;
+import com.dasoops.dasserver.cq.utils.DqCodeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,12 +43,17 @@ public class AddPluginPlugin extends CqPlugin {
         return onMessage(cqTemplate, event);
     }
 
+    @MessageMapping(prefix = "addPlugin")
+    public PassObj onGroupMessage(MessageParam param) {
+
+        return PassObj.block();
+    }
+
     @Override
     public PassObj onGroupMessage(CqTemplate cqTemplate, CqGroupMessageEvent event) {
         return onMessage(cqTemplate, event);
     }
 
-    @Transactional(rollbackFor = Exception.class)
     public PassObj onMessage(CqTemplate cqTemplate, CqMessageEvent event) {
         final String prefix = "addPlugin";
         String message = event.getMessage();
@@ -56,7 +62,7 @@ public class AddPluginPlugin extends CqPlugin {
             return PassObj.pass(event);
         }
 
-        List<String> paramStrList = DqUtil.getParamStr(message, prefix);
+        List<String> paramStrList = DqCodeUtil.getParamStr(message, prefix);
         //参数校验
         if (ObjUtil.isEmpty(paramStrList) || paramStrList.size() < 3) {
             cqTemplate.sendMsg(event, "怎么这都不会");

@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.conf;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.dasoops.dasserver.cq.utils.EventUtil;
+import com.dasoops.dasserver.cq.EventUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Configuration;
 

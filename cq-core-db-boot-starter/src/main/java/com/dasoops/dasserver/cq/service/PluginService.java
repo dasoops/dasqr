@@ -24,7 +24,7 @@ public interface PluginService extends IService<PluginDo> {
      *
      * @return {@link Optional}<{@link List}<{@link ?} {@link extends} {@link Class}<{@link CqPlugin}>>>
      */
-    Optional<List<Class<? extends CqPlugin>>> getAllPluginClass();
+    List<? extends CqPlugin> getAllLoadPlugin();
 
     /**
      * 通过关键字获取插件对象

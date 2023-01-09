@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.cq.service;
 
-import com.dasoops.dasserver.cq.bot.CqTemplate;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.baomidou.mybatisplus.extension.service.IService;
 

@@ -2,7 +2,7 @@ package com.dasoops.dasserver.plugin.authwrapper.utils;
 
 import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.util.RegisterMtmPluginUtil;
-import com.dasoops.dasserver.cq.utils.EventUtil;
+import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.utils.entity.EventInfo;
 import com.dasoops.dasserver.plugin.authwrapper.cache.AuthWrapperPluginCache;
 import com.dasoops.dasserver.plugin.authwrapper.cache.AuthWrapperRegisterMtmPluginCache;

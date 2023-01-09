@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.plugin.pluginloader;
 
-import com.dasoops.dasserver.plugin.pluginloader.anno.EnableDynamic;
+import com.dasoops.dasserver.plugin.pluginloader.core.ModuleApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -12,6 +13,10 @@ import org.springframework.context.annotation.ComponentScan;
  * @Description: 自动配置
  */
 @ComponentScan("com.dasoops.dasserver.plugin.pluginloader.*")
-@EnableDynamic
 public class AutoConfiguration {
+
+    @Bean
+    public ModuleApplication moduleApplication() {
+        return new ModuleApplication();
+    }
 }

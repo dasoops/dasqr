@@ -1,7 +1,6 @@
 package com.dasoops.dasserver.plugin.authwrapper.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
@@ -47,8 +46,7 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void initOrUpdateRegisterMtmPluginList2Cache() {
-
+    public void initOrUpdateRegisterMtmPluginList() {
         List<RegisterMtmPluginDo> noExistRegisterMtmPluginDoList = new ArrayList<>();
 
         List<RegisterMtmPluginDo> registerMtmPluginDoAllList = super.list();
@@ -111,8 +109,8 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
 
     @Override
     public void initOrUpdateAuthIdOtmIsPassMap2Cache() {
+        log.info("初始化/更新 注册用户id 单对多 插件是否放行 映射集合");
         List<RegisterMtmPluginDo> registerMtmPluginDoAllList = super.list();
-        log.debug("initOrUpdateAuthIdOtmIsPassMap2Cache():{}", JSON.toJSONString(registerMtmPluginDoAllList));
         //按注册角色id分组
         Map<Long, List<RegisterMtmPluginDo>> groupByRegisterIdMap = registerMtmPluginDoAllList.stream().collect(Collectors.groupingBy(RegisterMtmPluginDo::getRegisterRowId));
         //replace

@@ -3,10 +3,11 @@ package com.dasoops.dasserver.plugin.gitnotice.controller;
 import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
-import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqGlobal;
-import com.dasoops.dasserver.cq.bot.CqTemplate;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
+import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.entity.retdata.ApiData;
 import com.dasoops.dasserver.cq.entity.retdata.MessageData;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
@@ -44,15 +45,19 @@ public class GitController {
     private final CqProperties cqProperties;
     private final GitNoticeProperties gitNoticeProperties;
     private final ConfigService configService;
+    private final List<String> noticeRefs;
+    private final List<String> rebootNoticeRefs;
 
     public GitController(CqProperties cqProperties, GitNoticeProperties gitNoticeProperties, ConfigService configService) {
         this.cqProperties = cqProperties;
         this.gitNoticeProperties = gitNoticeProperties;
         this.configService = configService;
+        this.noticeRefs = StrUtil.split(gitNoticeProperties.getNoticeRefs(), ",");
+        this.rebootNoticeRefs = StrUtil.split(gitNoticeProperties.getRebootNoticeRefs(), ",");
     }
 
     @PostMapping("/push")
-    @ApiOperation(value = "gitPush 消息上报",notes = "gitPush 消息上报")
+    @ApiOperation(value = "gitPush 消息上报", notes = "gitPush 消息上报")
     public void pushNotice(@RequestBody PushNoticeDto pushNoticeDto) {
         //获取当前配置的用户信息
         Optional<GitNoticeTypeEnum> noticeTypeEnumOpt = getEnum();
@@ -62,16 +67,24 @@ public class GitController {
         GitNoticeTypeEnum noticeTypeEnum = noticeTypeEnumOpt.get();
 
         //无cq连接抛出异常
-        CqTemplate cqTemplate = CqGlobal.findFirst().orElseThrow(() -> new CqLogicException(ExceptionEnum.NO_CQ_CONNECTION));
-
-        //发送git通知
-        sendNotice(cqTemplate, noticeTypeEnum, buildCommitNoticeStr(pushNoticeDto));
-
-        //master分支收到消息发送重启通知
-        if (isMaster(pushNoticeDto)) {
-            Integer version = configService.updateVersion(pushNoticeDto.getTotalCommitsCount());
-            sendNotice(cqTemplate, noticeTypeEnum, buildRebootNoticeStr(pushNoticeDto, version));
+        List<CqTemplate> cqTemplateList = CqGlobal.getAll();
+        if (cqTemplateList.isEmpty()) {
+            throw new LogicException(CqExceptionEnum.CQ_GLOBAL_EMPTY);
         }
+
+        cqTemplateList.forEach(cqTemplate -> {
+            //发送git通知
+            if (isNoticeRefs(pushNoticeDto)) {
+            sendNotice(cqTemplate, noticeTypeEnum, buildCommitNoticeStr(pushNoticeDto));
+            }
+
+            //通知分支收到消息发送重启通知
+                    if (isRebootRefs(pushNoticeDto)) {
+                Integer version = configService.updateVersion(pushNoticeDto.getTotalCommitsCount());
+                sendNotice(cqTemplate, noticeTypeEnum, buildRebootNoticeStr(pushNoticeDto, version));
+                    }
+        });
+
     }
 
     /**
@@ -86,16 +99,27 @@ public class GitController {
     }
 
     /**
-     * 是Master分支
+     * 是通知分支
      *
      * @param pushNoticeDto 推送通知dto
      * @return boolean
      */
-    private boolean isMaster(PushNoticeDto pushNoticeDto) {
+    private boolean isNoticeRefs(PushNoticeDto pushNoticeDto) {
         String[] refSplit = pushNoticeDto.getRef().split("/");
         String branch = refSplit[refSplit.length - 1].replace("/", "");
-        final String master = "master";
-        return master.equals(branch);
+        return noticeRefs.contains(branch);
+    }
+
+    /**
+     * 是重启分支
+     *
+     * @param pushNoticeDto 推请注意dto
+     * @return boolean
+     */
+    private boolean isRebootRefs(PushNoticeDto pushNoticeDto) {
+        String[] refSplit = pushNoticeDto.getRef().split("/");
+        String branch = refSplit[refSplit.length - 1].replace("/", "");
+        return rebootNoticeRefs.contains(branch);
     }
 
     /**
@@ -122,7 +146,7 @@ public class GitController {
 
         final String failed = "failed";
         if (failed.equals(resApiData.getStatus())) {
-            throw new CqLogicException(ExceptionEnum.CQ_RETURN_FAILED,JSON.toJSONString(resApiData));
+            throw new CqLogicException(CqExceptionEnum.RESPONSE_ERROR, JSON.toJSONString(resApiData));
         }
 
     }

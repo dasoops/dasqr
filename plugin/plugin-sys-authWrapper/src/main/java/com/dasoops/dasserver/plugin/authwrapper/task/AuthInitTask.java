@@ -1,11 +1,11 @@
 package com.dasoops.dasserver.plugin.authwrapper.task;
 
-import com.dasoops.dasserver.cq.bot.CqTemplate;
-import com.dasoops.dasserver.cq.service.PluginService;
+import com.dasoops.common.task.BaseInitTask;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.service.RegisterService;
-import com.dasoops.dasserver.cq.task.CqCoreInitTask;
 import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperPluginService;
 import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperRegisterMtmPluginService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,19 +17,13 @@ import org.springframework.stereotype.Component;
  * @Description: 初始化任务
  */
 @Component
-public class AuthInitTask {
+@RequiredArgsConstructor
+public class AuthInitTask extends BaseInitTask {
 
     private final RegisterService registerService;
     private final AuthWrapperRegisterMtmPluginService authWrapperRegisterMtmPluginService;
     private final AuthWrapperPluginService authWrapperPluginService;
-    private final CqCoreInitTask cqCoreInitTask;
 
-    public AuthInitTask(RegisterService registerService, AuthWrapperRegisterMtmPluginService authWrapperRegisterMtmPluginService, AuthWrapperPluginService authWrapperPluginService, CqCoreInitTask cqCoreInitTask, PluginService pluginService) {
-        this.registerService = registerService;
-        this.authWrapperRegisterMtmPluginService = authWrapperRegisterMtmPluginService;
-        this.authWrapperPluginService = authWrapperPluginService;
-        this.cqCoreInitTask = cqCoreInitTask;
-    }
 
     /**
      * 初始化或更新
@@ -50,8 +44,7 @@ public class AuthInitTask {
      * 初始化或更新注册表多对多插件集合
      */
     public void initOrUpdateRegisterMtmPluginList() {
-        authWrapperRegisterMtmPluginService.initOrUpdateRegisterMtmPluginList2Cache();
-        cqCoreInitTask.initOrUpdateAll();
+        authWrapperRegisterMtmPluginService.initOrUpdateRegisterMtmPluginList();
         authWrapperRegisterMtmPluginService.initOrUpdateAuthIdOtmIsPassMap2Cache();
         authWrapperPluginService.initOrUpdatePluginClassNameOtoIdMap2Cache();
     }

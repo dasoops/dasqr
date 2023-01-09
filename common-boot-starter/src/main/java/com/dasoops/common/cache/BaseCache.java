@@ -2,15 +2,15 @@ package com.dasoops.common.cache;
 
 import com.dasoops.common.entity.enums.IRedisHashKeyEnum;
 import com.dasoops.common.entity.enums.IRedisKeyEnum;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @Title: BaseCache
@@ -38,6 +38,14 @@ public class BaseCache {
         return stringRedisTemplate.opsForList();
     }
 
+    private SetOperations<String, String> set() {
+        return stringRedisTemplate.opsForSet();
+    }
+
+    private ZSetOperations<String, String> zSet() {
+        return stringRedisTemplate.opsForZSet();
+    }
+
     private HashOperations<String, String, String> hash() {
         return stringRedisTemplate.opsForHash();
     }
@@ -50,16 +58,16 @@ public class BaseCache {
         return stringRedisTemplate.keys("*");
     }
 
-    protected Set<String> keys(String pattern) {
-        return stringRedisTemplate.keys(pattern);
+    protected Set<String> keys4Prefix(IRedisKeyEnum redisKeyEnum) {
+        return stringRedisTemplate.keys(redisKeyEnum.getKey() + "*");
     }
 
     protected void remove(IRedisKeyEnum redisKeyEnum) {
         stringRedisTemplate.delete(redisKeyEnum.getKey());
     }
 
-    protected void remove4Prefix(String prefix) {
-        Set<String> keys = stringRedisTemplate.keys(prefix + "*");
+    protected void remove4Prefix(IRedisKeyEnum redisKeyEnum) {
+        Set<String> keys = stringRedisTemplate.keys(redisKeyEnum.getKey() + "*");
         if (keys != null && keys.size() > 0) {
             stringRedisTemplate.delete(keys);
         }
@@ -67,6 +75,14 @@ public class BaseCache {
 
     protected void expire(IRedisKeyEnum redisKeyEnum, Long timeout, TimeUnit timeUnit) {
         stringRedisTemplate.expire(redisKeyEnum.getKey(), timeout, timeUnit);
+    }
+
+    protected void expire4Prefix(IRedisKeyEnum redisKeyEnum, Long timeout, TimeUnit timeUnit) {
+        Set<String> keys = stringRedisTemplate.keys(redisKeyEnum.getKey() + "*");
+        if (keys == null) {
+            return;
+        }
+        keys.forEach(key -> stringRedisTemplate.expire(key, timeout, timeUnit));
     }
 
     /* -- Global End -- */
@@ -152,4 +168,50 @@ public class BaseCache {
     }
 
     /* -- List End -- */
+
+    /* -- Set Begin -- */
+
+    protected void sadd(IRedisKeyEnum redisKeyEnum, List<String> valueList) {
+        set().add(redisKeyEnum.getKey(), valueList.toArray(new String[0]));
+    }
+
+    protected void sadd(IRedisKeyEnum redisKeyEnum, String value) {
+        set().add(redisKeyEnum.getKey(), value);
+    }
+
+    protected Set<String> sget(IRedisKeyEnum redisKeyEnum) {
+        return set().members(redisKeyEnum.getKey());
+    }
+
+    /**
+     * 根据前缀获取所有项并分组
+     *
+     * @param redisKeyEnum               复述,关键枚举
+     * @param groupingKeyConvertFunction 分组键转换函数
+     * @param valueConvertFunction       分组值转换函数
+     * @return {@link Map}<{@link R1}, {@link Set}<{@link R2}>>
+     */
+    protected <R1, R2> Map<R1, Set<R2>> sGetGroupingByPrefix(IRedisKeyEnum redisKeyEnum, Function<String, R1> groupingKeyConvertFunction, Function<String, R2> valueConvertFunction) {
+        Set<String> keyStringSet = this.keys4Prefix(redisKeyEnum);
+        HashMap<R1, Set<R2>> resultMap = new HashMap<>(keyStringSet.size());
+        for (String key : keyStringSet) {
+            Set<String> members = set().members(key);
+            if (members == null) {
+                return resultMap;
+            }
+            Set<R2> set = members.stream().map(valueConvertFunction).collect(Collectors.toSet());
+            String keyString = key.substring(key.lastIndexOf(":") + 1);
+            R1 groupingKey = groupingKeyConvertFunction.apply(keyString);
+            resultMap.put(groupingKey, set);
+        }
+        return resultMap;
+    }
+
+    protected Map<String, Set<String>> sGetGroupingByPrefix(IRedisKeyEnum redisKeyEnum) {
+        return this.sGetGroupingByPrefix(redisKeyEnum, string -> string, string -> string);
+    }
+
+
+
+    /* -- Set End -- */
 }

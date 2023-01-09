@@ -2,12 +2,14 @@ package com.dasoops.dasserver.cq.cache;
 
 import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.entity.enums.IRedisHashKeyEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.entity.enums.ConfigKeyEnum;
 import com.dasoops.dasserver.cq.service.ConfigService;
 import com.dasoops.dasserver.cq.utils.CqAssert;
 import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ import java.util.List;
  * @Description: 配置缓存
  */
 @Service
+@Slf4j
 public class ConfigCache extends BaseCache {
 
     private final ConfigService configService;
@@ -41,16 +44,19 @@ public class ConfigCache extends BaseCache {
      * 初始化配置
      */
     public void initOrUpdateConfig() {
+        log.info("初始化/更新 配置项 缓存");
         super.remove(ConfigKeyEnum.CONFIG);
 
         List<ConfigDo> configList = configService.list();
         CqAssert.dbExecuteReturnMustNotNull(configList);
-        configList.forEach(config -> {
-            super.hset(ConfigKeyEnum.CONFIG, config.getKeyword(), config.getValue());
-        });
+        configList.forEach(config -> super.hset(ConfigKeyEnum.CONFIG, config.getKeyword(), config.getValue()));
     }
 
-    public String getConfig(ConfigHashKeyEnum configHashKeyEnum) {
+    public void setConfig(ConfigHashKeyEnum configHashKeyEnum, String value) {
+        super.hset(ConfigKeyEnum.CONFIG, configHashKeyEnum.getKey(), value);
+    }
+
+    public String getConfig(IRedisHashKeyEnum configHashKeyEnum) {
         String value = super.hget(ConfigKeyEnum.CONFIG, configHashKeyEnum.getKey());
         CqAssert.ifNull(value, () -> {
             throw new LogicException(ExceptionEnum.REDIS_DATA_NOT_NULL);
@@ -58,7 +64,15 @@ public class ConfigCache extends BaseCache {
         return value;
     }
 
-    public void setConfig(ConfigHashKeyEnum configHashKeyEnum, String value) {
-        super.hset(ConfigKeyEnum.CONFIG, configHashKeyEnum.getKey(), value);
+    public Integer getIntegerConfig(IRedisHashKeyEnum configHashKeyEnum){
+        return Integer.valueOf(this.getConfig(configHashKeyEnum));
+    }
+
+    public Long getLongConfig(IRedisHashKeyEnum configHashKeyEnum){
+        return Long.valueOf(this.getConfig(configHashKeyEnum));
+    }
+
+    public String getStringConfig(IRedisHashKeyEnum configHashKeyEnum){
+        return this.getConfig(configHashKeyEnum);
     }
 }

@@ -11,11 +11,12 @@ import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,35 +39,31 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
     private final PluginMapper pluginMapper;
     private final RegisterService registerService;
     private final RegisterMtmPluginService registerMtmPluginService;
+    private final ApplicationContext applicationContext;
 
-    public PluginServiceImpl(@Lazy @SuppressWarnings("all") PluginMapper pluginMapper, @Lazy RegisterService registerService, @Lazy RegisterMtmPluginService registerMtmPluginService) {
+    public PluginServiceImpl(@Lazy @SuppressWarnings("all") PluginMapper pluginMapper, @Lazy RegisterService registerService, @Lazy RegisterMtmPluginService registerMtmPluginService, ApplicationContext applicationContext) {
         this.pluginMapper = pluginMapper;
         this.registerService = registerService;
         this.registerMtmPluginService = registerMtmPluginService;
+        this.applicationContext = applicationContext;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Optional<List<Class<? extends CqPlugin>>> getAllPluginClass() {
-        //获取所有类全路径
-        Optional<List<String>> classPathListOpt = Optional.ofNullable(pluginMapper.selectAllClassPathOrderByOrder());
+    public List<CqPlugin> getAllLoadPlugin() {
+        //获取所有启用的类全路径
+        List<String> allClassPathList = pluginMapper.selectAllEnableClassPathOrderByOrder();
 
-        if (classPathListOpt.isEmpty()) {
-            return Optional.empty();
-        }
+        //加载的所有插件
+        Collection<CqPlugin> loadPluginList = applicationContext.getBeansOfType(CqPlugin.class).values();
 
-        //根据类路径获取类对象
-        List<String> classPathList = classPathListOpt.get();
-        List<Class<? extends CqPlugin>> resList = new ArrayList<>(classPathList.size());
-        classPathList.forEach(classPath -> {
-            try {
-                resList.add((Class<CqPlugin>) Class.forName(classPath));
-            } catch (Exception e) {
-                log.error("ClassNotFound,classPath: {}", classPath);
-            }
-        });
+        //在数据库中有启用记录的才是需要加载的
+        List<CqPlugin> needloadPluginList = loadPluginList.stream().filter(cqPlugin -> {
+            boolean needLoad = allClassPathList.stream().anyMatch(classPath -> cqPlugin.getClass().getName().contains(classPath));
+            Assert.ifFalse(needLoad, () -> log.error("存在未知插件({}),请及时添加数据库记录以加载该插件", cqPlugin.getClass().getName()));
+            return needLoad;
+        }).toList();
 
-        return Optional.of(resList);
+        return needloadPluginList;
     }
 
     @Override
