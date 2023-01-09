@@ -110,6 +110,11 @@
             <artifactId>plugin-image</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-reboot</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

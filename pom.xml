@@ -24,6 +24,7 @@
         <module>plugin/plugin-sys-webManager</module>
         <module>plugin/plugin-sys-webAuth</module>
         <module>plugin/plugin-sys-pluginLoader</module>
+        <module>plugin/plugin-sys-reboot</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -194,6 +195,12 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-sys-pluginLoader</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-sys-reboot</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 
