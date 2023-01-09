@@ -103,6 +103,9 @@ public class MessageMappingReslover {
      */
     @SuppressWarnings("unchecked")
     private static PassObj resloveInvokeResult(CqTemplate cqTemplate, CqMessageEvent messageEvent, Object result) {
+        if (result == null){
+            return PassObj.block();
+        }
         if (result instanceof PassObj passObj) {
             //自己处理passObj
             return passObj;
@@ -112,9 +115,6 @@ public class MessageMappingReslover {
             return PassObj.block();
         } else {
             //前面判断过了只有String,PassObj,PluginResult,List<? extends String>,这里是List<? extends String>
-            if (result == null) {
-                return PassObj.block();
-            }
             List<String> messageList;
             if (result instanceof PluginResult pluginResult) {
                 messageList = pluginResult.getMessageList();
