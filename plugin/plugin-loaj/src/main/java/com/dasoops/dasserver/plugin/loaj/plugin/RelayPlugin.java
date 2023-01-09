@@ -6,7 +6,7 @@ import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
-import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajKeyEnum;
+import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajRedisKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,7 @@ public class RelayPlugin extends CqPlugin {
     }
 
     private PassObj onMessage(CqTemplate cqTemplate, CqMessageEvent event) {
-        Map<Object, Object> entries = stringRedisTemplate.opsForHash().entries(LoajKeyEnum.REPLY.getKey());
+        Map<Object, Object> entries = stringRedisTemplate.opsForHash().entries(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_MAP.getKey());
 
         String message = event.getMessage();
         if (entries.containsKey(message)) {

@@ -10,7 +10,7 @@ import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.DqCodeUtil;
-import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajKeyEnum;
+import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajRedisKeyEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
 import lombok.extern.slf4j.Slf4j;
@@ -71,7 +71,7 @@ public class AddRelayPlugin extends CqPlugin {
         replyPo.setKeyword(keyword);
         replyPo.setReply(reply);
         replyService.save(replyPo);
-        stringRedisTemplate.opsForHash().put(LoajKeyEnum.REPLY.getKey(), keyword, reply);
+        stringRedisTemplate.opsForHash().put(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_MAP.getKey(), keyword, reply);
         cqTemplate.sendMsg(event, "已阅");
         return PassObj.block();
     }

@@ -8,15 +8,18 @@ import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
-import com.dasoops.dasserver.cq.entity.enums.MessageParamResloveExceptionEnum;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.entity.enums.MessageParamResloveExceptionEnum;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.MessageParam;
+import com.dasoops.dasserver.cq.entity.result.PluginResult;
 import com.dasoops.dasserver.cq.utils.DqCodeUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -68,9 +71,46 @@ public class MessageMappingReslover {
                 params = buildParams(paramClazzs, cqTemplate, messageEvent, messageParam);
             }
             //执行方法
-            PassObj passObj = ReflectUtil.invoke(cqPlugin, pluginMethod, params);
-            //返回
+            Object result = ReflectUtil.invoke(cqPlugin, pluginMethod, params);
+            PassObj passObj = resloveInvokeResult(cqTemplate, messageEvent, result);
+            if (passObj != null) {
+                return passObj;
+            }
+            return PassObj.block();
+        }
+        return null;
+    }
+
+    /**
+     * 解析调用结果
+     *
+     * @param cqTemplate   cq模板
+     * @param messageEvent 消息事件
+     * @param result       结果
+     * @return {@link PassObj}
+     */
+    @SuppressWarnings("unchecked")
+    private static PassObj resloveInvokeResult(CqTemplate cqTemplate, CqMessageEvent messageEvent, Object result) {
+        if (result instanceof PassObj passObj) {
+            //自己处理passObj
             return passObj;
+        } else if (result instanceof String resultStr) {
+            //单句
+            cqTemplate.sendMsg(messageEvent, resultStr);
+            return PassObj.block();
+        } else {
+            //前面判断过了只有String,PassObj,PluginResult,List<? extends String>,这里是List<? extends String>
+            if (result == null) {
+                return PassObj.block();
+            }
+            List<String> messageList;
+            if (result instanceof PluginResult pluginResult) {
+                messageList = pluginResult.getMessageList();
+            } else {
+                //前面判断过了只有String,PassObj,PluginResult,List<? extends String>,这里是List<? extends String>
+                messageList = (List<String>) result;
+            }
+            messageList.forEach(message -> cqTemplate.sendMsg(messageEvent, message));
         }
         return null;
     }
@@ -110,7 +150,35 @@ public class MessageMappingReslover {
     }
 
     private static boolean checkReturnType(Method pluginMethod) {
-        return PassObj.class.isAssignableFrom(pluginMethod.getReturnType());
+        //是否属于PassObj 或 String 或 PluginResult
+        if (
+                PassObj.class.isAssignableFrom(pluginMethod.getReturnType()) ||
+                        String.class.isAssignableFrom(pluginMethod.getReturnType()) ||
+                        PluginResult.class.isAssignableFrom(pluginMethod.getReturnType())
+        ) {
+            return true;
+        }
+
+        // 开始检查泛型 允许的类型 List<? extends String>
+        // 是否继承于List
+        if (!List.class.isAssignableFrom(pluginMethod.getReturnType())) {
+            return false;
+        }
+
+        //检查是否多个泛型
+        ParameterizedType parameterizedType = (ParameterizedType) pluginMethod.getGenericReturnType();
+        Type[] argumentTypes = parameterizedType.getActualTypeArguments();
+        if (argumentTypes.length > 1) {
+            return false;
+        }
+
+        //检查泛型是否继承于String
+        Class<?> clazz = (Class<?>) argumentTypes[0];
+        if (!String.class.isAssignableFrom(clazz)) {
+            return false;
+        }
+
+        return true;
     }
 
     private static Object[] buildParams(Class<?>[] paramClazzs, CqTemplate cqTemplate, CqMessageEvent messageEvent, MessageParam messageParam) {

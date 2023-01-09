@@ -143,37 +143,82 @@ public class Assert {
         }
     }
 
-
     /**
      * 对象必须全部为空
      *
      * @param obj obj
      */
-    public static void allMustNull(Object... obj) {
+    public static boolean allMustNull(Object... obj) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             reslover.allMustNull();
+            return false;
         }
         for (Object o : obj) {
             if (!ObjUtil.isNull(o) && !ObjUtil.isEmpty(o)) {
                 reslover.allMustNull();
+                return false;
             }
         }
+        return true;
     }
 
     /**
-     * 对象非空
+     * 对象必须全部非空
      *
      * @param obj obj
      */
-    public static void allMustNotNull(Object... obj) {
+    public static boolean allMustNotNull(Object... obj) {
         if (ObjUtil.isNull(obj) || ObjUtil.isEmpty(obj)) {
             reslover.allMustNotNull();
+            return false;
         }
         for (Object o : obj) {
             if (ObjUtil.isNull(o) || ObjUtil.isEmpty(o)) {
                 reslover.allMustNotNull();
+                return false;
             }
         }
+        return true;
+    }
+
+    /**
+     * 如果全空
+     * 全空返回true
+     *
+     * @param obj obj
+     */
+    public static boolean ifAllNull(NoneFunction function, Object... obj) {
+        if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
+            function.invoke();
+            return true;
+        }
+        for (Object o : obj) {
+            if (!ObjUtil.isNull(o) && !ObjUtil.isEmpty(o)) {
+                function.invoke();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 如果有空
+     * 有空返回true
+     *
+     * @param obj obj
+     */
+    public static boolean ifHasAnyNull(NoneFunction function, Object... obj) {
+        if (ObjUtil.isNull(obj) || ObjUtil.isEmpty(obj)) {
+            function.invoke();
+            return true;
+        }
+        for (Object o : obj) {
+            if (ObjUtil.isNull(o) || ObjUtil.isEmpty(o)) {
+                function.invoke();
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

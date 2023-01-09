@@ -6,10 +6,10 @@ import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
-import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.entity.result.PluginResult;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.plugin.loaj.cache.RollCache;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajConfigHashKeyEnum;
@@ -43,15 +43,14 @@ public class RollPlugin extends CqPlugin {
     final String rollPrefix = "roll";
 
     @MessageMapping(prefix = "endRoll", type = MessageMappingTypeEnum.GROUP)
-    public PassObj endRoll(CqTemplate cqTemplate, EndRollParam param) {
+    public PluginResult endRoll(CqTemplate cqTemplate, EndRollParam param) {
         log.debug("(RollPlugin) 进入endRoll点逻辑");
         Long groupId = param.getGroupId();
 
         //没有人roll直接短路
         if (!rollCache.hasRecord(groupId)) {
-            cqTemplate.sendGroupMsg(param.getGroupId(), "还没有人roll点哦", false);
             log.debug("(RollPlugin) endRoll逻辑执行完毕,阻塞后续插件 - 无人roll点分支");
-            return PassObj.block();
+            return PluginResult.of("还没有人roll点哦");
         }
 
         //id对应最大值集合
@@ -69,30 +68,29 @@ public class RollPlugin extends CqPlugin {
         Long userId = maxScoreEntry.getKey();
         Integer score = maxScoreEntry.getValue();
 
-        cqTemplate.sendGroupMsg(param.getGroupId(), StrUtil.format("{}恭喜这个B摇到了最高点:{}", CqCodeUtil.at(userId), score), false);
-
+        PluginResult result = PluginResult.of(StrUtil.format("{}恭喜这个B摇到了最高点:{}", CqCodeUtil.at(userId), score));
 
         int userTotal = allRecordGroupingByUserId.size();
-
+        //黑鬼 | 一个人 | 多次 只能触发一个
         if (score <= configCache.getIntegerConfig(LoajConfigHashKeyEnum.ROLL_NIGGER_SCORE)) {
             if (userTotal > 1) {
-                cqTemplate.sendGroupMsg(groupId, StrUtil.format("投了{}次,整个{}分,乐,铁黑鬼", userTotal, score), false);
+                result.add(StrUtil.format("投了{}次,整个{}分,乐,铁黑鬼", userTotal, score));
             } else {
-                cqTemplate.sendGroupMsg(groupId, StrUtil.format("{}分,乐,什么黑鬼", score), false);
+                result.add(StrUtil.format("{}分,乐,什么黑鬼", score));
             }
         } else if (userTotal <= 1) {
-            cqTemplate.sendGroupMsg(groupId, "一个人玩roll点,乐", false);
-        } else {
-            cqTemplate.sendGroupMsg(groupId, "不过,roll多次对别人可不太公平哦~", false);
+            result.add("一个人玩roll点,乐");
+        } else if (allRecordGroupingByUserId.get(maxScoreEntry.getKey()).size() > 1) {
+            result.add("不过,roll多次对别人可不太公平哦~");
         }
 
         rollCache.removeGroupAllRecord(groupId);
         log.info("(RollPlugin) endRoll逻辑执行完毕,阻塞后续插件");
-        return PassObj.block();
+        return result;
     }
 
     @MessageMapping(prefix = rollPrefix, type = MessageMappingTypeEnum.GROUP)
-    public PassObj roll(CqTemplate cqTemplate, RollParam param) {
+    public String roll(CqTemplate cqTemplate, RollParam param) {
         log.debug("(RollPlugin) 进入roll点逻辑");
 
         int randomInt = RandomUtil.randomInt(1, 101);
@@ -102,11 +100,9 @@ public class RollPlugin extends CqPlugin {
         rollCache.lengthenGroupExpireTime(groupId);
         //添加记录
         rollCache.addRecord(param.getGroupId(), param.getUserId(), randomInt);
-        //发消息
-        cqTemplate.sendGroupMsg(groupId, CqCodeUtil.at(param.getUserId()) + "你roll到了: " + randomInt, false);
 
         log.info("(RollPlugin) roll点逻辑执行完毕,阻塞后续插件");
-        return PassObj.block();
+        return CqCodeUtil.at(param.getUserId()) + "你roll到了: " + randomInt;
     }
 
 }

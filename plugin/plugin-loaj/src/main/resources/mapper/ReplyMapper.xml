@@ -5,19 +5,18 @@
 <mapper namespace="com.dasoops.dasserver.plugin.loaj.mapper.ReplyMapper">
 
     <resultMap id="BaseResultMap" type="com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo">
-            <id property="id" column="ID" jdbcType="BIGINT"/>
-            <result property="keyword" column="KEYWORD" jdbcType="VARCHAR"/>
-            <result property="reply" column="REPLY" jdbcType="VARCHAR"/>
-            <result property="isDelete" column="IS_DELETE" jdbcType="VARCHAR"/>
-            <result property="createUser" column="CREATE_USER" jdbcType="BIGINT"/>
-            <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
-            <result property="updateUser" column="UPDATE_USER" jdbcType="VARCHAR"/>
-            <result property="updateTime" column="UPDATE_TIME" jdbcType="TIMESTAMP"/>
+        <id property="rowId" column="row_id" jdbcType="BIGINT"/>
+        <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
+        <result property="reply" column="reply" jdbcType="VARCHAR"/>
+        <result property="matchType" column="matchType" jdbcType="TINYINT"/>
+        <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        row_id,KEYWORD,REPLY,
-        IS_DELETE,CREATE_USER,CREATE_TIME,
-        UPDATE_USER,UPDATE_TIME
+        row_id,keyword,reply,matchType,isDelete,createUser,createTime,updateUser,updateTime
     </sql>
 </mapper>

@@ -1,12 +1,11 @@
 package com.dasoops.dasserver.plugin.loaj.entity.po;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * @Title: ReplyPo
@@ -33,6 +32,8 @@ public class ReplyDo extends BaseDo implements Serializable {
      */
     private String reply;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    /**
+     * 匹配类型(0:全局匹配;1:前缀匹配;2:后缀匹配;3:包含匹配)
+     */
+    private Integer matchType;
 }

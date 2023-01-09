@@ -10,6 +10,7 @@ import com.dasoops.dasserver.cq.entity.enums.ApiEnum;
 import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
+import com.dasoops.dasserver.cq.entity.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.retdata.*;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
 import lombok.Data;
@@ -66,6 +67,20 @@ public class CqTemplate {
             return sendGroupMsg(((CqGroupMessageEvent) event).getGroupId(), message, false);
         }
         return sendPrivateMsg(event.getUserId(), message, false);
+    }
+
+    /**
+     * 发送消息
+     *
+     * @param message 消息
+     * @param param   param
+     * @return {@link ApiData}<{@link MessageData}>
+     */
+    public ApiData<MessageData> sendMsg(MessageParam param, String message) {
+        if (param.isGroup()) {
+            return sendGroupMsg(param.getGroupId(), message, false);
+        }
+        return sendPrivateMsg(param.getUserId(), message, false);
     }
 
     /**

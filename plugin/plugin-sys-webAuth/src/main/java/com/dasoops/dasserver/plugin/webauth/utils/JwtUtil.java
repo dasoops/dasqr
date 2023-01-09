@@ -7,6 +7,8 @@ import com.alibaba.fastjson2.JSON;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
@@ -59,6 +61,12 @@ public class JwtUtil {
             return Optional.of(JSON.parseObject(jsonStr, AuthUserDto.class));
         } catch (ValidateException e) {
             log.debug("权限验证失败: {}", e.getMessage());
+            return Optional.empty();
+        } catch (TokenExpiredException e) {
+            log.debug("token过期");
+            return Optional.empty();
+        } catch (JWTVerificationException e) {
+            log.debug("token校验失败", e);
             return Optional.empty();
         }
     }

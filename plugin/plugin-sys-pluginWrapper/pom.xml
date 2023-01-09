@@ -29,6 +29,10 @@
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>cq-core-db-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>minio-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -16,15 +16,11 @@ import static com.dasoops.common.entity.enums.BaseRedisKeyEnum.PLUGIN;
  */
 @AllArgsConstructor
 @Getter
-public enum LoajKeyEnum implements IRedisKeyEnum {
-
+public enum LoajRedisKeyEnum implements IRedisKeyEnum {
     /**
-     * 本地版本号
+     * 触发关键词 单对单 回复语句
      */
-    ROLL(getBasePath() + "roll"),
-
-
-    REPLY(getBasePath() + "reply");
+    REPLY_KEYWORD_OTO_REPLY_MAP(getBasePath() + "reply_keyword_oto_reply");
 
     final String key;
 

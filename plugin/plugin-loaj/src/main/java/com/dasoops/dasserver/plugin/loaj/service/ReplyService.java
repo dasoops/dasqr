@@ -14,4 +14,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ReplyService extends IService<ReplyDo> {
 
+    /**
+     * 初始化/更新 关键词 单对单 回复 映射集合 缓存
+     */
+    void initOrUpdateRelayMap2Cache();
 }
