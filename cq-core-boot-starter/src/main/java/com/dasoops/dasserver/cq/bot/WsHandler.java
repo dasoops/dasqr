@@ -84,37 +84,7 @@ public class WsHandler extends TextWebSocketHandler {
         );
 
         initIsCompleted = true;
-
-
-/*
-        插件通知 预计迁移至增强插件
-        List<String> unLoadPluginList = stringRedisTemplate.opsForList().range(RedisKeyEnum.UN_LOAD_PLUGIN.getKey(), 0, -1);
-        List<String> loadPluginList = stringRedisTemplate.opsForList().range(RedisKeyEnum.LOAD_PLUGIN.getKey(), 0, -1);
-
-        String configRedisKey = RedisKeyEnum.CORE_CONFIG + ":config";
-        String version = "null";
-        if (Boolean.TRUE.equals(stringRedisTemplate.hasKey(configRedisKey))) {
-            version = (String) stringRedisTemplate.opsForHash().get(RedisKeyEnum.CORE_CONFIG + ":config", "localVersion");
-        }
-        StringBuilder sb = new StringBuilder("Server Start V." + version);
-        if (unLoadPluginList != null) {
-            sb.append("\r\n已加载插件: ");
-            unLoadPluginList.forEach(pluginName -> {
-                sb.append("\r\n\t- ").append(pluginName);
-            });
-        }
-        if (loadPluginList != null) {
-            sb.append("未成功加载插件: ");
-            loadPluginList.forEach(pluginName -> {
-                sb.append("\r\n\t- ").append(pluginName);
-            });
-        }
-
-        CqAssert.notNull(loadPluginList, () -> sb.append(StrUtil.format("成功加载插件 {} 个\r\n", loadPluginList.size())));
-        CqAssert.notNull(unLoadPluginList, () -> sb.append(StrUtil.format("未成功加载插件 {} 个\r\n", unLoadPluginList.size())));
-
-        cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), sb.toString(), false);
-        */
+        cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), "DasServer start,", false);
     }
 
     /**
