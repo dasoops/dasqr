@@ -105,10 +105,10 @@
             <artifactId>plugin-style</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.dasoops.dasserver</groupId>-->
-<!--            <artifactId>plugin-image</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-image</artifactId>
+        </dependency>
 
     </dependencies>
 

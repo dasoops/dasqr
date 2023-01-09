@@ -54,9 +54,4 @@ public class PluginDo extends BaseDo implements Serializable {
      * 是否启用
      */
     private Integer enable;
-
-    /**
-     * 加载jar路径
-     */
-    private String loadJarPath;
 }

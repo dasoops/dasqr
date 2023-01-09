@@ -11,7 +11,6 @@
         <result property="order" column="order" jdbcType="INTEGER"/>
         <result property="level" column="level" jdbcType="TINYINT"/>
         <result property="description" column="description" jdbcType="VARCHAR"/>
-        <result property="loadJarPath" column="load_jar_path" jdbcType="VARCHAR"/>
         <result property="enable" column="enable" jdbcType="TINYINT"/>
         <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
         <result property="createUser" column="create_user" jdbcType="BIGINT"/>
@@ -24,7 +23,7 @@
         row_id
         ,
         keyword,class_path,`order`,
-        `level`,description,loadJarPath,
+        `level`,description,
         enable,is_delete,create_user,
         create_time,update_user,update_time
     </sql>
