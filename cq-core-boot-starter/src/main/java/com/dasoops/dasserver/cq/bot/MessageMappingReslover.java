@@ -316,6 +316,9 @@ public class MessageMappingReslover {
 
     private static void checkOrder(List<Field> sortFieldList) {
         int fieldCount = sortFieldList.size();
+        if (fieldCount == 0) {
+            return;
+        }
         //获取最大order
         Field maxOrderField = sortFieldList.get(fieldCount - 1);
         InjectionParam maxOrderFieldInjectionParam = maxOrderField.getAnnotation(InjectionParam.class);
