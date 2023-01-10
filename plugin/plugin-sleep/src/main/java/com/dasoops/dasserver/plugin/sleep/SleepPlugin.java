@@ -55,7 +55,6 @@ public class SleepPlugin extends CqPlugin {
                 return "呜呜呜~";
             }
         }
-
         return "zzZZZZzzzzzz";
     }
 
