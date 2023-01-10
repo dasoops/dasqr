@@ -4,7 +4,6 @@ import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
-import com.dasoops.dasserver.cq.entity.event.message.MessageParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +27,7 @@ public class RebootPlugin extends CqPlugin {
     }
 
     @MessageMapping(prefix = "reboot", type = MessageMappingTypeEnum.ALL)
-    public String reboot(CqTemplate cqTemplate, MessageParam param) {
+    public String reboot(CqTemplate cqTemplate, RebootMessageParam param) {
         cqTemplate.sendMsg(param, "gogogo");
         rebootEvent.run();
         return """
