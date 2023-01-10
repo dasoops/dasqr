@@ -30,10 +30,7 @@ public class RebootPlugin extends CqPlugin {
     public String reboot(CqTemplate cqTemplate, RebootMessageParam param) {
         cqTemplate.sendMsg(param, "gogogo");
         rebootEvent.run();
-        return """
-                compile complete
-                to reboot
-                """;
+        return "compile complete,to reboot";
     }
 
 }
