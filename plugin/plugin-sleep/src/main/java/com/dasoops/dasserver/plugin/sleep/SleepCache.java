@@ -26,21 +26,21 @@ public class SleepCache extends BaseCache {
         super(stringRedisTemplate);
     }
 
-    public void setGroupSleepTime(Long groupId, Long time, TimeUnit timeUnit) {
-        setSleepTime(false, groupId, time, timeUnit);
+    public void setGroupSleepTime(Long groupId, Long count, TimeUnit timeUnit) {
+        setSleepTime(false, groupId, count, timeUnit);
     }
 
-    public void setUserSleepTime(Long userId, Long time, TimeUnit timeUnit) {
-        setSleepTime(false, userId, time, timeUnit);
+    public void setUserSleepTime(Long userId, Long count, TimeUnit timeUnit) {
+        setSleepTime(false, userId, count, timeUnit);
     }
 
-    public void setSleepTime(boolean isGroup, Long registerId, Long time, TimeUnit timeUnit) {
+    public void setSleepTime(boolean isGroup, Long registerId, Long count, TimeUnit timeUnit) {
         SleepRedisKeyShamEnum redisKeyEnum = SleepRedisKeyShamEnum.build(isGroup, registerId);
-        super.setAndExpire(redisKeyEnum, FLAG, time, timeUnit);
+        super.setAndExpire(redisKeyEnum, FLAG, count, timeUnit);
     }
 
-    public void sleep(boolean isGroup, Long registerId, Long time, TimeUnit timeUnit) {
-        setSleepTime(isGroup, registerId, time, timeUnit);
+    public void sleep(boolean isGroup, Long registerId, Long count, TimeUnit timeUnit) {
+        setSleepTime(isGroup, registerId, count, timeUnit);
     }
 
     public boolean isSleep(boolean isGroup, Long registerId) {

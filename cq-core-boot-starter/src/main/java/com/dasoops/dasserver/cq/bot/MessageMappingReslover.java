@@ -41,8 +41,8 @@ public class MessageMappingReslover {
         MessageParam messageParam;
         for (Method pluginMethod : pluginMethods) {
             //检查是否需要解析
-            boolean needReslove = checkNeedReslove(pluginMethod, messageEvent, defaultMethodName, eventTypeEnum);
-            if (!needReslove) {
+            String matchKeyword = checkNeedReslove(pluginMethod, messageEvent, defaultMethodName, eventTypeEnum);
+            if (matchKeyword == null) {
                 continue;
             }
             //开始反射获取实体类
@@ -66,7 +66,7 @@ public class MessageMappingReslover {
                 //实例化对象
                 messageParam = (MessageParam) ReflectUtil.newInstance(messageParamClazz);
                 //注入属性
-                injectionValue(messageParam, eventTypeEnum, pluginMethod.getAnnotation(MessageMapping.class), messageEvent, messageParamClazz);
+                injectionValue(messageParam, eventTypeEnum, pluginMethod.getAnnotation(MessageMapping.class), messageEvent, messageParamClazz, matchKeyword);
                 //构建参数集合
                 params = buildParams(paramClazzs, cqTemplate, messageEvent, messageParam);
             }
@@ -150,29 +150,29 @@ public class MessageMappingReslover {
      * @param eventTypeEnum     事件类型枚举
      * @return boolean
      */
-    private static boolean checkNeedReslove(Method pluginMethod, CqMessageEvent messageEvent, String defaultMethodName, EventTypeEnum eventTypeEnum) {
+    private static String checkNeedReslove(Method pluginMethod, CqMessageEvent messageEvent, String defaultMethodName, EventTypeEnum eventTypeEnum) {
         //检查是否有注解(需要解析),没有直接过
         if (!hasAnnotation(pluginMethod)) {
-            return false;
+            return null;
         }
         //从注解获取type,根据type检查是否匹配
         MessageMapping annotation = pluginMethod.getAnnotation(MessageMapping.class);
         boolean typeIsMatch = typeIsMatch(defaultMethodName, eventTypeEnum, pluginMethod, annotation);
         if (!typeIsMatch) {
-            return false;
+            return null;
         }
         //检查是否匹配解析规则,不匹配直接过
         String message = messageEvent.getMessage();
-        boolean messageIsMatch = checkMessageIsMatch(message, annotation);
-        if (!messageIsMatch) {
-            return false;
+        String matchKeyword = checkMessageIsMatch(message, annotation);
+        if (matchKeyword == null) {
+            return null;
         }
         //检查返回值类型是否通过,不过抛异常,不惯着你直接抛,咱不做低声下气的人
         boolean returnTypeIsMatch = checkReturnType(pluginMethod);
         if (!returnTypeIsMatch) {
             throw new LogicException(MessageParamResloveExceptionEnum.RETURN_TYPE_IS_NOT_PASSOBJ);
         }
-        return true;
+        return matchKeyword;
     }
 
     private static boolean checkReturnType(Method pluginMethod) {
@@ -277,7 +277,7 @@ public class MessageMappingReslover {
     }
 
 
-    private static void injectionValue(final MessageParam messageParam, EventTypeEnum eventTypeEnum, MessageMapping annotation, CqMessageEvent messageEvent, Class<?> messageParamClazz) {
+    private static void injectionValue(final MessageParam messageParam, EventTypeEnum eventTypeEnum, MessageMapping annotation, CqMessageEvent messageEvent, Class<?> messageParamClazz, String matchKeyword) {
         //设置isGroup
         boolean isGroup = eventTypeEnum.equals(EventTypeEnum.MESSAGE_GROUP);
         messageParam.setIsGroup(isGroup);
@@ -285,6 +285,7 @@ public class MessageMappingReslover {
         if (isGroup) {
             messageParam.setGroupId(((CqGroupMessageEvent) messageEvent).getGroupId());
         }
+        messageParam.setMatchKeyword(matchKeyword);
 
         //获取字段,根据注解判断是否需要注入
         Field[] paramFields = messageParamClazz.getDeclaredFields();
@@ -344,7 +345,7 @@ public class MessageMappingReslover {
      * @param annotation 注释
      * @return boolean
      */
-    private static boolean checkMessageIsMatch(String message, MessageMapping annotation) {
+    private static String checkMessageIsMatch(String message, MessageMapping annotation) {
         if (annotation.ignoreDbc()) {
             message = Convert.toDBC(message);
         }
@@ -355,7 +356,7 @@ public class MessageMappingReslover {
             }
             //匹配通过直接return
             if (StrUtil.startWith(message, prefix, annotation.ignoreCase())) {
-                return true;
+                return prefix;
             }
         }
         //后缀匹配
@@ -364,17 +365,17 @@ public class MessageMappingReslover {
                 suffix = Convert.toDBC(suffix);
             }
             if (StrUtil.endWith(message, suffix, annotation.ignoreCase())) {
-                return true;
+                return suffix;
             }
         }
         //包含关键词匹配
         for (String keyword : annotation.contains()) {
             if (message.contains(keyword)) {
-                return true;
+                return keyword;
             }
         }
         //全部不匹配
-        return false;
+        return null;
     }
 
     private static String getMatchPrefix(String message, MessageMapping annotation) {

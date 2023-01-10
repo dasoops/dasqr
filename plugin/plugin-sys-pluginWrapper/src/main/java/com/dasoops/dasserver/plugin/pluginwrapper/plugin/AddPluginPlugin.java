@@ -31,12 +31,12 @@ public class AddPluginPlugin extends CqPlugin {
 
     @MessageMapping(prefix = "addPlugin", type = MessageMappingTypeEnum.ALL)
     public PluginResult addPlugin(CqTemplate cqTemplate, AddPluginParam param) {
-        CqMessageAssert.getInstance().allMustNotNull(param, param.getKeyword(), param.getClassPath(), param.getDescription(), param.getLevel());
+        CqMessageAssert.getInstance().allMustNotNull(param, param.getMatchKeyword(), param.getClassPath(), param.getDescription(), param.getLevel());
 
         Integer maxOrder = pluginService.getMaxOrder();
 
         PluginDo pluginDo = new PluginDo();
-        pluginDo.setKeyword(param.getKeyword());
+        pluginDo.setKeyword(param.getMatchKeyword());
         pluginDo.setClassPath(param.getClassPath());
         pluginDo.setDescription(param.getDescription());
         pluginDo.setEnable(PluginEnableEnum.TRUE.getDbValue());

@@ -1,5 +1,7 @@
 package com.dasoops.dasserver.plugin.sleep;
 
+import com.dasoops.common.util.TimeUtil;
+import com.dasoops.common.util.entity.TimeDto;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
@@ -28,34 +30,33 @@ public class SleepPlugin extends CqPlugin {
         this.sleepCache = sleepCache;
     }
 
-    @MessageMapping(prefix = {"sleep", "quiet", "打晕", "shutUp"}, type = MessageMappingTypeEnum.ALL)
+    @MessageMapping(prefix = {"sleep", "quiet", "打晕", "闭嘴", "shutUp"}, type = MessageMappingTypeEnum.ALL)
     public String sleep(SleepParam param) {
-        CqMessageAssert.getInstance().allMustNotNull(param, param.getSleepTimeString());
-        //分离单位和时间
+        CqMessageAssert.getInstance().allMustNotNull(param);
+
+        TimeDto timeDto;
         String sleepTimeString = param.getSleepTimeString();
-        int[] sleepTimeChars = sleepTimeString.chars().toArray();
-        StringBuilder timeUnitString = new StringBuilder();
-        int timeEndIndex = 0;
-        for (int i = 0; i < sleepTimeChars.length; i++) {
-            int timeChar = sleepTimeChars[i];
-            if (timeChar >= '0' && timeChar <= '9') {
-                timeEndIndex = i + 1;
-                continue;
+        if (null == sleepTimeString || "".equals(sleepTimeString)) {
+            timeDto = TimeDto.builder().count(10L).timeUnit(TimeUnit.MINUTES).build();
+        } else {
+            //分离单位和时间
+            timeDto = TimeUtil.cutTimeUnitAndTimeCount(param.getSleepTimeString());
+        }
+        sleepCache.sleep(param.getIsGroup(), param.getRegisterId(), timeDto.getCount(), timeDto.getTimeUnit());
+
+        switch (param.getMatchKeyword()) {
+            case "quiet" -> {
+                return null;
             }
-            timeUnitString.append((char) timeChar);
+            case "打晕" -> {
+                return "@&o%a*e()$~";
+            }
+            case "shutUp", "闭嘴" -> {
+                return "呜呜呜~";
+            }
         }
 
-        TimeUnit timeUnit;
-        switch (timeUnitString.toString()) {
-            case "m", "min", "minute", "minutes" -> timeUnit = TimeUnit.MINUTES;
-            case "h", "hour" -> timeUnit = TimeUnit.HOURS;
-            case "d", "day", "days" -> timeUnit = TimeUnit.DAYS;
-            default -> timeUnit = TimeUnit.SECONDS;
-        }
-        Long time = Long.valueOf(sleepTimeString.substring(0, timeEndIndex));
-
-        sleepCache.sleep(param.getIsGroup(), param.getRegisterId(), time, timeUnit);
-        return "zzZZZZzzzzzz...";
+        return "zzZZZZzzzzzz";
     }
 
 }

@@ -34,6 +34,11 @@ public class MessageParam extends BaseParam {
      */
     private Long userId;
 
+    /**
+     * 匹配关键字
+     */
+    private String matchKeyword;
+
     public Long getRegisterId() {
         if (isGroup) {
             return groupId;

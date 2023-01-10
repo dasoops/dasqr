@@ -145,7 +145,7 @@ public class WsHandler extends TextWebSocketHandler {
             CqTemplate finalCqTemplate = cqTemplate;
             executor.execute(() -> {
                 try {
-                        eventHandler.handle(finalCqTemplate, messageObj);
+                    eventHandler.handle(finalCqTemplate, messageObj);
                 } catch (Exception e) {
                     //异常处理
                     Assert.getInstance().ifTrue(
