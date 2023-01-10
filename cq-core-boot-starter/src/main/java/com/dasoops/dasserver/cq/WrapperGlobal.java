@@ -5,6 +5,7 @@ import com.dasoops.dasserver.cq.wrapper.ExceptionWrapper;
 import com.dasoops.dasserver.cq.wrapper.WsWrapper;
 import org.springframework.context.ApplicationContext;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -20,11 +21,11 @@ public class WrapperGlobal {
 
     private static ApplicationContext applicationContext;
 
-    private static List<AuthWrapper> authWrapperList;
+    private static List<AuthWrapper> authWrapperList = new ArrayList<>();
 
-    private static List<ExceptionWrapper> exceptionWrapperList;
+    private static List<ExceptionWrapper> exceptionWrapperList = new ArrayList<>();
 
-    private static List<WsWrapper> wsWrapperList;
+    private static List<WsWrapper> wsWrapperList = new ArrayList<>();
 
     public static void refresh() {
         WrapperGlobal.authWrapperList = applicationContext.getBeansOfType(AuthWrapper.class).values().stream().sorted(Comparator.comparingInt(AuthWrapper::getOrder)).toList();

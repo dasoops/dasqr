@@ -2,6 +2,7 @@ package com.dasoops.dasserver.cq.bot;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqGlobal;
@@ -70,20 +71,24 @@ public class WsHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) {
-        Long qid = getQid(session);
-        log.info("{} connection", qid);
+        try {
+            Long qid = getQid(session);
+            log.info("{} connection", qid);
 
-        //创建CqTemplate,存入CqGlobal方便取用
-        CqTemplate cqTemplate = cqFactory.create(qid, session);
-        CqGlobal.put(qid, cqTemplate);
+            //创建CqTemplate,存入CqGlobal方便取用
+            CqTemplate cqTemplate = cqFactory.create(qid, session);
+            CqGlobal.put(qid, cqTemplate);
 
-        List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
+            List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
 
-        CqMessageAssert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
-                .forEach(wsWrapper -> wsWrapper.afterConnectionEstablishedWrapper(cqTemplate))
-        );
+            CqMessageAssert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
+                    .forEach(wsWrapper -> wsWrapper.afterConnectionEstablishedWrapper(cqTemplate)));
 
-        initIsCompleted = true;
+            //等待初始化完成
+        } catch (Exception e) {
+            log.error("", e);
+            throw new LogicException(ExceptionEnum.INIT_ERROR);
+        }
     }
 
     /**
@@ -113,15 +118,10 @@ public class WsHandler extends TextWebSocketHandler {
      */
     @Override
     public void handleTextMessage(@NonNull WebSocketSession session, @NonNull TextMessage message) {
-        //等待缓存更新
-        try {
-            while (!initIsCompleted) {
-                super.wait(100);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        //同步的,只能在这里检测初始化
+        if (!initIsCompleted) {
+            initIsCompleted = WrapperGlobal.getWsWrapperList().stream().allMatch(WsWrapper::getInitIsCompleted);
         }
-
         Long qid = getQid(session);
         CqTemplate cqTemplate = CqGlobal.get(qid);
 
@@ -138,17 +138,24 @@ public class WsHandler extends TextWebSocketHandler {
             //是返回消息 触发唤醒事件
             apiHandler.onReceiveApiMessage(messageObj);
         } else {
+            //缓存等信息未处理完毕时不处理消息,同时也不处理关机期间积压消息
+            if (!initIsCompleted) {
+                return;
+            }
             //是cq消息上报
             CqTemplate finalCqTemplate = cqTemplate;
             executor.execute(() -> {
                 try {
-                    eventHandler.handle(finalCqTemplate, messageObj);
+                        eventHandler.handle(finalCqTemplate, messageObj);
                 } catch (Exception e) {
                     //异常处理
-                    CqMessageAssert.ifTrue(cqProperties.isConsolePrintStack(), () -> CqMessageAssert.ifTrueOrElse(cqProperties.isNativePrintStack(),
-                            e::printStackTrace,
-                            () -> log.error("消息处理发生异常: {}", e instanceof LogicException ? ((LogicException) e).getStackMessage() : e)
-                    ));
+                    CqMessageAssert.ifTrue(
+                            cqProperties.isConsolePrintStack(),
+                            () -> CqMessageAssert.ifTrueOrElse(
+                                    cqProperties.isNativePrintStack(),
+                                    e::printStackTrace,
+                                    () -> log.error("消息处理发生异常: {}", e instanceof LogicException logicException ? logicException.getStackMessage() : e)
+                            ));
                     List<ExceptionWrapper> exceptionWrapperList = WrapperGlobal.getExceptionWrapperList();
                     Assert.ifNotNull(exceptionWrapperList, () -> exceptionWrapperList.forEach(exceptionWrapper -> exceptionWrapper.invoke(e)));
                 }

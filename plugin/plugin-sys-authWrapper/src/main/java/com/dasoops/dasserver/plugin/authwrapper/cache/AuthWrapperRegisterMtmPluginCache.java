@@ -6,6 +6,7 @@ import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Convert;
 import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
 import com.dasoops.dasserver.entity.enums.AuthRedisKeyAuthListShamEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  * @Description: 注册mtm插件缓存
  */
 @Component
+@Slf4j
 public class AuthWrapperRegisterMtmPluginCache extends BaseCache {
 
     public AuthWrapperRegisterMtmPluginCache(StringRedisTemplate stringRedisTemplate) {
@@ -38,6 +40,7 @@ public class AuthWrapperRegisterMtmPluginCache extends BaseCache {
         AuthRedisKeyAuthListShamEnum redisKeyEnum = new AuthRedisKeyAuthListShamEnum(registerId);
         String isPass = super.hget(redisKeyEnum, String.valueOf(pluginId));
         if (isPass == null || "".equals(isPass)) {
+            log.error("isPass is null in cache,registerId: {},pluginId: {}", registerId, pluginId);
             throw new LogicException(ExceptionEnum.REDIS_DATA_NOT_NULL);
         }
         //判断是否为TRUE

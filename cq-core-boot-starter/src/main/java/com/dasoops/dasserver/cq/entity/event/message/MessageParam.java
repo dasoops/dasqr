@@ -33,4 +33,11 @@ public class MessageParam extends BaseParam {
      * 用户id
      */
     private Long userId;
+
+    public Long getRegisterId() {
+        if (isGroup) {
+            return groupId;
+        }
+        return userId;
+    }
 }

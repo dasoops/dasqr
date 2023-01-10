@@ -87,6 +87,11 @@
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-reboot</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-gitNotice</artifactId>
         </dependency>
 
@@ -112,7 +117,7 @@
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>plugin-sys-reboot</artifactId>
+            <artifactId>plugin-sleep</artifactId>
         </dependency>
 
     </dependencies>

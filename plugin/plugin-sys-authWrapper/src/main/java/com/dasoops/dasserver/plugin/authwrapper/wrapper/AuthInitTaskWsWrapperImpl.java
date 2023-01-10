@@ -3,6 +3,7 @@ package com.dasoops.dasserver.plugin.authwrapper.wrapper;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.wrapper.WsWrapper;
 import com.dasoops.dasserver.plugin.authwrapper.task.AuthInitTask;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,9 @@ public class AuthInitTaskWsWrapperImpl implements WsWrapper {
 
     private final AuthInitTask authInitTask;
 
+    @Getter
+    private Boolean initIsCompleted = false;
+
     public AuthInitTaskWsWrapperImpl(AuthInitTask authInitTask) {
         this.authInitTask = authInitTask;
     }
@@ -27,11 +31,11 @@ public class AuthInitTaskWsWrapperImpl implements WsWrapper {
     @Override
     public void afterConnectionEstablishedWrapper(CqTemplate cqTemplate) {
         authInitTask.initOrUpdateAll(cqTemplate);
+        initIsCompleted = true;
     }
 
     @Override
     public void afterConnectionClosedWrapper(CqTemplate cqTemplate) {
-
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.dasoops.dasserver.plugin.wswrapper;
 
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.wrapper.WsWrapper;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -17,9 +18,14 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class WsWrapperImpl implements WsWrapper {
 
+    @Getter
+    private Boolean initIsCompleted = false;
+
     @Override
     public void afterConnectionEstablishedWrapper(CqTemplate cqTemplate) {
         //todo
+
+        initIsCompleted = true;
     }
 
     @Override

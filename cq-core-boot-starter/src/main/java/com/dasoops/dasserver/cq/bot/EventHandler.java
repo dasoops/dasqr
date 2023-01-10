@@ -1,11 +1,7 @@
 package com.dasoops.dasserver.cq.bot;
 
-import cn.hutool.core.util.EnumUtil;
 import com.alibaba.fastjson2.JSONObject;
-import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.*;
-import com.dasoops.dasserver.cq.entity.enums.CqEventColumnEnum;
-import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.PostTypeEnum;
 import com.dasoops.dasserver.cq.entity.event.CqEvent;
@@ -19,7 +15,9 @@ import com.dasoops.dasserver.cq.entity.event.meta.CqMetaEvent;
 import com.dasoops.dasserver.cq.entity.event.notice.*;
 import com.dasoops.dasserver.cq.entity.event.request.CqFriendRequestEvent;
 import com.dasoops.dasserver.cq.entity.event.request.CqGroupRequestEvent;
+import com.dasoops.dasserver.cq.utils.entity.EventInfo;
 import com.dasoops.dasserver.cq.wrapper.AuthWrapper;
+import com.dasoops.dasserver.cq.wrapper.WsWrapper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -47,21 +45,17 @@ public class EventHandler {
      */
     public void handle(CqTemplate cqTemplate, JSONObject eventJson) {
         try {
-            EventUtil.set(eventJson);
+            EventInfo eventInfo = EventUtil.set(eventJson);
             CqGlobal.setThreadLocal(cqTemplate);
 
-            String postType = eventJson.getString(CqEventColumnEnum.POST_TYPE.getKey());
-            PostTypeEnum postTypeEnum = EnumUtil.getBy(PostTypeEnum::getKey, postType);
-            String eventType;
-            //心跳的messageType键不一样
-            switch (postTypeEnum) {
-                case MESSAGE, MESSAGE_SENT -> eventType = eventJson.getString(CqEventColumnEnum.MESSAGE_TYPE.getKey());
-                case NOTICE -> eventType = eventJson.getString(CqEventColumnEnum.NOTICE_TYPE.getKey());
-                case REQUEST -> eventType = eventJson.getString(CqEventColumnEnum.REQUEST_TYPE.getKey());
-                case META_EVENT -> eventType = eventJson.getString(CqEventColumnEnum.MESSAGE_EVENT_TYPE.getKey());
-                default -> throw new LogicException(CqExceptionEnum.UNKNOWN_POST_TYPE);
+            List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
+            boolean pass = wsWrapperList.stream().allMatch(wsWrapper -> wsWrapper.beforeHandleTextMessage(cqTemplate, eventInfo));
+            if (!pass) {
+                return;
             }
-            EventTypeEnum eventTypeEnum = EnumUtil.getBy(EventTypeEnum::getKey, eventType);
+
+            PostTypeEnum postTypeEnum = eventInfo.getPostTypeEnum();
+            EventTypeEnum eventTypeEnum = eventInfo.getEventTypeEnum();
 
             switch (postTypeEnum) {
                 case MESSAGE -> {
@@ -86,6 +80,8 @@ public class EventHandler {
                         case NOTICE_GROUP_DECREASE -> handleMessage(cqTemplate, eventJson, CqGroupDecreaseNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupDecreaseNotice(cqTemplate, (CqGroupDecreaseNoticeEvent) cqEvent));
                         case NOTICE_GROUP_INCREASE -> handleMessage(cqTemplate, eventJson, CqGroupIncreaseNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupIncreaseNotice(cqTemplate, (CqGroupIncreaseNoticeEvent) cqEvent));
                         case NOTICE_GROUP_UPLOAD -> handleMessage(cqTemplate, eventJson, CqGroupUploadNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupUploadNotice(cqTemplate, (CqGroupUploadNoticeEvent) cqEvent));
+                        case NOTICE_FRIEND_RECALL -> handleMessage(cqTemplate, eventJson, CqGroupRecallNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupRecallNotice(cqTemplate, (CqGroupRecallNoticeEvent) cqEvent));
+                        case NOTICE_GROUP_RECALL -> handleMessage(cqTemplate, eventJson, CqFriendRecallNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onFriendRecallNotice(cqTemplate, (CqFriendRecallNoticeEvent) cqEvent));
                     }
                 }
                 case REQUEST -> {
@@ -100,7 +96,7 @@ public class EventHandler {
                         case META_EVENT_LIFECYCLE -> handleMetaEvent(cqTemplate, eventJson, CqLifecycleMetaEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onLifecycleMeta(cqTemplate, (CqLifecycleMetaEvent) cqEvent));
                     }
                 }
-                default -> log.error("not found reslove method({}:{})", postType, eventType);
+                default -> log.error("not found reslove method");
             }
         } finally {
             EventUtil.remove();

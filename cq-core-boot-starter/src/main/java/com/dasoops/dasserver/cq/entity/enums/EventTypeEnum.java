@@ -45,6 +45,10 @@ public enum EventTypeEnum {
      */
     NOTICE_GROUP_UPLOAD("group_upload"),
     /**
+     * 群消息撤回
+     */
+    NOTICE_GROUP_RECALL("group_recall"),
+    /**
      * 群管理员变动
      */
     NOTICE_GROUP_ADMIN("group_admin"),
@@ -64,6 +68,10 @@ public enum EventTypeEnum {
      * 好友添加
      */
     NOTICE_FRIEND_ADD("friend_add"),
+    /**
+     * 私聊消息撤回
+     */
+    NOTICE_FRIEND_RECALL("friend_recall"),
     /**
      * 加好友请求
      */

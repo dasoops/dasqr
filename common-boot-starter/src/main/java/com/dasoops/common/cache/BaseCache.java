@@ -101,6 +101,10 @@ public class BaseCache {
         return value().getAndDelete(redisKeyEnum.getKey());
     }
 
+    protected void setAndExpire(IRedisKeyEnum redisKeyEnum, String value, Long time, TimeUnit timeUnit) {
+        value().set(redisKeyEnum.getKey(), value);
+        expire(redisKeyEnum, time, timeUnit);
+    }
     /* -- Value End -- */
 
     /* -- Hash Begin -- */
@@ -174,6 +178,7 @@ public class BaseCache {
     protected void sadd(IRedisKeyEnum redisKeyEnum, List<String> valueList) {
         set().add(redisKeyEnum.getKey(), valueList.toArray(new String[0]));
     }
+
     protected void sadd(IRedisKeyEnum redisKeyEnum, Set<String> valueSet) {
         set().add(redisKeyEnum.getKey(), valueSet.toArray(new String[0]));
     }
@@ -213,8 +218,6 @@ public class BaseCache {
     protected Map<String, Set<String>> sGetGroupingByPrefix(IRedisKeyEnum redisKeyEnum) {
         return this.sGetGroupingByPrefix(redisKeyEnum, string -> string, string -> string);
     }
-
-
 
     /* -- Set End -- */
 }

@@ -1,13 +1,14 @@
 package com.dasoops.dasserver.cq;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.dasoops.dasserver.cq.bot.CqPluginLoadReslover;
+import com.dasoops.dasserver.cq.bot.DefaultPluginLoadReslover;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @Title: CqPluginGlobal
@@ -32,23 +33,9 @@ public class CqPluginGlobal {
     /**
      * 默认解析器
      */
-    public static CqPluginLoadReslover reslover = applicationContext ->
-            applicationContext.getBeansOfType(CqPlugin.class).values().stream().collect(Collectors.toMap(cqPlugin -> cqPlugin.getClass().getName(), cqPlugin -> cqPlugin));
+    public static CqPluginLoadReslover reslover = new DefaultPluginLoadReslover();
 
     public static Integer resloverOrder = 2147483647;
-
-    /**
-     * 插件加载解析器
-     */
-    public interface CqPluginLoadReslover {
-        /**
-         * 刷新
-         *
-         * @param applicationContext applicationContext
-         * @return {@link Map}<{@link String}, {@link CqPlugin}>
-         */
-        Map<String, CqPlugin> refresh(ApplicationContext applicationContext);
-    }
 
     public static void put(String className, CqPlugin cqPlugin) {
         pluginMap.put(className, cqPlugin);

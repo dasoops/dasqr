@@ -27,7 +27,7 @@ public class RebootPlugin extends CqPlugin {
 
     @MessageMapping(prefix = "reboot", type = MessageMappingTypeEnum.ALL)
     public String reboot() {
-        rebootEvent.start();
+        rebootEvent.run();
         return "gogogo";
     }
 

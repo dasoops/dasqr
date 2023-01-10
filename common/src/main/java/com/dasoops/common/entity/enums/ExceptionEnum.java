@@ -54,6 +54,7 @@ public enum ExceptionEnum implements IExceptionEnum {
      * 系统异常
      */
     TYPE_CONVERT(7001, "类型转换异常"),
+    INIT_ERROR(7002, "项目初始化异常"),
 
     /**
      * other

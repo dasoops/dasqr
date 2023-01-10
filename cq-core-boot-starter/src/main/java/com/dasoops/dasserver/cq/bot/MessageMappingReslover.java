@@ -19,10 +19,7 @@ import com.dasoops.dasserver.cq.entity.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.result.PluginResult;
 import com.dasoops.dasserver.cq.utils.DqCodeUtil;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -77,12 +74,15 @@ public class MessageMappingReslover {
             Object result;
             //捕获断言抛出的参数异常
             try {
-                result = ReflectUtil.invoke(cqPlugin, pluginMethod, params);
+                result = pluginMethod.invoke(cqPlugin, params);
+//                result = ReflectUtil.invoke(cqPlugin, pluginMethod, params);
             } catch (LogicException e) {
                 if (!e.getExceptionEnum().equals(CqExceptionEnum.PARAM_RESLOVE_ERROR)) {
                     throw e;
                 }
                 result = PluginResult.fastFail();
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                throw new LogicException(e);
             }
             PassObj passObj = resloveInvokeResult(cqTemplate, messageEvent, result);
             if (passObj != null) {
@@ -103,12 +103,14 @@ public class MessageMappingReslover {
      */
     @SuppressWarnings("unchecked")
     private static PassObj resloveInvokeResult(CqTemplate cqTemplate, CqMessageEvent messageEvent, Object result) {
-        if (result == null){
+        if (result == null) {
             return PassObj.block();
         }
         if (result instanceof PassObj passObj) {
             //自己处理passObj
             return passObj;
+        } else if (result instanceof Boolean boolResult) {
+            return boolResult ? PassObj.pass(messageEvent) : PassObj.block();
         } else if (result instanceof String resultStr) {
             //单句
             cqTemplate.sendMsg(messageEvent, resultStr);
@@ -162,11 +164,15 @@ public class MessageMappingReslover {
     }
 
     private static boolean checkReturnType(Method pluginMethod) {
-        //是否属于PassObj 或 String 或 PluginResult
-        if (
-                PassObj.class.isAssignableFrom(pluginMethod.getReturnType()) ||
-                        String.class.isAssignableFrom(pluginMethod.getReturnType()) ||
-                        PluginResult.class.isAssignableFrom(pluginMethod.getReturnType())
+        //是否属于void, PassObj, String, PluginResult, boolean
+        Class<?> returnType = pluginMethod.getReturnType();
+        if (returnType == void.class ||
+                PassObj.class.isAssignableFrom(returnType) ||
+                String.class.isAssignableFrom(returnType) ||
+                PluginResult.class.isAssignableFrom(returnType) ||
+                boolean.class.isAssignableFrom(returnType) ||
+                Boolean.class.isAssignableFrom(returnType)
+
         ) {
             return true;
         }

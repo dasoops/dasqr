@@ -12,7 +12,7 @@ import com.dasoops.common.entity.enums.IExceptionEnum;
  * @Description: cq逻辑异常
  * @see AbstractBaseCustomException
  */
-public class LogicException extends AbstractBaseCustomException{
+public class LogicException extends AbstractBaseCustomException {
 
     public LogicException(IExceptionEnum exceptionEnum) {
         super(exceptionEnum);
@@ -37,7 +37,7 @@ public class LogicException extends AbstractBaseCustomException{
      */
     @Override
     public String getStackInfo() {
-        final int excludeLine = 5;
+        final int excludeLine = 0;
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         StringBuilder sb = new StringBuilder();
         sb.append(StrUtil.format("ERROR{{}:{}}{}  stack\r\n", super.getExceptionEnum().getCode(), super.getExceptionEnum().getMsg(), super.getStackMessage() == null ? "" : super.getStackMessage()));
@@ -60,6 +60,7 @@ public class LogicException extends AbstractBaseCustomException{
         StringBuilder sb = new StringBuilder();
         //未知异常情况
         sb.append(StrUtil.format("ERROR{{}:{}}{}  stack\r\n", super.getExceptionEnum().getCode(), super.getExceptionEnum().getMsg(), super.getStackMessage() == null ? "" : super.getStackMessage()));
+        sb.append(StrUtil.format("top exception detailMessage is: {}", e.getMessage()));
         //排除前5行(断言,异常类信息)
         for (StackTraceElement element : stackTrace) {
             sb.append(StrUtil.format("\t at {}.{}({}:{})\r\n", element.getClassName(), element.getMethodName(), element.getClassName(), element.getLineNumber()));

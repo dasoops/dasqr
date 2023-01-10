@@ -3,6 +3,7 @@ package com.dasoops.dasserver.plugin.webmanager.wrapper;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.wrapper.WsWrapper;
 import com.dasoops.dasserver.plugin.webmanager.task.WebManagerInitTask;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,6 +20,9 @@ public class RegisterIdOtoNameInitTaskWsWrapperImpl implements WsWrapper {
 
     private final WebManagerInitTask webManagerInitTask;
 
+    @Getter
+    private Boolean initIsCompleted = false;
+
     public RegisterIdOtoNameInitTaskWsWrapperImpl(WebManagerInitTask webManagerInitTask) {
         this.webManagerInitTask = webManagerInitTask;
     }
@@ -26,10 +30,12 @@ public class RegisterIdOtoNameInitTaskWsWrapperImpl implements WsWrapper {
     @Override
     public void afterConnectionEstablishedWrapper(CqTemplate cqTemplate) {
         webManagerInitTask.initOrUpdateRegisterIdOtoNameMap2Cache(cqTemplate);
+        initIsCompleted = true;
     }
 
     @Override
     public void afterConnectionClosedWrapper(CqTemplate cqTemplate) {
+        
 
     }
 
