@@ -2,6 +2,7 @@ package com.dasoops.dasserver.plugin.webmanager.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.exception.LogicException;
+import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.cache.RegisterCache;
@@ -19,7 +20,6 @@ import com.dasoops.dasserver.plugin.webmanager.entity.param.LoginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.LoginVo;
 import com.dasoops.dasserver.plugin.webmanager.mapper.RegisterWebMapper;
 import com.dasoops.dasserver.plugin.webmanager.service.RegisterWebService;
-import com.dasoops.dasserver.plugin.webmanager.util.WebAssert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +55,7 @@ public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, Regis
     @Override
     public LoginVo login(LoginParam loginParam) {
 
-        WebAssert.allMustNotNull(loginParam, loginParam.getUsername(), loginParam.getPassword());
+        Assert.getInstance().allMustNotNull(loginParam, loginParam.getUsername(), loginParam.getPassword());
 
         //密码暂无,账号应同密码
         String username = loginParam.getUsername();

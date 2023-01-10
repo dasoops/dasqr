@@ -77,16 +77,23 @@ public class MessageMappingReslover {
                 result = pluginMethod.invoke(cqPlugin, params);
 //                result = ReflectUtil.invoke(cqPlugin, pluginMethod, params);
             } catch (LogicException e) {
+                //非参数解析异常直接抛出,由wsHandler处理
                 if (!e.getExceptionEnum().equals(CqExceptionEnum.PARAM_RESLOVE_ERROR)) {
                     throw e;
                 }
+                //参数解析异常使用快速失败处理
                 result = PluginResult.fastFail();
-            } catch (IllegalAccessException e) {
-                throw new LogicException(e);
             } catch (InvocationTargetException e) {
-                if (e.getTargetException() instanceof LogicException logicException) {
+                if (!(e.getTargetException() instanceof LogicException logicException)) {
+                    throw new LogicException(e);
+                }
+                //非参数解析异常直接抛出,由wsHandler处理
+                if (!logicException.getExceptionEnum().equals(CqExceptionEnum.PARAM_RESLOVE_ERROR)) {
                     throw logicException;
                 }
+                //参数解析异常使用快速失败处理
+                result = PluginResult.fastFail();
+            } catch (IllegalAccessException e) {
                 throw new LogicException(e);
             }
             PassObj passObj = resloveInvokeResult(cqTemplate, messageEvent, result);

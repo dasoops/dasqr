@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.cq.utils;
 
 import com.dasoops.common.util.Assert;
+import com.dasoops.common.util.entity.AssertReslover;
 import com.dasoops.common.util.entity.DefaultAssertReslover;
 import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
@@ -15,18 +16,27 @@ import com.dasoops.dasserver.cq.exception.CqLogicException;
  */
 public class CqMessageAssert extends Assert {
 
-    static {
-        setReslover(new DefaultAssertReslover() {
-            @Override
-            public void allMustNull() {
-                throw new CqLogicException(CqExceptionEnum.PARAM_RESLOVE_ERROR);
-            }
+    private static Assert instance;
 
-            @Override
-            public void allMustNotNull() {
-                throw new CqLogicException(CqExceptionEnum.PARAM_RESLOVE_ERROR);
-            }
-        });
+    protected CqMessageAssert(AssertReslover reslover) {
+        super(reslover);
+    }
+
+    public static Assert getInstance() {
+        if (instance == null) {
+            instance = new CqMessageAssert(new DefaultAssertReslover(){
+                @Override
+                public void allMustNull() {
+                    throw new CqLogicException(CqExceptionEnum.PARAM_RESLOVE_ERROR);
+                }
+
+                @Override
+                public void allMustNotNull() {
+                    throw new CqLogicException(CqExceptionEnum.PARAM_RESLOVE_ERROR);
+                }
+            });
+        }
+        return instance;
     }
 
 }

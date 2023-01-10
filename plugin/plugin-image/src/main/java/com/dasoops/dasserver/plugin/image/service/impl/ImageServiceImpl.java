@@ -28,7 +28,6 @@ import com.dasoops.dasserver.plugin.image.mapper.ImageMapper;
 import com.dasoops.dasserver.plugin.image.service.ImageService;
 import com.dasoops.dasserver.plugin.webmanager.cache.RegisterWebCache;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
-import com.dasoops.dasserver.plugin.webmanager.util.WebAssert;
 import com.dasoops.minio.MinioTemplate;
 import com.dasoops.minio.MinioUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -138,7 +137,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
     @Override
     public IPage<GetImageVo> getImageInfoPage(GetImageInfoPageParam param) {
-        WebAssert.allMustNotNull(param);
+        Assert.getInstance().allMustNotNull(param);
         //根据更新时间判断(网页端有更新的需求实现,会导致关键词的覆盖)
         QueryWrapper<ImageDo> wrapper = param.buildTimeQueryWrapper("UPDATE_TIME");
 
@@ -171,7 +170,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
     @Override
     public GetFantastyKeywordVo getFantasyKeyword4Cache(GetFantastyKeywordParam param) {
-        Assert.allMustNotNull(param, param.getKeyword());
+        Assert.getInstance().allMustNotNull(param, param.getKeyword());
         List<String> keywordList = imageCache.getImageKeywordList();
         List<String> fantasyKeywordList = keywordList.stream().filter(keyword -> keyword.contains(param.getKeyword())).toList();
         GetFantastyKeywordVo vo = new GetFantastyKeywordVo();
@@ -189,7 +188,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
     @Override
     public GetFantastyUserVo getFantasyUser(GetFantastyUserParam param) {
-        WebAssert.allMustNotNull(param);
+        Assert.getInstance().allMustNotNull(param);
 
         Map<String, String> allRegisterUser = registerWebCache.getAllRegisterIdOtoNameMap();
 
@@ -222,7 +221,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
     @Override
     public void editImageInfo(EditImageInfoParam param) {
-        WebAssert.allMustNotNull(param, param.getId(), param.getKeyword(), param.getFileName());
+        Assert.getInstance().allMustNotNull(param, param.getId(), param.getKeyword(), param.getFileName());
 
         String keyword = param.getKeyword();
         Long id = param.getId();
@@ -261,7 +260,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
     @Override
     public void addImage(AddImageParam param) {
-        WebAssert.allMustNotNull(param);
+        Assert.getInstance().allMustNotNull(param);
 
         String keyword = param.getKeyword();
         if (this.keywordIsRepeat(keyword)) {
@@ -285,7 +284,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
     @Override
     public void deleteImage(DeleteImageParam param) {
-        WebAssert.allMustNotNull(param, param.getId());
+        Assert.getInstance().allMustNotNull(param, param.getId());
 
         Long id = param.getId();
         ImageDo imageDo = super.getById(id);

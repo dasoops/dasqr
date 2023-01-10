@@ -12,7 +12,6 @@ import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.conf.NamedThreadFactory;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.conf.properties.EventProperties;
-import com.dasoops.dasserver.cq.utils.CqMessageAssert;
 import com.dasoops.dasserver.cq.wrapper.ExceptionWrapper;
 import com.dasoops.dasserver.cq.wrapper.WsWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -81,7 +80,7 @@ public class WsHandler extends TextWebSocketHandler {
 
             List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
 
-            CqMessageAssert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
+            Assert.getInstance().ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
                     .forEach(wsWrapper -> wsWrapper.afterConnectionEstablishedWrapper(cqTemplate)));
 
             //等待初始化完成
@@ -103,7 +102,7 @@ public class WsHandler extends TextWebSocketHandler {
         Long qid = getQid(session);
         log.info("{} close connection", qid);
         List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
-        CqMessageAssert.ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
+        Assert.getInstance().ifNotNull(wsWrapperList, () -> wsWrapperList.parallelStream()
                 .forEach(wsWrapper -> wsWrapper.afterConnectionClosedWrapper(CqGlobal.get(qid))));
 
         CqGlobal.remove(qid);
@@ -149,15 +148,15 @@ public class WsHandler extends TextWebSocketHandler {
                         eventHandler.handle(finalCqTemplate, messageObj);
                 } catch (Exception e) {
                     //异常处理
-                    CqMessageAssert.ifTrue(
+                    Assert.getInstance().ifTrue(
                             cqProperties.isConsolePrintStack(),
-                            () -> CqMessageAssert.ifTrueOrElse(
+                            () -> Assert.getInstance().ifTrueOrElse(
                                     cqProperties.isNativePrintStack(),
                                     e::printStackTrace,
                                     () -> log.error("消息处理发生异常: {}", e instanceof LogicException logicException ? logicException.getStackMessage() : e)
                             ));
                     List<ExceptionWrapper> exceptionWrapperList = WrapperGlobal.getExceptionWrapperList();
-                    Assert.ifNotNull(exceptionWrapperList, () -> exceptionWrapperList.forEach(exceptionWrapper -> exceptionWrapper.invoke(e)));
+                    Assert.getInstance().ifNotNull(exceptionWrapperList, () -> exceptionWrapperList.forEach(exceptionWrapper -> exceptionWrapper.invoke(e)));
                 }
             });
         }

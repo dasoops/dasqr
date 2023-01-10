@@ -63,7 +63,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
         List<CqPlugin> needloadPluginList = loadPluginList.stream()
                 .filter(cqPlugin -> {
                     boolean needLoad = allClassPathList.stream().anyMatch(classPath -> ClassNameUtil.removeCglibSuffix(cqPlugin.getClass().getName()).equals(classPath));
-                    Assert.ifFalse(needLoad, () -> log.error("存在未知插件({}),请及时添加数据库记录以加载该插件", ClassNameUtil.removeCglibSuffix(cqPlugin.getClass().getName())));
+                    Assert.getInstance().ifFalse(needLoad, () -> log.error("存在未知插件({}),请及时添加数据库记录以加载该插件", ClassNameUtil.removeCglibSuffix(cqPlugin.getClass().getName())));
                     return needLoad;
                 })
                 .sorted(Comparator.comparingInt(cqPlugin -> {
@@ -82,8 +82,8 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(PluginDo pluginPo) {
-        Assert.allMustNotNull(pluginPo, pluginPo.getKeyword(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription(), pluginPo.getOrder());
-        Assert.allMustNull(pluginPo.getRowId());
+        Assert.getInstance().allMustNotNull(pluginPo, pluginPo.getKeyword(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription(), pluginPo.getOrder());
+        Assert.getInstance().allMustNull(pluginPo.getRowId());
 
         //默认启用,存储插件对象
         pluginPo.setEnable(1);
@@ -108,7 +108,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
 
     @Override
     public boolean updateByKeyword(PluginDo pluginPo) {
-        Assert.isTrue(super.lambdaUpdate().eq(PluginDo::getKeyword, pluginPo.getKeyword()).update(pluginPo));
+        Assert.getInstance().isTrue(super.lambdaUpdate().eq(PluginDo::getKeyword, pluginPo.getKeyword()).update(pluginPo));
         return true;
     }
 

@@ -4,10 +4,10 @@ import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.entity.enums.IRedisHashKeyEnum;
 import com.dasoops.common.exception.LogicException;
+import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.entity.enums.ConfigKeyEnum;
 import com.dasoops.dasserver.cq.service.ConfigService;
-import com.dasoops.dasserver.cq.utils.CqMessageAssert;
 import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -48,7 +48,7 @@ public class ConfigCache extends BaseCache {
         super.remove(ConfigKeyEnum.CONFIG);
 
         List<ConfigDo> configList = configService.list();
-        CqMessageAssert.dbExecuteReturnMustNotNull(configList);
+        Assert.getInstance().dbExecuteReturnMustNotNull(configList);
         configList.forEach(config -> super.hset(ConfigKeyEnum.CONFIG, config.getKeyword(), config.getValue()));
     }
 
@@ -58,7 +58,7 @@ public class ConfigCache extends BaseCache {
 
     public String getConfig(IRedisHashKeyEnum configHashKeyEnum) {
         String value = super.hget(ConfigKeyEnum.CONFIG, configHashKeyEnum.getKey());
-        CqMessageAssert.ifNull(value, () -> {
+        Assert.getInstance().ifNull(value, () -> {
             throw new LogicException(ExceptionEnum.REDIS_DATA_NOT_NULL);
         });
         return value;

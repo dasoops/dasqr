@@ -17,10 +17,18 @@ import java.util.function.Supplier;
  */
 public class Assert {
 
-    private static AssertReslover reslover = new DefaultAssertReslover();
+    private final AssertReslover reslover;
+    private static Assert instance;
 
-    protected static void setReslover(AssertReslover reslover) {
-        Assert.reslover = reslover;
+    protected Assert(AssertReslover reslover) {
+        this.reslover = reslover;
+    }
+
+    public static Assert getInstance() {
+        if (instance == null) {
+            instance = new Assert(new DefaultAssertReslover());
+        }
+        return instance;
     }
 
     /**
@@ -28,7 +36,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static <T> void ifNull(T obj, NoneFunction function) {
+    public <T> void ifNull(T obj, NoneFunction function) {
         if (ObjUtil.isNull(obj) || ObjUtil.isEmpty(obj)) {
             function.invoke();
         }
@@ -39,7 +47,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static <T, R> R ifNullOrElse(T obj, Function<T, R> function, Function<T, R> orElseFunction) {
+    public <T, R> R ifNullOrElse(T obj, Function<T, R> function, Function<T, R> orElseFunction) {
         if (ObjUtil.isNull(obj) || ObjUtil.isEmpty(obj)) {
             function.apply(obj);
         }
@@ -51,7 +59,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static <T> void ifNotNull(T obj, NoneFunction function) {
+    public <T> void ifNotNull(T obj, NoneFunction function) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             function.invoke();
         }
@@ -62,7 +70,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static <T, R> R ifNotNull(T obj, Supplier<R> function) {
+    public <T, R> R ifNotNull(T obj, Supplier<R> function) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             return function.get();
         }
@@ -74,7 +82,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static <T, R> R ifNotNull(T obj, Function<T, R> function) {
+    public <T, R> R ifNotNull(T obj, Function<T, R> function) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             return function.apply(obj);
         }
@@ -86,7 +94,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static <T, R> R ifNotNullOrElse(T obj, Function<T, R> function, Function<T, R> orElseFunction) {
+    public <T, R> R ifNotNullOrElse(T obj, Function<T, R> function, Function<T, R> orElseFunction) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             return function.apply(obj);
         }
@@ -98,7 +106,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static <T> void ifNotNullOrElse(T obj, NoneFunction function, NoneFunction orElseFunction) {
+    public <T> void ifNotNullOrElse(T obj, NoneFunction function, NoneFunction orElseFunction) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             function.invoke();
         }
@@ -111,7 +119,7 @@ public class Assert {
      * @param bool     boolean
      * @param function 函数
      */
-    public static void ifTrue(Boolean bool, NoneFunction function) {
+    public void ifTrue(Boolean bool, NoneFunction function) {
         if (bool) {
             function.invoke();
         }
@@ -123,7 +131,7 @@ public class Assert {
      * @param bool     boolean
      * @param function 函数
      */
-    public static void ifTrueOrElse(Boolean bool, NoneFunction function, NoneFunction orElseFunction) {
+    public void ifTrueOrElse(Boolean bool, NoneFunction function, NoneFunction orElseFunction) {
         if (bool) {
             function.invoke();
         } else {
@@ -137,7 +145,7 @@ public class Assert {
      * @param bool     boolean
      * @param function 函数
      */
-    public static void ifFalse(Boolean bool, NoneFunction function) {
+    public void ifFalse(Boolean bool, NoneFunction function) {
         if (!bool) {
             function.invoke();
         }
@@ -148,8 +156,9 @@ public class Assert {
      *
      * @param objs objs
      */
-    public static boolean allMustNull(Object... objs) {
+    public boolean allMustNull(Object... objs) {
         if (ObjUtil.isNull(objs) || ObjUtil.isEmpty(objs)) {
+            reslover.allMustNull();
             return true;
         }
         for (Object obj : objs) {
@@ -166,7 +175,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static boolean allMustNotNull(Object... obj) {
+    public boolean allMustNotNull(Object... obj) {
         if (ObjUtil.isNull(obj) || ObjUtil.isEmpty(obj)) {
             reslover.allMustNotNull();
             return false;
@@ -186,7 +195,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static boolean ifAllNull(NoneFunction function, Object... obj) {
+    public boolean ifAllNull(NoneFunction function, Object... obj) {
         if (!ObjUtil.isNull(obj) && !ObjUtil.isEmpty(obj)) {
             function.invoke();
             return true;
@@ -206,7 +215,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static boolean ifHasAnyNull(NoneFunction function, Object... obj) {
+    public boolean ifHasAnyNull(NoneFunction function, Object... obj) {
         if (ObjUtil.isNull(obj) || ObjUtil.isEmpty(obj)) {
             function.invoke();
             return true;
@@ -225,7 +234,7 @@ public class Assert {
      *
      * @param bool boolean
      */
-    public static void isTrue(Boolean bool) {
+    public void isTrue(Boolean bool) {
         if (bool) {
             reslover.isTrue();
         }
@@ -236,7 +245,7 @@ public class Assert {
      *
      * @param bool boolean
      */
-    public static void isFalse(Boolean bool) {
+    public void isFalse(Boolean bool) {
         if (!bool) {
             reslover.isFalse();
         }
@@ -247,7 +256,7 @@ public class Assert {
      *
      * @param bool 保龄球
      */
-    public static void dbExecuteMustSuccess(Boolean bool) {
+    public void dbExecuteMustSuccess(Boolean bool) {
         if (!bool) {
             reslover.dbExecuteMustSuccess();
         }
@@ -258,7 +267,7 @@ public class Assert {
      *
      * @param obj obj
      */
-    public static void dbExecuteReturnMustNotNull(Object obj) {
+    public void dbExecuteReturnMustNotNull(Object obj) {
         if (ObjUtil.isNull(obj)) {
             reslover.dbExecuteReturnMustNotNull();
         }
@@ -269,7 +278,7 @@ public class Assert {
      *
      * @param count 记录数
      */
-    public static void dbExecuteResNotZero(Integer count) {
+    public void dbExecuteResNotZero(Integer count) {
         if (count <= 0) {
             reslover.dbExecuteResNotZero();
         }
@@ -277,7 +286,7 @@ public class Assert {
 
     /**
      * @Title: noneFunction
-     * @ClassPath com.dasoops.dasserver.core.util.CqAssert.noneFunction
+     * @ClassPath com.dasoops.dasserver.core.util.CqAssert.getInstance()noneFunction
      * @Author DasoopsNicole@Gmail.com
      * @Date 2022/11/01
      * @Version 1.0.0

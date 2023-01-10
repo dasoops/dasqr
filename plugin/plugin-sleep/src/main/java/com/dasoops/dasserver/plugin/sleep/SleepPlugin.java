@@ -30,7 +30,7 @@ public class SleepPlugin extends CqPlugin {
 
     @MessageMapping(prefix = {"sleep", "quiet", "打晕", "shutUp"}, type = MessageMappingTypeEnum.ALL)
     public String sleep(SleepParam param) {
-        CqMessageAssert.allMustNotNull(param, param.getSleepTimeString());
+        CqMessageAssert.getInstance().allMustNotNull(param, param.getSleepTimeString());
         //分离单位和时间
         String sleepTimeString = param.getSleepTimeString();
         int[] sleepTimeChars = sleepTimeString.chars().toArray();

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.LogicException;
+import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.entity.enums.ConfigCanEditEnum;
@@ -19,7 +20,6 @@ import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetConfigVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import com.dasoops.dasserver.plugin.webmanager.mapper.ConfigWebMapper;
 import com.dasoops.dasserver.plugin.webmanager.service.ConfigWebService;
-import com.dasoops.dasserver.plugin.webmanager.util.WebAssert;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
 
     @Override
     public IPage<GetConfigVo> getConfigPageData(GetConfigPageParam param) {
-        WebAssert.allMustNotNull(param);
+        Assert.getInstance().allMustNotNull(param);
         String keyword = param.getKeyword();
         String description = param.getDescription();
 
@@ -70,7 +70,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
 
     @Override
     public void editConfig(EditConfigParam param) {
-        WebAssert.allMustNotNull(param, param.getKeyword(), param.getValue(), param.getDescription());
+        Assert.getInstance().allMustNotNull(param, param.getKeyword(), param.getValue(), param.getDescription());
 
         String keyword = param.getKeyword();
         Long id = param.getId();
@@ -109,7 +109,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
 
     @Override
     public void addConfig(AddConfigParam param) {
-        WebAssert.allMustNotNull(param, param.getKeyword(), param.getValue(), param.getDescription(), param.getCanEdit());
+        Assert.getInstance().allMustNotNull(param, param.getKeyword(), param.getValue(), param.getDescription(), param.getCanEdit());
 
         String keyword = param.getKeyword();
         Long count = super.lambdaQuery().eq(ConfigDo::getKeyword, keyword).count();
@@ -134,7 +134,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
 
     @Override
     public void deleteConfig(DeleteConfigParam param) {
-        WebAssert.allMustNotNull(param, param.getId());
+        Assert.getInstance().allMustNotNull(param, param.getId());
 
         Long id = param.getId();
         ConfigDo configDo = super.getById(id);

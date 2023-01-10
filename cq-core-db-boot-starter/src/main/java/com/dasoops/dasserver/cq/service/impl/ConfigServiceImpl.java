@@ -3,10 +3,10 @@ package com.dasoops.dasserver.cq.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.LogicException;
+import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.mapper.ConfigMapper;
 import com.dasoops.dasserver.cq.service.ConfigService;
-import com.dasoops.dasserver.cq.utils.CqMessageAssert;
 import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +41,7 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
         //获取版本号对象,获取版本号,增加后更新
         int version = Integer.parseInt(getConfig(ConfigHashKeyEnum.VERSION));
         int endVersion = version + addVersion;
-        CqMessageAssert.ifTrue(super.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.VERSION.getKey()).set(ConfigDo::getValue, endVersion).update(), ()->{
+        Assert.getInstance().ifTrue(super.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.VERSION.getKey()).set(ConfigDo::getValue, endVersion).update(), ()->{
             throw new LogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_FALSE);
         });
         return endVersion;
