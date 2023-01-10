@@ -3,6 +3,7 @@ package com.dasoops.dasserver.plugin.sleep;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.utils.CqMessageAssert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -29,9 +30,7 @@ public class SleepPlugin extends CqPlugin {
 
     @MessageMapping(prefix = {"sleep", "quiet", "打晕", "shutUp"}, type = MessageMappingTypeEnum.ALL)
     public String sleep(SleepParam param) {
-        if (param != null) {
-            return "aoe";
-        }
+        CqMessageAssert.allMustNotNull(param, param.getSleepTimeString());
         //分离单位和时间
         String sleepTimeString = param.getSleepTimeString();
         int[] sleepTimeChars = sleepTimeString.chars().toArray();
