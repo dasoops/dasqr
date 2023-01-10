@@ -81,7 +81,12 @@ public class MessageMappingReslover {
                     throw e;
                 }
                 result = PluginResult.fastFail();
-            } catch (IllegalAccessException | InvocationTargetException e) {
+            } catch (IllegalAccessException e) {
+                throw new LogicException(e);
+            } catch (InvocationTargetException e) {
+                if (e.getTargetException() instanceof LogicException logicException) {
+                    throw logicException;
+                }
                 throw new LogicException(e);
             }
             PassObj passObj = resloveInvokeResult(cqTemplate, messageEvent, result);
