@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.sleep;
+package com.dasoops.dasserver.plugin.sleep.entity.enums;
 
 import com.dasoops.common.entity.enums.BaseRedisKeyEnum;
 import com.dasoops.common.entity.enums.IRedisKeyEnum;

@@ -1,6 +1,7 @@
-package com.dasoops.dasserver.plugin.reboot;
+package com.dasoops.dasserver.plugin.reboot.plugin;
 
 import com.dasoops.common.exception.LogicException;
+import com.dasoops.dasserver.plugin.reboot.RebootProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ import java.io.InputStreamReader;
  */
 @Component
 @Slf4j
-public class RebootEvent extends Thread {
+public class RebootThread extends Thread {
 
     @Resource
     private RebootProperties rebootProperties;

@@ -1,8 +1,10 @@
-package com.dasoops.dasserver.plugin.sleep;
+package com.dasoops.dasserver.plugin.sleep.plugin;
 
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.plugin.sleep.entity.param.CheckSleepParam;
+import com.dasoops.dasserver.plugin.sleep.cache.SleepCache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

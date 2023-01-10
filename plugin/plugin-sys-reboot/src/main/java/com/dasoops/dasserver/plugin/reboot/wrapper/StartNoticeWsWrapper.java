@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.reboot;
+package com.dasoops.dasserver.plugin.reboot.wrapper;
 
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @Title: StartNoticeWsWrapper
- * @ClassPath com.dasoops.dasserver.plugin.reboot.StartNoticeWsWrapper
+ * @ClassPath com.dasoops.dasserver.plugin.reboot.wrapper.StartNoticeWsWrapper
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/10
  * @Version 1.0.0
