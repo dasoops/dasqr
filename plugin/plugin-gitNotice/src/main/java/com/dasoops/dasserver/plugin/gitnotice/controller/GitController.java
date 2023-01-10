@@ -75,14 +75,14 @@ public class GitController {
         cqTemplateList.forEach(cqTemplate -> {
             //发送git通知
             if (isNoticeRefs(pushNoticeDto)) {
-            sendNotice(cqTemplate, noticeTypeEnum, buildCommitNoticeStr(pushNoticeDto));
+                sendNotice(cqTemplate, noticeTypeEnum, buildCommitNoticeStr(pushNoticeDto));
             }
 
             //通知分支收到消息发送重启通知
-                    if (isRebootRefs(pushNoticeDto)) {
+            if (isRebootRefs(pushNoticeDto)) {
                 Integer version = configService.updateVersion(pushNoticeDto.getTotalCommitsCount());
                 sendNotice(cqTemplate, noticeTypeEnum, buildRebootNoticeStr(pushNoticeDto, version));
-                    }
+            }
         });
 
     }
