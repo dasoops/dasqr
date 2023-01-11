@@ -8,6 +8,7 @@ import com.dasoops.dasserver.plugin.loaj.cache.ReplyCache;
 import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreCaseEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreDbcEnum;
+import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyMatchTypeEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.param.AddRelayParam;
 import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
@@ -41,6 +42,7 @@ public class AddReplyPlugin extends CqPlugin {
         replyDo.setReply(param.getRelay());
         replyDo.setIgnoreCase(ReplyIgnoreCaseEnum.TRUE.getDbValue());
         replyDo.setIgnoreDbc(ReplyIgnoreDbcEnum.TRUE.getDbValue());
+        replyDo.setMatchType(ReplyMatchTypeEnum.ALL.getDbValue());
         replyService.save(replyDo);
 
         ReplyRedisValueDto replyDto = new ReplyRedisValueDto();
@@ -48,6 +50,7 @@ public class AddReplyPlugin extends CqPlugin {
         replyDto.setReply(param.getRelay());
         replyDto.setIgnoreCase(true);
         replyDto.setIgnoreDbc(true);
+        replyDto.setMatchType(ReplyMatchTypeEnum.ALL.getDbValue());
         replyCache.addreply(replyDto);
         return "已阅";
     }

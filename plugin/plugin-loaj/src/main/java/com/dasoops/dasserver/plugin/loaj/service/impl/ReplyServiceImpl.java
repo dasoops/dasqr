@@ -46,7 +46,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
             ReplyRedisValueDto dto = new ReplyRedisValueDto();
             dto.setKeyword(replyDo.getKeyword());
             dto.setReply(replyDo.getReply());
-            dto.setMetchType(replyDo.getMatchType());
+            dto.setMatchType(replyDo.getMatchType());
             dto.setIgnoreCase(replyDo.getIgnoreCase().equals(ReplyIgnoreCaseEnum.TRUE.getDbValue()));
             dto.setIgnoreDbc(replyDo.getIgnoreDbc().equals(ReplyIgnoreDbcEnum.TRUE.getDbValue()));
             return dto;

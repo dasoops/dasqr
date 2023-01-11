@@ -29,7 +29,7 @@ public class ReplyRedisValueDto extends BaseDto {
     /**
      * 匹配规则
      */
-    private Integer metchType;
+    private Integer matchType;
 
     /**
      * 忽略大小写

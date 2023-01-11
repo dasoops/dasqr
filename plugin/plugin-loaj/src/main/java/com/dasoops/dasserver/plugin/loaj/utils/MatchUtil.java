@@ -43,7 +43,7 @@ public class MatchUtil {
     }
 
     public static boolean match(String message, ReplyRedisValueDto dto) {
-        return match(EnumUtil.getBy(ReplyMatchTypeEnum::getDbValue, dto.getMetchType()), message, dto.getKeyword(), dto.getIgnoreCase(), dto.getIgnoreDbc());
+        return match(EnumUtil.getBy(ReplyMatchTypeEnum::getDbValue, dto.getMatchType()), message, dto.getKeyword(), dto.getIgnoreCase(), dto.getIgnoreDbc());
     }
 
 }
