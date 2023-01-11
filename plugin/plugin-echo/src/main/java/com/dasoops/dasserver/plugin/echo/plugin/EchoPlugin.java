@@ -18,7 +18,7 @@ import java.util.Set;
  * @Title: CacheEchoPlugin
  * @ClassPath com.dasoops.dasserver.plugin.cacheecho.plugin.EchoPlugin
  * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/11
+ * @Date 2023/01/116
  * @Version 1.0.0
  * @Description: echo插件
  * @see CqPlugin
@@ -47,7 +47,7 @@ public class EchoPlugin extends CqPlugin {
         String cacheKeyword = StrUtil.removePrefix(echoMessage, cachePrefix);
         Set<String> keySet = echoCache.keys(cacheKeyword);
         if (keySet.size() <= 0) {
-            return "none";
+            return "None";
         } else if (keySet.size() > 1) {
             List<String> keyList = keySet.stream().map(key -> cachePrefix + key).toList();
             return StrUtil.format("any Result:[{}]", StrUtil.join(",", keyList));

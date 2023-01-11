@@ -42,4 +42,8 @@ public class ReplyCache extends BaseCache {
         Set<String> valueSet = super.members(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_SET);
         return valueSet.stream().map(jsonString -> JSON.parseObject(jsonString, ReplyRedisValueDto.class)).collect(Collectors.toSet());
     }
+
+    public void addreply(ReplyRedisValueDto dto) {
+        super.sadd(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_SET, JSON.toJSONString(dto));
+    }
 }
