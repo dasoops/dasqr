@@ -11,21 +11,22 @@
         <module>cq-core-boot-starter</module>
         <module>cq-core-db-boot-starter</module>
         <module>cq-core-mongo-boot-starter</module>
+        <module>plugin/plugin-alasNotice</module>
         <module>plugin/plugin-core</module>
         <module>plugin/plugin-gitNotice</module>
-        <module>plugin/plugin-sys-exceptionWrapper</module>
-        <module>plugin/plugin-log</module>
-        <module>plugin/plugin-loaj</module>
-        <module>plugin/plugin-style</module>
         <module>plugin/plugin-image</module>
+        <module>plugin/plugin-loaj</module>
+        <module>plugin/plugin-log</module>
         <module>plugin/plugin-sleep</module>
-        <module>plugin/plugin-sys-pluginWrapper</module>
+        <module>plugin/plugin-style</module>
         <module>plugin/plugin-sys-authWrapper</module>
-        <module>plugin/plugin-sys-wsWrapper</module>
-        <module>plugin/plugin-sys-webManager</module>
-        <module>plugin/plugin-sys-webAuth</module>
+        <module>plugin/plugin-sys-exceptionWrapper</module>
         <module>plugin/plugin-sys-pluginLoader</module>
+        <module>plugin/plugin-sys-pluginWrapper</module>
         <module>plugin/plugin-sys-reboot</module>
+        <module>plugin/plugin-sys-webAuth</module>
+        <module>plugin/plugin-sys-webManager</module>
+        <module>plugin/plugin-sys-wsWrapper</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -208,6 +209,12 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-sys-reboot</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-alasNotice</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 

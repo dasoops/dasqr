@@ -43,7 +43,6 @@ public class RebootPlugin extends CqPlugin {
     public String reboot(CqTemplate cqTemplate, RebootMessageParam param) {
         cqTemplate.sendMsg(param, "gogogo");
         new RebootThread(rebootProperties).run();
-//        rebootThread.run();
         return "compile complete,to reboot";
     }
 

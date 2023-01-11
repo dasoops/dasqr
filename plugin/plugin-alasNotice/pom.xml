@@ -8,9 +8,9 @@
         <version>1.0.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId></artifactId>
+    <artifactId>plugin-alasNotice</artifactId>
     <version>1.0.0</version>
-    <description>dasServer plugin </description>
+    <description>dasServer plugin alasNotice</description>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
@@ -24,6 +24,14 @@
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dasoops</groupId>
+            <artifactId>common-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>cq-core-db-boot-starter</artifactId>
         </dependency>
     </dependencies>
 

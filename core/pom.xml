@@ -120,6 +120,11 @@
             <artifactId>plugin-sleep</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-alasNotice</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
