@@ -109,7 +109,7 @@ public class GitController {
      * @return {@link String}
      */
     private String buildRebootNoticeStr(PushNoticeDto dto, Integer cloudVersion) {
-        return StrUtil.format("{}分支收到提交\r\n(Ver.{}R -> Ver.{}R)\r\n可以使用reboot指令重新编译运行最新版本了捏", getRef(dto), cloudVersion, cloudVersion - dto.getTotalCommitsCount());
+        return StrUtil.format("{}分支收到提交\r\n(Ver.{}L -> Ver.{}C)\r\n可以使用reboot指令重新编译运行最新版本了捏", getRef(dto), cloudVersion - dto.getTotalCommitsCount(), cloudVersion);
     }
 
 

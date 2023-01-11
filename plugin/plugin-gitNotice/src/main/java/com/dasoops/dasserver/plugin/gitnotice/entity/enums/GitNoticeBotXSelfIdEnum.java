@@ -16,7 +16,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum GitNoticeBotXSelfIdEnum implements IDbColumnEnum {
+public enum GitNoticeBotXSelfIdEnum {
 
     /**
      * 所有
