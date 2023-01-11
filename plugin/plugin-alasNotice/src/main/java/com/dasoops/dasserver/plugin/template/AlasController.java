@@ -3,6 +3,7 @@ package com.dasoops.dasserver.plugin.template;
 import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasserver.cq.CqGlobal;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.plugin.template.entity.enums.AlasConfigHashKeyEnum;
@@ -41,12 +42,12 @@ public class AlasController {
         Long groupId = configCache.getLongConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_GROUP);
         Long userId = configCache.getLongConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_USER);
 
+        //构建发送消息
         final SendMessageFunction function;
-
         switch (noticeTypeEnum) {
-            case GROUP -> function = (xSelfId, message) -> CqGlobal.get(xSelfId).sendGroupMsg(groupId, message, false);
-            case PRIVATE -> function = (xSelfId, message) -> CqGlobal.get(xSelfId).sendPrivateMsg(groupId, message, false);
-            case GROUP_AT_USER -> function = (xSelfId, message) -> CqGlobal.get(xSelfId).sendGroupMsg(groupId, CqCodeUtil.at(userId) + message, false);
+            case GROUP -> function = (cqTemplate, message) -> cqTemplate.sendGroupMsg(groupId, message, false);
+            case PRIVATE -> function = (cqTemplate, message) -> cqTemplate.sendPrivateMsg(groupId, message, false);
+            case GROUP_AT_USER -> function = (cqTemplate, message) -> cqTemplate.sendGroupMsg(groupId, CqCodeUtil.at(userId) + message, false);
             default -> function = null;
         }
 
@@ -58,13 +59,19 @@ public class AlasController {
                 """;
         String massage = StrUtil.format(messageFormat, param.getTitle(), param.getContent());
 
-        xSelfIdList.forEach(xSelfId -> function.send(xSelfId, massage));
+        for (Long xSelfId : xSelfIdList) {
+            CqTemplate cqTemplate = CqGlobal.get(xSelfId);
+            if (cqTemplate == null) {
+                continue;
+            }
+            function.send(cqTemplate, massage);
+        }
 
         return "success";
     }
 
     interface SendMessageFunction {
-        void send(Long xSelfId, String message);
+        void send(CqTemplate cqTemplate, String message);
     }
 
 }
