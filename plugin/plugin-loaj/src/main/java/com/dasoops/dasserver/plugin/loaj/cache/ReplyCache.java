@@ -39,7 +39,7 @@ public class ReplyCache extends BaseCache {
     }
 
     public Set<ReplyRedisValueDto> getAllReply() {
-        Set<String> valueSet = super.sget(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_SET);
+        Set<String> valueSet = super.members(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_SET);
         return valueSet.stream().map(jsonString -> JSON.parseObject(jsonString, ReplyRedisValueDto.class)).collect(Collectors.toSet());
     }
 }

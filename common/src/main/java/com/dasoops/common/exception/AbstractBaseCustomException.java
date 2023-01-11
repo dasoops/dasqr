@@ -34,7 +34,7 @@ public abstract class AbstractBaseCustomException extends RuntimeException {
         this.stackMessage = getStackInfo();
     }
 
-    public AbstractBaseCustomException(Exception exception) {
+    public AbstractBaseCustomException(Throwable exception) {
         if (exception instanceof AbstractBaseCustomException e) {
             this.exceptionEnum = e.getExceptionEnum();
             this.stackMessage = e.getStackMessage();
@@ -67,6 +67,6 @@ public abstract class AbstractBaseCustomException extends RuntimeException {
      * @param e e
      * @return {@link String}
      */
-    public abstract String getStackInfo(Exception e);
+    public abstract String getStackInfo(Throwable e);
 
 }

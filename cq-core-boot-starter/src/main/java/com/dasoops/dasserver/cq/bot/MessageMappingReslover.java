@@ -85,7 +85,7 @@ public class MessageMappingReslover {
                 result = PluginResult.fastFail();
             } catch (InvocationTargetException e) {
                 if (!(e.getTargetException() instanceof LogicException logicException)) {
-                    throw new LogicException(e);
+                    throw new LogicException(e.getTargetException());
                 }
                 //非参数解析异常直接抛出,由wsHandler处理
                 if (!logicException.getExceptionEnum().equals(CqExceptionEnum.PARAM_RESLOVE_ERROR)) {
@@ -218,7 +218,7 @@ public class MessageMappingReslover {
             if (CqTemplate.class.isAssignableFrom(paramClazz)) {
                 //注入cqTemplate
                 params[i] = cqTemplate;
-            } else if (messageEvent.getClass().isAssignableFrom(paramClazz)) {
+            } else if (paramClazz.isAssignableFrom(messageEvent.getClass())) {
                 //注入原始消息对象
                 params[i] = messageEvent;
             }

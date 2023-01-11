@@ -12,6 +12,7 @@
         <module>cq-core-db-boot-starter</module>
         <module>cq-core-mongo-boot-starter</module>
         <module>plugin/plugin-alasNotice</module>
+        <module>plugin/plugin-echo</module>
         <module>plugin/plugin-core</module>
         <module>plugin/plugin-gitNotice</module>
         <module>plugin/plugin-image</module>
@@ -215,6 +216,12 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-alasNotice</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-echo</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 

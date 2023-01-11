@@ -18,7 +18,7 @@ public class LogicException extends AbstractBaseCustomException {
         super(exceptionEnum);
     }
 
-    public LogicException(Exception exception) {
+    public LogicException(Throwable exception) {
         super(exception);
     }
 
@@ -55,7 +55,7 @@ public class LogicException extends AbstractBaseCustomException {
      * @return {@link String}
      */
     @Override
-    public String getStackInfo(Exception e) {
+    public String getStackInfo(Throwable e) {
         StackTraceElement[] stackTrace = e.getStackTrace();
         StringBuilder sb = new StringBuilder();
         //未知异常情况

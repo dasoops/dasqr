@@ -2,7 +2,9 @@ package com.dasoops.common.cache;
 
 import com.dasoops.common.entity.enums.IRedisHashKeyEnum;
 import com.dasoops.common.entity.enums.IRedisKeyEnum;
+import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.*;
+import com.alibaba.fastjson2.JSON;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +60,10 @@ public class BaseCache {
         return stringRedisTemplate.keys("*");
     }
 
+    protected Set<String> keys(String keyword) {
+        return stringRedisTemplate.keys("*" + keyword + "*");
+    }
+
     protected Set<String> keys4Prefix(IRedisKeyEnum redisKeyEnum) {
         return stringRedisTemplate.keys(redisKeyEnum.getKey() + "*");
     }
@@ -85,6 +91,30 @@ public class BaseCache {
         keys.forEach(key -> stringRedisTemplate.expire(key, timeout, timeUnit));
     }
 
+    protected DataType type(IRedisKeyEnum redisKeyEnum) {
+        return stringRedisTemplate.type(redisKeyEnum.getKey());
+    }
+
+    protected String getJSONString(IRedisKeyEnum redisKeyEnum) {
+        DataType type = type(redisKeyEnum);
+        switch (type) {
+            case SET -> {
+                return JSON.toJSONString(members(redisKeyEnum));
+            }
+            case HASH -> {
+                return JSON.toJSONString(entries(redisKeyEnum));
+            }
+            case LIST -> {
+                return JSON.toJSONString(lget(redisKeyEnum));
+            }
+            case STRING -> {
+                return get(redisKeyEnum);
+            }
+            default -> {
+                return null;
+            }
+        }
+    }
     /* -- Global End -- */
 
     /* -- Value Begin -- */
@@ -187,7 +217,7 @@ public class BaseCache {
         set().add(redisKeyEnum.getKey(), value);
     }
 
-    protected Set<String> sget(IRedisKeyEnum redisKeyEnum) {
+    protected Set<String> members(IRedisKeyEnum redisKeyEnum) {
         return set().members(redisKeyEnum.getKey());
     }
 

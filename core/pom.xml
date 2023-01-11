@@ -125,6 +125,11 @@
             <artifactId>plugin-alasNotice</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-echo</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
