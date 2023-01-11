@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
-import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.entity.enums.ConfigCanEditEnum;
 import com.dasoops.dasserver.cq.service.ConfigService;
@@ -20,6 +19,7 @@ import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetConfigVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import com.dasoops.dasserver.plugin.webmanager.mapper.ConfigWebMapper;
 import com.dasoops.dasserver.plugin.webmanager.service.ConfigWebService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,17 +36,12 @@ import java.util.stream.Collectors;
  * @see ConfigService
  */
 @Service
+@RequiredArgsConstructor
 public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         implements ConfigWebService {
 
     private final ConfigWebMapper configWebMapper;
-    private final ConfigCache configCache;
-
-    @SuppressWarnings("all")
-    public ConfigWebServiceImpl(ConfigWebMapper configWebMapper, ConfigCache configCache) {
-        this.configWebMapper = configWebMapper;
-        this.configCache = configCache;
-    }
+    private final ConfigService configService;
 
     @Override
     public IPage<GetConfigVo> getConfigPageData(GetConfigPageParam param) {
@@ -97,7 +92,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         newConfigDo.setDescription(param.getDescription());
 
         super.updateById(newConfigDo);
-        configCache.initOrUpdateConfig();
+        configService.initOrUpdateConfig();
     }
 
     @Override
@@ -130,7 +125,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         configDo.setDescription(param.getDescription());
 
         super.save(configDo);
-        configCache.initOrUpdate();
+        configService.initOrUpdateConfig();
     }
 
     @Override
@@ -148,7 +143,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         }
 
         super.removeById(id);
-        configCache.initOrUpdate();
+        configService.initOrUpdateConfig();
     }
 
     @Override

@@ -7,17 +7,15 @@ import com.dasoops.common.entity.enums.IDbColumnEnum;
 import com.dasoops.common.entity.enums.IRedisHashKeyEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
-import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.entity.enums.ConfigKeyEnum;
-import com.dasoops.dasserver.cq.service.ConfigService;
 import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -33,28 +31,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ConfigCache extends BaseCache {
 
-    private final ConfigService configService;
-
-    public ConfigCache(StringRedisTemplate stringRedisTemplate, ConfigService configService) {
+    public ConfigCache(StringRedisTemplate stringRedisTemplate) {
         super(stringRedisTemplate);
-        this.configService = configService;
     }
 
-    @PostConstruct
-    public void initOrUpdate() {
-        initOrUpdateConfig();
-    }
-
-    /**
-     * 初始化配置
-     */
-    public void initOrUpdateConfig() {
-        log.info("初始化/更新 配置项 缓存");
+    public void setConfig(Map<String, String> valueMap) {
         super.remove(ConfigKeyEnum.CONFIG);
-
-        List<ConfigDo> configList = configService.list();
-        Assert.getInstance().dbExecuteReturnMustNotNull(configList);
-        configList.forEach(config -> super.hset(ConfigKeyEnum.CONFIG, config.getKeyword(), config.getValue()));
+        super.hset(ConfigKeyEnum.CONFIG, valueMap);
     }
 
     public void setConfig(ConfigHashKeyEnum configHashKeyEnum, String value) {

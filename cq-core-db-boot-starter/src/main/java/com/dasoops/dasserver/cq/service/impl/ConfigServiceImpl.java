@@ -8,9 +8,12 @@ import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.mapper.ConfigMapper;
 import com.dasoops.dasserver.cq.service.ConfigService;
 import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @Title: ConfigServiceImpl
@@ -23,6 +26,7 @@ import java.util.Optional;
  * @see ConfigService
  */
 @Service
+@Slf4j
 public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
         implements ConfigService {
 
@@ -30,6 +34,15 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
 
     public ConfigServiceImpl(ConfigCache configCache) {
         this.configCache = configCache;
+    }
+
+
+    @Override
+    public void initOrUpdateConfig() {
+        log.info("初始化/更新 配置项 缓存");
+
+        Map<String, String> valueMap = super.list().stream().collect(Collectors.toMap(ConfigDo::getKeyword, ConfigDo::getValue));
+        configCache.setConfig(valueMap);
     }
 
     @Override

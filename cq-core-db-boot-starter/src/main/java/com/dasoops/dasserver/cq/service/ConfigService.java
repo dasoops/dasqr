@@ -18,6 +18,11 @@ import java.util.Optional;
 public interface ConfigService extends IService<ConfigDo> {
 
     /**
+     * 初始化配置
+     */
+    void initOrUpdateConfig();
+
+    /**
      * 获取配置
      *
      * @param config 配置
