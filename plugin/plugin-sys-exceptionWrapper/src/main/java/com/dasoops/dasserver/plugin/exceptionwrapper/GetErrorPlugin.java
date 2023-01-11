@@ -60,8 +60,13 @@ public class GetErrorPlugin extends CqPlugin {
                 }
                 int size = paramStrList.size();
                 paramStrList.forEach(errorId -> {
-                    Query query = Query.query(Criteria.where("id").is(new ObjectId(errorId)));
-                    ExceptionPo po = mongoTemplate.findOne(query, ExceptionPo.class);
+                    ExceptionPo po = null;
+                    try {
+                        Query query = Query.query(Criteria.where("id").is(new ObjectId(errorId)));
+                        po = mongoTemplate.findOne(query, ExceptionPo.class);
+                    } catch (Exception e) {
+                        log.error("get Mongo Exception logs error:", e);
+                    }
                     if (po == null) {
                         cqTemplate.sendMsg(event, "这个error不存在捏" + (size <= 1 ? "" : "(" + errorId + ")"));
                     } else {
