@@ -9,6 +9,8 @@ import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.plugin.gitnotice.entity.dto.Commits;
 import com.dasoops.dasserver.plugin.gitnotice.entity.dto.PushNoticeDto;
 import com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitConfigHashKeyEnum;
+import com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitNoticeBotXSelfIdEnum;
+import com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitNoticeRefEnum;
 import com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitNoticeTypeEnum;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
@@ -52,16 +54,26 @@ public class GitController {
             return;
         }
 
-        //是否是提醒分支
+        //检查提醒分支
         List<String> noticeRefList = configCache.getStringListConfig(GitConfigHashKeyEnum.GIT_NOTICE_REFS);
         String ref = getRef(pushNoticeDto);
-        if (!noticeRefList.contains(ref)) {
-            return;
+        //检查是否为全部
+        if (!noticeRefList.contains(GitNoticeRefEnum.ALL.getDbValue())) {
+            //检查是否提醒分支
+            if (!noticeRefList.contains(ref)) {
+                return;
+            }
         }
 
         //获取需要发送提醒的CqTemplate集合
-        List<Long> xSelfIdList = configCache.getLongListConfig(GitConfigHashKeyEnum.GIT_NOTICE_X_SELF_ID);
-        List<CqTemplate> cqTemplateList = xSelfIdList.stream().map(CqGlobal::get).filter(Objects::nonNull).toList();
+        String gitNoticeXSelfId = configCache.getStringConfig(GitConfigHashKeyEnum.GIT_NOTICE_X_SELF_ID);
+        List<CqTemplate> cqTemplateList;
+        if (gitNoticeXSelfId.equals(GitNoticeBotXSelfIdEnum.ALL.getDbValue())) {
+            cqTemplateList = CqGlobal.getAll();
+        } else {
+            List<Long> xSelfIdList = StrUtil.split(gitNoticeXSelfId, ",").stream().map(Long::valueOf).toList();
+            cqTemplateList = xSelfIdList.stream().map(CqGlobal::get).filter(Objects::nonNull).toList();
+        }
 
         //发送提醒消息
         Long groupId = configCache.getLongConfig(GitConfigHashKeyEnum.GIT_NOTICE_GROUP);
@@ -79,7 +91,6 @@ public class GitController {
         Integer cloudVersion = configService.updateVersion(pushNoticeDto.getCommits().size());
         String rebootNoticeStr = buildRebootNoticeStr(pushNoticeDto, cloudVersion);
         sendNotice(noticeTypeEnum, cqTemplateList, groupId, userId, rebootNoticeStr);
-
     }
 
     private void sendNotice(GitNoticeTypeEnum noticeTypeEnum, List<CqTemplate> cqTemplateList, Long groupId, Long userId, String rebootNoticeStr) {
