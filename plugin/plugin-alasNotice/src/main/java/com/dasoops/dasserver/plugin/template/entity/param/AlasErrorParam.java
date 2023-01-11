@@ -32,4 +32,10 @@ public class AlasErrorParam extends BaseParam {
     @JSONField(name = "content")
     private String content;
 
+    /**
+     * 标题
+     */
+    @JSONField(name = "title")
+    private String title;
+
 }

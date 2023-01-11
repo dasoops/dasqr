@@ -1,13 +1,21 @@
 package com.dasoops.dasserver.plugin.template;
 
-import com.alibaba.fastjson2.JSONObject;
+import cn.hutool.core.util.EnumUtil;
+import cn.hutool.core.util.StrUtil;
+import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
+import com.dasoops.dasserver.cq.utils.CqCodeUtil;
+import com.dasoops.dasserver.plugin.template.entity.enums.AlasConfigHashKeyEnum;
+import com.dasoops.dasserver.plugin.template.entity.enums.AlasNoticeTypeEnum;
+import com.dasoops.dasserver.plugin.template.entity.param.AlasErrorParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @Title: AlasController
@@ -26,25 +34,37 @@ public class AlasController {
     private final ConfigCache configCache;
 
     @PostMapping("error")
-    public String error(@RequestBody JSONObject param) {
-        log.info(param.toJSONString());
-//        List<Long> xSelfIdList = param.getXSelfIdList();
-//
-//        AlasNoticeTypeEnum noticeTypeEnum = EnumUtil.getBy(AlasNoticeTypeEnum::getDbValue, configCache.getIntegerConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_TYPE));
-//        Long groupId = configCache.getLongConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_GROUP);
-//        Long userId = configCache.getLongConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_USER);
-//
-//        String message =
-//
-//        xSelfIdList.forEach(xSelfId -> {
-//            CqTemplate cqTemplate = CqGlobal.get(xSelfId);
-//            switch (noticeTypeEnum) {
-//                case GROUP -> cqTemplate.sendGroupMsg(groupId,)
-//                case PRIVATE ->
-//                case GROUP_AT_USER ->
-//            }
-//        });
+    public String error(@RequestBody AlasErrorParam param) {
+        List<Long> xSelfIdList = param.getXSelfIdList();
+
+        AlasNoticeTypeEnum noticeTypeEnum = EnumUtil.getBy(AlasNoticeTypeEnum::getDbValue, configCache.getIntegerConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_TYPE));
+        Long groupId = configCache.getLongConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_GROUP);
+        Long userId = configCache.getLongConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_USER);
+
+        final SendMessageFunction function;
+
+        switch (noticeTypeEnum) {
+            case GROUP -> function = (xSelfId, message) -> CqGlobal.get(xSelfId).sendGroupMsg(groupId, message, false);
+            case PRIVATE -> function = (xSelfId, message) -> CqGlobal.get(xSelfId).sendPrivateMsg(groupId, message, false);
+            case GROUP_AT_USER -> function = (xSelfId, message) -> CqGlobal.get(xSelfId).sendGroupMsg(groupId, CqCodeUtil.at(userId) + message, false);
+            default -> function = null;
+        }
+
+        //构建发送消息
+        String messageFormat = """
+                AlasError:
+                  title: {}
+                  context: {}
+                """;
+        String massage = StrUtil.format(messageFormat, param.getTitle(), param.getContent());
+
+        xSelfIdList.forEach(xSelfId -> function.send(xSelfId, massage));
+
         return "success";
+    }
+
+    interface SendMessageFunction {
+        void send(Long xSelfId, String message);
     }
 
 }
