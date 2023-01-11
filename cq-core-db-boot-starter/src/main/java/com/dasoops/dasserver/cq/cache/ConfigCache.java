@@ -1,7 +1,9 @@
 package com.dasoops.dasserver.cq.cache;
 
+import cn.hutool.core.util.StrUtil;
 import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.entity.enums.IDbColumnEnum;
 import com.dasoops.common.entity.enums.IRedisHashKeyEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
@@ -14,7 +16,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @Title: ConfigCache
@@ -56,6 +61,10 @@ public class ConfigCache extends BaseCache {
         super.hset(ConfigKeyEnum.CONFIG, configHashKeyEnum.getKey(), value);
     }
 
+    public void setConfig(String keyword, String value) {
+        super.hset(ConfigKeyEnum.CONFIG, keyword, value);
+    }
+
     public String getConfig(IRedisHashKeyEnum configHashKeyEnum) {
         String value = super.hget(ConfigKeyEnum.CONFIG, configHashKeyEnum.getKey());
         Assert.getInstance().ifNull(value, () -> {
@@ -64,15 +73,44 @@ public class ConfigCache extends BaseCache {
         return value;
     }
 
-    public Integer getIntegerConfig(IRedisHashKeyEnum configHashKeyEnum){
-        return Integer.valueOf(this.getConfig(configHashKeyEnum));
+    public <R> R getConfig(IRedisHashKeyEnum configHashKeyEnum, Function<String, R> convertFunction) {
+        String value = getConfig(configHashKeyEnum);
+        return convertFunction.apply(value);
     }
 
-    public Long getLongConfig(IRedisHashKeyEnum configHashKeyEnum){
-        return Long.valueOf(this.getConfig(configHashKeyEnum));
+    public <R extends IDbColumnEnum> R getEnumConfig(IRedisHashKeyEnum configHashKeyEnum, Class<R> enumClass) {
+        Integer integerValue = getIntegerConfig(configHashKeyEnum);
+        R[] enumConstants = enumClass.getEnumConstants();
+        return Arrays.stream(enumConstants).filter(enumConstant -> enumConstant.getDbValue().equals(integerValue)).findFirst().orElse(null);
     }
 
-    public String getStringConfig(IRedisHashKeyEnum configHashKeyEnum){
-        return this.getConfig(configHashKeyEnum);
+    public Integer getIntegerConfig(IRedisHashKeyEnum configHashKeyEnum) {
+        return getConfig(configHashKeyEnum, Integer::valueOf);
+    }
+
+    public Long getLongConfig(IRedisHashKeyEnum configHashKeyEnum) {
+        return getConfig(configHashKeyEnum, Long::valueOf);
+    }
+
+    public Boolean getBooleanConfig(IRedisHashKeyEnum configHashKeyEnum) {
+        return getConfig(configHashKeyEnum, string -> !"0".equals(string));
+    }
+
+    public String getStringConfig(IRedisHashKeyEnum configHashKeyEnum) {
+        return getConfig(configHashKeyEnum);
+    }
+
+    public List<String> getStringListConfig(IRedisHashKeyEnum configHashKeyEnum) {
+        return getConfig(configHashKeyEnum, str -> StrUtil.split(str, ","));
+    }
+
+    public List<Integer> getIntegerListConfig(IRedisHashKeyEnum configHashKeyEnum) {
+        return getConfig(configHashKeyEnum, str -> StrUtil.split(str, ","))
+                .stream().map(Integer::valueOf).collect(Collectors.toList());
+    }
+
+    public List<Long> getLongListConfig(IRedisHashKeyEnum configHashKeyEnum) {
+        return getConfig(configHashKeyEnum, str -> StrUtil.split(str, ","))
+                .stream().map(Long::valueOf).collect(Collectors.toList());
     }
 }

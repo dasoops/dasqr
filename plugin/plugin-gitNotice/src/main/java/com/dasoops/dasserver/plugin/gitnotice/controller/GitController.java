@@ -1,21 +1,14 @@
 package com.dasoops.dasserver.plugin.gitnotice.controller;
 
-import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson2.JSON;
-import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.CqTemplate;
-import com.dasoops.dasserver.cq.conf.properties.CqProperties;
-import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
-import com.dasoops.dasserver.cq.entity.retdata.ApiData;
-import com.dasoops.dasserver.cq.entity.retdata.MessageData;
-import com.dasoops.dasserver.cq.exception.CqLogicException;
+import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.service.ConfigService;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
-import com.dasoops.dasserver.plugin.gitnotice.GitNoticeProperties;
 import com.dasoops.dasserver.plugin.gitnotice.entity.dto.Commits;
 import com.dasoops.dasserver.plugin.gitnotice.entity.dto.PushNoticeDto;
+import com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitConfigHashKeyEnum;
 import com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitNoticeTypeEnum;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
@@ -26,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 /**
  * @Title: GitController
@@ -42,113 +35,70 @@ import java.util.Optional;
 @ApiSupport(author = "DasoopsNicole@gmail.com")
 public class GitController {
 
-    private final CqProperties cqProperties;
-    private final GitNoticeProperties gitNoticeProperties;
+    private final ConfigCache configCache;
     private final ConfigService configService;
-    private final List<String> noticeRefs;
-    private final List<String> rebootNoticeRefs;
 
-    public GitController(CqProperties cqProperties, GitNoticeProperties gitNoticeProperties, ConfigService configService) {
-        this.cqProperties = cqProperties;
-        this.gitNoticeProperties = gitNoticeProperties;
+    public GitController(ConfigCache configCache, ConfigService configService) {
+        this.configCache = configCache;
         this.configService = configService;
-        this.noticeRefs = StrUtil.split(gitNoticeProperties.getNoticeRefs(), ",");
-        this.rebootNoticeRefs = StrUtil.split(gitNoticeProperties.getRebootNoticeRefs(), ",");
     }
 
     @PostMapping("/push")
     @ApiOperation(value = "gitPush 消息上报", notes = "gitPush 消息上报")
     public void pushNotice(@RequestBody PushNoticeDto pushNoticeDto) {
-        //获取当前配置的用户信息
-        Optional<GitNoticeTypeEnum> noticeTypeEnumOpt = getEnum();
-        if (noticeTypeEnumOpt.isEmpty()) {
+        //是否需要提醒
+        GitNoticeTypeEnum noticeTypeEnum = configCache.getEnumConfig(GitConfigHashKeyEnum.GIT_NOTICE_TYPE, GitNoticeTypeEnum.class);
+        if (noticeTypeEnum.equals(GitNoticeTypeEnum.NONE)) {
             return;
         }
-        GitNoticeTypeEnum noticeTypeEnum = noticeTypeEnumOpt.get();
 
-        //无cq连接抛出异常
-        List<CqTemplate> cqTemplateList = CqGlobal.getAll();
-        if (cqTemplateList.isEmpty()) {
-            throw new LogicException(CqExceptionEnum.CQ_GLOBAL_EMPTY);
+        //是否是提醒分支
+        List<String> noticeRefList = configCache.getStringListConfig(GitConfigHashKeyEnum.GIT_NOTICE_REFS);
+        String ref = getRef(pushNoticeDto);
+        if (!noticeRefList.contains(ref)) {
+            return;
         }
 
-        cqTemplateList.forEach(cqTemplate -> {
-            //发送git通知
-            if (isNoticeRefs(pushNoticeDto)) {
-                sendNotice(cqTemplate, noticeTypeEnum, buildCommitNoticeStr(pushNoticeDto));
-            }
+        //获取需要发送提醒的CqTemplate集合
+        List<Long> xSelfIdList = configCache.getLongListConfig(GitConfigHashKeyEnum.GIT_NOTICE_X_SELF_ID);
+        List<CqTemplate> cqTemplateList = xSelfIdList.stream().map(CqGlobal::get).filter(Objects::nonNull).toList();
 
-            //通知分支收到消息发送重启通知
-            if (isRebootRefs(pushNoticeDto)) {
-                Integer version = configService.updateVersion(pushNoticeDto.getTotalCommitsCount());
-                sendNotice(cqTemplate, noticeTypeEnum, buildRebootNoticeStr(pushNoticeDto, version));
-            }
-        });
+        //发送提醒消息
+        Long groupId = configCache.getLongConfig(GitConfigHashKeyEnum.GIT_NOTICE_GROUP);
+        Long userId = configCache.getLongConfig(GitConfigHashKeyEnum.GIT_NOTICE_USER);
+        String commitNoticeString = buildCommitNoticeStr(pushNoticeDto);
+        sendNotice(noticeTypeEnum, cqTemplateList, groupId, userId, commitNoticeString);
 
+        //是否是重启分支(即新版本)
+        List<String> rebootNoticeRefList = configCache.getStringListConfig(GitConfigHashKeyEnum.GIT_REBOOT_NOTICE_REFS);
+        if (!rebootNoticeRefList.contains(ref)) {
+            return;
+        }
+
+        //更新版本号
+        Integer cloudVersion = configService.updateVersion(pushNoticeDto.getCommits().size());
+        String rebootNoticeStr = buildRebootNoticeStr(pushNoticeDto, cloudVersion);
+        sendNotice(noticeTypeEnum, cqTemplateList, groupId, userId, rebootNoticeStr);
+
+    }
+
+    private void sendNotice(GitNoticeTypeEnum noticeTypeEnum, List<CqTemplate> cqTemplateList, Long groupId, Long userId, String rebootNoticeStr) {
+        switch (noticeTypeEnum) {
+            case GROUP -> cqTemplateList.forEach(cqTemplate -> cqTemplate.sendGroupMsg(groupId, rebootNoticeStr));
+            case PRIVATE -> cqTemplateList.forEach(cqTemplate -> cqTemplate.sendPrivateMsg(userId, rebootNoticeStr));
+            case GROUP_AT_USER -> cqTemplateList.forEach(cqTemplate -> cqTemplate.sendGroupMsg(groupId, CqCodeUtil.at(userId) + rebootNoticeStr));
+        }
     }
 
     /**
      * 构建RebootNoticeStr
      *
-     * @param pushNoticeDto 推送通知dto
-     * @param version       版本
+     * @param dto          推送通知dto
+     * @param cloudVersion 云版本
      * @return {@link String}
      */
-    private String buildRebootNoticeStr(PushNoticeDto pushNoticeDto, Integer version) {
-        return StrUtil.format("master分支收到提交\r\n(Ver.{}R -> Ver.{}R)\r\n可以使用reboot指令重新编译运行最新版本了捏", version, version - pushNoticeDto.getTotalCommitsCount());
-    }
-
-    /**
-     * 是通知分支
-     *
-     * @param pushNoticeDto 推送通知dto
-     * @return boolean
-     */
-    private boolean isNoticeRefs(PushNoticeDto pushNoticeDto) {
-        String[] refSplit = pushNoticeDto.getRef().split("/");
-        String branch = refSplit[refSplit.length - 1].replace("/", "");
-        return noticeRefs.contains(branch);
-    }
-
-    /**
-     * 是重启分支
-     *
-     * @param pushNoticeDto 推请注意dto
-     * @return boolean
-     */
-    private boolean isRebootRefs(PushNoticeDto pushNoticeDto) {
-        String[] refSplit = pushNoticeDto.getRef().split("/");
-        String branch = refSplit[refSplit.length - 1].replace("/", "");
-        return rebootNoticeRefs.contains(branch);
-    }
-
-    /**
-     * 发送通知
-     *
-     * @param cqTemplate     cqTemplate
-     * @param noticeTypeEnum 通知枚举
-     * @param str            str
-     */
-    private void sendNotice(CqTemplate cqTemplate, GitNoticeTypeEnum noticeTypeEnum, String str) {
-        ApiData<MessageData> resApiData;
-        switch (noticeTypeEnum) {
-            case GROUP -> resApiData = cqTemplate.sendGroupMsg(gitNoticeProperties.getNoticeGroupId(), str, false);
-            case PRIVATE -> resApiData = cqTemplate.sendPrivateMsg(gitNoticeProperties.getNoticeUserId(), str, false);
-            case GROUP_AT_USER -> resApiData = cqTemplate.sendGroupMsg(gitNoticeProperties.getNoticeGroupId(), CqCodeUtil.at(gitNoticeProperties.getNoticeUserId()) + str, false);
-            case CORE_GROUP -> resApiData = cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), str, false);
-            case CORE_PRIVATE -> resApiData = cqTemplate.sendPrivateMsg(cqProperties.getDevUserId(), str, false);
-            case CORE_GROUP_AT_USER -> resApiData = cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), CqCodeUtil.at(cqProperties.getDevUserId()) + str, false);
-            default -> {
-                resApiData = new ApiData<>();
-                resApiData.setStatus("failed");
-            }
-        }
-
-        final String failed = "failed";
-        if (failed.equals(resApiData.getStatus())) {
-            throw new CqLogicException(CqExceptionEnum.RESPONSE_ERROR, JSON.toJSONString(resApiData));
-        }
-
+    private String buildRebootNoticeStr(PushNoticeDto dto, Integer cloudVersion) {
+        return StrUtil.format("{}分支收到提交\r\n(Ver.{}R -> Ver.{}R)\r\n可以使用reboot指令重新编译运行最新版本了捏", getRef(dto), cloudVersion, cloudVersion - dto.getTotalCommitsCount());
     }
 
 
@@ -159,8 +109,7 @@ public class GitController {
      * @return {@link String}
      */
     private String buildCommitNoticeStr(PushNoticeDto pushNoticeDto) {
-        String[] refSplit = pushNoticeDto.getRef().split("/");
-        String branch = refSplit[refSplit.length - 1].replace("/", "");
+        String branch = getRef(pushNoticeDto);
 
         StringBuilder sb = new StringBuilder();
         sb.append("收到了新的push!\r\n");
@@ -185,14 +134,14 @@ public class GitController {
     }
 
     /**
-     * 根据字符串获取枚举
+     * 获取分支
      *
-     * @return {@link Optional}<{@link GitNoticeTypeEnum}>
+     * @param pushNoticeDto 推送消息dto
+     * @return {@link String}
      */
-    @SuppressWarnings("all")
-    private Optional<GitNoticeTypeEnum> getEnum() {
-        GitNoticeTypeEnum gitNoticeTypeEnum = EnumUtil.getBy(GitNoticeTypeEnum::getKeyword, gitNoticeProperties.getNoticeType());
-        return Optional.ofNullable(gitNoticeTypeEnum);
+    private String getRef(PushNoticeDto pushNoticeDto) {
+        String[] refSplit = pushNoticeDto.getRef().split("/");
+        return refSplit[refSplit.length - 1].replace("/", "");
     }
 
 }

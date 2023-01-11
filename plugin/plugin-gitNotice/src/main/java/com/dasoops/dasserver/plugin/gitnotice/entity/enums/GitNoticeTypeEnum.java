@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.gitnotice.entity.enums;
 
+import com.dasoops.common.entity.enums.IDbColumnEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,19 +15,25 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum GitNoticeTypeEnum {
-    /**
-     * 使用dev开发组配置 群内at用户
-     */
-    CORE_GROUP_AT_USER("coreGroupAtUser"),
-    CORE_GROUP("coreGroup"),
-    CORE_PRIVATE("corePrivate"),
-    GROUP_AT_USER("groupAtUser"),
-    GROUP("group"),
-    PRIVATE("private"),
-    NONE("none"),
+public enum GitNoticeTypeEnum implements IDbColumnEnum {
 
+    /**
+     * 不提醒
+     */
+    NONE(0),
+    /**
+     * 私聊
+     */
+    PRIVATE(1),
+    /**
+     * 群组
+     */
+    GROUP(2),
+    /**
+     * 群at用户
+     */
+    GROUP_AT_USER(3),
     ;
 
-    private final String keyword;
+    private final Integer dbValue;
 }

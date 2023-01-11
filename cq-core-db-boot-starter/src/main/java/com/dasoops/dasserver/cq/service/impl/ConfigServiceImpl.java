@@ -3,7 +3,7 @@ package com.dasoops.dasserver.cq.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.LogicException;
-import com.dasoops.common.util.Assert;
+import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.mapper.ConfigMapper;
 import com.dasoops.dasserver.cq.service.ConfigService;
@@ -26,25 +26,37 @@ import java.util.Optional;
 public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
         implements ConfigService {
 
+    private final ConfigCache configCache;
+
+    public ConfigServiceImpl(ConfigCache configCache) {
+        this.configCache = configCache;
+    }
+
     @Override
     public String getConfig(ConfigHashKeyEnum config) {
         //获取配置对象
-        Optional<ConfigDo> configPoOpt = super.lambdaQuery().eq(ConfigDo::getKeyword, config.getKey()).oneOpt();
-        if (configPoOpt.isEmpty()) {
+        Optional<ConfigDo> configDoOptinal = super.lambdaQuery().eq(ConfigDo::getKeyword, config.getKey()).oneOpt();
+        if (configDoOptinal.isEmpty()) {
             throw new LogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_NULL);
         }
-        return configPoOpt.get().getValue();
+        return configDoOptinal.get().getValue();
     }
 
     @Override
     public Integer updateVersion(Integer addVersion) {
         //获取版本号对象,获取版本号,增加后更新
-        int version = Integer.parseInt(getConfig(ConfigHashKeyEnum.VERSION));
+        int version = Integer.parseInt(getConfig(ConfigHashKeyEnum.CLOUD_VERSION));
         int endVersion = version + addVersion;
-        Assert.getInstance().ifTrue(super.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.VERSION.getKey()).set(ConfigDo::getValue, endVersion).update(), ()->{
-            throw new LogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_FALSE);
-        });
+        super.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.CLOUD_VERSION.getKey()).set(ConfigDo::getValue, endVersion).update();
+        configCache.setConfig(ConfigHashKeyEnum.CLOUD_VERSION, String.valueOf(endVersion));
         return endVersion;
+    }
+
+    @Override
+    public void updateLocalVersionFromCloudVersion() {
+        int version = Integer.parseInt(getConfig(ConfigHashKeyEnum.CLOUD_VERSION));
+        super.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.LOCAL_VERSION.getKey()).set(ConfigDo::getValue, version).update();
+        configCache.setConfig(ConfigHashKeyEnum.LOCAL_VERSION, String.valueOf(version));
     }
 
 }

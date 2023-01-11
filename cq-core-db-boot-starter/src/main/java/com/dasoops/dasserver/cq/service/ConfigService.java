@@ -33,4 +33,8 @@ public interface ConfigService extends IService<ConfigDo> {
      */
     Integer updateVersion(Integer version);
 
+    /**
+     * 从云端版本号更新本地版本号
+     */
+    void updateLocalVersionFromCloudVersion();
 }

@@ -1,6 +1,5 @@
-package com.dasoops.dasserver.plugin.template;
+package com.dasoops.dasserver.plugin.template.controller;
 
-import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.CqTemplate;
@@ -9,6 +8,9 @@ import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.plugin.template.entity.enums.AlasConfigHashKeyEnum;
 import com.dasoops.dasserver.plugin.template.entity.enums.AlasNoticeTypeEnum;
 import com.dasoops.dasserver.plugin.template.entity.param.AlasErrorParam;
+import com.github.xiaoymin.knife4j.annotations.ApiSupport;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +22,7 @@ import java.util.List;
 
 /**
  * @Title: AlasController
- * @ClassPath com.dasoops.dasserver.plugin.template.AlasController
+ * @ClassPath com.dasoops.dasserver.plugin.template.controller.AlasController
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/11
  * @Version 1.0.0
@@ -30,15 +32,18 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Api(tags = "PLUGIN - ALAS_NOTICE")
+@ApiSupport(author = "DasoopsNicole@gmail.com")
 public class AlasController {
 
     private final ConfigCache configCache;
 
     @PostMapping("error")
+    @ApiOperation(value = "alasError消息上报", notes = "alasError消息上报")
     public String error(@RequestBody AlasErrorParam param) {
         List<Long> xSelfIdList = param.getXSelfIdList();
 
-        AlasNoticeTypeEnum noticeTypeEnum = EnumUtil.getBy(AlasNoticeTypeEnum::getDbValue, configCache.getIntegerConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_TYPE));
+        AlasNoticeTypeEnum noticeTypeEnum = configCache.getEnumConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_TYPE, AlasNoticeTypeEnum.class);
         Long groupId = configCache.getLongConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_GROUP);
         Long userId = configCache.getLongConfig(AlasConfigHashKeyEnum.ALAS_NOTICE_USER);
 
@@ -48,7 +53,9 @@ public class AlasController {
             case GROUP -> function = (cqTemplate, message) -> cqTemplate.sendGroupMsg(groupId, message, false);
             case PRIVATE -> function = (cqTemplate, message) -> cqTemplate.sendPrivateMsg(groupId, message, false);
             case GROUP_AT_USER -> function = (cqTemplate, message) -> cqTemplate.sendGroupMsg(groupId, CqCodeUtil.at(userId) + message, false);
-            default -> function = null;
+            default -> {
+                return "noNotice";
+            }
         }
 
         //构建发送消息

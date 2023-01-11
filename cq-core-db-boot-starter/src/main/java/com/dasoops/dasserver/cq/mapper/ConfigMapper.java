@@ -13,7 +13,6 @@ import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
  * @see BaseMapper
  */
 public interface ConfigMapper extends BaseMapper<ConfigDo> {
-
 }
 
 

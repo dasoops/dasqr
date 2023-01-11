@@ -89,14 +89,15 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
             throw new LogicException(ConfigExceptionEnum.CANT_EDIT);
         }
 
+        String value = param.getValue();
         ConfigDo newConfigDo = new ConfigDo();
         newConfigDo.setRowId(id);
         newConfigDo.setKeyword(keyword);
-        newConfigDo.setValue(param.getValue());
+        newConfigDo.setValue(value);
         newConfigDo.setDescription(param.getDescription());
 
         super.updateById(newConfigDo);
-        configCache.initOrUpdate();
+        configCache.initOrUpdateConfig();
     }
 
     @Override

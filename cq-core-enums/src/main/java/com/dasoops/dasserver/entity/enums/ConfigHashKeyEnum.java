@@ -17,7 +17,7 @@ public enum ConfigHashKeyEnum implements IRedisHashKeyEnum {
     /**
      * 版本
      */
-    VERSION("cloudVersion"),
+    CLOUD_VERSION("cloudVersion"),
     /**
      * 本地运行版本
      */

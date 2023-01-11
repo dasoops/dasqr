@@ -107,6 +107,17 @@ public class CqTemplate {
     }
 
     /**
+     * 发送私聊消息
+     *
+     * @param qId     对方 QQ 号
+     * @param message 要发送的内容
+     * @return 结果
+     */
+    public ApiData<MessageData> sendPrivateMsg(Long qId, String message) {
+        return sendPrivateMsg(qId, message, false);
+    }
+
+    /**
      * 发送群消息
      *
      * @param groupId    群号
@@ -131,6 +142,18 @@ public class CqTemplate {
 
         checkResultCode(result);
         return result;
+    }
+
+
+    /**
+     * 发送群消息
+     *
+     * @param groupId 群号
+     * @param message 要发送的内容
+     * @return 结果
+     */
+    public ApiData<MessageData> sendGroupMsg(Long groupId, String message) {
+        return sendGroupMsg(groupId, message, false);
     }
 
     /**

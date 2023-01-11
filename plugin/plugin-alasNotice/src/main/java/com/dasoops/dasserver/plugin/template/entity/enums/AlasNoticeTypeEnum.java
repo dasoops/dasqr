@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.template.entity.enums;
 
+import com.dasoops.common.entity.enums.IDbColumnEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,20 +14,24 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum AlasNoticeTypeEnum {
+public enum AlasNoticeTypeEnum implements IDbColumnEnum {
 
+    /**
+     * 不提醒
+     */
+    NONE(0),
     /**
      * 私聊
      */
-    PRIVATE(0),
+    PRIVATE(1),
     /**
      * 群组
      */
-    GROUP(1),
+    GROUP(2),
     /**
      * 群at用户
      */
-    GROUP_AT_USER(2),
+    GROUP_AT_USER(3),
     ;
 
     final Integer dbValue;
