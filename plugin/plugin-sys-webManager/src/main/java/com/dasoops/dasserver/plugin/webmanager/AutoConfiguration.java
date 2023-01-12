@@ -15,8 +15,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
  */
 @ComponentScan("com.dasoops.dasserver.plugin.webmanager")
 @MapperScan("com.dasoops.dasserver.plugin.webmanager.mapper")
-@EnableKnife4j
-@EnableSwagger2WebMvc
 public class AutoConfiguration {
 
 }
