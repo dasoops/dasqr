@@ -7,6 +7,7 @@
         :rules="rules"
         label-width="80px"
         class="login-form"
+        @keydown.enter="loginFunc(loginFormRef)"
     >
       <h2>
         Login
@@ -33,14 +34,14 @@ import {useRouter} from "vue-router";
 import {LoginData, LoginRes} from "@/entity/loginEntity";
 import {FormInstance, FormRules} from "element-plus";
 import {login} from "@/request/RegisterRequest";
-import {useStore} from "@/conf/store";
+import {getStore} from "@/conf/store";
 
 
 export default defineComponent({
 
   setup() {
     let router = useRouter();
-    let store = useStore();
+    let store = getStore();
 
     const data = reactive(new LoginData());
     const rules = reactive<FormRules>({

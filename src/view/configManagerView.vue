@@ -112,7 +112,7 @@
         align-center
         draggable
     >
-      <el-form :model="editConfigParam" class="searchForm" label-position="top">
+      <el-form :model="editConfigParam" class="searchForm" label-position="top" @keydown.enter="handleEdit">
         <el-form-item label="keyword" class="text-color">
           <el-input v-model="editConfigParam.keyword" placeholder="" class="input-line" clearable/>
         </el-form-item>
@@ -139,7 +139,7 @@
         align-center
         draggable
     >
-      <el-form :model="addConfigParam" class="searchForm" label-position="top">
+      <el-form :model="addConfigParam" class="searchForm" label-position="top" @keydown.enter="handleAdd">
         <el-form-item label="keyword" class="text-color">
           <el-input v-model="addConfigParam.keyword" placeholder="" class="input-line" clearable/>
         </el-form-item>

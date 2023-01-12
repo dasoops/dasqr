@@ -136,7 +136,7 @@
         align-center
         draggable
     >
-      <el-form :model="editImageInfoParam" class="searchForm" label-position="top">
+      <el-form :model="editImageInfoParam" class="searchForm" label-position="top" @keydown.enter="handleEdit">
         <el-form-item label="keyword" class="text-color">
           <el-input v-model="editImageInfoParam.keyword" placeholder="" class="input-line" clearable/>
         </el-form-item>
@@ -171,7 +171,7 @@
         align-center
         draggable
     >
-      <el-form :model="addImageParam" class="searchForm" label-position="top">
+      <el-form :model="addImageParam" class="searchForm" label-position="top" @keydown.enter="handleAdd">
         <el-form-item label="keyword" class="text-color">
           <el-input v-model="addImageParam.keyword" placeholder="" class="input-line" clearable/>
         </el-form-item>
@@ -662,7 +662,7 @@ export default defineComponent({
     border: 1px solid greenyellow;
   }
 
-  .el-upload-dragger:hover{
+  .el-upload-dragger:hover {
     border-color: yellowgreen;
   }
 }
