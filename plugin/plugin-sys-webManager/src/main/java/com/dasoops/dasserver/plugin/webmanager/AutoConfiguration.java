@@ -1,7 +1,9 @@
 package com.dasoops.dasserver.plugin.webmanager;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 /**
  * @Title: Configuration
@@ -13,6 +15,8 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @ComponentScan("com.dasoops.dasserver.plugin.webmanager")
 @MapperScan("com.dasoops.dasserver.plugin.webmanager.mapper")
+@EnableKnife4j
+@EnableSwagger2WebMvc
 public class AutoConfiguration {
 
 }

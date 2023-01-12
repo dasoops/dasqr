@@ -84,12 +84,14 @@ public class PluginController {
     }
 
     @PostMapping("sortPlugin")
+    @ApiOperation(value = "对插件排序", notes = "对插件排序")
     public SimpleResult sortPlugin(SortPluginParam param) {
         pluginWebService.sortPlugin(param);
         return SimpleResult.success();
     }
 
     @PostMapping("getPluginSort")
+    @ApiOperation(value = "获取插件排序", notes = "获取插件排序")
     public Result<GetPluginSortVo> getPluginSort() {
         return Result.success(pluginWebService.getSortPlugin());
     }
