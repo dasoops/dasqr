@@ -99,7 +99,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
     public GetNextIdVo getNextId() {
         Long id = configWebMapper.selectMaxId() + 1;
         GetNextIdVo getNextIdVo = new GetNextIdVo();
-        getNextIdVo.setId(id);
+        getNextIdVo.setRowId(id);
         return getNextIdVo;
     }
 

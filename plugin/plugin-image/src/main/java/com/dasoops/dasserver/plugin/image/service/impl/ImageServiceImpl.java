@@ -254,7 +254,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
     public GetNextIdVo getNextId() {
         Long id = imageMapper.selectMaxId() + 1;
         GetNextIdVo getNextIdVo = new GetNextIdVo();
-        getNextIdVo.setId(id);
+        getNextIdVo.setRowId(id);
         return getNextIdVo;
     }
 

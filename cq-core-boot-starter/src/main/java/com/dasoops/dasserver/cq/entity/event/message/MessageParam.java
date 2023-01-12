@@ -22,6 +22,7 @@ public class MessageParam extends BaseParam {
     /**
      * 是否为群组消息
      */
+
     private Boolean isGroup;
 
     /**

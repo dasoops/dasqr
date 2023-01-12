@@ -12,18 +12,18 @@ import lombok.EqualsAndHashCode;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/12/30
  * @Version 1.0.0
- * @Description: 获取新增idVo
+ * @Description: 获取下一个主键id
  * @see BaseVo
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "获取新增idVo", description = "获取新增idVo")
+@ApiModel(value = "获取下一个主键id", description = "获取下一个主键id")
 public class GetNextIdVo extends BaseVo {
 
     /**
-     * id
+     * rowId
      */
-    @ApiModelProperty(value = "id", notes = "id", example = "30", required = true)
-    private Long id;
+    @ApiModelProperty(value = "rowId", notes = "rowId", example = "30", required = true)
+    private Long rowId;
 
 }
