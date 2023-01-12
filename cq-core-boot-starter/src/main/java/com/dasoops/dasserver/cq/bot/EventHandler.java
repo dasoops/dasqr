@@ -56,6 +56,9 @@ public class EventHandler {
 
             PostTypeEnum postTypeEnum = eventInfo.getPostTypeEnum();
             EventTypeEnum eventTypeEnum = eventInfo.getEventTypeEnum();
+            if (eventTypeEnum == null) {
+                log.error("undefined event type: " + eventInfo.getMessageType());
+            }
 
             switch (postTypeEnum) {
                 case MESSAGE -> {

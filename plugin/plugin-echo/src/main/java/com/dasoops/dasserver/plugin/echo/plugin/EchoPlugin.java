@@ -55,5 +55,4 @@ public class EchoPlugin extends CqPlugin {
             return echoCache.get(keySet.iterator().next());
         }
     }
-
 }
