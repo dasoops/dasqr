@@ -68,7 +68,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         Assert.getInstance().allMustNotNull(param, param.getKeyword(), param.getValue(), param.getDescription());
 
         String keyword = param.getKeyword();
-        Long id = param.getId();
+        Long id = param.getRowId();
 
         //不同id是否有相同关键字
         Long count = super.lambdaQuery().eq(ConfigDo::getKeyword, keyword).ne(ConfigDo::getRowId, id).count();
@@ -151,7 +151,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         List<ConfigDo> doList = super.list();
         List<ExportConfigDto> resList = doList.stream().map(configDo -> {
             ExportConfigDto dto = new ExportConfigDto();
-            dto.setId(configDo.getRowId());
+            dto.setRowId(configDo.getRowId());
             dto.setKeyword(configDo.getKeyword());
             dto.setValue(configDo.getValue());
             dto.setDescription(configDo.getDescription());

@@ -1,7 +1,19 @@
 package com.dasoops.dasserver.plugin.webmanager.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
+import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
+import com.dasoops.dasserver.plugin.webmanager.controller.GetPluginSortVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.SortPluginParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.DeletePluginParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.EditPluginParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginVo;
+
+import java.util.List;
 
 /**
  * @Title: PluginService
@@ -14,4 +26,60 @@ import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
  */
 public interface PluginWebService extends IService<PluginDo> {
 
+    /**
+     * 获取插件分页数据
+     *
+     * @param param param
+     * @return {@link IPage}<{@link GetPluginVo}>
+     */
+    IPage<GetPluginVo> getPluginPageData(GetPluginPageParam param);
+
+    /**
+     * 编辑插件
+     *
+     * @param param param
+     */
+    void editPlugin(EditPluginParam param);
+
+    /**
+     * 获取下一个主键id
+     *
+     * @return {@link GetNextIdVo}
+     */
+    GetNextIdVo getNextId();
+
+    /**
+     * 添加插件
+     *
+     * @param param param
+     */
+    void addPlugin(AddPluginParam param);
+
+    /**
+     * 删除插件
+     *
+     * @param param param
+     */
+    void deletePlugin(DeletePluginParam param);
+
+    /**
+     * 导出所有插件
+     *
+     * @return {@link List}<{@link ExportPluginDto}>
+     */
+    List<ExportPluginDto> exportAllPlugin();
+
+    /**
+     * 排序插件
+     *
+     * @param param param
+     */
+    void sortPlugin(SortPluginParam param);
+
+    /**
+     * 获取排序插件
+     *
+     * @return {@link Object}
+     */
+    GetPluginSortVo getSortPlugin();
 }

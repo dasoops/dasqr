@@ -34,6 +34,10 @@
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-sys-webAuth</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-pluginWrapper</artifactId>
+        </dependency>
 
     </dependencies>
 </project>

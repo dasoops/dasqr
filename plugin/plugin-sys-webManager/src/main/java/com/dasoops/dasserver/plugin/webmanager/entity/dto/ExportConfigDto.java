@@ -2,6 +2,7 @@ package com.dasoops.dasserver.plugin.webmanager.entity.dto;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.dasoops.common.entity.dto.base.BaseDto;
+import com.dasoops.dasserver.cq.entity.dto.BaseExportDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,13 +17,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ExportConfigDto extends BaseDto {
-
-    /**
-     * id
-     */
-    @ExcelProperty(value = "id",index = 0)
-    private Long id;
+public class ExportConfigDto extends BaseExportDto {
 
     /**
      * 关键字

@@ -39,7 +39,11 @@ public class AddPluginPlugin extends CqPlugin {
         pluginDo.setKeyword(param.getMatchKeyword());
         pluginDo.setClassPath(param.getClassPath());
         pluginDo.setDescription(param.getDescription());
-        pluginDo.setEnable(PluginEnableEnum.TRUE.getDbValue());
+        Integer enable = param.getEnable();
+        if (enable == null) {
+            enable = PluginEnableEnum.TRUE.getDbValue();
+        }
+        pluginDo.setEnable(enable);
         pluginDo.setLevel(param.getLevel());
         pluginDo.setOrder(maxOrder + 1);
         pluginService.save(pluginDo);

@@ -16,6 +16,7 @@ import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetConfigVo;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -33,13 +34,10 @@ import java.util.List;
 @RequestMapping("config")
 @Api(tags = "WM - 配置")
 @ApiSupport(author = "DasoopsNicole@gmail.com")
+@RequiredArgsConstructor
 public class ConfigController {
 
     private final ConfigWebService configWebService;
-
-    public ConfigController(ConfigWebService configWebService) {
-        this.configWebService = configWebService;
-    }
 
     @GetMapping("getConfigPage")
     @ApiOperation(value = "获取分页配置信息", notes = "获取分页配置信息")

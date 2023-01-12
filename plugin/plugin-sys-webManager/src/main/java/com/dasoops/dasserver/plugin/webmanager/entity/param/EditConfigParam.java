@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.param;
 
+import com.dasoops.common.entity.param.base.BaseEditAndDeleteParam;
 import com.dasoops.common.entity.param.base.BaseParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,13 +19,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(value = "编辑配置参数", description = "编辑配置参数")
-public class EditConfigParam extends BaseParam {
-
-    /**
-     * id
-     */
-    @ApiModelProperty(value = "id", notes = "id", example = "1", required = true)
-    private Long id;
+public class EditConfigParam extends BaseEditAndDeleteParam {
 
     /**
      * 配置项关键词

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -64,7 +65,11 @@ public class ConfigCache extends BaseCache {
     public <R extends IDbColumnEnum> R getEnumConfig(IRedisHashKeyEnum configHashKeyEnum, Class<R> enumClass) {
         Integer integerValue = getIntegerConfig(configHashKeyEnum);
         R[] enumConstants = enumClass.getEnumConstants();
-        return Arrays.stream(enumConstants).filter(enumConstant -> enumConstant.getDbValue().equals(integerValue)).findFirst().orElse(null);
+        Optional<R> enumOptional = Arrays.stream(enumConstants).filter(enumConstant -> enumConstant.getDbValue().equals(integerValue)).findFirst();
+        if (enumOptional.isEmpty()) {
+            throw new LogicException(ExceptionEnum.UNKNOWN_KEYWORD);
+        }
+        return enumOptional.get();
     }
 
     public Integer getIntegerConfig(IRedisHashKeyEnum configHashKeyEnum) {

@@ -27,6 +27,7 @@ public enum ExceptionEnum implements IExceptionEnum {
     IS_TRUE(2001, "值必须为true"),
     IS_FALSE(2002, "值必须为false"),
     SIZE_ZERO(2003, "数据不可为空"),
+    UNKNOWN_KEYWORD(2004, "未知的关键词"),
 
     /**
      * 参数异常
