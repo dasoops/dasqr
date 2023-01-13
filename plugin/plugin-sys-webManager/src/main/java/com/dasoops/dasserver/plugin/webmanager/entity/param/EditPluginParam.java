@@ -1,7 +1,8 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.param;
 
-import com.dasoops.common.entity.param.base.BaseEditAndDeleteParam;
+import com.dasoops.common.entity.param.base.BaseEditParam;
 import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +18,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class EditPluginParam extends BaseEditAndDeleteParam {
+public class EditPluginParam extends BaseEditParam<PluginDo>{
 
     /**
      * 插件名称
@@ -48,5 +49,4 @@ public class EditPluginParam extends BaseEditAndDeleteParam {
      */
     @ApiModelProperty(value = "是否启用", notes = "是否启用", example = "1", required = true)
     private Integer enable;
-
 }

@@ -16,13 +16,13 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ConfigExceptionEnum implements IExceptionEnum {
+public enum WebManagerExceptionEnum implements IExceptionEnum {
 
     /***/
     REPEAT_KEYWORD(10201, "重复的关键词"),
     UNDEFINED_ID(10202, "无效的id"),
     CANT_EDIT(10203, "不支持编辑的配置项"),
-
+    UNDEFINED_CLASS_PATH(10204, "未找到类文件"),
     ;
 
     final Integer code;

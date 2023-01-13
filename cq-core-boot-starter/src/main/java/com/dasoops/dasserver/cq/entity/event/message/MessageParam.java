@@ -2,7 +2,6 @@ package com.dasoops.dasserver.cq.entity.event.message;
 
 import com.dasoops.common.entity.param.base.BaseParam;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -14,10 +13,9 @@ import lombok.NoArgsConstructor;
  * @Description: 消息param
  * @see BaseParam
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class MessageParam extends BaseParam {
+public class MessageParam {
 
     /**
      * 是否为群组消息

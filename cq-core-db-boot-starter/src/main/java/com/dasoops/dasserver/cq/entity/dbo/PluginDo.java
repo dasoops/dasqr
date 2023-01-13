@@ -26,7 +26,8 @@ public class PluginDo extends BaseDo implements Serializable {
     /**
      * 触发关键词
      */
-    private String keyword;
+    @TableField("`name`")
+    private String name;
 
     /**
      * 全类名

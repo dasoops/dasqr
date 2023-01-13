@@ -14,6 +14,12 @@ import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
  */
 public interface PluginWebMapper extends BaseMapper<PluginDo> {
 
+    /**
+     * 查询自增id
+     *
+     * @return {@link Long}
+     */
+    Long selectMaxId();
 }
 
 

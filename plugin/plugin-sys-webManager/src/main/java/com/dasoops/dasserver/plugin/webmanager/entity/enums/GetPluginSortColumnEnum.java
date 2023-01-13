@@ -19,20 +19,21 @@ public enum GetPluginSortColumnEnum implements ISortColumnEnum {
     /**
      * 主键id
      */
-    ROW_ID(0),
+    ROW_ID(0, "row_id"),
     /**
      * 排序字段
      */
-    ORDER(1),
+    ORDER(1, "order"),
     /**
      * level字段
      */
-    LEVEL(2),
+    LEVEL(2, "level"),
     /**
      * enable字段
      */
-    ENABLE(3),
+    ENABLE(3, "enable"),
     ;
 
     final Integer integerValue;
+    final String columnName;
 }

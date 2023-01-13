@@ -1,5 +1,7 @@
 package com.dasoops.common.entity.param.base;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dasoops.common.entity.dbo.base.BaseDo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +17,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseEditAndDeleteParam extends BaseParam {
+public class BaseEditAndDeleteParam<T extends BaseDo> extends BaseParam<T> {
 
     /**
      * 主键id
@@ -23,4 +25,8 @@ public class BaseEditAndDeleteParam extends BaseParam {
     @ApiModelProperty(value = "主键id", notes = "主键id", example = "1", required = true)
     private Long rowId;
 
+    @Override
+    public QueryWrapper<T> buildWrapper() {
+        return super.buildWrapper().eq("rowId", rowId);
+    }
 }

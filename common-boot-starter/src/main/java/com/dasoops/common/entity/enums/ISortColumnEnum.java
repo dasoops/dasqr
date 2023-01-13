@@ -17,4 +17,11 @@ public interface ISortColumnEnum {
      */
     Integer getIntegerValue();
 
+    /**
+     * 获取字段名字
+     *
+     * @return {@link String}
+     */
+    String getColumnName();
+
 }

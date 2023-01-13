@@ -139,7 +139,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
     public IPage<GetImageVo> getImageInfoPage(GetImageInfoPageParam param) {
         Assert.getInstance().allMustNotNull(param);
         //根据更新时间判断(网页端有更新的需求实现,会导致关键词的覆盖)
-        QueryWrapper<ImageDo> wrapper = param.buildTimeQueryWrapper("UPDATE_TIME");
+        QueryWrapper<ImageDo> wrapper = param.buildWrapper("UPDATE_TIME");
 
         //拼接like参数
         wrapper.lambda()

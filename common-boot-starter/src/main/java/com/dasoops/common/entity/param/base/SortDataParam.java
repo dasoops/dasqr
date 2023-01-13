@@ -1,5 +1,6 @@
 package com.dasoops.common.entity.param.base;
 
+import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.entity.dto.base.BaseDto;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.entity.enums.ISortColumnEnum;
@@ -23,7 +24,7 @@ import java.util.Optional;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SortDataParam extends BaseParam {
+public class SortDataParam<T extends BaseDo> extends BaseParam<T> {
 
     /**
      * 排序字段
@@ -36,7 +37,6 @@ public class SortDataParam extends BaseParam {
      */
     @ApiModelProperty(value = "排序规则(0:降序;1:升序)", notes = "排序规则(0:降序;1:升序)", example = "0", required = true)
     private Integer sortRule;
-
 
     public <R extends ISortColumnEnum> R buildColumnEnum(Class<R> clazz) {
         R[] enumConstants = clazz.getEnumConstants();

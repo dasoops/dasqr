@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.param;
 
-import com.dasoops.common.entity.param.base.BaseEasyPageParam;
 import com.dasoops.common.entity.param.base.BasePageParam;
+import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,12 +14,11 @@ import lombok.EqualsAndHashCode;
  * @Date 2022/12/28
  * @Version 1.0.0
  * @Description: 获取配置参数
- * @see BaseEasyPageParam
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(value = "获取分页配置参数",description = "获取分页配置参数")
-public class GetConfigPageParam extends BasePageParam {
+public class GetConfigPageParam extends BasePageParam<ConfigDo> {
 
     /**
      * 关键字

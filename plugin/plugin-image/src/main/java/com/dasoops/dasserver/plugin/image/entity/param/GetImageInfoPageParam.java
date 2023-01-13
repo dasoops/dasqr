@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.image.entity.param;
 
-import com.dasoops.common.entity.param.base.BaseEasyTimePageParam;
 import com.dasoops.common.entity.param.base.BaseTimePageParam;
+import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "获取分页图像信息", description = "获取分页图像信息")
-public class GetImageInfoPageParam extends BaseTimePageParam {
+public class GetImageInfoPageParam extends BaseTimePageParam<ImageDo> {
 
     /**
      * 关键词

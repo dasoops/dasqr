@@ -76,13 +76,13 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
 
     @Override
     public Optional<PluginDo> getByKeyWord(String keyWord) {
-        return super.lambdaQuery().eq(PluginDo::getKeyword, keyWord).oneOpt();
+        return super.lambdaQuery().eq(PluginDo::getName, keyWord).oneOpt();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(PluginDo pluginPo) {
-        Assert.getInstance().allMustNotNull(pluginPo, pluginPo.getKeyword(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription(), pluginPo.getOrder());
+        Assert.getInstance().allMustNotNull(pluginPo, pluginPo.getName(), pluginPo.getClassPath(), pluginPo.getLevel(), pluginPo.getDescription(), pluginPo.getOrder());
         Assert.getInstance().allMustNull(pluginPo.getRowId());
 
         //默认启用,存储插件对象
@@ -108,7 +108,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
 
     @Override
     public boolean updateByKeyword(PluginDo pluginPo) {
-        Assert.getInstance().isTrue(super.lambdaUpdate().eq(PluginDo::getKeyword, pluginPo.getKeyword()).update(pluginPo));
+        Assert.getInstance().isTrue(super.lambdaUpdate().eq(PluginDo::getName, pluginPo.getName()).update(pluginPo));
         return true;
     }
 

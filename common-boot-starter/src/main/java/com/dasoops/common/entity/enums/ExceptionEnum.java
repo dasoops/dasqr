@@ -56,6 +56,7 @@ public enum ExceptionEnum implements IExceptionEnum {
      */
     TYPE_CONVERT(7001, "类型转换异常"),
     INIT_ERROR(7002, "项目初始化异常"),
+    NO_NULL_PARAMETER_CONSTRUCTOR(7003, "没有无参构造"),
 
     /**
      * other

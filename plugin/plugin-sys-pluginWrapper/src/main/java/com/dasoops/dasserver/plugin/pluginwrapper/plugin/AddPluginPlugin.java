@@ -36,7 +36,7 @@ public class AddPluginPlugin extends CqPlugin {
         Integer maxOrder = pluginService.getMaxOrder();
 
         PluginDo pluginDo = new PluginDo();
-        pluginDo.setKeyword(param.getMatchKeyword());
+        pluginDo.setName(param.getMatchKeyword());
         pluginDo.setClassPath(param.getClassPath());
         pluginDo.setDescription(param.getDescription());
         Integer enable = param.getEnable();

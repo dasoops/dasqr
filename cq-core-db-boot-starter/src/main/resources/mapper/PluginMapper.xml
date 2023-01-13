@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.dasoops.dasserver.cq.entity.dbo.PluginDo">
         <id property="rowId" column="row_id" jdbcType="BIGINT"/>
-        <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="classPath" column="class_path" jdbcType="VARCHAR"/>
         <result property="order" column="order" jdbcType="INTEGER"/>
         <result property="level" column="level" jdbcType="TINYINT"/>
@@ -22,7 +22,7 @@
     <sql id="Base_Column_List">
         row_id
         ,
-        keyword,class_path,`order`,
+        `name`,class_path,`order`,
         `level`,description,
         enable,is_delete,create_user,
         create_time,update_user,update_time
