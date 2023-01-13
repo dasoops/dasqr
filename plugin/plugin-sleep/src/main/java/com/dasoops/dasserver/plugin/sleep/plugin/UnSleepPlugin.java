@@ -1,8 +1,10 @@
 package com.dasoops.dasserver.plugin.sleep.plugin;
 
 import com.dasoops.dasserver.cq.CqPlugin;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.plugin.sleep.cache.SleepCache;
 import com.dasoops.dasserver.plugin.sleep.entity.param.SleepParam;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +30,7 @@ public class UnSleepPlugin extends CqPlugin {
     }
 
     @MessageMapping(prefix = {"unSleep", "unQuiet", "醒醒"}, type = MessageMappingTypeEnum.ALL)
-    public String sleep(SleepParam param) {
+    public String sleep(MappingMessage<SleepParam> param, CqTemplate cqTemplate) {
         sleepCache.removeFlag(param.getIsGroup(), param.getRegisterId());
         return "醒了醒了";
     }

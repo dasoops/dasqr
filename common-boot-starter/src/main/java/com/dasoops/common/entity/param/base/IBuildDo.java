@@ -2,10 +2,7 @@ package com.dasoops.common.entity.param.base;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.dasoops.common.entity.dbo.base.BaseDo;
-import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.exception.LogicException;
-
-import java.lang.reflect.ParameterizedType;
+import com.dasoops.common.util.ReflectUtil;
 
 /**
  * @Title: IBuildDo
@@ -22,18 +19,9 @@ public interface IBuildDo<T extends BaseDo> {
      *
      * @return {@link T}
      */
-    default T buildDo(){
+    default T buildDo() {
         {
-            ParameterizedType superClass = (ParameterizedType) getClass().getGenericSuperclass();
-            @SuppressWarnings("all")
-            Class<T> type = (Class<T>) superClass.getActualTypeArguments()[0];
-            T t;
-            try {
-                t = type.getConstructor().newInstance();
-            } catch (Exception e) {
-                throw new LogicException(ExceptionEnum.NO_NULL_PARAMETER_CONSTRUCTOR);
-
-            }
+            T t = ReflectUtil.getGenericInstance(getClass(), 0);
             BeanUtil.copyProperties(this, t);
             return t;
         }

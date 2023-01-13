@@ -3,6 +3,8 @@ package com.dasoops.dasserver.cq.bot;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.dasoops.common.entity.dbo.base.BaseDo;
+import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
@@ -15,7 +17,7 @@ import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.MessageParamResloveExceptionEnum;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
-import com.dasoops.dasserver.cq.entity.event.message.MessageParam;
+import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.cq.entity.result.PluginResult;
 import com.dasoops.dasserver.cq.utils.DqCodeUtil;
 
@@ -34,11 +36,10 @@ import java.util.List;
  */
 public class MessageMappingReslover {
 
-    public static PassObj resloveParamAndHandle(CqPlugin cqPlugin, CqTemplate cqTemplate, CqMessageEvent messageEvent, String defaultMethodName, EventTypeEnum eventTypeEnum) {
+    public static <T extends BaseParam<? extends BaseDo>> PassObj resloveParamAndHandle(CqPlugin cqPlugin, CqTemplate cqTemplate, CqMessageEvent messageEvent, String defaultMethodName, EventTypeEnum eventTypeEnum) {
         //开始选择方法,优先判断包含注解的方法,都不符合再调用继承的,再不符合直接调用CqPlugin的默认实现
         Class<? extends CqPlugin> clazz = cqPlugin.getClass();
         Method[] pluginMethods = clazz.getMethods();
-        MessageParam messageParam;
         for (Method pluginMethod : pluginMethods) {
             //检查是否需要解析
             String matchKeyword = checkNeedReslove(pluginMethod, messageEvent, defaultMethodName, eventTypeEnum);
@@ -48,11 +49,17 @@ public class MessageMappingReslover {
             //开始反射获取实体类
             //获取全部类型
             Class<?>[] paramClazzs = pluginMethod.getParameterTypes();
+            //有泛型的类
             //过滤,获取MessageParam类型的
             //忽略类型检查,实际已经过滤了
-//            @SuppressWarnings("all")
-            List<Class<?>> messageParamClazzList = Arrays.stream(paramClazzs).filter(MessageParam.class::isAssignableFrom).toList();
-            int messageParamSize = messageParamClazzList.size();
+            Type[] types = pluginMethod.getGenericParameterTypes();
+            List<ParameterizedType> messageParamTypeList = Arrays.stream(types)
+                    .filter(type -> type instanceof ParameterizedType)
+                    .map(type -> (ParameterizedType) type)
+                    .filter(type -> ((Class<?>) type.getRawType()).isAssignableFrom(MappingMessage.class))
+                    .toList();
+
+            int messageParamSize = messageParamTypeList.size();
             Object[] params;
             if (messageParamSize > 1) {
                 //超出限制,无法注入,抛出异常
@@ -62,13 +69,19 @@ public class MessageMappingReslover {
                 params = buildParams(paramClazzs, cqTemplate, messageEvent);
             } else {
                 //构建MessageParam对象
-                Class<?> messageParamClazz = messageParamClazzList.get(0);
+                //已经经过类型检查
+                @SuppressWarnings("all")
+                Class<MappingMessage<T>> messageParamClazz = (Class<MappingMessage<T>>) messageParamTypeList.get(0).getRawType();
+                //泛型类型
+                @SuppressWarnings("all")
+                //已经经过类型检查
+                Class<T> genericParameterClazz = (Class<T>) messageParamTypeList.get(0).getActualTypeArguments()[0];
                 //实例化对象
-                messageParam = (MessageParam) ReflectUtil.newInstance(messageParamClazz);
+                MappingMessage<T> mappingMessage = ReflectUtil.newInstance(messageParamClazz);
                 //注入属性
-                injectionValue(messageParam, eventTypeEnum, pluginMethod.getAnnotation(MessageMapping.class), messageEvent, messageParamClazz, matchKeyword);
+                injectionValue(mappingMessage, eventTypeEnum, pluginMethod.getAnnotation(MessageMapping.class), messageEvent, genericParameterClazz, matchKeyword);
                 //构建参数集合
-                params = buildParams(paramClazzs, cqTemplate, messageEvent, messageParam);
+                params = buildParams(paramClazzs, cqTemplate, messageEvent, mappingMessage);
             }
             //执行方法
             Object result;
@@ -211,7 +224,7 @@ public class MessageMappingReslover {
         return true;
     }
 
-    private static Object[] buildParams(Class<?>[] paramClazzs, CqTemplate cqTemplate, CqMessageEvent messageEvent, MessageParam messageParam) {
+    private static Object[] buildParams(Class<?>[] paramClazzs, CqTemplate cqTemplate, CqMessageEvent messageEvent, MappingMessage<? extends BaseParam<? extends BaseDo>> mappingMessage) {
         Object[] params = new Object[paramClazzs.length];
         for (int i = 0; i < paramClazzs.length; i++) {
             Class<?> paramClazz = paramClazzs[i];
@@ -223,12 +236,12 @@ public class MessageMappingReslover {
                 params[i] = messageEvent;
             }
             //没这个参数直接过就行了
-            if (messageParam == null) {
+            if (mappingMessage == null) {
                 continue;
             }
-            if (MessageParam.class.isAssignableFrom(paramClazz)) {
+            if (MappingMessage.class.isAssignableFrom(paramClazz)) {
                 //注入messageParam
-                params[i] = messageParam;
+                params[i] = mappingMessage;
             }
             //其余情况不需要注入,因为没东西注入,可能会搞个自定义注入器?那还要配套解析器欸
         }
@@ -277,18 +290,20 @@ public class MessageMappingReslover {
     }
 
 
-    private static void injectionValue(final MessageParam messageParam, EventTypeEnum eventTypeEnum, MessageMapping annotation, CqMessageEvent messageEvent, Class<?> messageParamClazz, String matchKeyword) {
+    private static <T extends BaseParam<? extends BaseDo>> void injectionValue(final MappingMessage<T> mappingMessageParam, EventTypeEnum eventTypeEnum, MessageMapping annotation, CqMessageEvent messageEvent, Class<T> genericParameterClazz, String matchKeyword) {
         //设置isGroup
         boolean isGroup = eventTypeEnum.equals(EventTypeEnum.MESSAGE_GROUP);
-        messageParam.setIsGroup(isGroup);
-        messageParam.setUserId(messageEvent.getUserId());
+        mappingMessageParam.setIsGroup(isGroup);
+        mappingMessageParam.setUserId(messageEvent.getUserId());
         if (isGroup) {
-            messageParam.setGroupId(((CqGroupMessageEvent) messageEvent).getGroupId());
+            mappingMessageParam.setGroupId(((CqGroupMessageEvent) messageEvent).getGroupId());
         }
-        messageParam.setMatchKeyword(matchKeyword);
+        mappingMessageParam.setMatchKeyword(matchKeyword);
 
+        //获取泛型实例对象
+        T param = ReflectUtil.newInstance(genericParameterClazz);
         //获取字段,根据注解判断是否需要注入
-        Field[] paramFields = messageParamClazz.getDeclaredFields();
+        Field[] paramFields = param.getClass().getDeclaredFields();
         //长度为0 没有参数 直接返回就可以
         if (paramFields.length == 0) {
             return;
@@ -306,8 +321,9 @@ public class MessageMappingReslover {
             InjectionParam injectionParam = field.getAnnotation(InjectionParam.class);
             int order = injectionParam.order();
             String paramString = paramStringList.get(order);
-            ReflectUtil.setFieldValue(messageParam, field, paramString);
+            ReflectUtil.setFieldValue(param, field, paramString);
         }
+        mappingMessageParam.setParam(param);
     }
 
     private static List<Field> getSortedNeedSetField(Field[] paramFields) {

@@ -1,5 +1,6 @@
 package com.dasoops.common.util;
 
+import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.entity.enums.ReflectUtilExceptionEnum;
 import com.dasoops.common.exception.LogicException;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 
 /**
  * 反射工具包
@@ -19,6 +21,17 @@ import java.lang.reflect.Method;
 public class ReflectUtil {
 
     private static final String SET_METHOD_PREFIX = "set";
+
+    public static <T> T getGenericInstance(Class<?> clazz,Integer index) {
+        ParameterizedType superClass = (ParameterizedType) clazz.getGenericSuperclass();
+        @SuppressWarnings("all")
+        Class<T> type = (Class<T>) superClass.getActualTypeArguments()[index];
+        try {
+            return type.getConstructor().newInstance();
+        } catch (Exception e) {
+            throw new LogicException(ExceptionEnum.NO_NULL_PARAMETER_CONSTRUCTOR);
+        }
+    }
 
     /**
      * 往父类直到查询到指定方法

@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.cq.entity.event.message;
 
+import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.entity.param.base.BaseParam;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class MessageParam {
+public class MappingMessage<T extends BaseParam<? extends BaseDo>> {
 
     /**
      * 是否为群组消息
@@ -37,6 +38,11 @@ public class MessageParam {
      * 匹配关键字
      */
     private String matchKeyword;
+
+    /**
+     * 用户输入参数
+     */
+    private T param;
 
     public Long getRegisterId() {
         if (isGroup) {

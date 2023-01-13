@@ -1,12 +1,13 @@
 package com.dasoops.dasserver.plugin.echo.plugin;
 
 import cn.hutool.core.util.StrUtil;
+import com.dasoops.common.entity.param.base.SimpleParam;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
+import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.plugin.echo.cache.EchoCache;
-import com.dasoops.dasserver.plugin.echo.entity.param.EchoParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -31,7 +32,7 @@ public class EchoPlugin extends CqPlugin {
     private final EchoCache echoCache;
 
     @MessageMapping(prefix = {"echo", "print", "printf"}, type = MessageMappingTypeEnum.ALL)
-    public String echo(EchoParam param, CqMessageEvent messageEvent) {
+    public String echo(MappingMessage<SimpleParam> param, CqMessageEvent messageEvent) {
         //获取移除前缀后的消息
         String message = messageEvent.getMessage();
         String matchKeyword = param.getMatchKeyword();

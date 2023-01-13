@@ -3,18 +3,18 @@ package com.dasoops.dasserver.plugin.loaj.plugin;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.entity.param.base.SimpleParam;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.cq.entity.result.PluginResult;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.plugin.loaj.cache.RollCache;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajConfigHashKeyEnum;
-import com.dasoops.dasserver.plugin.loaj.entity.param.EndRollParam;
-import com.dasoops.dasserver.plugin.loaj.entity.param.RollParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -41,7 +41,7 @@ public class RollPlugin extends CqPlugin {
     private final ConfigCache configCache;
 
     @MessageMapping(prefix = "endRoll", type = MessageMappingTypeEnum.GROUP)
-    public PluginResult endRoll(CqTemplate cqTemplate, EndRollParam param) {
+    public PluginResult endRoll(CqTemplate cqTemplate, MappingMessage<SimpleParam> param) {
         log.debug("(RollPlugin) 进入endRoll点逻辑");
         Long groupId = param.getGroupId();
 
@@ -90,7 +90,7 @@ public class RollPlugin extends CqPlugin {
     final String rollPrefix = "roll";
 
     @MessageMapping(prefix = rollPrefix, type = MessageMappingTypeEnum.GROUP)
-    public String roll(CqTemplate cqTemplate, RollParam param) {
+    public String roll(CqTemplate cqTemplate, MappingMessage<SimpleParam> param) {
         log.debug("(RollPlugin) 进入roll点逻辑");
 
         int randomInt = RandomUtil.randomInt(1, 101);

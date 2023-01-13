@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.webmanager.entity.param;
 import com.dasoops.common.entity.param.base.BaseAddParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
-import com.dasoops.dasserver.cq.entity.event.message.MessageParam;
+import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
  * @Date 2023/01/09
  * @Version 1.0.0
  * @Description: 添加插件param
- * @see MessageParam
+ * @see MappingMessage
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

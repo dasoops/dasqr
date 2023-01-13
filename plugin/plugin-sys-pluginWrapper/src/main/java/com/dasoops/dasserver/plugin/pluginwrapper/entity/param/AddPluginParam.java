@@ -1,7 +1,9 @@
 package com.dasoops.dasserver.plugin.pluginwrapper.entity.param;
 
+import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
-import com.dasoops.dasserver.cq.entity.event.message.MessageParam;
+import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
+import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,11 +14,11 @@ import lombok.EqualsAndHashCode;
  * @Date 2023/01/09
  * @Version 1.0.0
  * @Description: 添加插件param
- * @see MessageParam
+ * @see MappingMessage
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AddPluginParam extends MessageParam {
+public class AddPluginParam extends BaseParam<PluginDo> {
 
     /**
      * 关键字

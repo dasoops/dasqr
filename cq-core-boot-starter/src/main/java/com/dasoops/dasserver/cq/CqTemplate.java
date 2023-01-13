@@ -2,6 +2,8 @@ package com.dasoops.dasserver.cq;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.TypeReference;
+import com.dasoops.common.entity.dbo.base.BaseDo;
+import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.api.IApiRequest;
 import com.dasoops.dasserver.cq.entity.entity.CqGroupAnonymous;
@@ -10,7 +12,7 @@ import com.dasoops.dasserver.cq.entity.enums.ApiEnum;
 import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
-import com.dasoops.dasserver.cq.entity.event.message.MessageParam;
+import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.cq.entity.retdata.*;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
 import lombok.Data;
@@ -76,7 +78,7 @@ public class CqTemplate {
      * @param param   param
      * @return {@link ApiData}<{@link MessageData}>
      */
-    public ApiData<MessageData> sendMsg(MessageParam param, String message) {
+    public ApiData<MessageData> sendMsg(MappingMessage<? extends BaseParam<? extends BaseDo>> param, String message) {
         if (param.getIsGroup()) {
             return sendGroupMsg(param.getGroupId(), message, false);
         }

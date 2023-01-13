@@ -2,6 +2,7 @@ package com.dasoops.common.entity.param.base;
 
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dasoops.common.entity.dbo.base.BaseDo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +17,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseTimePageParam<T> extends BasePageParam implements IBuildWrapper<T> {
+public class BaseTimePageParam<T extends BaseDo> extends BasePageParam<T> implements IBuildWrapper<T> {
 
     /**
      * 开始时间

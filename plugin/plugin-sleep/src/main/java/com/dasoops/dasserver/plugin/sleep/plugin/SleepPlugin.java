@@ -5,6 +5,7 @@ import com.dasoops.common.util.entity.TimeDto;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.cq.utils.CqMessageAssert;
 import com.dasoops.dasserver.plugin.sleep.cache.SleepCache;
 import com.dasoops.dasserver.plugin.sleep.entity.param.SleepParam;
@@ -33,16 +34,16 @@ public class SleepPlugin extends CqPlugin {
     }
 
     @MessageMapping(prefix = {"sleep", "quiet", "打晕", "闭嘴", "shutUp"}, type = MessageMappingTypeEnum.ALL)
-    public String sleep(SleepParam param) {
+    public String sleep(MappingMessage<SleepParam> param) {
         CqMessageAssert.getInstance().allMustNotNull(param);
 
         TimeDto timeDto;
-        String sleepTimeString = param.getSleepTimeString();
+        String sleepTimeString = param.getParam().getSleepTimeString();
         if (null == sleepTimeString || "".equals(sleepTimeString)) {
             timeDto = TimeDto.builder().count(10L).timeUnit(TimeUnit.MINUTES).build();
         } else {
             //分离单位和时间
-            timeDto = TimeUtil.cutTimeUnitAndTimeCount(param.getSleepTimeString());
+            timeDto = TimeUtil.cutTimeUnitAndTimeCount(sleepTimeString);
         }
         sleepCache.sleep(param.getIsGroup(), param.getRegisterId(), timeDto.getCount(), timeDto.getTimeUnit());
 

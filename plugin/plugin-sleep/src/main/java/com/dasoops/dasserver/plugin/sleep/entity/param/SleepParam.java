@@ -1,7 +1,9 @@
 package com.dasoops.dasserver.plugin.sleep.entity.param;
 
+import com.dasoops.common.entity.dbo.base.BaseDo;
+import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
-import com.dasoops.dasserver.cq.entity.event.message.MessageParam;
+import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,11 +14,11 @@ import lombok.EqualsAndHashCode;
  * @Date 2023/01/10
  * @Version 1.0.0
  * @Description: 睡眠param
- * @see MessageParam
+ * @see MappingMessage
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SleepParam extends MessageParam {
+public class SleepParam extends BaseParam<BaseDo> {
 
     /**
      * 睡眠事件

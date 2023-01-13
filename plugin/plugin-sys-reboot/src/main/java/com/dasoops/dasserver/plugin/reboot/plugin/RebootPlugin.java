@@ -1,15 +1,16 @@
 package com.dasoops.dasserver.plugin.reboot.plugin;
 
+import com.dasoops.common.entity.param.base.SimpleParam;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.plugin.reboot.RebootProperties;
 import com.dasoops.dasserver.plugin.reboot.entity.enums.QuietRebootEnum;
 import com.dasoops.dasserver.plugin.reboot.entity.enums.RebootConfigHashKeyEnum;
-import com.dasoops.dasserver.plugin.reboot.entity.param.RebootMessageParam;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,12 +37,14 @@ public class RebootPlugin extends CqPlugin {
     private final RebootProperties rebootProperties;
     private final ConfigCache configCache;
 
+    @SuppressWarnings("all")
     @MessageMapping(prefix = "reboot", type = MessageMappingTypeEnum.ALL)
-    public String reboot(CqTemplate cqTemplate, RebootMessageParam param) {
+    public String reboot(CqTemplate cqTemplate, MappingMessage<SimpleParam> param) {
         QuietRebootEnum quietRebootEnum = configCache.getEnumConfig(RebootConfigHashKeyEnum.QUIET_REBOOT, QuietRebootEnum.class);
         if (quietRebootEnum.equals(QuietRebootEnum.FALSE)) {
             cqTemplate.sendMsg(param, "gogogo");
         }
+        //改start会有问题,同步异步
         new RebootThread(rebootProperties).run();
         if (quietRebootEnum.equals(QuietRebootEnum.FALSE)) {
             return "compile complete,to reboot";
