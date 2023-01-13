@@ -1,7 +1,9 @@
 package com.dasoops.common.util.entity;
 
-import com.dasoops.common.entity.dto.base.BaseDto;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,14 +14,12 @@ import java.util.concurrent.TimeUnit;
  * @Date 2023/01/10
  * @Version 1.0.0
  * @Description: 时间dto
- * @see BaseDto
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TimeDto extends BaseDto {
+public class TimeDto {
 
     /**
      * 数

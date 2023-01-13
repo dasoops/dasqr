@@ -24,9 +24,10 @@
     </properties>
 
     <dependencies>
+
         <dependency>
-            <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>common</artifactId>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
         </dependency>
 
         <dependency>
@@ -36,9 +37,13 @@
         </dependency>
 
         <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.2</version>
         </dependency>
 
         <dependency>

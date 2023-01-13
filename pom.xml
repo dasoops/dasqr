@@ -2,10 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modules>
-        <module>common</module>
         <module>common-boot-starter</module>
         <module>core</module>
-        <module>cq-core-enums</module>
         <module>minio-boot-starter</module>
         <module>ocr-boot-starter</module>
         <module>cq-core-boot-starter</module>
@@ -74,11 +72,6 @@
             </dependency>
 
             <!-- 自定义组件 -->
-            <dependency>
-                <groupId>com.dasoops.dasserver</groupId>
-                <artifactId>cq-core-enums</artifactId>
-                <version>${cq.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>

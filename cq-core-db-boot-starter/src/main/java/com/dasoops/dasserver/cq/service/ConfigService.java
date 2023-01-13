@@ -2,7 +2,7 @@ package com.dasoops.dasserver.cq.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
-import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
+import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 
 import java.util.Optional;
 

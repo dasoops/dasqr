@@ -11,7 +11,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
-import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
+import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 import com.dasoops.dasserver.plugin.webauth.entity.dto.AuthUserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

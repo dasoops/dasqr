@@ -3,7 +3,7 @@ package com.dasoops.dasserver.cq.util;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.dasoops.dasserver.cq.entity.enums.RegisterTypeEnum;
-import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
+import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 import org.springframework.stereotype.Component;
 
 /**

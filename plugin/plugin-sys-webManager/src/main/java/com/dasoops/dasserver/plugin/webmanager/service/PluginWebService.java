@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
-import com.dasoops.dasserver.plugin.webmanager.controller.GetPluginSortVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginSortVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.SortPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.DeletePluginParam;

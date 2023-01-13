@@ -8,7 +8,7 @@ import com.dasoops.common.entity.enums.IRedisHashKeyEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.entity.enums.ConfigKeyEnum;
-import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
+import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;

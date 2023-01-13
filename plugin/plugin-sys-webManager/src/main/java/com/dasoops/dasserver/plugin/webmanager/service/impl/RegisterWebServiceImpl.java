@@ -11,7 +11,7 @@ import com.dasoops.dasserver.cq.entity.enums.RegisterTypeEnum;
 import com.dasoops.dasserver.cq.entity.retdata.FriendData;
 import com.dasoops.dasserver.cq.entity.retdata.GroupData;
 import com.dasoops.dasserver.cq.service.RegisterService;
-import com.dasoops.dasserver.entity.enums.ConfigHashKeyEnum;
+import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 import com.dasoops.dasserver.plugin.webauth.entity.dto.AuthUserDto;
 import com.dasoops.dasserver.plugin.webauth.entity.enums.RegisterExceptionEnum;
 import com.dasoops.dasserver.plugin.webauth.utils.JwtUtil;

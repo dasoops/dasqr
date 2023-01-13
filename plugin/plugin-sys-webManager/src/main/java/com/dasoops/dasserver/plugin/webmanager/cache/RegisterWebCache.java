@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.webmanager.cache;
 import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.util.Convert;
 import com.dasoops.dasserver.cq.cache.RegisterCache;
-import com.dasoops.dasserver.entity.enums.RegisterRedisKeyEnum;
+import com.dasoops.dasserver.cq.entity.enums.RegisterRedisKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;

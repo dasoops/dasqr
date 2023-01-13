@@ -1,11 +1,11 @@
-package com.dasoops.common.entity.other;
+package com.dasoops.common.entity.vo.base;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
  * @Title: MapModel
- * @ClassPath com.dasoops.common.entity.other.MapModel
+ * @ClassPath com.dasoops.common.entity.vo.base.MapModel
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/12/15
  * @Version 1.0.0

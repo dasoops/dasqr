@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.enums;
 
+import com.dasoops.common.entity.enums.ISortColumnEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,7 +14,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum GetPluginPageOrderByColumnEnum {
+public enum GetPluginSortColumnEnum implements ISortColumnEnum {
 
     /**
      * 主键id
@@ -33,5 +34,5 @@ public enum GetPluginPageOrderByColumnEnum {
     ENABLE(3),
     ;
 
-    final Integer param;
+    final Integer integerValue;
 }

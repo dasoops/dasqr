@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.entity.enums;
+package com.dasoops.dasserver.plugin.authwrapper.entity.enums;
 
 import com.dasoops.common.entity.enums.IRedisKeyEnum;
 import lombok.Getter;

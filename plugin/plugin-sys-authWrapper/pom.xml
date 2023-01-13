@@ -25,15 +25,17 @@
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-core</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>cq-core-db-boot-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.dasoops</groupId>
             <artifactId>common-boot-starter</artifactId>
-            <version>1.0.0</version>
         </dependency>
+
     </dependencies>
 
 </project>

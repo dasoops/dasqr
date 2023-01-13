@@ -12,6 +12,7 @@ import com.dasoops.dasserver.plugin.webmanager.entity.param.DeletePluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.EditPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginSortVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginVo;
 import com.dasoops.dasserver.plugin.webmanager.service.PluginWebService;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;

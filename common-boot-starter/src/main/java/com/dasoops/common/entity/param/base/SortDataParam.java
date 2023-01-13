@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class GetSortDataParam extends BaseParam {
+public class SortDataParam extends BaseParam {
 
     /**
      * 排序字段
@@ -47,7 +47,7 @@ public class GetSortDataParam extends BaseParam {
         return enumOptional.get();
     }
 
-    public SortRuleEnum buildColumnEnum() {
+    public SortRuleEnum buildRuleEnum() {
         Optional<SortRuleEnum> enumOptional = Arrays.stream(SortRuleEnum.values()).filter(enumConstant -> enumConstant.getIntegerValue().equals(sortColumn)).findFirst();
         if (enumOptional.isEmpty()) {
             throw new LogicException(ExceptionEnum.UNKNOWN_KEYWORD);

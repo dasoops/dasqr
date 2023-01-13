@@ -2,7 +2,7 @@ package com.dasoops.dasserver.cq.cache;
 
 import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.util.Convert;
-import com.dasoops.dasserver.entity.enums.RegisterRedisKeyEnum;
+import com.dasoops.dasserver.cq.entity.enums.RegisterRedisKeyEnum;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 

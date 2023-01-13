@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.webmanager.controller;
+package com.dasoops.dasserver.plugin.webmanager.entity.vo;
 
 import com.dasoops.common.entity.vo.base.BaseVo;
 import io.swagger.annotations.ApiModel;
@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @Title: PluginSortVo
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.controller.PluginSortVo
+ * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.vo.PluginSortVo
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/12
  * @Version 1.0.0

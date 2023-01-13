@@ -3,11 +3,15 @@ package com.dasoops.dasserver.plugin.reboot.plugin;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.plugin.reboot.RebootProperties;
+import com.dasoops.dasserver.plugin.reboot.entity.enums.QuietRebootEnum;
+import com.dasoops.dasserver.plugin.reboot.entity.enums.RebootConfigHashKeyEnum;
 import com.dasoops.dasserver.plugin.reboot.entity.param.RebootMessageParam;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -26,24 +30,23 @@ import java.io.InputStreamReader;
  */
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class RebootPlugin extends CqPlugin {
 
     private final RebootProperties rebootProperties;
-
-    public RebootPlugin(RebootProperties rebootProperties) {
-//        this.rebootThread = rebootThread;
-        this.rebootProperties = rebootProperties;
-    }
-
-//    public RebootPlugin(RebootThread rebootThread) {
-//        this.rebootThread = rebootThread;
-//    }
+    private final ConfigCache configCache;
 
     @MessageMapping(prefix = "reboot", type = MessageMappingTypeEnum.ALL)
     public String reboot(CqTemplate cqTemplate, RebootMessageParam param) {
-        cqTemplate.sendMsg(param, "gogogo");
+        QuietRebootEnum quietRebootEnum = configCache.getEnumConfig(RebootConfigHashKeyEnum.QUIET_REBOOT, QuietRebootEnum.class);
+        if (quietRebootEnum.equals(QuietRebootEnum.FALSE)) {
+            cqTemplate.sendMsg(param, "gogogo");
+        }
         new RebootThread(rebootProperties).run();
-        return "compile complete,to reboot";
+        if (quietRebootEnum.equals(QuietRebootEnum.FALSE)) {
+            return "compile complete,to reboot";
+        }
+        return null;
     }
 
     @AllArgsConstructor

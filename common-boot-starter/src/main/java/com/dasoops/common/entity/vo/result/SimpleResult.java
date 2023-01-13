@@ -1,6 +1,5 @@
 package com.dasoops.common.entity.vo.result;
 
-import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.entity.enums.IExceptionEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

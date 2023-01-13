@@ -22,10 +22,6 @@
     <dependencies>
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.dasoops.dasserver</groupId>
             <artifactId>minio-boot-starter</artifactId>
         </dependency>
         <dependency>
@@ -37,6 +33,10 @@
             <artifactId>swagger-annotations</artifactId>
             <version>1.6.6</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.dasoops</groupId>
+            <artifactId>common-boot-starter</artifactId>
         </dependency>
     </dependencies>
 

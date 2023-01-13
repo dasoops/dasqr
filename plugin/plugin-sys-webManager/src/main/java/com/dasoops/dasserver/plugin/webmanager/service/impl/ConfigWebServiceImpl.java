@@ -68,15 +68,15 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         Assert.getInstance().allMustNotNull(param, param.getKeyword(), param.getValue(), param.getDescription());
 
         String keyword = param.getKeyword();
-        Long id = param.getRowId();
+        Long rowId = param.getRowId();
 
         //不同id是否有相同关键字
-        Long count = super.lambdaQuery().eq(ConfigDo::getKeyword, keyword).ne(ConfigDo::getRowId, id).count();
+        Long count = super.lambdaQuery().eq(ConfigDo::getKeyword, keyword).ne(ConfigDo::getRowId, rowId).count();
         if (count > 0) {
             throw new LogicException(ConfigExceptionEnum.REPEAT_KEYWORD);
         }
 
-        ConfigDo oldConfigDo = super.lambdaQuery().eq(ConfigDo::getRowId, id).one();
+        ConfigDo oldConfigDo = super.lambdaQuery().eq(ConfigDo::getRowId, rowId).one();
         if (oldConfigDo == null) {
             throw new LogicException(ConfigExceptionEnum.UNDEFINED_ID);
         }
@@ -86,7 +86,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
 
         String value = param.getValue();
         ConfigDo newConfigDo = new ConfigDo();
-        newConfigDo.setRowId(id);
+        newConfigDo.setRowId(rowId);
         newConfigDo.setKeyword(keyword);
         newConfigDo.setValue(value);
         newConfigDo.setDescription(param.getDescription());

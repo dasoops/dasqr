@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.entity.enums;
+package com.dasoops.dasserver.cq.entity.enums;
 
 import com.dasoops.common.entity.enums.IRedisKeyEnum;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import static com.dasoops.common.entity.enums.BaseRedisKeyEnum.SYS_PLUGIN;
 
 /**
  * @Title: PluginRedisKeyEnum
- * @ClassPath com.dasoops.dasserver.entity.enums.PluginRedisKeyEnum
+ * @ClassPath com.dasoops.dasserver.cq.entity.enums.PluginRedisKeyEnum
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/12/27
  * @Version 1.0.0

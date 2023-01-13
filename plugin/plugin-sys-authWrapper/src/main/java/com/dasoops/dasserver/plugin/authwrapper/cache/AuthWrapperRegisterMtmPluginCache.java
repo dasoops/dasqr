@@ -5,7 +5,7 @@ import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Convert;
 import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
-import com.dasoops.dasserver.entity.enums.AuthRedisKeyAuthListShamEnum;
+import com.dasoops.dasserver.plugin.authwrapper.entity.enums.AuthRedisKeyAuthListShamEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;

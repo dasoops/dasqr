@@ -92,7 +92,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         try {
             filename = minioTemplate.saveImage(url);
         } catch (Exception e) {
-            throw new CqLogicException(ImageExceptionEnum.IMAGE_SAVE_ERROR);
+            throw new CqLogicException(ImageExceptionEnum.IMAGE_SAVE_ERROR, e);
         }
 
 

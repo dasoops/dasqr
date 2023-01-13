@@ -1,6 +1,5 @@
 package com.dasoops.minio;
 
-import com.dasoops.common.task.BaseInitTask;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +12,10 @@ import javax.annotation.PostConstruct;
  * @Date 2023/01/09
  * @Version 1.0.0
  * @Description: minio初始化任务
- * @see BaseInitTask
  */
 @Component
 @RequiredArgsConstructor
-public class MinioInitTask extends BaseInitTask {
+public class MinioInitTask{
 
     private final MinioProperties minioProperties;
 
