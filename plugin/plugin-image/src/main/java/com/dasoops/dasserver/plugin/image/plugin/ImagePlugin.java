@@ -66,9 +66,9 @@ public class ImagePlugin extends CqPlugin {
      */
     private PassObj onMessage(CqTemplate cqTemplate, CqMessageEvent cqMessageEvent) {
         String message = cqMessageEvent.getMessage();
-        final String getImagePrefix = "取图";
+        final String getImagePrefix = "取图 ";
         final String getImageSuffix = ".jpg";
-        final String saveImagePrefix = "存图";
+        final String saveImagePrefix = "存图 ";
 
         if (StrUtil.startWithIgnoreCase(message, getImagePrefix)) {
             //取图逻辑
