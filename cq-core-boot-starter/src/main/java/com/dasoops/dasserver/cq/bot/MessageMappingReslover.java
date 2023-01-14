@@ -370,6 +370,9 @@ public class MessageMappingReslover {
             if (annotation.ignoreDbc()) {
                 prefix = Convert.toDBC(prefix);
             }
+            if (message.equals(prefix)) {
+                return prefix;
+            }
             //匹配通过直接return
             if (StrUtil.startWith(message, prefix + " ", annotation.ignoreCase())) {
                 return prefix;
