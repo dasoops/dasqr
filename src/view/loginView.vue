@@ -31,7 +31,7 @@
 <script lang="ts">
 import {defineComponent, reactive, ref, toRefs} from "vue";
 import {useRouter} from "vue-router";
-import {LoginData, LoginRes} from "@/entity/loginEntity";
+import {LoginData, LoginRes} from "@/entity/param/RegisterParam";
 import {FormInstance, FormRules} from "element-plus";
 import {login} from "@/request/RegisterRequest";
 import {getStore} from "@/conf/store";

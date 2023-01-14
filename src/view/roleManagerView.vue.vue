@@ -1,13 +1,31 @@
 <template>
   <div style="height: 5%">
-    <el-form :model="getPluginParam" class="searchForm" @keydown.enter="loadData">
+    <el-form :model="getImageInfoPageParam" class="searchForm" @keydown.enter="loadData">
       <el-row :gutter="35">
-        <el-col :offset="1" :span="10">
-          <el-form-item label="name || description like" class="text-color">
-            <el-input v-model="getPluginParam.keyword" placeholder="% enter %" class="input-line" clearable/>
+        <el-col :offset="1" :span="6">
+          <el-form-item label="keyword like" class="text-color">
+            <el-input v-model="getImageInfoPageParam.keyword" placeholder="% enter %" class="input-line" clearable/>
           </el-form-item>
         </el-col>
-        <el-col :span="10">
+        <el-col :span="6">
+          <el-form-item label="createUser">
+            <el-autocomplete
+                v-model="fantastyUserKeyword"
+                :fetch-suggestions="queryFantastyUser"
+                placeholder="% enter %"
+                @select="handleSelectFantastyUser"
+                @change="handleSelectFantastyUser"
+                class="input-line"
+                value-key="author"
+                :hide-loading="true"
+                clearable
+                :fit-input-width="true"
+                width="100%"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+
         </el-col>
         <el-col :span="3">
           <el-form-item>
@@ -24,7 +42,7 @@
   <div style="height: 88%">
     <el-row class="tableRow" style="height: 100%">
       <el-table
-          v-loading="isLoading"
+          v-loading="loading"
           element-loading-background="rgba(43, 43, 43, 0.6)"
           :data="tableData"
           height="100%"
@@ -34,7 +52,7 @@
           stripe
       >
         <el-table-column
-            prop="rowId"
+            prop="id"
             label="id"
             width="50"
             header-align="center"
@@ -77,6 +95,17 @@
                 :disabled="scope.row.canEdit === 0"
                 :icon="Edit"
             />
+            <el-popover placement="left" width="auto" trigger="hover" effect="dark">
+              <template #reference>
+                <el-button
+                    color="#ffffff"
+                    size="small"
+                    plain
+                    :icon="View"
+                />
+              </template>
+              <el-image style="max-height: 600px;max-width: 600px" :src="getViewPath(scope.row)" fit="scale-down"/>
+            </el-popover>
           </template>
         </el-table-column>
       </el-table>
@@ -86,8 +115,8 @@
   <div style="height: 5%">
     <el-row justify="end" class="pageRow">
       <el-pagination
-          v-model:current-page="getPluginParam.current"
-          v-model:page-size="getPluginParam.size"
+          v-model:current-page="getImageInfoPageParam.current"
+          v-model:page-size="getImageInfoPageParam.size"
           :page-sizes="[15, 30, 50, 100]"
           small
           background
@@ -107,10 +136,24 @@
         align-center
         draggable
     >
-      <el-form :model="editPluginParam" class="searchForm" label-position="top" @keydown.enter="handleEdit">
+      <el-form :model="editImageInfoParam" class="searchForm" label-position="top" @keydown.enter="handleEdit">
         <el-form-item label="keyword" class="text-color">
-          <el-input v-model="editPluginParam.keyword" placeholder="" class="input-line" clearable/>
+          <el-input v-model="editImageInfoParam.keyword" placeholder="" class="input-line" clearable/>
         </el-form-item>
+        <el-upload
+            :drag="true"
+            list-type="picture"
+            class="avatar-uploader"
+            accept=".jpeg,.png,.jpg,.bmp,.gif"
+            :action="uploadImageUrl"
+            :method="uploadImageMethod"
+            :headers="requestHeaders"
+            :show-file-list="false"
+            :on-success="handleEditUploadSuccess"
+            :before-upload="checkFileType"
+        >
+          <el-image style="max-height: 100%;max-width: 100%" :src="editImageShowFilePath" fit="scale-down"/>
+        </el-upload>
       </el-form>
       <template #footer>
           <span class="dialog-footer">
@@ -174,119 +217,193 @@
 
 <script lang="ts">
 import {defineComponent, reactive, toRefs} from "vue";
-import {Check, Close, Delete, Download, Edit, Plus, Search, UploadFilled, View} from '@element-plus/icons-vue'
-import {ElMessageBox} from "element-plus";
-import {ImageData} from "@/entity/param/ImageParam";
-import {GetPluginVo} from "@/entity/vo/PluginVo";
-import {AddPluginParam, EditPluginParam, GetPluginPageSortParam} from "@/entity/param/PluginParam";
+import {UploadFilled, Check, Close, Delete, Download, Edit, Plus, Search, View} from '@element-plus/icons-vue'
+import {ElMessage, ElMessageBox} from "element-plus";
 import {
-  addPlugin,
-  deletePlugin,
-  editPlugin,
-  exportAllPlugin,
-  getNextPluginId,
-  getPluginPage
-} from "@/request/PluginRequest";
-import {simpleExport} from "@/util/DownloadUtil";
-import {DeleteParam} from "@/entity/param/BaseParam";
+  AddImageParam, DeleteImageParam,
+  EditImageInfoParam, FantastyUserRes,
+  GetFantastyUserParam,
+  GetImageInfoPageParam,
+  ImageData, UploadImageRes
+} from "@/entity/param/ImageParam";
+import {
+  addImage,
+  deleteImage,
+  editImageInfo,
+  exportAllImageInfo,
+  getFantasyUser,
+  getImageInfoPage, getNextImageId,
+  uploadImageMethod,
+  uploadImageUrl
+} from "@/request/ImageRequest";
+import {UploadRawFile} from "element-plus/lib/components";
+import {AxiosHeaders} from "axios";
+import {Result} from "@/entity/param/BaseParam";
+import {getFileNameForDisposition} from "@/util/StringUtil";
 
 export default defineComponent({
-  name: "pluginManagerView",
+  name: "roleManagerView",
   setup() {
-    let tableData: GetPluginVo[] = reactive([]);
-    const getPluginParam: GetPluginPageSortParam = reactive({
+    let tableData: Array<ImageData> = reactive([]);
+    const getImageInfoPageParam: GetImageInfoPageParam = reactive({
       size: 15,
-      current: 1,
-
+      current: 1
     });
-    const editPluginParam: EditPluginParam = reactive({
-      classPath: 'string',
-      description: 'string',
-      enable: 0,
-      level: 0,
-      name: 'string',
+    const editImageInfoParam: EditImageInfoParam = reactive({
       rowId: 0,
+      fileName: '',
+      keyword: '',
     });
-    const addPluginParam: AddPluginParam = reactive({
-      classPath: 'string',
-      description: 'string',
-      name: 'string',
-      enable: 0,
-      level: 0,
+    const addImageParam: AddImageParam = reactive({
+      keyword: '',
+      fileName: ''
     })
     let total = 0;
     let showEditDialog = false;
     let showAddDialog = false;
-    let isLoading = false;
+    let loading = false;
     let addTitle = '';
+    let fantastyUserList: string[] = [];
+    let viewImagePath = '';
+    let fantastyUserKeyword = '';
+    let editImageShowFilePath = '';
+    let addImageShowFilePath = '';
+    const temp = 'white';
+    const requestHeaders = new AxiosHeaders({"Authorization": localStorage.getItem("token")})
 
     const loadData = async function () {
-      dataMap.isLoading = true;
-      getPluginPage(getPluginParam).then(res => {
-        let data = res.data;
-        console.log(res);
-        dataMap.tableData = reactive(data);
-        dataMap.total = total;
-        dataMap.isLoading = false;
+      dataMap.loading = true;
+      getImageInfoPage(getImageInfoPageParam).then(res => {
+        dataMap.tableData = reactive(res.data);
+        dataMap.tableData.forEach(rowData => {
+          rowData.author = "(" + rowData.authorId + ") " + rowData.authorName;
+        })
+        dataMap.total = res.total;
+        dataMap.loading = false;
       })
     }
     const handleEdit = function () {
-      editPlugin(dataMap.editPluginParam).then(() => {
+      editImageInfo(dataMap.editImageInfoParam).then(() => {
         dataMap.showEditDialog = false;
         loadData();
       })
     }
     const handleAdd = function () {
-      addPlugin(dataMap.addPluginParam).then(() => {
+      addImage(dataMap.addImageParam).then(() => {
         dataMap.showAddDialog = false;
         loadData();
       })
     }
+    const handleEditUploadSuccess = function (res: Result<UploadImageRes>) {
+      let data = res.data;
+      dataMap.editImageShowFilePath = data.filePath;
+      dataMap.editImageInfoParam.fileName = data.fileName;
+    }
+    const handleAddUploadSuccess = function (res: Result<UploadImageRes>) {
+      let data = res.data;
+      dataMap.addImageShowFilePath = data.filePath;
+      dataMap.addImageParam.fileName = data.fileName;
+    }
     const handleCurrentChange = function (current: number) {
-      dataMap.getPluginParam.current = current;
+      dataMap.getImageInfoPageParam.current = current;
       loadData();
     }
     const handleSizeChange = function (size: number) {
-      dataMap.getPluginParam.size = size;
+      dataMap.getImageInfoPageParam.size = size;
       loadData();
     }
-    const handleExport = function () {
-      exportAllPlugin().then(res => {
-        simpleExport(res);
-      })
+    const handleSelectFantastyUser = function (res: FantastyUserRes) {
+      dataMap.getImageInfoPageParam.createUser = res.registerId;
     }
-    const toEdit = function (rowData: GetPluginVo) {
-      dataMap.editPluginParam.rowId = rowData.rowId;
-      dataMap.editPluginParam.classPath = rowData.classPath;
-      dataMap.editPluginParam.description = rowData.description;
-      dataMap.editPluginParam.enable = rowData.enable;
-      dataMap.editPluginParam.level = rowData.level;
-      dataMap.editPluginParam.name = rowData.name;
+    const handleExport = function () {
+      exportAllImageInfo().then(res => {
+        let data = res.data;
+        if (!data) {
+          return
+        }
+
+        let url = window.URL.createObjectURL(new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}))
+        let a = document.createElement('a')
+        a.style.display = 'none'
+        a.href = url
+
+        //文件名
+        let fileName = getFileNameForDisposition(res.headers['content-disposition']);
+        a.setAttribute('download', fileName)
+
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(a.href)
+        document.body.removeChild(a)
+      })
+
+    }
+    const queryFantastyUser = async function () {
+      const matchRexStr = /\([1-9][0-9]{4,}\)[\w]*\s/g;
+      let userEnterKeyword = dataMap.fantastyUserKeyword;
+      if (matchRexStr.test(userEnterKeyword)) {
+        await getFantasyUser(new class implements GetFantastyUserParam {
+          keyword = dataMap.getImageInfoPageParam.createUser ? dataMap.getImageInfoPageParam.createUser.toString() : "";
+        }).then(function (res) {
+          for (let fantastyUserListElement of res.data.fantastyUserList) {
+            fantastyUserListElement.author = "(" + fantastyUserListElement.registerId + ") " + fantastyUserListElement.name;
+          }
+          dataMap.fantastyUserList = res.data.fantastyUserList;
+        })
+      } else {
+        await getFantasyUser(new class implements GetFantastyUserParam {
+          keyword = dataMap.fantastyUserKeyword;
+        }).then(function (res) {
+          for (let fantastyUserListElement of res.data.fantastyUserList) {
+            fantastyUserListElement.author = "(" + fantastyUserListElement.registerId + ") " + fantastyUserListElement.name;
+          }
+          dataMap.fantastyUserList = res.data.fantastyUserList;
+        })
+      }
+      return dataMap.fantastyUserList;
+    }
+    const toEdit = function (rowData: ImageData) {
+      dataMap.editImageInfoParam.rowId = rowData.id;
+      dataMap.editImageInfoParam.keyword = rowData.keyword;
+      dataMap.editImageShowFilePath = rowData.filePath;
+      dataMap.editImageInfoParam.fileName = rowData.fileName;
       dataMap.showEditDialog = true;
     }
     const toAdd = function () {
-      getNextPluginId().then(res => {
-        dataMap.addTitle = 'Add ( ' + res.data.data.rowId + ' )';
+      getNextImageId().then(res => {
+        dataMap.addTitle = 'Add ( ' + res.data.rowId + ' )';
       })
-      dataMap.addPluginParam.classPath = '';
-      dataMap.addPluginParam.description = '';
-      dataMap.addPluginParam.enable = 0;
-      dataMap.addPluginParam.level = 9;
-      dataMap.addPluginParam.name = '';
+      dataMap.addImageParam.keyword = '';
+      dataMap.addImageParam.fileName = '';
+      dataMap.addImageShowFilePath = '';
       dataMap.showAddDialog = true;
     }
     const getViewPath = function (rowData: ImageData) {
       return rowData.filePath;
     }
     const getEditTitle = function () {
-      return 'Edit (' + dataMap.editPluginParam.rowId + ": " + dataMap.editPluginParam.name + ")";
+      return 'Edit ( ' + dataMap.editImageInfoParam.rowId + ' )';
     }
     const init = function () {
       loadData();
     }
-    const toDelete = function (rowData: GetPluginVo) {
+    const checkFileType = function (file: UploadRawFile) {
+      const fileName = file.name;
+      const fileType = fileName.substring(fileName.lastIndexOf('.'));
+      if (
+          fileType != '.jpg' &&
+          fileType != '.png' &&
+          fileType != '.jpeg' &&
+          fileType != '.bmp' &&
+          fileType != '.gif'
+      ) {
+        ElMessage.error('不是,jpeg,.png,.jpg,.bmp,.gif文件,请上传正确的图片类型');
+        return false;
+      }
+    }
+    const toDelete = function (rowData: ImageData) {
       ElMessageBox.confirm(
-          'You could lose him for long time. Continue?',
+          'You could lose him for dasDrag.vue long time. Continue?',
           'Warning',
           {
             confirmButtonText: 'OK',
@@ -294,8 +411,8 @@ export default defineComponent({
             type: 'warning',
           }
       ).then(function () {
-        deletePlugin(new class implements DeleteParam {
-          rowId = rowData.rowId;
+        deleteImage(new class implements DeleteImageParam {
+          id = rowData.id;
         }).then(() => {
           loadData();
         })
@@ -303,20 +420,34 @@ export default defineComponent({
     }
     const dataMap = reactive({
       tableData,
-      getPluginParam,
+      getImageInfoPageParam,
       total,
       showEditDialog,
       showAddDialog,
-      isLoading,
-      editPluginParam,
-      addPluginParam,
+      loading,
+      temp,
+      addImageShowFilePath,
+      fantastyUserKeyword,
+      fantastyUserList,
+      editImageInfoParam,
+      editImageShowFilePath,
+      addImageParam,
+      viewImagePath,
       addTitle,
+      uploadImageUrl,
+      uploadImageMethod,
+      requestHeaders,
     })
     const functionMap = {
       handleCurrentChange,
       handleSizeChange,
+      queryFantastyUser,
       getViewPath,
       handleExport,
+      handleEditUploadSuccess,
+      handleAddUploadSuccess,
+      handleSelectFantastyUser,
+      checkFileType,
       toEdit,
       getEditTitle,
       loadData,
@@ -531,7 +662,7 @@ export default defineComponent({
     border: 1px solid greenyellow;
   }
 
-  .el-upload-dragger:hover {
+  .el-upload-dragger:hover{
     border-color: yellowgreen;
   }
 }

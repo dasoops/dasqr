@@ -1,10 +1,10 @@
 /**
  * 配置数据
  */
-import {BaseParam, PageParam} from "@/entity/BaseEntity";
+import {BaseDeleteAndEditParam, BaseParam, PageParam} from "@/entity/param/BaseParam";
 
 export interface ConfigData {
-    id: number;
+    rowId: number;
     keyword: string;
     value: string;
     description: string;
@@ -21,9 +21,8 @@ export interface GetConfigPageParam extends PageParam {
 /**
  * 编辑配置参数
  */
-export interface EditConfigParam extends BaseParam {
+export interface EditConfigParam extends BaseDeleteAndEditParam {
     description?: string;
-    id: number;
     keyword?: string;
     value?: string;
 }

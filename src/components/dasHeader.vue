@@ -16,7 +16,7 @@
       </el-col>
       <el-col :span="4">
         <nav id="loginNav">
-          <a v-if="$store.state.isLogin" href="javascript:void(0)" class="router-link-active router-link-exact-active"
+          <a v-if="$store.state.token" href="javascript:void(0)" class="router-link-active router-link-exact-active"
              @click="logout"> logOut</a>
           <router-link v-else to='/login'>Login</router-link>
         </nav>
@@ -26,28 +26,24 @@
 </template>
 
 <script>
-import {defineComponent, reactive, toRefs} from "vue";
+import {defineComponent} from "vue";
 import {useRouter} from "vue-router";
-import {useStore} from "@/conf/store";
+import {getStore} from "@/conf/store";
 
 export default defineComponent({
-  name: 'myHeader',
+  name: 'dasHeader',
   setup() {
     const router = useRouter();
-    let store = useStore();
-
-    const resObj = reactive({
-      isLogin: false,
-      token: ''
-    })
+    let store = getStore();
 
     const logout = function () {
       localStorage.removeItem("token");
       store.commit("refresh");
-      router.push("/login");
-    }
 
-    return {...toRefs(resObj), logout};
+      router.push("/login");
+    };
+
+    return {logout};
   }
 })
 </script>

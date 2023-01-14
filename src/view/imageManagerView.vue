@@ -52,7 +52,7 @@
           stripe
       >
         <el-table-column
-            prop="id"
+            prop="rowId"
             label="id"
             width="50"
             header-align="center"
@@ -225,21 +225,21 @@ import {
   GetFantastyUserParam,
   GetImageInfoPageParam,
   ImageData, UploadImageRes
-} from "@/entity/ImageEntity";
+} from "@/entity/param/ImageParam";
 import {
   addImage,
   deleteImage,
   editImageInfo,
   exportAllImageInfo,
   getFantasyUser,
-  getImageInfoPage, getNextId,
+  getImageInfoPage, getNextImageId,
   uploadImageMethod,
   uploadImageUrl
 } from "@/request/ImageRequest";
 import {UploadRawFile} from "element-plus/lib/components";
 import {AxiosHeaders} from "axios";
-import {Result} from "@/entity/BaseEntity";
 import {getFileNameForDisposition} from "@/util/StringUtil";
+import {Result} from "@/entity/result/BaseResult";
 
 export default defineComponent({
   name: "imageManagerView",
@@ -250,7 +250,7 @@ export default defineComponent({
       current: 1
     });
     const editImageInfoParam: EditImageInfoParam = reactive({
-      id: 0,
+      rowId: 0,
       fileName: '',
       keyword: '',
     });
@@ -268,7 +268,6 @@ export default defineComponent({
     let fantastyUserKeyword = '';
     let editImageShowFilePath = '';
     let addImageShowFilePath = '';
-    const temp = 'white';
     const requestHeaders = new AxiosHeaders({"Authorization": localStorage.getItem("token")})
 
     const loadData = async function () {
@@ -363,15 +362,15 @@ export default defineComponent({
       return dataMap.fantastyUserList;
     }
     const toEdit = function (rowData: ImageData) {
-      dataMap.editImageInfoParam.id = rowData.id;
+      dataMap.editImageInfoParam.rowId = rowData.rowId;
       dataMap.editImageInfoParam.keyword = rowData.keyword;
       dataMap.editImageShowFilePath = rowData.filePath;
       dataMap.editImageInfoParam.fileName = rowData.fileName;
       dataMap.showEditDialog = true;
     }
     const toAdd = function () {
-      getNextId().then(res => {
-        dataMap.addTitle = 'Add ( ' + res.data.id + ' )';
+      getNextImageId().then(res => {
+        dataMap.addTitle = 'Add ( ' + res.data.rowId + ' )';
       })
       dataMap.addImageParam.keyword = '';
       dataMap.addImageParam.fileName = '';
@@ -382,7 +381,7 @@ export default defineComponent({
       return rowData.filePath;
     }
     const getEditTitle = function () {
-      return 'Edit ( ' + dataMap.editImageInfoParam.id + ' )';
+      return "Edit (" + dataMap.editImageInfoParam.rowId + ":" + dataMap.editImageInfoParam.keyword + ")";
     }
     const init = function () {
       loadData();
@@ -403,7 +402,7 @@ export default defineComponent({
     }
     const toDelete = function (rowData: ImageData) {
       ElMessageBox.confirm(
-          'You could lose him for a long time. Continue?',
+          'You could lose him for dasDrag.vue long time. Continue?',
           'Warning',
           {
             confirmButtonText: 'OK',
@@ -412,7 +411,7 @@ export default defineComponent({
           }
       ).then(function () {
         deleteImage(new class implements DeleteImageParam {
-          id = rowData.id;
+          id = rowData.rowId;
         }).then(() => {
           loadData();
         })
@@ -425,7 +424,6 @@ export default defineComponent({
       showEditDialog,
       showAddDialog,
       loading,
-      temp,
       addImageShowFilePath,
       fantastyUserKeyword,
       fantastyUserList,

@@ -40,7 +40,7 @@
           stripe
       >
         <el-table-column
-            prop="id"
+            prop="rowId"
             label="id"
             width="50"
             header-align="center"
@@ -184,7 +184,7 @@ import {
   DeleteConfigParam,
   EditConfigParam,
   GetConfigPageParam
-} from "@/entity/configEntity";
+} from "@/entity/param/ConfigParam";
 import {Check, Close, Delete, Download, Edit, Plus, Search} from '@element-plus/icons-vue'
 import {
   addConfig,
@@ -208,7 +208,7 @@ export default defineComponent({
       current: 1
     });
     const editConfigParam: EditConfigParam = reactive({
-      id: 0,
+      rowId: 0,
       keyword: '',
       value: '',
       description: ''
@@ -254,7 +254,7 @@ export default defineComponent({
       loadData();
     }
     const toEdit = function (rowData: ConfigData) {
-      dataMap.editConfigParam.id = rowData.id;
+      dataMap.editConfigParam.rowId = rowData.rowId;
       dataMap.editConfigParam.keyword = rowData.keyword;
       dataMap.editConfigParam.value = rowData.value;
       dataMap.editConfigParam.description = rowData.description;
@@ -274,14 +274,14 @@ export default defineComponent({
       })
     }
     const getEditTitle = function () {
-      return 'Edit ( ' + dataMap.editConfigParam.id + ' )';
+      return "Edit (" + dataMap.editConfigParam.rowId + ":" + dataMap.editConfigParam.keyword + ")";
     }
     const init = function () {
       loadData();
     }
     const toDelete = function (rowData: ConfigData) {
       ElMessageBox.confirm(
-          'You could lose him for a long time. Continue?',
+          'You could lose him for dasDrag.vue long time. Continue?',
           'Warning',
           {
             confirmButtonText: 'OK',
@@ -290,7 +290,7 @@ export default defineComponent({
           }
       ).then(function () {
         deleteConfig(new class implements DeleteConfigParam {
-          id = rowData.id
+          id = rowData.rowId
         }).then(() => {
           loadData();
         })

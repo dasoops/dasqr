@@ -1,5 +1,7 @@
-import axiosClient from "@/conf/axiosClient";
-import {LoginParam} from "@/entity/loginEntity";
+import {RegisterParam} from "@/entity/param/RegisterParam";
+import {getInstance} from "@/conf/axiosClient";
+
+const axiosClient = getInstance("register");
 
 /**
  * 登录
@@ -8,7 +10,7 @@ import {LoginParam} from "@/entity/loginEntity";
  * @param {string} param.username 用户名
  * @returns
  */
-export const login = function (param: LoginParam) {
+export const login = function (param: RegisterParam) {
     return axiosClient({
         url: "/register/login",
         method: "POST",

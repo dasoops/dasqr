@@ -1,26 +1,4 @@
-/**
- * Result基类
- */
-export interface BaseResult<T> {
-    code: number;
-    data: T;
-    msg: string;
-}
 
-/**
- * Result
- */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface Result<T> extends BaseResult<T> {
-
-}
-
-/**
- * 分页Result
- */
-export interface PageResult<T> extends Result<T> {
-    total: number;
-}
 
 /**
  * Param基类
@@ -29,6 +7,26 @@ export interface PageResult<T> extends Result<T> {
 export interface BaseParam {
 
 }
+
+/**
+ * 排序param
+ */
+export interface SortParam {
+    sortColumn: number;
+    sortRult: number;
+}
+
+/**
+ * 编辑和删除Param基类
+ */
+export interface BaseDeleteAndEditParam extends BaseParam {
+    rowId: number;
+}
+
+/**
+ * 编辑和删除Param基类
+ */
+export type DeleteParam = BaseDeleteAndEditParam
 
 /**
  * 分页Param
@@ -50,4 +48,5 @@ export interface TimeParam extends BaseParam {
  * 分页时间Param
  */
 export interface TimePageParam extends PageParam, TimeParam {
+
 }

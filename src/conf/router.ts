@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
             title: 'config',
         },
         // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
+        // this generates dasDrag.vue separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "configManager" */ '../view/configManagerView.vue')
     },
@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
             title: 'register',
         },
         // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
+        // this generates dasDrag.vue separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "registerManager" */ '../view/registerManagerView.vue')
     },
@@ -37,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
             title: '',
         },
         // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
+        // this generates dasDrag.vue separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "pluginManager" */ '../view/pluginManagerView.vue')
     },
@@ -48,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
             title: 'role',
         },
         // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
+        // this generates dasDrag.vue separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "roleManager" */ '../view/roleManagerView.vue')
     },
@@ -59,7 +59,7 @@ const routes: Array<RouteRecordRaw> = [
             title: 'image',
         },
         // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
+        // this generates dasDrag.vue separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "imageManager" */ '../view/imageManagerView.vue')
     },
@@ -70,7 +70,7 @@ const routes: Array<RouteRecordRaw> = [
             title: 'login',
         },
         // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
+        // this generates dasDrag.vue separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "loginNav" */ '../view/loginView.vue')
     }

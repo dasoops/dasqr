@@ -1,5 +1,7 @@
-import {AddConfigParam, DeleteConfigParam, EditConfigParam, GetConfigPageParam} from "@/entity/configEntity";
-import axiosClient from "@/conf/axiosClient";
+import {AddConfigParam, DeleteConfigParam, EditConfigParam, GetConfigPageParam} from "@/entity/param/ConfigParam";
+import {getInstance} from "@/conf/axiosClient";
+
+const axiosClient = getInstance("config");
 
 /**
  * 获取分页配置信息
@@ -11,9 +13,9 @@ import axiosClient from "@/conf/axiosClient";
  */
 export const getConfigPage = function (param: GetConfigPageParam) {
     return axiosClient({
-        url: "/config/getConfigPage",
+        url: "/getConfigPage",
         method: "GET",
-        params: param
+        data: param
     })
 }
 
@@ -28,7 +30,7 @@ export const getConfigPage = function (param: GetConfigPageParam) {
  */
 export const editConfig = function (param: EditConfigParam) {
     return axiosClient({
-        url: "/config/editConfig",
+        url: "/editConfig",
         method: "POST",
         data: param
     });
@@ -40,7 +42,7 @@ export const editConfig = function (param: EditConfigParam) {
  */
 export const getNextConfigId = function () {
     return axiosClient({
-        url: "/config/getNextId",
+        url: "/getNextId",
         method: "GET"
     });
 }
@@ -56,7 +58,7 @@ export const getNextConfigId = function () {
  */
 export const addConfig = function (param: AddConfigParam) {
     return axiosClient({
-        url: "/config/addConfig",
+        url: "/addConfig",
         method: "POST",
         data: param
     });
@@ -70,7 +72,7 @@ export const addConfig = function (param: AddConfigParam) {
  */
 export const deleteConfig = function (param: DeleteConfigParam) {
     return axiosClient({
-        url: "/config/deleteConfig",
+        url: "/deleteConfig",
         method: "POST",
         data: param
     });
@@ -82,7 +84,7 @@ export const deleteConfig = function (param: DeleteConfigParam) {
  */
 export const exportAllConfig = function () {
     return axiosClient({
-        url: "/config/exportAllConfig",
+        url: "/exportAllConfig",
         method: "GET",
         responseType: "blob"
     })

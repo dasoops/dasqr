@@ -2,7 +2,7 @@
   <das-header></das-header>
   <el-container>
     <el-main>
-      <router-view/>
+      <router-view v-wechat-title='$route.meta.title'/>
     </el-main>
   </el-container>
 </template>

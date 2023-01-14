@@ -1,12 +1,14 @@
-import axiosClient from "@/conf/axiosClient";
 import {
     AddImageParam,
     DeleteImageParam,
     EditImageInfoParam, GetFantastyUserParam,
     GetFantasyKeywordParam,
     GetImageInfoPageParam
-} from "@/entity/ImageEntity";
+} from "@/entity/param/ImageParam";
 import {getBaseUrl} from "@/request/initRequest";
+import {getInstance} from "@/conf/axiosClient";
+
+const axiosClient = getInstance("image");
 
 /**
  * 获取分页配置信息
@@ -14,9 +16,9 @@ import {getBaseUrl} from "@/request/initRequest";
  */
 export const getImagePage = function (param: GetImageInfoPageParam) {
     return axiosClient({
-        url: "/config/getConfigPage",
+        url: "/getImagePage",
         method: "GET",
-        params: param
+        data: param
     })
 }
 
@@ -30,7 +32,7 @@ export const getImagePage = function (param: GetImageInfoPageParam) {
  */
 export const editImageInfo = function (param: EditImageInfoParam) {
     return axiosClient({
-        url: "/image/editImageInfo",
+        url: "/editImageInfo",
         method: "POST",
         data: param
     })
@@ -45,7 +47,7 @@ export const editImageInfo = function (param: EditImageInfoParam) {
  */
 export const addImage = function (param: AddImageParam) {
     return axiosClient({
-        url: "/image/addImage",
+        url: "/addImage",
         method: "POST",
         data: param
     })
@@ -59,7 +61,7 @@ export const addImage = function (param: AddImageParam) {
  */
 export const deleteImage = function (param: DeleteImageParam) {
     return axiosClient({
-        url: "/image/deleteImage",
+        url: "/deleteImage",
         method: "POST",
         data: param
     })
@@ -71,7 +73,7 @@ export const deleteImage = function (param: DeleteImageParam) {
  */
 export const exportAllImageInfo = function () {
     return axiosClient({
-        url: "/image/exportAllImageInfo",
+        url: "/exportAllImageInfo",
         method: "GET",
         responseType: "blob"
     })
@@ -84,9 +86,9 @@ export const exportAllImageInfo = function () {
  */
 export const getFantastyKeyword = function (param: GetFantasyKeywordParam) {
     return axiosClient({
-        url: "/image/getFantastyKeyword",
+        url: "/getFantastyKeyword",
         method: "GET",
-        params: param
+        data: param
     })
 }
 
@@ -97,9 +99,9 @@ export const getFantastyKeyword = function (param: GetFantasyKeywordParam) {
  */
 export const getFantasyUser = function (param: GetFantastyUserParam) {
     return axiosClient({
-        url: "/image/getFantastyUser",
+        url: "/getFantastyUser",
         method: "GET",
-        params: param
+        data: param
     })
 }
 
@@ -116,9 +118,9 @@ export const getFantasyUser = function (param: GetFantastyUserParam) {
  */
 export const getImageInfoPage = function (param: GetImageInfoPageParam) {
     return axiosClient({
-        url: "/image/getImageInfoPage",
+        url: "/getImageInfoPage",
         method: "GET",
-        params: param
+        data: param
     })
 }
 
@@ -126,9 +128,9 @@ export const getImageInfoPage = function (param: GetImageInfoPageParam) {
  * 获取下一个自增主键id
  * @returns
  */
-export const getNextId = function () {
+export const getNextImageId = function () {
     return axiosClient({
-        url: "/image/getNextId",
+        url: "/getNextId",
         method: "GET"
     })
 }

@@ -13,7 +13,7 @@ export class LoginData {
 /**
  * 登录请求参数
  */
-export interface LoginParam {
+export interface RegisterParam {
     username: string,
     password: string,
 }

@@ -1,11 +1,10 @@
 /**
  * 编辑图片信息Param
  */
-import {BaseParam, PageParam} from "@/entity/BaseEntity";
+import {BaseDeleteAndEditParam, BaseParam, PageParam} from "@/entity/param/BaseParam";
 
-export interface EditImageInfoParam extends BaseParam {
+export interface EditImageInfoParam extends BaseDeleteAndEditParam {
     fileName: string;
-    id: number;
     keyword: string;
 }
 
@@ -50,7 +49,7 @@ export interface GetImageInfoPageParam extends PageParam {
  * 图片表格信息
  */
 export interface ImageData {
-    id: number;
+    rowId: number;
     keyword: string;
     filePath: string;
     groupId: number;
