@@ -68,16 +68,17 @@ public class MessageMappingReslover {
                 //为0,不需要注入param,直接开始注入其他参数
                 params = buildParams(paramClazzs, cqTemplate, messageEvent);
             } else {
+                ParameterizedType messageParamParameterizedType = messageParamTypeList.get(0);
                 //构建MessageParam对象
                 //已经经过类型检查
                 @SuppressWarnings("all")
-                Class<MappingMessage<T>> messageParamClazz = (Class<MappingMessage<T>>) messageParamTypeList.get(0).getRawType();
-                //泛型类型
-                @SuppressWarnings("all")
-                //已经经过类型检查
-                Class<T> genericParameterClazz = (Class<T>) messageParamTypeList.get(0).getActualTypeArguments()[0];
+                Class<MappingMessage<T>> messageParamClazz = (Class<MappingMessage<T>>) messageParamParameterizedType.getRawType();
                 //实例化对象
                 MappingMessage<T> mappingMessage = ReflectUtil.newInstance(messageParamClazz);
+                //获取泛型类型
+                //已经经过类型检查
+                @SuppressWarnings("all")
+                Class<T> genericParameterClazz = (Class<T>) messageParamParameterizedType.getActualTypeArguments()[0];
                 //注入属性
                 injectionValue(mappingMessage, eventTypeEnum, pluginMethod.getAnnotation(MessageMapping.class), messageEvent, genericParameterClazz, matchKeyword);
                 //构建参数集合
