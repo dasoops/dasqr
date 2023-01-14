@@ -1,7 +1,7 @@
 package com.dasoops.common.util;
 
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.entity.enums.ReflectUtilExceptionEnum;
+import com.dasoops.common.util.entity.ReflectUtilExceptionEnum;
 import com.dasoops.common.exception.LogicException;
 import lombok.extern.slf4j.Slf4j;
 

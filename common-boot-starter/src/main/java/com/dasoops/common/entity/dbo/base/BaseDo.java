@@ -20,7 +20,7 @@ import java.util.Date;
  * @Description: sqlDo基类
  */
 @Data
-public class BaseDo implements Serializable {
+public abstract class BaseDo implements Serializable {
     /**
      * 主键id
      */

@@ -20,6 +20,13 @@ public interface PluginWebMapper extends BaseMapper<PluginDo> {
      * @return {@link Long}
      */
     Long selectMaxId();
+
+    /**
+     * 查询最大排序
+     *
+     * @return {@link Integer}
+     */
+    Integer selectMaxOrder();
 }
 
 

@@ -26,6 +26,6 @@ public class GetPluginSortVo extends BaseVo {
      * 插件排序集合
      */
     @ApiModelProperty(value = "插件排序集合", notes = "插件排序集合", example = "{\"rowId\":\"1\",\"name\":\"模板插件(template)\",\"order\":\"1\"}", required = true)
-    private List<PluginSortVo> pluginSortList;
+    private List<PluginSortInnerVo> pluginSortList;
 
 }

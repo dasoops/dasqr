@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.image.entity.enums;
 
 
-import com.dasoops.common.entity.enums.IDbColumnEnum;
+import com.dasoops.common.entity.enums.base.IDbColumnEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

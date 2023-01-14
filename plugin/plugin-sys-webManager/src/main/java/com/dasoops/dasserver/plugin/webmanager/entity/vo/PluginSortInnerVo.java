@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "插件排序vo", description = "插件排序vo")
-public class PluginSortVo extends BaseVo {
+public class PluginSortInnerVo extends BaseVo {
 
     /**
      * 主键id
@@ -29,8 +29,14 @@ public class PluginSortVo extends BaseVo {
     /**
      * 名称
      */
-    @ApiModelProperty(value = "名称", notes = "名称", example = "模板插件(template)", required = true)
+    @ApiModelProperty(value = "名称", notes = "名称", example = "template", required = true)
     private String name;
+
+    /**
+     * 描述
+     */
+    @ApiModelProperty(value = "描述", notes = "描述", example = "模板插件", required = true)
+    private String description;
 
     /**
      * 排序

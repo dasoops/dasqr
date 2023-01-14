@@ -10,5 +10,5 @@ import java.io.Serializable;
  * @Version 1.0.0
  * @Description: vo基类
  */
-public class BaseVo implements Serializable {
+public abstract class BaseVo implements Serializable {
 }

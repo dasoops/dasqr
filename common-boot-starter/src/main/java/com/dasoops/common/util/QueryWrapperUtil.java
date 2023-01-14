@@ -3,9 +3,9 @@ package com.dasoops.common.util;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.entity.enums.ISortColumnEnum;
+import com.dasoops.common.entity.enums.base.ISortColumnEnum;
 import com.dasoops.common.entity.enums.SortRuleEnum;
-import com.dasoops.common.entity.param.base.SortDataParam;
+import com.dasoops.common.entity.param.SortParam;
 import com.dasoops.common.exception.LogicException;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class QueryWrapperUtil {
 
-    public static <R extends BaseDo, E extends ISortColumnEnum> QueryWrapper<R> addSortParam(final QueryWrapper<R> wrapper, List<SortDataParam<R>> paramList, Class<E> enumClass) {
+    public static <R extends BaseDo, E extends ISortColumnEnum> QueryWrapper<R> addSortParam(final QueryWrapper<R> wrapper, List<SortParam<R>> paramList, Class<E> enumClass) {
         if (wrapper == null) {
             throw new LogicException(ExceptionEnum.PARAMETER_NOT_NULL);
         }

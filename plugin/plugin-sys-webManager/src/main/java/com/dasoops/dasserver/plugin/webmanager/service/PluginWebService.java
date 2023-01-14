@@ -4,12 +4,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.CheckPluginClassPathParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginSortVo;
-import com.dasoops.dasserver.plugin.webmanager.entity.SortPluginParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.SortPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.DeletePluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.EditPluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageSortParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginVo;
 
@@ -32,7 +33,7 @@ public interface PluginWebService extends IService<PluginDo> {
      * @param param param
      * @return {@link IPage}<{@link GetPluginVo}>
      */
-    IPage<GetPluginVo> getPluginPageData(GetPluginPageParam param);
+    IPage<GetPluginVo> getPluginPageData(GetPluginPageSortParam param);
 
     /**
      * 编辑插件
@@ -82,4 +83,11 @@ public interface PluginWebService extends IService<PluginDo> {
      * @return {@link Object}
      */
     GetPluginSortVo getSortPlugin();
+
+    /**
+     * 检查插件类路径
+     *
+     * @param param param
+     */
+    void checkPluginClassPath(CheckPluginClassPathParam param);
 }

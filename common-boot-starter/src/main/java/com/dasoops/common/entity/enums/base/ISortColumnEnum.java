@@ -1,8 +1,8 @@
-package com.dasoops.common.entity.enums;
+package com.dasoops.common.entity.enums.base;
 
 /**
  * @Title: ISortColumnEnum
- * @ClassPath com.dasoops.common.entity.enums.ISortColumnEnum
+ * @ClassPath com.dasoops.common.entity.enums.base.ISortColumnEnum
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/12
  * @Version 1.0.0

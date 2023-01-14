@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.template;
+package com.dasoops.dasserver.plugin.alasnotice;
 
 import org.springframework.context.annotation.ComponentScan;
 
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @Version 1.0.0
  * @Description: 自动配置
  */
-@ComponentScan("com.dasoops.dasserver.plugin.template")
+@ComponentScan("com.dasoops.dasserver.plugin.alasnotice")
 public class AutoConfiguration {
 
 }

@@ -33,7 +33,7 @@ public class AddReplyPlugin extends CqPlugin {
     private final ReplyCache replyCache;
 
 
-    @MessageMapping(prefix = "addReply", type = MessageMappingTypeEnum.ALL)
+    @MessageMapping(prefix = "addReply,跟我学", type = MessageMappingTypeEnum.ALL)
     public String addReply(AddRelayParam param) {
         CqMessageAssert.getInstance().allMustNotNull(param, param.getRelay(), param.getKeyword());
 

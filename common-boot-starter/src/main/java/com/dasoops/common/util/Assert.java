@@ -158,7 +158,6 @@ public class Assert {
      */
     public boolean allMustNull(Object... objs) {
         if (ObjUtil.isNull(objs) || ObjUtil.isEmpty(objs)) {
-            reslover.allMustNull();
             return true;
         }
         for (Object obj : objs) {

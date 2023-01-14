@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.cq.exception;
 
-import com.dasoops.common.entity.enums.IExceptionEnum;
+import com.dasoops.common.entity.enums.base.IExceptionEnum;
 import com.dasoops.common.exception.AbstractBaseCustomException;
 import com.dasoops.common.exception.LogicException;
 

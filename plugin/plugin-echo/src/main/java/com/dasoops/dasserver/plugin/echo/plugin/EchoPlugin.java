@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.echo.plugin;
 
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.entity.param.base.SimpleParam;
+import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;

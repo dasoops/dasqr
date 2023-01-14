@@ -1,5 +1,6 @@
 package com.dasoops.common.entity.enums;
 
+import com.dasoops.common.entity.enums.base.IExceptionEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,7 +10,7 @@ import lombok.Getter;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/10/08
  * @Version 1.0.0
- * @Description: 异常编号枚举
+ * @Description: 异常编号枚举(0-9999,65535)
  * @see Enum
  */
 @Getter

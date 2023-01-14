@@ -1,11 +1,11 @@
-package com.dasoops.common.entity.enums;
+package com.dasoops.common.entity.enums.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
  * @Title: BaseRedisKeyEnum
- * @ClassPath com.dasoops.common.entity.enums.BaseRedisKeyEnum
+ * @ClassPath com.dasoops.common.entity.enums.base.BaseRedisKeyEnum
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/01
  * @Version 1.0.0

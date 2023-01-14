@@ -1,13 +1,15 @@
-package com.dasoops.dasserver.plugin.template.controller;
+package com.dasoops.dasserver.plugin.alasnotice.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
-import com.dasoops.dasserver.plugin.template.entity.enums.AlasConfigHashKeyEnum;
-import com.dasoops.dasserver.plugin.template.entity.enums.AlasNoticeTypeEnum;
-import com.dasoops.dasserver.plugin.template.entity.param.AlasErrorParam;
+import com.dasoops.dasserver.plugin.alasnotice.entity.enums.AlasConfigHashKeyEnum;
+import com.dasoops.dasserver.plugin.alasnotice.entity.enums.AlasExceptionEnum;
+import com.dasoops.dasserver.plugin.alasnotice.entity.enums.AlasNoticeTypeEnum;
+import com.dasoops.dasserver.plugin.alasnotice.entity.param.AlasErrorParam;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -66,6 +68,9 @@ public class AlasController {
                 """;
         String massage = StrUtil.format(messageFormat, param.getTitle(), param.getContent());
 
+        if (xSelfIdList == null || xSelfIdList.size() == 0){
+            throw new LogicException(AlasExceptionEnum.NO_NOTICE_CQ_TEMPLATE);
+        }
         for (Long xSelfId : xSelfIdList) {
             CqTemplate cqTemplate = CqGlobal.get(xSelfId);
             if (cqTemplate == null) {

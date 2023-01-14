@@ -1,5 +1,6 @@
 package com.dasoops.common.entity.param.base;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dasoops.common.entity.dbo.base.BaseDo;
 
 import java.io.Serializable;
@@ -13,5 +14,12 @@ import java.io.Serializable;
  * @Description: Param基类
  * @see Serializable
  */
-public class BaseParam<T extends BaseDo> implements Serializable, IBuildWrapper<T> {
+public abstract class BaseParam<T extends BaseDo> implements Serializable, IBuildWrapper<T>, IBuildDo<T> {
+
+    @Override
+    public QueryWrapper<T> buildWrapper() {
+        QueryWrapper<T> wrapper = IBuildWrapper.super.buildWrapper();
+        wrapper.setEntity(IBuildDo.super.buildDo());
+        return wrapper;
+    }
 }

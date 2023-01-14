@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.enums;
 
-import com.dasoops.common.entity.enums.ISortColumnEnum;
+import com.dasoops.common.entity.enums.base.ISortColumnEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

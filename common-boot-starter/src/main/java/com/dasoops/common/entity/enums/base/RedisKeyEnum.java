@@ -1,9 +1,9 @@
-package com.dasoops.common.entity.enums;
+package com.dasoops.common.entity.enums.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import static com.dasoops.common.entity.enums.BaseRedisKeyEnum.PLUGIN;
+import static com.dasoops.common.entity.enums.base.BaseRedisKeyEnum.PLUGIN;
 
 /**
  * @Title: RedisKeyEnum

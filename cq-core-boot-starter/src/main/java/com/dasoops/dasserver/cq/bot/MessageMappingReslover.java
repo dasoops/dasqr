@@ -356,7 +356,6 @@ public class MessageMappingReslover {
 
     /**
      * 检查消息是否匹配
-     * 目前只包含prefix,后续可能会支持contains,suffix?
      *
      * @param message    消息
      * @param annotation 注释
@@ -372,7 +371,7 @@ public class MessageMappingReslover {
                 prefix = Convert.toDBC(prefix);
             }
             //匹配通过直接return
-            if (StrUtil.startWith(message, prefix, annotation.ignoreCase())) {
+            if (StrUtil.startWith(message, prefix + " ", annotation.ignoreCase())) {
                 return prefix;
             }
         }

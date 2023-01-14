@@ -16,7 +16,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseEasyPageDto<T> extends BaseDto {
+public abstract class BaseEasyPageDto<T> extends BaseDto {
 
     /**
      * 数据

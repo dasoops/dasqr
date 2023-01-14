@@ -1,8 +1,8 @@
 package com.dasoops.dasserver.plugin.loaj.entity.enums;
 
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.entity.enums.BaseRedisKeyEnum;
-import com.dasoops.common.entity.enums.IRedisKeyEnum;
+import com.dasoops.common.entity.enums.base.BaseRedisKeyEnum;
+import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import lombok.Getter;
 
 /**

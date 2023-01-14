@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BasePageParam<T extends BaseDo> extends BaseParam<T> implements IBuildSelectPage<T>{
+public abstract class BasePageParam<T extends BaseDo> extends BaseParam<T> implements IBuildSelectPage<T>{
 
     /**
      * 每页显示数量

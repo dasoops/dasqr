@@ -1,7 +1,7 @@
 package com.dasoops.common.cache;
 
-import com.dasoops.common.entity.enums.IRedisHashKeyEnum;
-import com.dasoops.common.entity.enums.IRedisKeyEnum;
+import com.dasoops.common.entity.enums.base.IRedisHashKeyEnum;
+import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.*;
 import com.alibaba.fastjson2.JSON;

@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.sleep.plugin;
 
-import com.dasoops.common.entity.param.base.SimpleParam;
+import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;

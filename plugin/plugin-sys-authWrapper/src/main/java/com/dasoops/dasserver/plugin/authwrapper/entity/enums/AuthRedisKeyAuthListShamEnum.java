@@ -1,9 +1,9 @@
 package com.dasoops.dasserver.plugin.authwrapper.entity.enums;
 
-import com.dasoops.common.entity.enums.IRedisKeyEnum;
+import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import lombok.Getter;
 
-import static com.dasoops.common.entity.enums.BaseRedisKeyEnum.AUTH;
+import static com.dasoops.common.entity.enums.base.BaseRedisKeyEnum.AUTH;
 
 /**
  * @Title: AuthRedisKeyShamEnum

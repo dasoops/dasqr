@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.loaj.plugin;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.entity.param.base.SimpleParam;
+import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;

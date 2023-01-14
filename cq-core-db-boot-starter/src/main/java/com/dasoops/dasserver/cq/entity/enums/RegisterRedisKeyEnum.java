@@ -1,10 +1,10 @@
 package com.dasoops.dasserver.cq.entity.enums;
 
-import com.dasoops.common.entity.enums.IRedisKeyEnum;
+import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import static com.dasoops.common.entity.enums.BaseRedisKeyEnum.REGISTER;
+import static com.dasoops.common.entity.enums.base.BaseRedisKeyEnum.REGISTER;
 
 /**
  * @Title: RegisterRedisKeyEnum

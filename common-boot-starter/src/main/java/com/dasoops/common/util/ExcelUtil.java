@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
-import com.dasoops.common.entity.enums.ExportExceptionEnum;
+import com.dasoops.common.util.entity.ExportExceptionEnum;
 import com.dasoops.common.exception.LogicException;
 import lombok.extern.slf4j.Slf4j;
 

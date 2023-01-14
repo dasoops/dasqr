@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.loaj.entity.param;
 
-import com.dasoops.common.entity.param.base.SimpleParam;
+import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import lombok.Data;

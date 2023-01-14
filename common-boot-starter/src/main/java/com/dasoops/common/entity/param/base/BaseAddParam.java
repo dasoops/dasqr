@@ -15,5 +15,5 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseAddParam<T extends BaseDo> extends BaseParam<T>{
+public abstract class BaseAddParam<T extends BaseDo> extends BaseParam<T>{
 }

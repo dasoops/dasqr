@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.sleep.entity.enums;
 
-import com.dasoops.common.entity.enums.BaseRedisKeyEnum;
-import com.dasoops.common.entity.enums.IRedisKeyEnum;
+import com.dasoops.common.entity.enums.base.BaseRedisKeyEnum;
+import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import lombok.Getter;
 
 /**

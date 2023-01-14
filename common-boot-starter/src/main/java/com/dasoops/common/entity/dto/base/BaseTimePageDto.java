@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseTimePageDto extends BaseDto {
+public abstract class BaseTimePageDto extends BaseDto {
 
     /**
      * 开始时间

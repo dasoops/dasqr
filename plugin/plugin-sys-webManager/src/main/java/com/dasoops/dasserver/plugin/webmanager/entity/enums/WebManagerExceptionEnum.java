@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.enums;
 
-import com.dasoops.common.entity.enums.IExceptionEnum;
+import com.dasoops.common.entity.enums.base.IExceptionEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,23 +10,29 @@ import lombok.Getter;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/12/30
  * @Version 1.0.0
- * @Description: 配置异常枚举(102xx)
+ * @Description: webManager异常枚举(103xx)
  * @see Enum
  * @see IExceptionEnum
  */
-@Getter
 @AllArgsConstructor
 public enum WebManagerExceptionEnum implements IExceptionEnum {
 
-    /***/
-    REPEAT_KEYWORD(10201, "重复的关键词"),
-    UNDEFINED_ID(10202, "无效的id"),
-    CANT_EDIT(10203, "不支持编辑的配置项"),
-    UNDEFINED_CLASS_PATH(10204, "未找到类文件"),
-    ;
+    /**
+     * eem快速生成
+     */
+    REPEAT_KEYWORD("重复的关键词"),
+    UNDEFINED_ID("未定义的id"),
+    CANT_EDIT("不支持编辑的配置项"),
+    UNDEFINED_CLASS_PATH("未找到类文件"),
+    REPEAT_CLASS_PATH("重复的类路径"),
+    NEED_HIGH_LEVEL("需要更高的level"), REPEAT_ROW_ID("重复的rowId"), REPEAT_ORDER("重复的order");
 
-    final Integer code;
+    @Override
+    public Integer getCode() {
+        return 10300 + ordinal();
+    }
 
+    @Getter
     final String msg;
 
 }

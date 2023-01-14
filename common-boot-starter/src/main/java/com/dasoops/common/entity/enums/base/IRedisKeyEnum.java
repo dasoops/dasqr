@@ -1,4 +1,4 @@
-package com.dasoops.common.entity.enums;
+package com.dasoops.common.entity.enums.base;
 
 /**
  * @Title: IRedisKeyEnum

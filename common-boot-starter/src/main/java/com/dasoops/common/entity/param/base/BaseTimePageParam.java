@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseTimePageParam<T extends BaseDo> extends BasePageParam<T> implements IBuildWrapper<T> {
+public abstract class BaseTimePageParam<T extends BaseDo> extends BasePageParam<T> implements IBuildWrapper<T> {
 
     /**
      * 开始时间

@@ -1,12 +1,13 @@
-package com.dasoops.common.entity.param.base;
+package com.dasoops.common.entity.param;
 
 import com.dasoops.common.entity.dbo.base.BaseDo;
+import com.dasoops.common.entity.param.base.BaseParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
  * @Title: SimpleParam
- * @ClassPath com.dasoops.common.entity.param.base.SimpleParam
+ * @ClassPath com.dasoops.common.entity.param.SimpleParam
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/13
  * @Version 1.0.0

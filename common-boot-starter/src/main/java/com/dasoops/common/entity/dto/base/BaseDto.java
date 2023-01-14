@@ -10,6 +10,6 @@ import java.io.Serializable;
  * @Version 1.0.0
  * @Description: dto基类
  */
-public class BaseDto implements Serializable {
+public abstract class BaseDto implements Serializable {
 
 }

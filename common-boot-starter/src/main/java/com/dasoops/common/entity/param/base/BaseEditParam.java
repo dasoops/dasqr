@@ -15,6 +15,6 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseEditParam<T extends BaseDo> extends BaseEditAndDeleteParam<T> implements IBuildDo<T> {
+public abstract class BaseEditParam<T extends BaseDo> extends BaseEditAndDeleteParam<T> implements IBuildDo<T> {
 
 }

@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.reboot.plugin;
 
-import com.dasoops.common.entity.param.base.SimpleParam;
+import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;

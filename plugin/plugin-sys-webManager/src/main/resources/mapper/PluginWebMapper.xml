@@ -30,6 +30,10 @@
         SELECT MAX(`row_id`)
         FROM `tb_core_plugin`;
     </select>
+    <select id="selectMaxOrder" resultType="java.lang.Integer">
+        SELECT MAX(`order`)
+        FROM `tb_core_plugin`;
+    </select>
 
 
 </mapper>

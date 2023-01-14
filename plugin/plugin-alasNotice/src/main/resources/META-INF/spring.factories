@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    com.dasoops.dasserver.plugin.template.AutoConfiguration
+    com.dasoops.dasserver.plugin.alasnotice.AutoConfiguration

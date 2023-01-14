@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.entity.enums;
 
-import com.dasoops.common.entity.enums.BaseRedisKeyEnum;
-import com.dasoops.common.entity.enums.IRedisKeyEnum;
+import com.dasoops.common.entity.enums.base.BaseRedisKeyEnum;
+import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

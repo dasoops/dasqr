@@ -16,7 +16,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseChartDataVo extends BaseVo{
+public abstract class BaseChartDataVo extends BaseVo{
 
     /**
      * 索引

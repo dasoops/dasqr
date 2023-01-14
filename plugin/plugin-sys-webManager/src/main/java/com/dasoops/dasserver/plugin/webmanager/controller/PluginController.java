@@ -6,11 +6,12 @@ import com.dasoops.common.entity.vo.result.Result;
 import com.dasoops.common.entity.vo.result.SimpleResult;
 import com.dasoops.common.util.ExcelUtil;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.SortPluginParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.SortPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.CheckPluginClassPathParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.DeletePluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.EditPluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageSortParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginSortVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginVo;
@@ -44,7 +45,7 @@ public class PluginController {
 
     @GetMapping("getPluginPage")
     @ApiOperation(value = "获取分页插件信息", notes = "获取分页插件信息")
-    public PageResult<GetPluginVo> getPluginPage(GetPluginPageParam param) {
+    public PageResult<GetPluginVo> getPluginPage(GetPluginPageSortParam param) {
         IPage<GetPluginVo> PluginDoPage = pluginWebService.getPluginPageData(param);
         return PageResult.success(PluginDoPage);
     }
@@ -86,15 +87,22 @@ public class PluginController {
 
     @PostMapping("sortPlugin")
     @ApiOperation(value = "对插件排序", notes = "对插件排序")
-    public SimpleResult sortPlugin(SortPluginParam param) {
+    public SimpleResult sortPlugin(@RequestBody SortPluginParam param) {
         pluginWebService.sortPlugin(param);
         return SimpleResult.success();
     }
 
-    @PostMapping("getPluginSort")
+    @GetMapping("getPluginSort")
     @ApiOperation(value = "获取插件排序", notes = "获取插件排序")
     public Result<GetPluginSortVo> getPluginSort() {
         return Result.success(pluginWebService.getSortPlugin());
+    }
+
+    @GetMapping("checkPluginClassPath")
+    @ApiOperation(value = "检查插件类路径", notes = "检查插件类路径")
+    public SimpleResult checkPluginClassPath(CheckPluginClassPathParam param) {
+        pluginWebService.checkPluginClassPath(param);
+        return SimpleResult.success();
     }
 
 }

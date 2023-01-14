@@ -2,7 +2,7 @@ package com.dasoops.dasserver.core;
 
 import com.dasoops.common.config.BaseExceptionHandler;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.entity.enums.IExceptionEnum;
+import com.dasoops.common.entity.enums.base.IExceptionEnum;
 import com.dasoops.common.entity.vo.result.SimpleResult;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
@@ -50,6 +50,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
                         log.error("消息处理发生异常: {}", tempE.getStackMessage());
                         return SimpleResult.fail(exceptionEnum);
                     } else if (e instanceof HttpMessageNotReadableException) {
+                        //参数解析异常
                         return SimpleResult.fail(ExceptionEnum.PARAMETER_RESLOVE_ERROR);
                     } else {
                         log.error("消息处理发生异常: ", e);

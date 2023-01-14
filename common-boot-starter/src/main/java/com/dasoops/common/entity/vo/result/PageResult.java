@@ -19,7 +19,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class PageResult<T> extends EasyPageResult<T> {
+public class PageResult<T> extends BaseResult {
 
     /**
      * 返回数据
@@ -38,7 +38,7 @@ public class PageResult<T> extends EasyPageResult<T> {
      *
      * @param dataList 数据集合
      * @param total    总计
-     * @return {@link EasyPageResult}<{@link T}>
+     * @return {@link PageResult}<{@link T}>
      */
     public static <T> PageResult<T> success(List<T> dataList, Integer total) {
         PageResult<T> result = new PageResult<>();
@@ -53,7 +53,7 @@ public class PageResult<T> extends EasyPageResult<T> {
      * 成功
      *
      * @param page 查询结果page对象
-     * @return {@link EasyPageResult}<{@link T}>
+     * @return {@link PageResult}<{@link T}>
      */
     public static <T> PageResult<T> success(IPage<T> page) {
         PageResult<T> result = new PageResult<>();

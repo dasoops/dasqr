@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.template.entity.param;
+package com.dasoops.dasserver.plugin.alasnotice.entity.param;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.dasoops.common.entity.param.base.BaseParam;

@@ -2,7 +2,7 @@ package com.dasoops.common.exception;
 
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.entity.enums.IExceptionEnum;
+import com.dasoops.common.entity.enums.base.IExceptionEnum;
 import lombok.Getter;
 
 /**
