@@ -44,6 +44,14 @@ public @interface MessageMapping {
     String[] suffix() default {};
 
     /**
+     * 匹配所有
+     * 请注意,匹配所有无法获得matchKeyword,也无法获得参数
+     *
+     * @return boolean
+     */
+    boolean matchAll() default false;
+
+    /**
      * 分隔符
      *
      * @return {@link String}

@@ -29,7 +29,7 @@ public class CheckSleepPlugin extends CqPlugin {
         this.sleepCache = sleepCache;
     }
 
-    @MessageMapping(prefix = "", type = MessageMappingTypeEnum.ALL)
+    @MessageMapping(matchAll = true, type = MessageMappingTypeEnum.ALL)
     public boolean isSleep(MappingMessage<SimpleParam> param, CqTemplate cqTemplate) {
         return !sleepCache.isSleep(param.getIsGroup(), param.getRegisterId());
     }

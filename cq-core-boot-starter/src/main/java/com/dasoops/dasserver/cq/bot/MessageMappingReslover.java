@@ -25,6 +25,7 @@ import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Title: MessageParamReslover
@@ -299,7 +300,9 @@ public class MessageMappingReslover {
         if (isGroup) {
             mappingMessageParam.setGroupId(((CqGroupMessageEvent) messageEvent).getGroupId());
         }
-        mappingMessageParam.setMatchKeyword(matchKeyword);
+        if (!Objects.equals(matchKeyword, "")) {
+            mappingMessageParam.setMatchKeyword(matchKeyword);
+        }
 
         //获取泛型实例对象
         T param = ReflectUtil.newInstance(genericParameterClazz);
@@ -362,6 +365,9 @@ public class MessageMappingReslover {
      * @return boolean
      */
     private static String checkMessageIsMatch(String message, MessageMapping annotation) {
+        if (annotation.matchAll()) {
+            return "";
+        }
         if (annotation.ignoreDbc()) {
             message = Convert.toDBC(message);
         }
