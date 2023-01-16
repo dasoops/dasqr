@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.log;
+package com.dasoops.dasserver.plugin.log.plugin;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson2.JSON;
@@ -15,6 +15,7 @@ import com.dasoops.dasserver.cq.entity.event.meta.CqLifecycleMetaEvent;
 import com.dasoops.dasserver.cq.entity.event.notice.*;
 import com.dasoops.dasserver.cq.entity.event.request.CqFriendRequestEvent;
 import com.dasoops.dasserver.cq.entity.event.request.CqGroupRequestEvent;
+import com.dasoops.dasserver.plugin.log.entity.dbo.MessageDo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -119,9 +120,9 @@ public class MessageLogPlugin extends CqPlugin {
     }
 
     private void save(CqEvent event) {
-        MessagePo messagePo = new MessagePo();
-        BeanUtil.copyProperties(event, messagePo);
-        messagePo.setTime(event.getTime());
-        asyncMongoTemplate.save(messagePo);
+        MessageDo messageDo = new MessageDo();
+        BeanUtil.copyProperties(event, messageDo);
+        messageDo.setTime(event.getTime());
+        asyncMongoTemplate.save(messageDo);
     }
 }

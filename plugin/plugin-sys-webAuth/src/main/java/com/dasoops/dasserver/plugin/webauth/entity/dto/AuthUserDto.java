@@ -20,7 +20,7 @@ public class AuthUserDto extends BaseDto {
     /**
      * id
      */
-    private Long id;
+    private Long rowId;
 
     /**
      * 注册者id

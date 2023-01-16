@@ -1,7 +1,6 @@
 package com.dasoops.dasserver.plugin.webmanager.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,14 +8,17 @@ import com.dasoops.common.entity.param.SortParam;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
 import com.dasoops.common.util.QueryWrapperUtil;
+import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
+import com.dasoops.dasserver.cq.entity.dto.PluginStatusDto;
+import com.dasoops.dasserver.cq.entity.enums.PluginStatusEnum;
 import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginInnerParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
+import com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginInnerParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.GetPluginSortColumnEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.WebManagerExceptionEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.CheckPluginClassPathParam;
@@ -31,11 +33,13 @@ import com.dasoops.dasserver.plugin.webmanager.mapper.PluginWebMapper;
 import com.dasoops.dasserver.plugin.webmanager.service.PluginWebService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Title: PluginServiceImpl
@@ -55,6 +59,8 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
 
     private final PluginWebMapper pluginWebMapper;
     private final RegisterService registerService;
+    private final PluginService pluginService;
+    private final ApplicationContext applicationContext;
 
     @Override
     public IPage<GetPluginVo> getPluginPageData(GetPluginPageSortParam param) {
@@ -62,15 +68,45 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
         QueryWrapper<PluginDo> wrapper = param.buildWrapper();
         List<SortParam<PluginDo>> sortParamList = param.getSortParamList();
         QueryWrapperUtil.addSortParam(wrapper, sortParamList, GetPluginSortColumnEnum.class);
+        String keyword = param.getKeyword();
+        if (keyword != null && !"".equals(keyword)) {
+            wrapper.like("description", keyword).or().like("name", keyword);
+        }
+
+        //加载的插件
+        Map<String, CqPlugin> loadPluginMap = applicationContext.getBeansOfType(CqPlugin.class);
+        List<String> loadPluginClassPath = loadPluginMap.values().stream().map(cqPlugin -> cqPlugin.getClass().getName()).toList();
 
         IPage<PluginDo> page = super.page(param.buildSelectPage(), wrapper);
         IPage<GetPluginVo> getPluginVoPage = page.convert(pluginDo -> {
             GetPluginVo getPluginVo = new GetPluginVo();
             BeanUtil.copyProperties(pluginDo, getPluginVo);
-            getPluginVo.setPluginName(StrUtil.format("{}({})", pluginDo.getName(), pluginDo.getDescription()));
+            boolean isLoad = loadPluginClassPath.contains(pluginDo.getClassPath());
+            getPluginVo.setStatus(isLoad ? PluginStatusEnum.LOAD.getIntegerValue() : PluginStatusEnum.ENABLE_NOT_LOAD.getIntegerValue());
             return getPluginVo;
         });
 
+        List<PluginStatusDto> noRecordPluginList = pluginService.getAllNoRecordPlugin();
+        //是否有未加载插件
+        if (noRecordPluginList.size() <= 0) {
+            return getPluginVoPage;
+        }
+
+        //添加记录数
+        long oldTotal = getPluginVoPage.getTotal();
+        int noRecordCount = noRecordPluginList.size();
+        getPluginVoPage.setTotal(oldTotal + noRecordCount);
+        //修改返回记录,将未添加的放在最前面
+        List<GetPluginVo> records = getPluginVoPage.getRecords();
+        records.subList(0, noRecordCount > 15 ? 0 : 15 - noRecordCount);
+
+        List<GetPluginVo> noRecordPluginVoList = noRecordPluginList.stream().map(pluginDto -> {
+            GetPluginVo getPluginVo = new GetPluginVo();
+            BeanUtil.copyProperties(pluginDto, getPluginVo);
+            return getPluginVo;
+        }).toList();
+
+        records.addAll(0, noRecordPluginVoList);
         return getPluginVoPage;
     }
 
@@ -143,6 +179,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
         List<SortPluginInnerParam> sortPluginParamList = param.getSortPluginParamList();
         List<Long> rowIdList = new ArrayList<>();
         List<Integer> orderList = new ArrayList<>();
+        //检查是否有重复id
         sortPluginParamList.forEach(dto -> {
             Long rowId = dto.getRowId();
             if (rowIdList.contains(rowId)) {
@@ -159,7 +196,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
 
         });
 
-        if (super.listByIds(rowIdList).size() < rowIdList.size()) {
+        if (super.list().size() < rowIdList.size()) {
             throw new LogicException(WebManagerExceptionEnum.UNDEFINED_ID);
         }
 

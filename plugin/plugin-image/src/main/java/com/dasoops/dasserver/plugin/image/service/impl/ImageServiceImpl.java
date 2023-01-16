@@ -153,7 +153,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
             Long registerId = imageDo.getAuthorId();
             String fileName = imageDo.getFileName();
             GetImageVo resVo = new GetImageVo();
-            resVo.setId(imageDo.getRowId());
+            resVo.setRowId(imageDo.getRowId());
             resVo.setKeyword(imageDo.getKeyword());
             resVo.setFileName(fileName);
             resVo.setFilePath(MinioUtil.buildImagePath(fileName));
@@ -221,10 +221,10 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
     @Override
     public void editImageInfo(EditImageInfoParam param) {
-        Assert.getInstance().allMustNotNull(param, param.getId(), param.getKeyword(), param.getFileName());
+        Assert.getInstance().allMustNotNull(param, param.getRowId(), param.getKeyword(), param.getFileName());
 
         String keyword = param.getKeyword();
-        Long id = param.getId();
+        Long id = param.getRowId();
 
         Long authorId = EventUtil.get().getAuthorId();
         ImageDo imageDo = super.getById(id);
@@ -284,9 +284,9 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
     @Override
     public void deleteImage(DeleteImageParam param) {
-        Assert.getInstance().allMustNotNull(param, param.getId());
+        Assert.getInstance().allMustNotNull(param, param.getRowId());
 
-        Long id = param.getId();
+        Long id = param.getRowId();
         ImageDo imageDo = super.getById(id);
 
         if (imageDo == null) {
@@ -306,7 +306,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         List<ImageDo> imageDoList = super.list();
         return imageDoList.stream().map(imageDo -> {
             ExportImageInfoDto dto = new ExportImageInfoDto();
-            dto.setId(imageDo.getRowId());
+            dto.setRowId(imageDo.getRowId());
             dto.setKeyword(imageDo.getKeyword());
             dto.setFilePath(MinioUtil.buildImagePath(imageDo.getFileName()));
             Long authorId = imageDo.getAuthorId();

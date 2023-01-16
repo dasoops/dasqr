@@ -23,7 +23,7 @@ public class GetConfigVo extends BaseVo {
      * id
      */
     @ApiModelProperty(value = "id", notes = "id", example = "1", required = true)
-    private Long id;
+    private Long rowId;
 
     /**
      * 关键字

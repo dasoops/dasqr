@@ -21,10 +21,10 @@ import lombok.EqualsAndHashCode;
 public class GetImageVo extends BaseVo {
 
     /**
-     * id
+     * rowId
      */
-    @ApiModelProperty(value = "id", notes = "id", example = "10", required = true)
-    private Long id;
+    @ApiModelProperty(value = "rowId", notes = "rowId", example = "10", required = true)
+    private Long rowId;
 
     /**
      * 关键词

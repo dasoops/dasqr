@@ -9,7 +9,7 @@ import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.cq.entity.result.PluginResult;
 import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.utils.CqMessageAssert;
-import com.dasoops.dasserver.plugin.pluginwrapper.entity.enums.PluginEnableEnum;
+import com.dasoops.dasserver.cq.entity.enums.PluginEnableEnum;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

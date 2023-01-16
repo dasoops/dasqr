@@ -21,10 +21,22 @@ import lombok.EqualsAndHashCode;
 public class GetPluginVo extends BaseVo {
 
     /**
+     * 主键id
+     */
+    @ApiModelProperty(value = "主键id", notes = "主键id", example = "1", required = true)
+    private Long rowId;
+
+    /**
      * 插件名称
      */
-    @ApiModelProperty(value = "插件名称", notes = "插件名称", example = "模板插件(templatePlugin)", required = true)
-    private String pluginName;
+    @ApiModelProperty(value = "插件名称", notes = "插件名称", example = "templatePlugin", required = true)
+    private String name;
+
+    /**
+     * 插件描述
+     */
+    @ApiModelProperty(value = "插件描述", notes = "插件描述", example = "模板插件", required = true)
+    private String description;
 
     /**
      * 类路径
@@ -49,5 +61,11 @@ public class GetPluginVo extends BaseVo {
      */
     @ApiModelProperty(value = "是否启用(0:false;1:true)", notes = "是否启用(0:false;1:true)", example = "0", required = true)
     private Integer enable;
+
+    /**
+     * 插件状态(0:未启用;1:未加载;2:加载;3:无记录)
+     */
+    @ApiModelProperty(value = "插件状态(0:未启用;1:未加载;2:加载;3:无记录)", notes = "插件状态(0:未启用;1:未加载;2:加载;3:无记录)", example = "1", required = true)
+    private Integer status;
 
 }

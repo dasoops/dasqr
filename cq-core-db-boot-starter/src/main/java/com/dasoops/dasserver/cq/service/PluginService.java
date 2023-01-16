@@ -3,6 +3,7 @@ package com.dasoops.dasserver.cq.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
+import com.dasoops.dasserver.cq.entity.dto.PluginStatusDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,20 @@ import java.util.Optional;
  */
 public interface PluginService extends IService<PluginDo> {
 
+
+    /**
+     * 获取所有插件和其状态(包含记录与加载)
+     *
+     * @return {@link List}<{@link PluginStatusDto}>
+     */
+    List<PluginStatusDto> getAllPluginAndStatus();
+
+    /**
+     * 获取所有没有数据库记录的插件
+     *
+     * @return {@link List}<{@link PluginStatusDto}>
+     */
+    List<PluginStatusDto> getAllNoRecordPlugin();
 
     /**
      * 获取所有插件类

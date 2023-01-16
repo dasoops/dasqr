@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.pluginwrapper.entity.enums;
+package com.dasoops.dasserver.cq.entity.enums;
 
 import com.dasoops.common.entity.enums.base.IDbColumnEnum;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @Title: PluginEnableEnum
- * @ClassPath com.dasoops.dasserver.plugin.pluginwrapper.entity.enums.PluginEnableEnum
+ * @ClassPath com.dasoops.dasserver.cq.entity.enums.PluginEnableEnum
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/09
  * @Version 1.0.0

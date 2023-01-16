@@ -87,11 +87,11 @@ CREATE TABLE `tb_core_plugin`  (
 -- Records of tb_core_plugin
 -- ----------------------------
 INSERT INTO `tb_core_plugin` VALUES (1, 'template', 'com.dasoops.dasserver.core.TemplatePlugin', 0, 5, '模板插件', 1, 0, -1, '2022-11-02 15:23:56', -1, '2022-11-02 15:23:58');
-INSERT INTO `tb_core_plugin` VALUES (2, 'messageLog', 'com.dasoops.dasserver.plugin.log.MessageLogPlugin', 10, 7, '日志插件', 1, 0, -1, '2022-11-03 17:15:48', -1, '2022-11-03 17:15:51');
+INSERT INTO `tb_core_plugin` VALUES (2, 'messageLog', 'com.dasoops.dasserver.plugin.log.plugin.MessageLogPlugin', 10, 7, '日志插件', 1, 0, -1, '2022-11-03 17:15:48', -1, '2022-11-03 17:15:51');
 INSERT INTO `tb_core_plugin` VALUES (3, 'roll', 'com.dasoops.dasserver.plugin.loaj.plugin.RollPlugin', 20, 5, 'ROLL点插件', 1, 0, -1, '2022-11-04 17:38:28', -1, '2022-11-04 17:38:23');
 INSERT INTO `tb_core_plugin` VALUES (4, 'Image', 'com.dasoops.dasserver.plugin.image.plugin.ImagePlugin', 30, 5, '存图取图插件', 1, 0, -1, '2022-11-08 10:17:26', -1, '2022-11-08 10:17:30');
-INSERT INTO `tb_core_plugin` VALUES (5, 'error', 'com.dasoops.dasserver.plugin.exceptionwrapper.GetErrorPlugin', 40, 5, '异常信息插件', 1, 0, -1, '2022-11-10 14:56:35', -1, '2022-11-10 14:56:33');
-INSERT INTO `tb_core_plugin` VALUES (6, 'throwException', 'com.dasoops.dasserver.plugin.exceptionwrapper.ThrowExceptionPlugin', 50, 5, '测试异常插件', 1, 0, -1, '2022-11-10 15:38:20', -1, '2022-11-10 15:38:18');
+INSERT INTO `tb_core_plugin` VALUES (5, 'error', 'com.dasoops.dasserver.plugin.exceptionwrapper.plugin.GetErrorPlugin', 40, 5, '异常信息插件', 1, 0, -1, '2022-11-10 14:56:35', -1, '2022-11-10 14:56:33');
+INSERT INTO `tb_core_plugin` VALUES (6, 'throwException', 'com.dasoops.dasserver.plugin.exceptionwrapper.plugin.ThrowExceptionPlugin', 50, 5, '测试异常插件', 1, 0, -1, '2022-11-10 15:38:20', -1, '2022-11-10 15:38:18');
 INSERT INTO `tb_core_plugin` VALUES (7, 'getPlugin', 'com.dasoops.dasserver.plugin.pluginwrapper.plugin.GetPluginPlugin', 60, 2, '获取插件列表插件', 1, 0, -1, '2022-11-10 15:57:21', -1, '2022-11-10 15:57:23');
 INSERT INTO `tb_core_plugin` VALUES (8, 'addPlugin', 'com.dasoops.dasserver.plugin.pluginwrapper.plugin.AddPluginPlugin', 70, 2, '添加插件', 1, 0, -1, '2022-11-10 15:57:21', -1, '2022-11-10 15:57:23');
 

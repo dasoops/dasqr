@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.log;
+package com.dasoops.dasserver.plugin.log.entity.dbo;
 
 import lombok.Data;
 import org.bson.types.ObjectId;
@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
  */
 @Document("message")
 @Data
-public class MessagePo {
+public class MessageDo {
 
     @MongoId(targetType = FieldType.OBJECT_ID)
     private ObjectId id;

@@ -18,10 +18,10 @@ import lombok.EqualsAndHashCode;
 public class ExportImageInfoDto extends BaseDto {
 
     /**
-     * id
+     * rowId
      */
-    @ExcelProperty(value = "id", index = 0)
-    private Long id;
+    @ExcelProperty(value = "rowId", index = 0)
+    private Long rowId;
 
     /**
      * 关键词

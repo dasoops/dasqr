@@ -83,7 +83,7 @@ public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, Regis
 
         Long registerId = registerDo.getRegisterId();
         AuthUserDto authUserDto = new AuthUserDto();
-        authUserDto.setId(registerDo.getRowId());
+        authUserDto.setRowId(registerDo.getRowId());
         authUserDto.setRegisterId(registerId);
         authUserDto.setName(registerWebCache.getRegisterNameByRowId(registerCache.getUserRowIdByRegisterId(registerId)));
         loginVo.setToken(JwtUtil.createToken(authUserDto));

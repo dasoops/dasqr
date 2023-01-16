@@ -55,7 +55,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
                 .page(param.buildSelectPage())
                 .convert(configDo -> {
                     GetConfigVo getConfigVo = new GetConfigVo();
-                    getConfigVo.setId(configDo.getRowId());
+                    getConfigVo.setRowId(configDo.getRowId());
                     BeanUtil.copyProperties(configDo, getConfigVo);
                     return getConfigVo;
                 });
@@ -130,9 +130,9 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
 
     @Override
     public void deleteConfig(DeleteConfigParam param) {
-        Assert.getInstance().allMustNotNull(param, param.getId());
+        Assert.getInstance().allMustNotNull(param, param.getRowId());
 
-        Long id = param.getId();
+        Long id = param.getRowId();
         ConfigDo configDo = super.getById(id);
         if (configDo == null) {
             throw new LogicException(WebManagerExceptionEnum.UNDEFINED_ID);

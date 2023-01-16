@@ -23,5 +23,5 @@ public class DeleteConfigParam extends BaseParam {
      * id
      */
     @ApiModelProperty(value = "id", notes = "id", example = "10", required = true)
-    private Long id;
+    private Long rowId;
 }

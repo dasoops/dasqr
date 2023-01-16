@@ -20,10 +20,10 @@ import lombok.EqualsAndHashCode;
 public class EditImageInfoParam extends BaseParam {
 
     /**
-     * id
+     * rowId
      */
-    @ApiModelProperty(value = "id", notes = "id", example = "65", required = true)
-    private Long id;
+    @ApiModelProperty(value = "rowId", notes = "rowId", example = "65", required = true)
+    private Long rowId;
 
     /**
      * 图片关键词

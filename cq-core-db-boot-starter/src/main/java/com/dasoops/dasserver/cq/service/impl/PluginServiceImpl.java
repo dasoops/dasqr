@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.cq.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.util.Assert;
@@ -8,6 +9,9 @@ import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
+import com.dasoops.dasserver.cq.entity.dto.PluginStatusDto;
+import com.dasoops.dasserver.cq.entity.enums.PluginEnableEnum;
+import com.dasoops.dasserver.cq.entity.enums.PluginStatusEnum;
 import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
 import com.dasoops.dasserver.cq.mapper.PluginMapper;
 import com.dasoops.dasserver.cq.service.PluginService;
@@ -47,6 +51,68 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
         this.registerService = registerService;
         this.registerMtmPluginService = registerMtmPluginService;
         this.applicationContext = applicationContext;
+    }
+
+    @Override
+    public List<PluginStatusDto> getAllPluginAndStatus() {
+        //获取有记录的所有插件
+        List<PluginDo> pluginDoList = super.list();
+        //加载的插件
+        Map<String, CqPlugin> loadPluginMap = applicationContext.getBeansOfType(CqPlugin.class);
+
+        List<PluginStatusDto> pluginStatusDtoList = pluginDoList.stream().map(pluginDo -> {
+            //0为未启用, 1启用未加载, 2加载, 3加载但无记录(不启用)
+            Integer enable = pluginDo.getEnable();
+            int status;
+            //未启用
+            if (enable.equals(PluginEnableEnum.FALSE.getDbValue())) {
+                status = PluginStatusEnum.NOT_ENABLE.getIntegerValue();
+            } else {
+                boolean isLoad = loadPluginMap.values().stream().anyMatch(cqPlugin -> cqPlugin.getClass().getName().equals(pluginDo.getClassPath()));
+                status = isLoad ? PluginStatusEnum.LOAD.getIntegerValue() : PluginStatusEnum.ENABLE_NOT_LOAD.getIntegerValue();
+            }
+            PluginStatusDto pluginStatusDto = new PluginStatusDto();
+            BeanUtil.copyProperties(pluginDo, pluginStatusDto);
+            pluginStatusDto.setStatus(status);
+            return pluginStatusDto;
+        }).toList();
+
+        //说明有加载了但无数据库记录的插件
+        if (loadPluginMap.size() > pluginDoList.size()) {
+            List<PluginStatusDto> noRecordPluginList = this.getAllNoRecordPlugin(pluginDoList, loadPluginMap);
+            pluginStatusDtoList.addAll(noRecordPluginList);
+        }
+        return pluginStatusDtoList;
+    }
+
+    @Override
+    public List<PluginStatusDto> getAllNoRecordPlugin() {
+        //获取有记录的所有插件
+        List<PluginDo> pluginDoList = super.list();
+        //加载的插件
+        Map<String, CqPlugin> loadPluginMap = applicationContext.getBeansOfType(CqPlugin.class);
+        return this.getAllNoRecordPlugin(pluginDoList, loadPluginMap);
+    }
+
+    private List<PluginStatusDto> getAllNoRecordPlugin(List<PluginDo> pluginDoList, Map<String, CqPlugin> loadPluginMap) {
+        List<String> pluginClassNameList = pluginDoList.stream().map(PluginDo::getClassPath).toList();
+        List<CqPlugin> noRecordButLoadPluginList = loadPluginMap.values().stream()
+                .filter(cqPlugin ->
+                        !pluginClassNameList.contains(cqPlugin.getClass().getName())
+                ).toList();
+        List<PluginStatusDto> noRecordPluginList = noRecordButLoadPluginList.stream().map(cqPlugin -> {
+            PluginStatusDto pluginStatusDto = new PluginStatusDto();
+            pluginStatusDto.setRowId(-1L);
+            pluginStatusDto.setName("无");
+            pluginStatusDto.setClassPath(cqPlugin.getClass().getName());
+            pluginStatusDto.setOrder(-1);
+            pluginStatusDto.setLevel(-1);
+            pluginStatusDto.setDescription("未知插件");
+            pluginStatusDto.setEnable(0);
+            pluginStatusDto.setStatus(PluginStatusEnum.NO_RECORD.getIntegerValue());
+            return pluginStatusDto;
+        }).toList();
+        return noRecordPluginList;
     }
 
     @Override

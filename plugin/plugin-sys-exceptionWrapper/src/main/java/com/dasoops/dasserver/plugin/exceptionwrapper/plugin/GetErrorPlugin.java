@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.exceptionwrapper;
+package com.dasoops.dasserver.plugin.exceptionwrapper.plugin;
 
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasserver.cq.CqPlugin;
@@ -8,6 +8,7 @@ import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
 import com.dasoops.dasserver.cq.utils.DqCodeUtil;
+import com.dasoops.dasserver.plugin.exceptionwrapper.entity.dbo.ExceptionDo;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -60,10 +61,10 @@ public class GetErrorPlugin extends CqPlugin {
                 }
                 int size = paramStrList.size();
                 paramStrList.forEach(errorId -> {
-                    ExceptionPo po = null;
+                    ExceptionDo po = null;
                     try {
                         Query query = Query.query(Criteria.where("id").is(new ObjectId(errorId)));
-                        po = mongoTemplate.findOne(query, ExceptionPo.class);
+                        po = mongoTemplate.findOne(query, ExceptionDo.class);
                     } catch (Exception e) {
                         log.error("get Mongo Exception logs error:", e);
                     }

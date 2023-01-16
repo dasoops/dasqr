@@ -32,4 +32,11 @@ public class GetPluginPageSortParam extends BasePageParam<PluginDo> {
     @JSONField(name = "sortParam")
     private List<SortParam<PluginDo>> sortParamList;
 
+    /**
+     * 关键词
+     */
+    @ApiModelProperty(value = "关键词", notes = "关键词", example = "模板", required = false)
+    private String keyword;
+
+
 }

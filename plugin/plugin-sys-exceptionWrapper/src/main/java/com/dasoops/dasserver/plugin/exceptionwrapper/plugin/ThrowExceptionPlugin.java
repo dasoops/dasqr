@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.exceptionwrapper;
+package com.dasoops.dasserver.plugin.exceptionwrapper.plugin;
 
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.LogicException;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @Title: ThrowExceptionPlugin
- * @ClassPath com.dasoops.dasserver.plugin.exceptionwrapper.ThrowExceptionPlugin
+ * @ClassPath com.dasoops.dasserver.plugin.exceptionwrapper.plugin.ThrowExceptionPlugin
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/11/10
  * @Version 1.0.0
