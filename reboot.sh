@@ -1,7 +1,11 @@
 pid=`ps -ef | grep DasServerApplication | grep -v grep | cut -c 9-15`
 
+cd /usr/local/gitRepo/webManager
 git pull
+npm run build
+
 cd /usr/local/gitRepo/dasServer
+git pull
 mvn clean install
 
 echo $pid
@@ -10,3 +14,4 @@ nohup mvn spring-boot:run -pl core >./logs/mvn.log 2>&1 &
 sstr=$(echo -e $str)
 echo $sstr
 kill $pid
+
