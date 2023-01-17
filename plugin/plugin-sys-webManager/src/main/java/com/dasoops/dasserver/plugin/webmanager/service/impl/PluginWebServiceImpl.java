@@ -3,12 +3,14 @@ package com.dasoops.dasserver.plugin.webmanager.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.param.SortParam;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
 import com.dasoops.common.util.QueryWrapperUtil;
 import com.dasoops.dasserver.cq.CqPlugin;
+import com.dasoops.dasserver.cq.CqPluginGlobal;
 import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
@@ -19,6 +21,7 @@ import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginInnerParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.enums.CheckPluginRepeatEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.GetPluginSortColumnEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.WebManagerExceptionEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.CheckPluginClassPathParam;
@@ -38,6 +41,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -77,36 +81,47 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
         Map<String, CqPlugin> loadPluginMap = applicationContext.getBeansOfType(CqPlugin.class);
         List<String> loadPluginClassPath = loadPluginMap.values().stream().map(cqPlugin -> cqPlugin.getClass().getName()).toList();
 
-        IPage<PluginDo> page = super.page(param.buildSelectPage(), wrapper);
-        IPage<GetPluginVo> getPluginVoPage = page.convert(pluginDo -> {
+        List<PluginDo> pluginDoList = super.list(wrapper);
+        List<GetPluginVo> getPluginVoList = new ArrayList<>(pluginDoList.stream().map(pluginDo -> {
             GetPluginVo getPluginVo = new GetPluginVo();
             BeanUtil.copyProperties(pluginDo, getPluginVo);
             boolean isLoad = loadPluginClassPath.contains(pluginDo.getClassPath());
-            getPluginVo.setStatus(isLoad ? PluginStatusEnum.LOAD.getIntegerValue() : PluginStatusEnum.ENABLE_NOT_LOAD.getIntegerValue());
+            getPluginVo.setStatus(isLoad ? PluginStatusEnum.LOAD.getIntegerValue() : PluginStatusEnum.ENABLE_UNLOAD.getIntegerValue());
             return getPluginVo;
-        });
+        }).toList());
 
+        //过滤状态
+        List<Integer> statusList = param.getStatusList();
+        if (statusList != null && statusList.size() > 0) {
+            getPluginVoList = new ArrayList<>(getPluginVoList.stream().filter(pluginVo -> statusList.contains(pluginVo.getStatus())).toList());
+        }
+
+        //构建返回参数
+        Integer paramSize = param.getSize();
+        Integer paramCurrent = param.getCurrent();
+        Page<GetPluginVo> getPluginVoPage = new Page<>(paramCurrent, paramSize);
+
+        //包含无记录加载插件 需要
+        //null集合 || 空集合 需要
+        boolean needNoRecord = (statusList == null || statusList.size() <= 0) || statusList.contains(PluginStatusEnum.NO_RECORD.getIntegerValue());
+        //不需要 || 没有未加载插件
         List<PluginStatusDto> noRecordPluginList = pluginService.getAllNoRecordPlugin();
-        //是否有未加载插件
-        if (noRecordPluginList.size() <= 0) {
+        if (noRecordPluginList.size() <= 0 || !needNoRecord) {
+            getPluginVoPage.setTotal(getPluginVoList.size());
+            getPluginVoPage.setRecords(getPluginVoList.subList((paramCurrent - 1) * paramSize, Math.min(paramCurrent * paramSize, getPluginVoList.size())));
             return getPluginVoPage;
         }
 
-        //添加记录数
-        long oldTotal = getPluginVoPage.getTotal();
-        int noRecordCount = noRecordPluginList.size();
-        getPluginVoPage.setTotal(oldTotal + noRecordCount);
-        //修改返回记录,将未添加的放在最前面
-        List<GetPluginVo> records = getPluginVoPage.getRecords();
-        records.subList(0, noRecordCount > 15 ? 0 : 15 - noRecordCount);
-
+        //添加未加载插件
         List<GetPluginVo> noRecordPluginVoList = noRecordPluginList.stream().map(pluginDto -> {
             GetPluginVo getPluginVo = new GetPluginVo();
             BeanUtil.copyProperties(pluginDto, getPluginVo);
             return getPluginVo;
         }).toList();
+        getPluginVoList.addAll(0, noRecordPluginVoList);
+        getPluginVoPage.setTotal(getPluginVoList.size());
+        getPluginVoPage.setRecords(getPluginVoList.subList((paramCurrent - 1) * paramSize, Math.min(paramCurrent * paramSize, getPluginVoList.size())));
 
-        records.addAll(0, noRecordPluginVoList);
         return getPluginVoPage;
     }
 
@@ -114,14 +129,23 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
     public void editPlugin(EditPluginParam param) {
         Assert.getInstance().allMustNotNull(param, param.getName(), param.getEnable(), param.getDescription(), param.getClassPath(), param.getLevel(), param.getRowId());
 
+        //-1为未知插件,直接转添加
+        if (param.getRowId().equals(-1L)) {
+            AddPluginParam addPluginParam = new AddPluginParam();
+            BeanUtil.copyProperties(param, addPluginParam);
+            this.addPlugin(addPluginParam);
+            return;
+        }
+
         //检查类路径
-        checkPluginClassPath(param.getClassPath());
+        checkPluginClassPath(false, param.getClassPath());
 
         //检查id
         checkPluginRowId(param.getRowId());
 
         PluginDo pluginDo = param.buildDo();
         super.updateById(pluginDo);
+        CqPluginGlobal.refresh();
     }
 
     @Override
@@ -136,14 +160,14 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
     public void addPlugin(AddPluginParam param) {
         Assert.getInstance().allMustNotNull(param, param.getName(), param.getLevel(), param.getEnable(), param.getClassPath(), param.getDescription());
         //检查类路径
-        checkPluginClassPath(param.getClassPath());
+        checkPluginClassPath(true, param.getClassPath());
 
         Integer maxOrder = pluginWebMapper.selectMaxOrder();
 
         PluginDo pluginDo = param.buildDo();
         pluginDo.setOrder(maxOrder + 1);
         super.save(pluginDo);
-
+        CqPluginGlobal.refresh();
     }
 
     @Override
@@ -155,12 +179,13 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
 
         //检查权限,需要当前用户有权限使用插件
         Integer level = pluginDo.getLevel();
-        RegisterDo registerDo = registerService.getById(EventUtil.get().getAuthorId());
+        RegisterDo registerDo = registerService.lambdaQuery().eq(RegisterDo::getRegisterId, EventUtil.get().getAuthorId()).one();
         if (registerDo.getLevel() > level) {
             throw new LogicException(WebManagerExceptionEnum.NEED_HIGH_LEVEL);
         }
 
         super.removeById(rowId);
+        CqPluginGlobal.refresh();
     }
 
     @Override
@@ -208,16 +233,19 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
         }).toList();
 
         pluginDoList.forEach(super::updateById);
+        CqPluginGlobal.refresh();
     }
 
     @Override
     public GetPluginSortVo getSortPlugin() {
         List<PluginDo> list = super.list();
-        List<PluginSortInnerVo> sortPluginDtoList = list.stream().map(pluginDo -> {
-            PluginSortInnerVo dto = new PluginSortInnerVo();
-            BeanUtil.copyProperties(pluginDo, dto);
-            return dto;
-        }).toList();
+        List<PluginSortInnerVo> sortPluginDtoList = list.stream()
+                .sorted(Comparator.comparingInt(PluginDo::getOrder))
+                .map(pluginDo -> {
+                    PluginSortInnerVo dto = new PluginSortInnerVo();
+                    BeanUtil.copyProperties(pluginDo, dto);
+                    return dto;
+                }).toList();
         GetPluginSortVo getPluginSortVo = new GetPluginSortVo();
         getPluginSortVo.setPluginSortList(sortPluginDtoList);
 
@@ -226,23 +254,29 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
 
     @Override
     public void checkPluginClassPath(CheckPluginClassPathParam param) {
-        Assert.getInstance().allMustNotNull(param, param.getClassPath());
-        checkPluginClassPath(param.getClassPath());
+        Assert.getInstance().allMustNotNull(param, param.getClassPath(), param.getCheckRepeatClassPath());
+        checkPluginClassPath(param.getCheckRepeatClassPath().equals(CheckPluginRepeatEnum.TRUE.getIntegerValue()), param.getClassPath());
     }
 
     /**
      * 检查插件类路径
      *
-     * @param classPath 类路径
+     * @param classPath            类路径
+     * @param checkRepeatClassPath 检查重复类路径
      */
-    private void checkPluginClassPath(String classPath) {
+    private void checkPluginClassPath(boolean checkRepeatClassPath, String classPath) {
         try {
-            this.getClass().getClassLoader().loadClass(classPath);
-            Long count = super.lambdaQuery().eq(PluginDo::getClassPath, classPath).count();
-            if (count > 0) {
-                throw new LogicException(WebManagerExceptionEnum.REPEAT_CLASS_PATH);
+            Class<?> clazz = Class.forName(classPath);
+            if (!CqPlugin.class.isAssignableFrom(clazz)) {
+                throw new LogicException(WebManagerExceptionEnum.NO_CQ_PLUGIN);
             }
-        } catch (ClassNotFoundException e) {
+            if (checkRepeatClassPath) {
+                Long count = super.lambdaQuery().eq(PluginDo::getClassPath, classPath).count();
+                if (count > 0) {
+                    throw new LogicException(WebManagerExceptionEnum.REPEAT_CLASS_PATH);
+                }
+            }
+        } catch (ClassNotFoundException | NoClassDefFoundError e) {
             throw new LogicException(WebManagerExceptionEnum.UNDEFINED_CLASS_PATH);
         }
     }

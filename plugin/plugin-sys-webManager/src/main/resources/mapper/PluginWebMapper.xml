@@ -6,12 +6,12 @@
 
     <resultMap id="BaseResultMap" type="com.dasoops.dasserver.cq.entity.dbo.PluginDo">
         <id property="rowId" column="row_id" jdbcType="BIGINT"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="name" column="`name`" jdbcType="VARCHAR"/>
         <result property="classPath" column="class_path" jdbcType="VARCHAR"/>
-        <result property="order" column="order" jdbcType="INTEGER"/>
-        <result property="level" column="level" jdbcType="TINYINT"/>
+        <result property="order" column="`order`" jdbcType="INTEGER"/>
+        <result property="level" column="`level`" jdbcType="TINYINT"/>
         <result property="description" column="description" jdbcType="VARCHAR"/>
-        <result property="enable" column="enable" jdbcType="TINYINT"/>
+        <result property="enable" column="`enable`" jdbcType="TINYINT"/>
         <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
         <result property="createUser" column="create_user" jdbcType="BIGINT"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>

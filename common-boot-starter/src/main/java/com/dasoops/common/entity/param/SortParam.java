@@ -1,5 +1,6 @@
 package com.dasoops.common.entity.param;
 
+import cn.hutool.core.util.EnumUtil;
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.entity.dto.base.BaseDto;
 import com.dasoops.common.entity.enums.ExceptionEnum;
@@ -49,11 +50,11 @@ public class SortParam<T extends BaseDo> extends BaseParam<T> {
     }
 
     public SortRuleEnum buildRuleEnum() {
-        Optional<SortRuleEnum> enumOptional = Arrays.stream(SortRuleEnum.values()).filter(enumConstant -> enumConstant.getIntegerValue().equals(sortColumn)).findFirst();
-        if (enumOptional.isEmpty()) {
+        SortRuleEnum sortRuleEnum = EnumUtil.getBy(SortRuleEnum::getIntegerValue, sortRule);
+        if (sortRuleEnum == null) {
             throw new LogicException(ExceptionEnum.UNKNOWN_KEYWORD);
         }
-        return enumOptional.get();
+        return sortRuleEnum;
     }
 
 }

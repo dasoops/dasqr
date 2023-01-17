@@ -1,12 +1,11 @@
 package com.dasoops.dasserver.cq.entity.dbo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * @Title: Register
@@ -37,7 +36,4 @@ public class RegisterDo extends BaseDo implements Serializable {
      * 默认权限等级(组为-1|0:sys;1:dev;2:user;8:zxy;9:none)
      */
     private Integer level;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

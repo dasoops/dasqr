@@ -25,7 +25,11 @@ public enum WebManagerExceptionEnum implements IExceptionEnum {
     CANT_EDIT("不支持编辑的配置项"),
     UNDEFINED_CLASS_PATH("未找到类文件"),
     REPEAT_CLASS_PATH("重复的类路径"),
-    NEED_HIGH_LEVEL("需要更高的level"), REPEAT_ROW_ID("重复的rowId"), REPEAT_ORDER("重复的order");
+    NEED_HIGH_LEVEL("需要更高的level"),
+    REPEAT_ROW_ID("重复的rowId"),
+    REPEAT_ORDER("重复的order"),
+    NO_CQ_PLUGIN("不是一个CqPlugin"),
+    ;
 
     @Override
     public Integer getCode() {

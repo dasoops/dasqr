@@ -1,8 +1,7 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.param;
 
-import com.alibaba.fastjson2.annotation.JSONField;
-import com.dasoops.common.entity.param.base.BasePageParam;
 import com.dasoops.common.entity.param.SortParam;
+import com.dasoops.common.entity.param.base.BasePageParam;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -29,7 +28,6 @@ public class GetPluginPageSortParam extends BasePageParam<PluginDo> {
      * 排序规则(排序字段0:rowId;1:order;2:level;3:enable)
      */
     @ApiModelProperty(value = "排序规则", notes = "排序规则", example = "{\"sortColumn\":\"1\",\"sortRule\":\"0\"}", required = false)
-    @JSONField(name = "sortParam")
     private List<SortParam<PluginDo>> sortParamList;
 
     /**
@@ -37,6 +35,12 @@ public class GetPluginPageSortParam extends BasePageParam<PluginDo> {
      */
     @ApiModelProperty(value = "关键词", notes = "关键词", example = "模板", required = false)
     private String keyword;
+
+    /**
+     * 状态
+     */
+    @ApiModelProperty(value = "状态", notes = "状态", example = "[1,2]", required = false)
+    private List<Integer> statusList;
 
 
 }

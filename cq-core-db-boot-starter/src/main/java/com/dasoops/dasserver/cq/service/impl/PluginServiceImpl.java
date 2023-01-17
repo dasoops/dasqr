@@ -66,10 +66,10 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
             int status;
             //未启用
             if (enable.equals(PluginEnableEnum.FALSE.getDbValue())) {
-                status = PluginStatusEnum.NOT_ENABLE.getIntegerValue();
+                status = PluginStatusEnum.UNABLE.getIntegerValue();
             } else {
                 boolean isLoad = loadPluginMap.values().stream().anyMatch(cqPlugin -> cqPlugin.getClass().getName().equals(pluginDo.getClassPath()));
-                status = isLoad ? PluginStatusEnum.LOAD.getIntegerValue() : PluginStatusEnum.ENABLE_NOT_LOAD.getIntegerValue();
+                status = isLoad ? PluginStatusEnum.LOAD.getIntegerValue() : PluginStatusEnum.ENABLE_UNLOAD.getIntegerValue();
             }
             PluginStatusDto pluginStatusDto = new PluginStatusDto();
             BeanUtil.copyProperties(pluginDo, pluginStatusDto);
@@ -103,7 +103,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
         List<PluginStatusDto> noRecordPluginList = noRecordButLoadPluginList.stream().map(cqPlugin -> {
             PluginStatusDto pluginStatusDto = new PluginStatusDto();
             pluginStatusDto.setRowId(-1L);
-            pluginStatusDto.setName("无");
+            pluginStatusDto.setName("noRecord");
             pluginStatusDto.setClassPath(cqPlugin.getClass().getName());
             pluginStatusDto.setOrder(-1);
             pluginStatusDto.setLevel(-1);

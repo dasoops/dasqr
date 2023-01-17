@@ -18,13 +18,13 @@ public enum PluginStatusEnum {
     /**
      * 未启用
      */
-    NOT_ENABLE(0, "-"),
+    UNABLE(0, "-"),
     /**
      * 未加载
      */
-    ENABLE_NOT_LOAD(1, "x"),
+    ENABLE_UNLOAD(1, "x"),
     /**
-     * 加载
+     * 已加载
      */
     LOAD(2, "√"),
     /**

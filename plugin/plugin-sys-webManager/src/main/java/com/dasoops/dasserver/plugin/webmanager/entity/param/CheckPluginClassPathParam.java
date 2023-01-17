@@ -25,4 +25,10 @@ public class CheckPluginClassPathParam extends SimpleParam {
     @ApiModelProperty(value = "类路径", notes = "类路径", example = "com.dasoops.dasserver.core.TemplatePlugin", required = true)
     private String classPath;
 
+    /**
+     * 检查是否是重复的类路径(0:false;1:true)
+     */
+    @ApiModelProperty(value = "检查是否是重复的类路径(0:false;1:true)", notes = "检查是否是重复的类路径(0:false;1:true)", example = "0", required = true)
+    private Integer checkRepeatClassPath;
+
 }
