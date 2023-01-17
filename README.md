@@ -1,4 +1,4 @@
-# demo
+# web-manager
 
 ## Project setup
 ```

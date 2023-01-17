@@ -93,7 +93,7 @@
       <el-pagination
           v-model:current-page="getConfigParam.current"
           v-model:page-size="getConfigParam.size"
-          :page-sizes="[15, 30, 50, 100]"
+          :page-sizes="[16, 32, 64, 128]"
           small
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -195,7 +195,7 @@ import {
   getNextConfigId
 } from "@/request/ConfigRequest";
 import {ElMessageBox} from "element-plus";
-import {getFileNameForDisposition} from "@/util/StringUtil";
+import { simpleExport } from "@/util/DownloadUtil";
 
 export default defineComponent({
   name: "configManagerView",
@@ -204,7 +204,7 @@ export default defineComponent({
     const getConfigParam: GetConfigPageParam = reactive({
       keyword: undefined,
       description: undefined,
-      size: 15,
+      size: 32,
       current: 1
     });
     const editConfigParam: EditConfigParam = reactive({
@@ -270,7 +270,7 @@ export default defineComponent({
     }
     const loadAddTitle = function () {
       getNextConfigId().then(res => {
-        dataMap.AddTitle = 'Add ( ' + res.data.id + ' )';
+        dataMap.AddTitle = 'Add ( ' + res.data.rowId + ' )';
       })
     }
     const getEditTitle = function () {
@@ -298,24 +298,7 @@ export default defineComponent({
     }
     const handleExport = function () {
       exportAllConfig().then(res => {
-        let data = res.data;
-        if (!data) {
-          return
-        }
-
-        let url = window.URL.createObjectURL(new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}))
-        let a = document.createElement('a')
-        a.style.display = 'none'
-        a.href = url
-
-        //文件名
-        let fileName = getFileNameForDisposition(res.headers['content-disposition']);
-        a.setAttribute('download', fileName)
-
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(a.href)
-        document.body.removeChild(a)
+        simpleExport(res);
       })
 
     }
@@ -458,6 +441,7 @@ export default defineComponent({
 .pageRow {
 
   :deep .el-pagination {
+
     .el-pagination__total {
       color: white;
     }

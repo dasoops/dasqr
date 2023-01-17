@@ -2,7 +2,7 @@
   <das-header></das-header>
   <el-container>
     <el-main>
-      <router-view v-wechat-title='$route.meta.title'/>
+      <router-view/>
     </el-main>
   </el-container>
 </template>
@@ -35,6 +35,9 @@ html, body, #app {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: white;
+  --el-color-white: #2b2b2b;
+  --el-font-family: 'consolas','Microsoft YaHei','微软雅黑','Helvetica Neue',Helvetica,'PingFang SC','Hiragino Sans GB',Arial,sans-serif;
+  --el-color-primary: greenYellow;
 }
 
 .el-form-item__label {
@@ -75,31 +78,72 @@ html, body, #app {
   --el-message-text-color: white;
 }
 
-.el-message-box{
+.el-message-box {
   background: #2b2b2b;
   border: none;
-  span,p{
+
+  span, p {
     color: white;
   }
-  .el-message-box__btns .el-button{
+
+  .el-message-box__btns .el-button {
     background: transparent;
     border: 1px solid white;
   }
-  .el-message-box__btns .el-button:hover{
-    span{
+
+  .el-message-box__btns .el-button:hover {
+    span {
       color: greenyellow;
     }
   }
 
 }
 
-.el-autocomplete-suggestion li{
+.el-autocomplete-suggestion li {
   background: #2b2b2b;
   color: white;
 }
 
-.el-autocomplete-suggestion li:hover{
+.el-autocomplete-suggestion li:hover {
   background: #363636FF;
   color: greenyellow;
 }
+
+.el-popper.is-light {
+  background: #2b2b2b;
+  color: white;
+
+  .el-tag {
+    --el-tag-text-color: white;
+    background: none;
+    border: 1px solid white;
+    border-radius: 5px;
+  }
+}
+
+.el-select__popper.el-popper {
+  background: none;
+  border: 1px solid white;
+}
+
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover {
+  background-color: #363636;
+  color: greenyellow;
+}
+
+.el-select-dropdown.is-multiple .el-select-dropdown__item.hover {
+  background-color: #363636;
+  color: white;
+}
+
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
+  background-color: transparent;
+  color: greenyellow;
+}
+
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected::after {
+  background-color: greenyellow;
+}
+
+
 </style>

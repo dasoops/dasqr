@@ -238,8 +238,8 @@ import {
 } from "@/request/ImageRequest";
 import {UploadRawFile} from "element-plus/lib/components";
 import {AxiosHeaders} from "axios";
-import {Result} from "@/entity/param/BaseParam";
-import {getFileNameForDisposition} from "@/util/StringUtil";
+import {Result} from "@/entity/result/BaseResult";
+import {simpleExport} from "@/util/DownloadUtil";
 
 export default defineComponent({
   name: "roleManagerView",
@@ -317,24 +317,7 @@ export default defineComponent({
     }
     const handleExport = function () {
       exportAllImageInfo().then(res => {
-        let data = res.data;
-        if (!data) {
-          return
-        }
-
-        let url = window.URL.createObjectURL(new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}))
-        let a = document.createElement('a')
-        a.style.display = 'none'
-        a.href = url
-
-        //文件名
-        let fileName = getFileNameForDisposition(res.headers['content-disposition']);
-        a.setAttribute('download', fileName)
-
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(a.href)
-        document.body.removeChild(a)
+        simpleExport(res);
       })
 
     }
@@ -363,7 +346,7 @@ export default defineComponent({
       return dataMap.fantastyUserList;
     }
     const toEdit = function (rowData: ImageData) {
-      dataMap.editImageInfoParam.rowId = rowData.id;
+      dataMap.editImageInfoParam.rowId = rowData.rowId;
       dataMap.editImageInfoParam.keyword = rowData.keyword;
       dataMap.editImageShowFilePath = rowData.filePath;
       dataMap.editImageInfoParam.fileName = rowData.fileName;
@@ -412,7 +395,7 @@ export default defineComponent({
           }
       ).then(function () {
         deleteImage(new class implements DeleteImageParam {
-          id = rowData.id;
+          rowId = rowData.rowId;
         }).then(() => {
           loadData();
         })
@@ -662,7 +645,7 @@ export default defineComponent({
     border: 1px solid greenyellow;
   }
 
-  .el-upload-dragger:hover{
+  .el-upload-dragger:hover {
     border-color: yellowgreen;
   }
 }

@@ -12,7 +12,7 @@ const axiosClient = getInstance("register");
  */
 export const login = function (param: RegisterParam) {
     return axiosClient({
-        url: "/register/login",
+        url: "/login",
         method: "POST",
         data: param
     });

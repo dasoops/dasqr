@@ -13,7 +13,7 @@ export interface BaseParam {
  */
 export interface SortParam {
     sortColumn: number;
-    sortRult: number;
+    sortRule: number;
 }
 
 /**

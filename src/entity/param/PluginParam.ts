@@ -4,7 +4,8 @@ import {BaseDeleteAndEditParam, BaseParam, PageParam, SortParam} from "@/entity/
  * 获取插件排序分页信息param
  */
 export interface GetPluginPageSortParam extends PageParam {
-    sortParam?: SortParam[];
+    sortParamList?: SortParam[];
+    statusList: number[];
 }
 
 /**
@@ -49,4 +50,5 @@ export interface SortPluginInnerParam {
  */
 export interface CheckPluginClassPathParam {
     classPath: string;
+    checkRepeatClassPath: number;
 }

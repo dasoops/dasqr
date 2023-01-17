@@ -1,8 +1,8 @@
-import axios, {AxiosInstance} from "axios";
+import axios, {AxiosInstance, ParamsSerializerOptions} from "axios";
 import {ElMessage} from "element-plus";
 import {useRouter} from "vue-router";
 import {getBaseUrl} from "@/request/initRequest";
-
+import qs from "qs";
 // const axiosClient = axios.create({
 //     baseURL: getBaseUrl(),
 //     timeout: 5000,
@@ -15,7 +15,7 @@ import {getBaseUrl} from "@/request/initRequest";
 const instanceMap = new Map<string | undefined, AxiosInstance>();
 
 function setInterceptors(axiosInstance: AxiosInstance) {
-    axiosInstance.interceptors.request.use((config) => {
+    axiosInstance.interceptors.request.use(function (config) {
         config.headers = config.headers ? config.headers : {};
         const token = localStorage.getItem("token");
         if (token) {
@@ -24,17 +24,24 @@ function setInterceptors(axiosInstance: AxiosInstance) {
         const method = config.method;
         if (method == 'GET' || method == 'get') {
             config.params = config.data;
+            config.paramsSerializer = new class implements ParamsSerializerOptions {
+                serialize = function (params: Record<string, any>) {
+                    return qs.stringify(params, {indices: false});
+                }
+            }
+
         }
         return config;
     })
 
     axiosInstance.interceptors.response.use(
-        (res) => {
+        function (res) {
             if (res.headers['content-type'] != "application/json;charset=UTF-8") {
                 return res;
             }
             const code: number = res.data.code;
-            if (code != 200) {
+            //不跳过异常 且 响应码不为200才报错误
+            if (!res.config.passError && code !== 200) {
                 ElMessage.error(res.data.msg);
                 if (code == 10001) {
                     localStorage.removeItem("token");

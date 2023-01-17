@@ -1,5 +1,5 @@
 // vuex.d.ts
-import { Store } from 'vuex'
+import {Store} from 'vuex'
 import {BaseResult} from "@/entity/result/BaseResult";
 
 declare module '@vue/runtime-core' {
@@ -18,12 +18,14 @@ declare module 'axios' {
     // 拓展 axios 的 config 类型
     export interface AxiosRequestConfig {
         validityTime?: number,
-        disableCache?: boolean
+        disableCache?: boolean,
+        passError?: boolean,
     }
 
     // 拓展Axios返回值类型
     export interface AxiosInstance {
         (config: AxiosRequestConfig): Promise<any>
-        <T = BaseResult>(config: AxiosRequestConfig): Promise<T>,
+
+        <T extends BaseResult>(config: AxiosRequestConfig): Promise<T>,
     }
 }

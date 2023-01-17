@@ -1,10 +1,12 @@
 <template>
-
+  <das-drag></das-drag>
 </template>
 
 <script>
+import DasDrag from "@/components/dasDrag";
 export default {
-  name: "RegisterManagerView"
+  name: "RegisterManagerView",
+  components: {DasDrag}
 }
 </script>
 

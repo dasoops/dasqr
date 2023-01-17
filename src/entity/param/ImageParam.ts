@@ -20,7 +20,7 @@ export interface AddImageParam extends BaseParam {
  * 删除图片Param
  */
 export interface DeleteImageParam extends BaseParam {
-    id: number;
+    rowId: number;
 }
 
 /**

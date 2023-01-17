@@ -1,6 +1,8 @@
 /**
  * 获取插件vo
  */
+import {BaseVo} from "@/entity/vo/BaseVo";
+
 export interface GetPluginVo extends BaseVo {
     name: string;
     description: string;
@@ -9,6 +11,7 @@ export interface GetPluginVo extends BaseVo {
     level: number;
     enable: number;
     rowId: number;
+    status: number;
 }
 
 /**

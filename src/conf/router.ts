@@ -5,14 +5,14 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         redirect: 'image',
         meta: {
-            title: 'index',
+            title: 'Index',
         },
     },
     {
         path: '/config',
         name: 'configManager',
         meta: {
-            title: 'config',
+            title: 'Config',
         },
         // route level code-splitting
         // this generates dasDrag.vue separate chunk (about.[hash].js) for this route
@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/register',
         name: 'registerManager',
         meta: {
-            title: 'register',
+            title: 'Register',
         },
         // route level code-splitting
         // this generates dasDrag.vue separate chunk (about.[hash].js) for this route
@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/plugin',
         name: 'pluginManager',
         meta: {
-            title: '',
+            title: 'Plugin',
         },
         // route level code-splitting
         // this generates dasDrag.vue separate chunk (about.[hash].js) for this route
@@ -45,7 +45,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/role',
         name: 'roleManager',
         meta: {
-            title: 'role',
+            title: 'Role',
         },
         // route level code-splitting
         // this generates dasDrag.vue separate chunk (about.[hash].js) for this route
@@ -56,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/image',
         name: 'imageManager',
         meta: {
-            title: 'image',
+            title: 'Image',
         },
         // route level code-splitting
         // this generates dasDrag.vue separate chunk (about.[hash].js) for this route
@@ -67,7 +67,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/login',
         name: 'login',
         meta: {
-            title: 'login',
+            title: 'Login',
         },
         // route level code-splitting
         // this generates dasDrag.vue separate chunk (about.[hash].js) for this route

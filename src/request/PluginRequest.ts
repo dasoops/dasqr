@@ -5,17 +5,19 @@ import {
     AddPluginParam,
     CheckPluginClassPathParam,
     EditPluginParam,
-    GetPluginPageSortParam, SortPluginParam
+    GetPluginPageSortParam,
+    SortPluginParam
 } from "@/entity/param/PluginParam";
 import {DeleteParam} from "@/entity/param/BaseParam";
 import {GetPluginSortVo, GetPluginVo} from "@/entity/vo/PluginVo";
+import {GetNextRowIdVo} from "@/entity/vo/BaseVo";
 
 const axiosClient = getInstance('plugin');
 
 /**
  * 新增插件
  */
-export const addPlugin = function (param: AddPluginParam): Promise<AxiosResponse<PageResult<AddPluginParam>>> {
+export const addPlugin = function (param: AddPluginParam): Promise<PageResult<AddPluginParam>> {
     return axiosClient({
         url: "/addPlugin",
         method: "POST",
@@ -26,7 +28,19 @@ export const addPlugin = function (param: AddPluginParam): Promise<AxiosResponse
 /**
  * 检查插件类路径
  */
-export const checkPluginClassPath = function (param: CheckPluginClassPathParam): Promise<AxiosResponse<SimpleResult>> {
+export const checkPluginClassPathNoError = function (param: CheckPluginClassPathParam): Promise<SimpleResult> {
+    return axiosClient({
+        url: "/checkPluginClassPath",
+        method: "GET",
+        data: param,
+        passError: true
+    })
+}
+
+/**
+ * 检查插件类路径
+ */
+export const checkPluginClassPath = function (param: CheckPluginClassPathParam): Promise<SimpleResult> {
     return axiosClient({
         url: "/checkPluginClassPath",
         method: "GET",
@@ -37,7 +51,7 @@ export const checkPluginClassPath = function (param: CheckPluginClassPathParam):
 /**
  * 删除插件
  */
-export const deletePlugin = function (param: DeleteParam): Promise<AxiosResponse<SimpleResult>> {
+export const deletePlugin = function (param: DeleteParam): Promise<SimpleResult> {
     return axiosClient({
         url: "/deletePlugin",
         method: "POST",
@@ -48,7 +62,7 @@ export const deletePlugin = function (param: DeleteParam): Promise<AxiosResponse
 /**
  * 编辑插件
  */
-export const editPlugin = function (param: EditPluginParam): Promise<AxiosResponse<SimpleResult>> {
+export const editPlugin = function (param: EditPluginParam): Promise<SimpleResult> {
     return axiosClient({
         url: "/editPlugin",
         method: "POST",
@@ -59,10 +73,10 @@ export const editPlugin = function (param: EditPluginParam): Promise<AxiosRespon
 /**
  * 获取分页排序插件信息
  */
-export const getPluginPage =  function (param: GetPluginPageSortParam): Promise<PageResult<GetPluginVo>> {
+export const getPluginPage = function (param: GetPluginPageSortParam): Promise<PageResult<GetPluginVo>> {
     return axiosClient({
         url: "/getPluginPage",
-        method: "GET",
+        method: "POST",
         data: param,
     })
 }
@@ -70,10 +84,10 @@ export const getPluginPage =  function (param: GetPluginPageSortParam): Promise<
 /**
  * 获取插件排序
  */
-export const getPluginSort = function (): Promise<AxiosResponse<Result<GetPluginSortVo>>> {
+export const getPluginSort = function (): Promise<Result<GetPluginSortVo>> {
     return axiosClient({
         url: "/getPluginSort",
-        method: "GenericTypeAnnotation",
+        method: "GET",
     })
 }
 
@@ -81,7 +95,7 @@ export const getPluginSort = function (): Promise<AxiosResponse<Result<GetPlugin
  * 获取下一个自增主键id
  * @returns
  */
-export const getNextPluginId = function (): Promise<AxiosResponse<Result<GetNextRowIdVo>>> {
+export const getNextPluginId = function (): Promise<Result<GetNextRowIdVo>> {
     return axiosClient({
         url: "/getNextId",
         method: "GET"
@@ -91,7 +105,7 @@ export const getNextPluginId = function (): Promise<AxiosResponse<Result<GetNext
 /**
  * 对插件排序
  */
-export const sortPlugin = function (param: SortPluginParam): Promise<AxiosResponse<SimpleResult>> {
+export const sortPlugin = function (param: SortPluginParam): Promise<SimpleResult> {
     return axiosClient({
         url: "/sortPlugin",
         method: "POST",

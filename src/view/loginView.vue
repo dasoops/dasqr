@@ -5,8 +5,8 @@
         :model="formData"
         status-icon
         :rules="rules"
-        label-width="80px"
         class="login-form"
+        label-width="80px"
         @keydown.enter="loginFunc(loginFormRef)"
     >
       <h2>
@@ -18,12 +18,9 @@
       <el-form-item label="密码" prop="password">
         <el-input v-model="formData.password" type="password" autocomplete="off"/>
       </el-form-item>
-      <el-form-item>
-        <el-button class="loginBtn" type="primary" @click="loginFunc(loginFormRef)"
-        >登录
-        </el-button
-        >
-      </el-form-item>
+      <el-button class="loginBtn" type="primary" @click="loginFunc(loginFormRef)"
+      >登录
+      </el-button>
     </el-form>
   </div>
 </template>
@@ -89,19 +86,62 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.login-box {
+.login-box :deep {
   width: 100%;
   margin: 0 auto;
+
+  .el-input .el-input__wrapper.is-focus {
+    border-bottom: 1px solid greenyellow;
+  }
+
+  .el-input .el-input__wrapper {
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    border-radius: 0;
+    border-bottom: 1px solid white;
+    box-shadow: 0 0;
+  }
+
+  .el-input .el-input__inner {
+    color: white;
+  }
+
+  .el-button {
+    border: 1px solid white;
+    color: white;
+  }
+
+  .el-button {
+    --el-button-hover-text-color: greenYellow !important;
+    --el-button-disabled-border-color: grey !important;
+    --el-button-disabled-text-color: grey !important;
+    background-color: rgba(255, 255, 255, 0);
+
+    .el-icon {
+      color: white;
+    }
+  }
+
+  .el-button:active {
+    border: 1px solid greenyellow;
+    color: white;
+  }
+
+  .el-button:hover {
+    color: greenyellow;
+  }
 
   .label {
     color: white;
   }
 
   .login-form {
+    text-align: center;
     width: 30%;
     margin: 10% auto;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 20px 40px 20px 20px;
+    background: transparent;
+    padding: 40px 40px 40px 40px;
+    border: 1px solid white;
     border-radius: 20px;
 
     h2 {
@@ -110,7 +150,6 @@ export default defineComponent({
   }
 
   .loginBtn {
-    margin: 10px 10px 10px 38%;
   }
 }
 

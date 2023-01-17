@@ -117,7 +117,7 @@
       <el-pagination
           v-model:current-page="getImageInfoPageParam.current"
           v-model:page-size="getImageInfoPageParam.size"
-          :page-sizes="[15, 30, 50, 100]"
+          :page-sizes="[16, 32, 64, 128]"
           small
           background
           layout="total, sizes, prev, pager, next, jumper"
@@ -238,15 +238,15 @@ import {
 } from "@/request/ImageRequest";
 import {UploadRawFile} from "element-plus/lib/components";
 import {AxiosHeaders} from "axios";
-import {getFileNameForDisposition} from "@/util/StringUtil";
 import {Result} from "@/entity/result/BaseResult";
+import { simpleExport } from "@/util/DownloadUtil";
 
 export default defineComponent({
   name: "imageManagerView",
   setup() {
     let tableData: Array<ImageData> = reactive([]);
     const getImageInfoPageParam: GetImageInfoPageParam = reactive({
-      size: 15,
+      size: 32,
       current: 1
     });
     const editImageInfoParam: EditImageInfoParam = reactive({
@@ -316,24 +316,7 @@ export default defineComponent({
     }
     const handleExport = function () {
       exportAllImageInfo().then(res => {
-        let data = res.data;
-        if (!data) {
-          return
-        }
-
-        let url = window.URL.createObjectURL(new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}))
-        let a = document.createElement('a')
-        a.style.display = 'none'
-        a.href = url
-
-        //文件名
-        let fileName = getFileNameForDisposition(res.headers['content-disposition']);
-        a.setAttribute('download', fileName)
-
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(a.href)
-        document.body.removeChild(a)
+        simpleExport(res);
       })
 
     }
@@ -411,7 +394,7 @@ export default defineComponent({
           }
       ).then(function () {
         deleteImage(new class implements DeleteImageParam {
-          id = rowData.rowId;
+          rowId = rowData.rowId;
         }).then(() => {
           loadData();
         })
