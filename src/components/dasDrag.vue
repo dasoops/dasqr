@@ -57,6 +57,14 @@ export default {
       this.list = this.list.sort((a, b) => a.order - b.order);
     }
   },
+  watch: {
+    this.list: {
+      handler(newList, oldList){
+        this.list = newList;
+      },
+      deep: true,
+    }
+  }
   computed: {
     dragOptions() {
       return {
