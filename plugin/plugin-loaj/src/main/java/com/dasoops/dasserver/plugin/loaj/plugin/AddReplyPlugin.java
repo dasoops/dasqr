@@ -3,6 +3,7 @@ package com.dasoops.dasserver.plugin.loaj.plugin;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.cq.utils.CqMessageAssert;
 import com.dasoops.dasserver.plugin.loaj.cache.ReplyCache;
 import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;
@@ -34,9 +35,10 @@ public class AddReplyPlugin extends CqPlugin {
 
 
     @MessageMapping(prefix = "addReply,跟我学", type = MessageMappingTypeEnum.ALL)
-    public String addReply(AddRelayParam param) {
-        CqMessageAssert.getInstance().allMustNotNull(param, param.getRelay(), param.getKeyword());
+    public String addReply(MappingMessage<AddRelayParam> message) {
+        CqMessageAssert.getInstance().allMustNotNull(message,message.getParam(), message.getParam().getRelay(), message.getParam().getKeyword());
 
+        AddRelayParam param = message.getParam();
         ReplyDo replyDo = new ReplyDo();
         replyDo.setKeyword(param.getKeyword());
         replyDo.setReply(param.getRelay());
