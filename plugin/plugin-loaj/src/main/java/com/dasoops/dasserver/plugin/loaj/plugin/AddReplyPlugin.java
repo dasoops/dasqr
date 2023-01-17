@@ -34,9 +34,9 @@ public class AddReplyPlugin extends CqPlugin {
     private final ReplyCache replyCache;
 
 
-    @MessageMapping(prefix = "addReply,跟我学", type = MessageMappingTypeEnum.ALL)
+    @MessageMapping(prefix = {"addReply", "跟我学"}, type = MessageMappingTypeEnum.ALL)
     public String addReply(MappingMessage<AddRelayParam> message) {
-        CqMessageAssert.getInstance().allMustNotNull(message,message.getParam(), message.getParam().getRelay(), message.getParam().getKeyword());
+        CqMessageAssert.getInstance().allMustNotNull(message, message.getParam(), message.getParam().getRelay(), message.getParam().getKeyword());
 
         AddRelayParam param = message.getParam();
         ReplyDo replyDo = new ReplyDo();
