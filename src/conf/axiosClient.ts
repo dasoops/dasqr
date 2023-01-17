@@ -11,7 +11,6 @@ import qs from "qs";
 //     },
 // });
 
-
 const instanceMap = new Map<string | undefined, AxiosInstance>();
 
 function setInterceptors(axiosInstance: AxiosInstance) {
@@ -43,7 +42,7 @@ function setInterceptors(axiosInstance: AxiosInstance) {
             //不跳过异常 且 响应码不为200才报错误
             if (!res.config.passError && code !== 200) {
                 ElMessage.error(res.data.msg);
-                if (code == 10001) {
+                if (code == 10000) {
                     localStorage.removeItem("token");
                     const router = useRouter();
                     router.push("/login").then();
