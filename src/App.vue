@@ -35,7 +35,6 @@ html, body, #app {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: white;
-  --el-color-white: #2b2b2b;
   --el-font-family: 'consolas','Microsoft YaHei','微软雅黑','Helvetica Neue',Helvetica,'PingFang SC','Hiragino Sans GB',Arial,sans-serif;
   --el-color-primary: greenYellow;
 }
