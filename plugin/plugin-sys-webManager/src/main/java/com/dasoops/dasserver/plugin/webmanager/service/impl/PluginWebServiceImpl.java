@@ -18,6 +18,7 @@ import com.dasoops.dasserver.cq.entity.dto.PluginStatusDto;
 import com.dasoops.dasserver.cq.entity.enums.PluginStatusEnum;
 import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
+import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperPluginService;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginInnerParam;
@@ -65,6 +66,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
     private final RegisterService registerService;
     private final PluginService pluginService;
     private final ApplicationContext applicationContext;
+    private final AuthWrapperPluginService authWrapperPluginService;
 
     @Override
     public IPage<GetPluginVo> getPluginPageData(GetPluginPageSortParam param) {
@@ -146,6 +148,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
         PluginDo pluginDo = param.buildDo();
         super.updateById(pluginDo);
         CqPluginGlobal.refresh();
+        authWrapperPluginService.initOrUpdatePluginClassNameOtoIdMap2Cache();
     }
 
     @Override
