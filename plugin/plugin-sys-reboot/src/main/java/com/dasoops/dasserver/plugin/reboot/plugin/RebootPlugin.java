@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.reboot.plugin;
 
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
@@ -45,7 +46,11 @@ public class RebootPlugin extends CqPlugin {
             cqTemplate.sendMsg(param, "gogogo");
         }
         //改start会有问题,同步异步
-        execTemplate.exec("reboot");
+        try {
+            execTemplate.exec("reboot");
+        } catch (LogicException e) {
+            return "未配置reboot文件路径(dasq.plugin.exec.execPluginMap.reboot)";
+        }
         if (quietReboot) {
             return "compile complete,to reboot";
         }
