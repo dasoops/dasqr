@@ -44,7 +44,7 @@ public class ExecPlugin extends CqPlugin {
         //放行
         cqTemplate.sendMsg(message, "gogogo");
         new ExecThread(execFilePath).run();
-        return "gogogo";
+        return null;
     }
 
 
