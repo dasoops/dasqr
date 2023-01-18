@@ -88,7 +88,7 @@ public class EventHandler {
                         case NOTICE_GROUP_UPLOAD -> handleMessage(cqTemplate, eventJson, CqGroupUploadNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupUploadNotice(cqTemplate, (CqGroupUploadNoticeEvent) cqEvent));
                         case NOTICE_FRIEND_RECALL -> handleMessage(cqTemplate, eventJson, CqGroupRecallNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupRecallNotice(cqTemplate, (CqGroupRecallNoticeEvent) cqEvent));
                         case NOTICE_GROUP_RECALL -> handleMessage(cqTemplate, eventJson, CqFriendRecallNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onFriendRecallNotice(cqTemplate, (CqFriendRecallNoticeEvent) cqEvent));
-                        case NOTICE_GROUP_CARD -> handleMessage(cqTemplate,eventJson,CqGroupCardNoticeEvent.class,(cqPluginPrama,cqTemplateParam,cqEvent)->cqPluginPrama.onGroupCardNotice(cqTemplate,(CqGroupCardNoticeEvent)cqEvent))
+                        case NOTICE_GROUP_CARD -> handleMessage(cqTemplate, eventJson, CqGroupCardNoticeEvent.class, (cqPluginPrama, cqTemplateParam, cqEvent) -> cqPluginPrama.onGroupCardNotice(cqTemplate, (CqGroupCardNoticeEvent) cqEvent));
                     }
                 }
                 case REQUEST -> {
