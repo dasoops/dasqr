@@ -1,6 +1,5 @@
 package com.dasoops.dasserver.plugin.reboot;
 
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
  * @Description: 自动配置
  */
 @ComponentScan("com.dasoops.dasserver.plugin.reboot")
-@EnableConfigurationProperties(RebootProperties.class)
 public class AutoConfiguration {
 
 }

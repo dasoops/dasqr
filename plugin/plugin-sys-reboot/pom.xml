@@ -31,7 +31,7 @@
         </dependency>
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>plugin-sys-shamMessage</artifactId>
+            <artifactId>plugin-sys-exec</artifactId>
         </dependency>
     </dependencies>
 
