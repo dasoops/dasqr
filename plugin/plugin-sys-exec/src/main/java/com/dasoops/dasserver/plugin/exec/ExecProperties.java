@@ -13,7 +13,7 @@ import java.util.Map;
  * @Version 1.0.0
  * @Description: execProperties
  */
-@ConfigurationProperties(prefix = "dasq.plugin.reboot")
+@ConfigurationProperties(prefix = "dasq.plugin.exec")
 @Data
 public class ExecProperties {
 
