@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.template.plugin.TemplatePlugin;
+package com.dasoops.dasserver.plugin.shammessage.plugin;
 
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;

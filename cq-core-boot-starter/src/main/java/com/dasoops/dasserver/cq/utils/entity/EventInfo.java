@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.cq.utils.entity;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.PostTypeEnum;
@@ -64,4 +65,9 @@ public class EventInfo {
     @JSONField(serialize = false)
     private EventTypeEnum eventTypeEnum;
 
+    /**
+     * 原始事件json
+     */
+    @JSONField(serialize = false)
+    private JSONObject rawEventJson;
 }

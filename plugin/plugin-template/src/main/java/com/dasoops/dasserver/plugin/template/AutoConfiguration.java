@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.template.AutoConfiguration;
+package com.dasoops.dasserver.plugin.shammessage;
 
 import org.springframework.context.annotation.ComponentScan;
 

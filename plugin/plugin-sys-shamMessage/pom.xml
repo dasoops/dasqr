@@ -8,9 +8,9 @@
         <version>1.0.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>plugin-sys-reboot</artifactId>
+    <artifactId>plugin-sys-shamMessage</artifactId>
     <version>1.0.0</version>
-    <description>dasServer sys plugin rebootPlugin</description>
+    <description>dasServer plugin shamMessage</description>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
@@ -24,14 +24,6 @@
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>cq-core-db-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>plugin-sys-shamMessage</artifactId>
         </dependency>
     </dependencies>
 

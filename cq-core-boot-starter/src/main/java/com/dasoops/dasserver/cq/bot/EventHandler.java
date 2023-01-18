@@ -114,7 +114,7 @@ public class EventHandler {
     /**
      * 处理消息的function接口,提供给上面的匿名内部类使用
      */
-    public interface HandleFunction {
+    private interface HandleFunction {
         /**
          * 执行
          *
@@ -149,7 +149,7 @@ public class EventHandler {
      * @param eventJson  事件json对象
      * @param clazz      clazz
      */
-    public void handleMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqEvent> clazz, HandleFunction func) {
+    private void handleMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqEvent> clazz, HandleFunction func) {
         handleMessage(cqTemplate, eventJson, clazz, func, true);
     }
 
@@ -160,7 +160,7 @@ public class EventHandler {
      * @param eventJson  事件json对象
      * @param clazz      clazz
      */
-    public void handleMetaEvent(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqMetaEvent> clazz, HandleFunction func) {
+    private void handleMetaEvent(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqMetaEvent> clazz, HandleFunction func) {
         handleMessage(cqTemplate, eventJson, clazz, func, false);
     }
 
@@ -173,7 +173,7 @@ public class EventHandler {
      * @param defaultFunction 默认方法
      * @param mustAuth        是否必须认证
      */
-    public void handleMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqEvent> clazz, HandleFunction defaultFunction, boolean mustAuth) {
+    private void handleMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqEvent> clazz, HandleFunction defaultFunction, boolean mustAuth) {
         handleResloveMessage(cqTemplate, eventJson, clazz, defaultFunction, mustAuth, null, null);
     }
 
@@ -187,7 +187,7 @@ public class EventHandler {
      * @param defaultMethodName 默认调用方法名称
      * @param eventTypeEnum     消息类型枚举
      */
-    public void handleResloveMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqMessageEvent> clazz, HandleFunction defaultFunction, String defaultMethodName, EventTypeEnum eventTypeEnum) {
+    private void handleResloveMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqMessageEvent> clazz, HandleFunction defaultFunction, String defaultMethodName, EventTypeEnum eventTypeEnum) {
         handleResloveMessage(cqTemplate, eventJson, clazz, defaultFunction, true, defaultMethodName, eventTypeEnum);
     }
 
@@ -202,7 +202,7 @@ public class EventHandler {
      * @param defaultMethodName 默认调用方法名称
      * @param eventTypeEnum     消息类型枚举
      */
-    public void handleResloveMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqEvent> clazz, HandleFunction defaultFunction, boolean mustAuth, String defaultMethodName, EventTypeEnum eventTypeEnum) {
+    private void handleResloveMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqEvent> clazz, HandleFunction defaultFunction, boolean mustAuth, String defaultMethodName, EventTypeEnum eventTypeEnum) {
         //实际只有俩会走这里,其余的不会走这个方法,所以通过硬编码实现,但是考虑到以后可能会改,所以先不删而是注释
         /*
         if (!messageTypeEnum.equals(MessageTypeEnum.MESSAGE_GROUP) && !messageTypeEnum.equals(MessageTypeEnum.MESSAGE_PRIVATE)) {

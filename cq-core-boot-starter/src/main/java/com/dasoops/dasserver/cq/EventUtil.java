@@ -70,26 +70,27 @@ public final class EventUtil {
     /**
      * 构建事件信息
      *
-     * @param paramObj param obj
+     * @param eventJson param obj
      * @return {@link EventInfo}
      */
-    public static EventInfo buildMessageInfo(JSONObject paramObj) {
-        EventInfo eventInfo = paramObj.to(EventInfo.class);
+    public static EventInfo buildMessageInfo(JSONObject eventJson) {
+        EventInfo eventInfo = eventJson.to(EventInfo.class);
+        eventInfo.setRawEventJson(eventJson);
         PostTypeEnum postTypeEnum = EnumUtil.getBy(PostTypeEnum::getKey, eventInfo.getPostType());
         eventInfo.setPostTypeEnum(postTypeEnum);
 
         String eventType;
         //心跳的messageType键不一样
         switch (postTypeEnum) {
-            case MESSAGE, MESSAGE_SENT -> eventType = paramObj.getString(CqEventColumnEnum.MESSAGE_TYPE.getKey());
-            case NOTICE -> eventType = paramObj.getString(CqEventColumnEnum.NOTICE_TYPE.getKey());
-            case REQUEST -> eventType = paramObj.getString(CqEventColumnEnum.REQUEST_TYPE.getKey());
-            case META_EVENT -> eventType = paramObj.getString(CqEventColumnEnum.MESSAGE_EVENT_TYPE.getKey());
+            case MESSAGE, MESSAGE_SENT -> eventType = eventJson.getString(CqEventColumnEnum.MESSAGE_TYPE.getKey());
+            case NOTICE -> eventType = eventJson.getString(CqEventColumnEnum.NOTICE_TYPE.getKey());
+            case REQUEST -> eventType = eventJson.getString(CqEventColumnEnum.REQUEST_TYPE.getKey());
+            case META_EVENT -> eventType = eventJson.getString(CqEventColumnEnum.MESSAGE_EVENT_TYPE.getKey());
             default -> throw new LogicException(CqExceptionEnum.UNKNOWN_POST_TYPE);
         }
         EventTypeEnum eventTypeEnum = EnumUtil.getBy(EventTypeEnum::getKey, eventType);
         eventInfo.setEventTypeEnum(eventTypeEnum);
-        eventInfo.setAuthorId(paramObj.getLong(CqEventColumnEnum.USER_ID.getKey()));
+        eventInfo.setAuthorId(eventJson.getLong(CqEventColumnEnum.USER_ID.getKey()));
         return eventInfo;
     }
 
