@@ -1,16 +1,18 @@
 package com.dasoops.dasserver.plugin.reboot.plugin;
 
-import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
+import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.entity.enums.ServerModeEnum;
 import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.plugin.reboot.RebootProperties;
 import com.dasoops.dasserver.plugin.reboot.entity.enums.QuietRebootEnum;
 import com.dasoops.dasserver.plugin.reboot.entity.enums.RebootConfigHashKeyEnum;
+import com.dasoops.dasserver.plugin.reboot.entity.param.RebootParam;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,14 +41,18 @@ public class RebootPlugin extends CqPlugin {
 
     @SuppressWarnings("all")
     @MessageMapping(prefix = "reboot", type = MessageMappingTypeEnum.ALL)
-    public String reboot(CqTemplate cqTemplate, MappingMessage<SimpleParam> param) {
+    public String reboot(CqTemplate cqTemplate, MappingMessage<RebootParam> param) {
+        if (!configCache.getIntegerConfig(ConfigHashKeyEnum.SERVER_MODE).equals(ServerModeEnum.PROD.getDbValue())) {
+            return null;
+        }
         QuietRebootEnum quietRebootEnum = configCache.getEnumConfig(RebootConfigHashKeyEnum.QUIET_REBOOT, QuietRebootEnum.class);
-        if (quietRebootEnum.equals(QuietRebootEnum.FALSE)) {
+        boolean quietReboot = quietRebootEnum.equals(QuietRebootEnum.FALSE);
+        if (quietReboot) {
             cqTemplate.sendMsg(param, "gogogo");
         }
         //改start会有问题,同步异步
         new RebootThread(rebootProperties).run();
-        if (quietRebootEnum.equals(QuietRebootEnum.FALSE)) {
+        if (quietReboot) {
             return "compile complete,to reboot";
         }
         return null;

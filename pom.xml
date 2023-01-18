@@ -18,6 +18,7 @@
         <module>plugin/plugin-log</module>
         <module>plugin/plugin-sleep</module>
         <module>plugin/plugin-style</module>
+        <module>plugin/plugin-sys-exec</module>
         <module>plugin/plugin-sys-authWrapper</module>
         <module>plugin/plugin-sys-exceptionWrapper</module>
         <module>plugin/plugin-sys-pluginLoader</module>
@@ -155,6 +156,12 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-image</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-sys-exec</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 

@@ -57,6 +57,11 @@
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-exec</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-sys-pluginWrapper</artifactId>
         </dependency>
 

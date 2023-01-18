@@ -371,6 +371,15 @@ public class MessageMappingReslover {
         if (annotation.ignoreDbc()) {
             message = Convert.toDBC(message);
         }
+        for (String equal : annotation.equal()) {
+            if (annotation.ignoreDbc()) {
+                equal = Convert.toDBC(equal);
+            }
+            if (equal.equals(message)) {
+                return equal;
+            }
+        }
+
         //前缀匹配
         for (String prefix : annotation.prefix()) {
             if (annotation.ignoreDbc()) {

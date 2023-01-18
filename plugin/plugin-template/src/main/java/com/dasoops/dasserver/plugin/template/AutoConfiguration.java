@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.alasnotice;
+package com.dasoops.dasserver.template.AutoConfiguration;
 
 import org.springframework.context.annotation.ComponentScan;
 

@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.alasnotice.plugin;
+package com.dasoops.dasserver.template.plugin.TemplatePlugin;
 
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;

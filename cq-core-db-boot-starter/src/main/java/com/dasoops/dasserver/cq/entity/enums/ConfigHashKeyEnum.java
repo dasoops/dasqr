@@ -43,6 +43,10 @@ public enum ConfigHashKeyEnum implements IRedisHashKeyEnum {
      * 令牌有效时间(秒)
      */
     TOKEN_EFFECTIVE_SECONDS("tokenEffectiveSeconds"),
+    /**
+     * 服务模式(0:prod;1:dev)
+     */
+    SERVER_MODE("serverMode"),
     ;
 
     @Getter

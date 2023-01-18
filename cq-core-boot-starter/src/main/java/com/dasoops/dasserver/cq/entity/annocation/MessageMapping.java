@@ -44,6 +44,11 @@ public @interface MessageMapping {
     String[] suffix() default {};
 
     /**
+     * 相等
+     */
+    String[] equal() default {};
+
+    /**
      * 匹配所有
      * 请注意,匹配所有无法获得matchKeyword,也无法获得参数
      *
