@@ -92,7 +92,10 @@ public enum EventTypeEnum {
      * http请求
      */
     HTTP_REQUEST("httpRequest"),
-    ;
+    /**
+     * 群成员名片更新
+     */
+    NOTICE_GROUP_CARD("group_card");
 
     final String key;
 

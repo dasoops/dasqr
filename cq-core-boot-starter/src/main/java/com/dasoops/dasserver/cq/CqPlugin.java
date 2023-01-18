@@ -218,4 +218,8 @@ public class CqPlugin {
     public PassObj onFriendRecallNotice(CqTemplate cqTemplate, CqFriendRecallNoticeEvent event) {
         return PassObj.pass(event);
     }
+
+    public PassObj onGroupCardNotice(CqTemplate cqTemplate, CqGroupCardNoticeEvent event) {
+        return PassObj.pass(event);
+    }
 }
