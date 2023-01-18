@@ -6,16 +6,11 @@ import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
-import com.dasoops.dasserver.plugin.exec.ExecProperties;
+import com.dasoops.dasserver.plugin.exec.ExecTemplate;
 import com.dasoops.dasserver.plugin.exec.entity.param.ExecParam;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 /**
  * @Title: TemplatePlugin
@@ -31,40 +26,18 @@ import java.io.InputStreamReader;
 @RequiredArgsConstructor
 public class ExecPlugin extends CqPlugin {
 
-    private final ExecProperties execProperties;
+    private final ExecTemplate execTemplate;
 
     @MessageMapping(prefix = "exec", type = MessageMappingTypeEnum.ALL)
     @SuppressWarnings("all")
     public String exec(MappingMessage<ExecParam> message, CqTemplate cqTemplate) {
-        String execFileKeyword = message.getParam().getExecFileKeyword();
-        String execFilePath = execProperties.getExecPathMap().get(execFileKeyword);
-        if (execFilePath == null) {
-            return "无效的关键词";
-        }
-        //放行
         cqTemplate.sendMsg(message, "gogogo");
-        new ExecThread(execFilePath).run();
-        return null;
-    }
-
-
-    @AllArgsConstructor
-    static class ExecThread extends Thread {
-        private final String execFilePath;
-
-        @Override
-        public void run() {
-            try {
-                Process process = Runtime.getRuntime().exec(new String[]{"/bin/sh", execFilePath});
-                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    log.info(line);
-                }
-            } catch (IOException e) {
-                throw new LogicException(e);
-            }
+        try {
+            execTemplate.exec(message.getParam().getExecFileKeyword());
+        } catch (LogicException e) {
+            return e.getExceptionEnum().getMsg();
         }
+        return "run shell completed";
     }
 
 }
