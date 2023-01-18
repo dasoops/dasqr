@@ -58,13 +58,14 @@ export default {
     }
   },
   watch: {
-    this.list: {
-      handler(newList, oldList){
+    sortDataList: {
+      handler(newList, oldList) {
+        console.log(newList);
         this.list = newList;
       },
       deep: true,
     }
-  }
+  },
   computed: {
     dragOptions() {
       return {
@@ -88,6 +89,7 @@ export default {
     color: rgba(173, 255, 47, 1);
     border: 1px solid greenyellow;
   }
+
   .drag {
     color: rgba(173, 255, 47, 0.2);
     border: 1px solid greenyellow;

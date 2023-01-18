@@ -70,7 +70,6 @@ export default function () {
      * @param getColumnInteger
      */
     const headerClick = (column: any, getColumnInteger: (string: string) => number) => {
-        console.log(column);
         // 把当前点击的表头字段名存起来，后面取消列的排序会用到
         currentClickColumn = getColumnInteger(column.label);
     }

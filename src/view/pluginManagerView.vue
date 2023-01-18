@@ -327,7 +327,6 @@ const handleSortListChange = function (list) {
 }
 const handleSort = function () {
   let i = 0;
-  console.log(dataMap.pluginSortList);
   let sortPluginInnerParamList = dataMap.pluginSortList.map(pluginSort => {
     return new class implements SortPluginInnerParam {
       rowId = pluginSort.rowId;
@@ -497,7 +496,6 @@ const toEdit = function (rowData: GetPluginVo) {
   editPluginParam.enable = rowData.enable;
   editPluginParam.level = rowData.level;
   editPluginParam.name = rowData.name;
-  console.log(editPluginParam);
   dataMap.showEditDialog = true;
 }
 const handleEdit = function (editFormRef: FormInstance | undefined) {
@@ -722,6 +720,7 @@ init();
 
 /* dialog */
 .dialog :deep {
+  --el-color-white: white;
   span {
     color: white;
   }

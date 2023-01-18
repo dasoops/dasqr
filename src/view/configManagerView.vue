@@ -502,6 +502,7 @@ export default defineComponent({
   }
 
   .el-dialog {
+    --el-color-white: white;
     background: #2b2b2b;
   }
 
