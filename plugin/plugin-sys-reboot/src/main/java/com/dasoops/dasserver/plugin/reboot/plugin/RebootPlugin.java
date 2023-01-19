@@ -6,9 +6,7 @@ import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
-import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
-import com.dasoops.dasserver.cq.entity.enums.ServerModeEnum;
 import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.plugin.exec.ExecTemplate;
 import com.dasoops.dasserver.plugin.reboot.entity.enums.QuietRebootEnum;
@@ -38,9 +36,9 @@ public class RebootPlugin extends CqPlugin {
     @SuppressWarnings("all")
     @MessageMapping(equal = {"reboot", "rebootServer", "rebootWeb"}, at = true, type = MessageMappingTypeEnum.ALL)
     public String reboot(CqTemplate cqTemplate, MappingMessage<RebootParam> param) {
-        if (!configCache.getIntegerConfig(ConfigHashKeyEnum.SERVER_MODE).equals(ServerModeEnum.PROD.getDbValue())) {
-            return "dev环境无法使用reboot指令";
-        }
+//        if (!configCache.getIntegerConfig(ConfigHashKeyEnum.SERVER_MODE).equals(ServerModeEnum.PROD.getDbValue())) {
+//            return "dev环境无法使用reboot指令";
+//        }
         QuietRebootEnum quietRebootEnum = configCache.getEnumConfig(RebootConfigHashKeyEnum.QUIET_REBOOT, QuietRebootEnum.class);
         boolean quietReboot = quietRebootEnum.equals(QuietRebootEnum.FALSE);
         if (quietReboot) {
