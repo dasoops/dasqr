@@ -52,6 +52,7 @@ public class ConfigCache extends BaseCache {
     public String getConfig(IRedisHashKeyEnum configHashKeyEnum) {
         String value = super.hget(ConfigKeyEnum.CONFIG, configHashKeyEnum.getKey());
         Assert.getInstance().ifNull(value, () -> {
+            log.error("redis data is null,key is {},hashKey is {}", ConfigKeyEnum.CONFIG.getKey(), configHashKeyEnum.getKey());
             throw new LogicException(ExceptionEnum.REDIS_DATA_NOT_NULL);
         });
         return value;
