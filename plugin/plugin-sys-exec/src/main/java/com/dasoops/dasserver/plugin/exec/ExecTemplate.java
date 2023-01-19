@@ -49,7 +49,6 @@ public class ExecTemplate {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     log.info(line);
-                    System.out.println(line);
                 }
             } catch (IOException e) {
                 throw new LogicException(e);
