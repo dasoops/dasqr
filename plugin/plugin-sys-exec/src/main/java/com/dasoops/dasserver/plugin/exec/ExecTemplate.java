@@ -32,11 +32,13 @@ public class ExecTemplate {
         if (execFilePath == null) {
             throw new LogicException(ExecExceptionEnum.UNDEFINED_KEYWORD);
         }
+        log.info("go run");
         new ExecThread(execFilePath).run();
-
+        log.info("go run");
     }
 
     @AllArgsConstructor
+    @Slf4j
     static class ExecThread extends Thread {
         private final String execFilePath;
 
@@ -46,10 +48,13 @@ public class ExecTemplate {
             try {
                 Process process = Runtime.getRuntime().exec(new String[]{"/bin/sh", execFilePath});
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                log.info("run");
                 String line;
                 while ((line = reader.readLine()) != null) {
+                    log.info("log");
                     log.info(line);
                 }
+                log.info("end");
             } catch (IOException e) {
                 throw new LogicException(e);
             }
