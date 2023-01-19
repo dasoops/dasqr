@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.reboot.plugin;
 
+import cn.hutool.core.util.StrUtil;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
@@ -49,7 +50,7 @@ public class RebootPlugin extends CqPlugin {
         try {
             execTemplate.exec(param.getMatchKeyword());
         } catch (LogicException e) {
-            return "未配置reboot文件路径(dasq.plugin.exec.execPluginMap.reboot)";
+            return StrUtil.format("未配置reboot文件路径(dasq.plugin.exec.execPluginMap.{})",param.getMatchKeyword());
         }
         if (quietReboot) {
             return "compile complete, to reboot";

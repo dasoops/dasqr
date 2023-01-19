@@ -21,7 +21,14 @@ public enum LoajConfigHashKeyEnum implements IRedisHashKeyEnum {
      * roll点记录redis有效时间(秒)
      */
     ROLL_RECORD_EFFECTIVE_SECONDS("rollRecordEffectiveSeconds"),
-    ROLL_NIGGER_SCORE("rollNiggerScore");
+    /**
+     * 黑鬼嘲讽触发分数
+     */
+    ROLL_NIGGER_SCORE("rollNiggerScore"),
+    /**
+     * 复读触发所需记录数
+     */
+    REPEAT_READ_COUNT("repeatReadCount");
 
     final String key;
 }
