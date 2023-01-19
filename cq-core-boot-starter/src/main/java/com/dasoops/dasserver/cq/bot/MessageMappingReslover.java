@@ -11,14 +11,12 @@ import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
-import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
-import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
-import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
-import com.dasoops.dasserver.cq.entity.enums.MessageParamResloveExceptionEnum;
+import com.dasoops.dasserver.cq.entity.enums.*;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.cq.entity.result.PluginResult;
+import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.DqCodeUtil;
 
 import java.lang.reflect.*;
@@ -178,7 +176,7 @@ public class MessageMappingReslover {
         }
         //检查是否匹配解析规则,不匹配直接过
         String message = messageEvent.getMessage();
-        String matchKeyword = checkMessageIsMatch(message, annotation);
+        String matchKeyword = checkMessageIsMatch(message, annotation, messageEvent.getSelfId());
         if (matchKeyword == null) {
             return null;
         }
@@ -364,18 +362,31 @@ public class MessageMappingReslover {
      * @param annotation 注释
      * @return boolean
      */
-    private static String checkMessageIsMatch(String message, MessageMapping annotation) {
+    private static String checkMessageIsMatch(String message, MessageMapping annotation, Long messageSelfId) {
         if (annotation.matchAll()) {
             return "";
         }
+        //at匹配
+        String atPrefix = null;
+        if (annotation.at()) {
+            //是否包含at
+            String atMe = CqCodeUtil.at(messageSelfId);
+            if (!message.startsWith(atMe)) {
+                return null;
+            }
+            atPrefix = atMe + " ";
+        }
+        //dbc转换
         if (annotation.ignoreDbc()) {
             message = Convert.toDBC(message);
         }
+
+        //全文匹配
         for (String equal : annotation.equal()) {
             if (annotation.ignoreDbc()) {
                 equal = Convert.toDBC(equal);
             }
-            if (equal.equals(message)) {
+            if (message.equals(atPrefix == null ? "" : atPrefix + equal)) {
                 return equal;
             }
         }
@@ -385,6 +396,10 @@ public class MessageMappingReslover {
             if (annotation.ignoreDbc()) {
                 prefix = Convert.toDBC(prefix);
             }
+            if (atPrefix != null) {
+                prefix += atPrefix;
+            }
+
             if (message.equals(prefix)) {
                 return prefix;
             }

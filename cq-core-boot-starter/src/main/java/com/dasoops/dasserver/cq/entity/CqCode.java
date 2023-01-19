@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.cq.entity;
 
+import com.dasoops.dasserver.cq.entity.enums.CqCodeTypeEnum;
 import lombok.Data;
 
 import java.util.Map;
@@ -18,7 +19,7 @@ public class CqCode {
     /**
      * 类型
      */
-    private String type;
+    private CqCodeTypeEnum typeEnum;
 
     /**
      * 参数个数

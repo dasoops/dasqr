@@ -37,7 +37,7 @@ public class ExecPlugin extends CqPlugin {
         } catch (LogicException e) {
             return e.getExceptionEnum().getMsg();
         }
-        return "run shell completed";
+        return "exec completed";
     }
 
 }

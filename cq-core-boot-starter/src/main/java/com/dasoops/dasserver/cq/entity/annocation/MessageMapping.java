@@ -49,6 +49,13 @@ public @interface MessageMapping {
     String[] equal() default {};
 
     /**
+     * 必须@bot
+     *
+     * @return boolean
+     */
+    boolean at() default false;
+
+    /**
      * 匹配所有
      * 请注意,匹配所有无法获得matchKeyword,也无法获得参数
      *

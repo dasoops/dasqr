@@ -1,7 +1,9 @@
 package com.dasoops.dasserver.cq.utils;
 
+import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.ReUtil;
 import com.dasoops.dasserver.cq.entity.CqCode;
+import com.dasoops.dasserver.cq.entity.enums.CqCodeTypeEnum;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -72,7 +74,7 @@ public class CqCodeUtil {
 
             //获取类型
             String typeStr = ReUtil.findAll(typeRegex, cqCodeStr, 0, new ArrayList<>()).get(0);
-            cqCode.setType(typeStr.replace("[CQ:", ""));
+            cqCode.setTypeEnum(EnumUtil.getBy(CqCodeTypeEnum::getStringValue, typeStr.replace("[CQ:", "")));
 
             //获取参数集合
             List<String> paramStrList = ReUtil.findAll(paramRegex, cqCodeStr, 0, new ArrayList<>());
@@ -92,24 +94,24 @@ public class CqCodeUtil {
     /**
      * 构建cqCode
      *
-     * @param type 类型
+     * @param typeEnum 枚举类型
      * @return {@link String}
      */
-    public static String buildCqCode(String type) {
-        String sb = "[CQ:" + type + "]";
+    public static String buildCqCode(CqCodeTypeEnum typeEnum) {
+        String sb = "[CQ:" + typeEnum.getStringValue() + "]";
         return sb;
     }
 
     /**
      * 构建cqCode
      *
-     * @param type   类型
-     * @param params 参数个数
+     * @param typeEnum 类型
+     * @param params   参数个数
      * @return {@link String}
      */
-    public static String buildCqCode(String type, Map<String, Object> params) {
+    public static String buildCqCode(CqCodeTypeEnum typeEnum, Map<String, Object> params) {
         StringBuilder sb = new StringBuilder();
-        sb.append("[CQ:").append(type);
+        sb.append("[CQ:").append(typeEnum.getStringValue());
         params.forEach((key, value) -> sb.append(",").append(key).append("=").append(escape(String.valueOf(value))));
         sb.append("]");
         return sb.toString();
@@ -122,7 +124,7 @@ public class CqCodeUtil {
      * @return [CQ:face,id=14]（发送一个微笑的系统表情）
      */
     public static String face(int id) {
-        return buildCqCode("face", Map.of("id", id));
+        return buildCqCode(CqCodeTypeEnum.FACE, Map.of("id", id));
     }
 
     /**
@@ -133,7 +135,7 @@ public class CqCodeUtil {
      * @return [CQ:emoji,id=128513]（发送一个大笑的emoji表情）
      */
     public static String emoji(int id) {
-        return buildCqCode("emoji", Map.of("id", id));
+        return buildCqCode(CqCodeTypeEnum.EMOJI, Map.of("id", id));
     }
 
     /**
@@ -143,7 +145,7 @@ public class CqCodeUtil {
      * @return [CQ:bface,id={1}]
      */
     public static String bface(int id) {
-        return buildCqCode("bface", Map.of("id", id));
+        return buildCqCode(CqCodeTypeEnum.BFACE, Map.of("id", id));
     }
 
     /**
@@ -153,7 +155,7 @@ public class CqCodeUtil {
      * @return [CQ:sface,id={1}]
      */
     public static String sface(int id) {
-        return buildCqCode("sface", Map.of("id", id));
+        return buildCqCode(CqCodeTypeEnum.SFACE, Map.of("id", id));
     }
 
     /**
@@ -163,7 +165,7 @@ public class CqCodeUtil {
      * @return [CQ:image,file={1}]
      */
     public static String image(String file) {
-        return buildCqCode("image", Map.of("file", file));
+        return buildCqCode(CqCodeTypeEnum.IMAGE, Map.of("file", file));
     }
 
 
@@ -176,7 +178,7 @@ public class CqCodeUtil {
      * @return [CQ:image,file={1},cache={2},timeout={3}]
      */
     public static String image(String file, boolean cache, int timeout) {
-        return buildCqCode("image", Map.of("file", file, "cache", cache, "timeout", timeout));
+        return buildCqCode(CqCodeTypeEnum.IMAGE, Map.of("file", file, "cache", cache, "timeout", timeout));
     }
 
 
@@ -188,7 +190,7 @@ public class CqCodeUtil {
      * @return [CQ:record,file={1},magic={2},cache={2},timeout={3}]
      */
     public static String record(String file, boolean magic) {
-        return buildCqCode("record", Map.of("file", file, "magic", magic));
+        return buildCqCode(CqCodeTypeEnum.RECORD, Map.of("file", file, "magic", magic));
     }
 
     /**
@@ -201,7 +203,7 @@ public class CqCodeUtil {
      * @return
      */
     public static String record(String file, boolean magic, boolean cache, int timeout) {
-        return buildCqCode("record", Map.of("file", file, "magic", magic, "cache", cache, "timeout", timeout));
+        return buildCqCode(CqCodeTypeEnum.RECORD, Map.of("file", file, "magic", magic, "cache", cache, "timeout", timeout));
     }
 
     /**
@@ -211,7 +213,7 @@ public class CqCodeUtil {
      * @return [CQ:at,qq={1}]
      */
     public static String at(Long qq) {
-        return buildCqCode("at", Map.of("qq", qq));
+        return buildCqCode(CqCodeTypeEnum.AT, Map.of("qq", qq));
     }
 
     /**
@@ -220,7 +222,7 @@ public class CqCodeUtil {
      * @return [CQ:at,qq=all]
      */
     public static String atAll() {
-        return buildCqCode("at", Map.of("qq", "all"));
+        return buildCqCode(CqCodeTypeEnum.AT, Map.of("qq", "all"));
     }
 
     /**
@@ -230,7 +232,7 @@ public class CqCodeUtil {
      * @return [CQ:rps,type={1}]
      */
     public static String rps(int type) {
-        return buildCqCode("rps", Map.of("type", type));
+        return buildCqCode(CqCodeTypeEnum.RPS, Map.of("type", type));
     }
 
     /**
@@ -240,7 +242,7 @@ public class CqCodeUtil {
      * @return [CQ:dice,type={1}]
      */
     public static String dice(int type) {
-        return buildCqCode("dice", Map.of("type", type));
+        return buildCqCode(CqCodeTypeEnum.DICE, Map.of("type", type));
     }
 
     /**
@@ -250,7 +252,7 @@ public class CqCodeUtil {
      * @return [CQ:shake]
      */
     public static String shake() {
-        return buildCqCode("shake");
+        return buildCqCode(CqCodeTypeEnum.SHAKE);
     }
 
     /**
@@ -261,7 +263,7 @@ public class CqCodeUtil {
      * @return [CQ:anonymous,ignore=true]
      */
     public static String anonymous(boolean ignore) {
-        return buildCqCode("anonymous", Map.of("ignore", ignore));
+        return buildCqCode(CqCodeTypeEnum.ANONYMOUS, Map.of("ignore", ignore));
     }
 
     /**
@@ -274,7 +276,7 @@ public class CqCodeUtil {
      * @return [CQ:location,lat=39.918056,lon=116.397027,title=故宫博物院,content=北京市东城区景山前街4号]
      */
     public static String location(double lat, double lon, String title, String content) {
-        return buildCqCode("location", Map.of("lat", lat, "lon", lon, "title", title, "content", content));
+        return buildCqCode(CqCodeTypeEnum.LOCATION, Map.of("lat", lat, "lon", lon, "title", title, "content", content));
     }
 
     /**
@@ -286,7 +288,7 @@ public class CqCodeUtil {
      * @return [CQ:sign,location={1},title={2},image={3}]
      */
     public static String sign(String location, String title, String image) {
-        return buildCqCode("sign", Map.of("location", location, "title", title, "image", image));
+        return buildCqCode(CqCodeTypeEnum.SIGN, Map.of("location", location, "title", title, "image", image));
     }
 
     /**
@@ -298,7 +300,7 @@ public class CqCodeUtil {
      * @return [CQ:music,type={1},id={2},style={3}]
      */
     public static String music(String type, int id, String style) {
-        return buildCqCode("music", Map.of("type", type, "id", id, "style", style));
+        return buildCqCode(CqCodeTypeEnum.MUSIC, Map.of("type", type, "id", id, "style", style));
     }
 
     /**
@@ -312,7 +314,7 @@ public class CqCodeUtil {
      * @return [CQ:music,type=custom,url={1},audio={2},title={3},content={4},image={5}]
      */
     public static String customMusic(String url, String audio, String title, String content, String image) {
-        return buildCqCode("customMusic", Map.of("url", url, "audio", audio, "title", title, "content", content, "image", image));
+        return buildCqCode(CqCodeTypeEnum.CUSTOM_MUSIC, Map.of("url", url, "audio", audio, "title", title, "content", content, "image", image));
     }
 
     /**
@@ -325,7 +327,7 @@ public class CqCodeUtil {
      * @return [CQ:share,url={1},title={2},content={3},image={4}]
      */
     public static String share(String url, String title, String content, String image) {
-        return buildCqCode("share", Map.of("url", url, "title", title, "content", content, "image", image));
+        return buildCqCode(CqCodeTypeEnum.SHARE, Map.of("url", url, "title", title, "content", content, "image", image));
     }
 
     /**
@@ -336,7 +338,7 @@ public class CqCodeUtil {
      * @return [CQ:contact,type={1},id={2}]
      */
     public static String contact(String type, Long id) {
-        return buildCqCode("contact", Map.of("type", type, "id", id));
+        return buildCqCode(CqCodeTypeEnum.CONTACT, Map.of("type", type, "id", id));
     }
 
     public static String getImgUrl(String param) {

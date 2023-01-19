@@ -35,10 +35,10 @@ public class RebootPlugin extends CqPlugin {
     private final ExecTemplate execTemplate;
 
     @SuppressWarnings("all")
-    @MessageMapping(prefix = "reboot", type = MessageMappingTypeEnum.ALL)
+    @MessageMapping(equal = {"reboot", "rebootServer", "rebootWeb"}, at = true, type = MessageMappingTypeEnum.ALL)
     public String reboot(CqTemplate cqTemplate, MappingMessage<RebootParam> param) {
         if (!configCache.getIntegerConfig(ConfigHashKeyEnum.SERVER_MODE).equals(ServerModeEnum.PROD.getDbValue())) {
-            return null;
+            return "dev环境无法使用reboot指令";
         }
         QuietRebootEnum quietRebootEnum = configCache.getEnumConfig(RebootConfigHashKeyEnum.QUIET_REBOOT, QuietRebootEnum.class);
         boolean quietReboot = quietRebootEnum.equals(QuietRebootEnum.FALSE);
@@ -47,12 +47,12 @@ public class RebootPlugin extends CqPlugin {
         }
         //改start会有问题,同步异步
         try {
-            execTemplate.exec("reboot");
+            execTemplate.exec(param.getMatchKeyword());
         } catch (LogicException e) {
             return "未配置reboot文件路径(dasq.plugin.exec.execPluginMap.reboot)";
         }
         if (quietReboot) {
-            return "compile complete,to reboot";
+            return "compile complete, to reboot";
         }
         return null;
     }
