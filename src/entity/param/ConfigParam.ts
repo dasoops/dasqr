@@ -40,6 +40,5 @@ export interface AddConfigParam extends BaseParam {
 /**
  * 删除配置参数
  */
-export interface DeleteConfigParam extends BaseParam {
-    id: number;
+export interface DeleteConfigParam extends BaseDeleteAndEditParam {
 }

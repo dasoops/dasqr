@@ -290,7 +290,7 @@ export default defineComponent({
           }
       ).then(function () {
         deleteConfig(new class implements DeleteConfigParam {
-          id = rowData.rowId
+          rowId = rowData.rowId
         }).then(() => {
           loadData();
         })
