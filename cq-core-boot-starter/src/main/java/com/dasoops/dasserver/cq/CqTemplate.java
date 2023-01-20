@@ -10,7 +10,7 @@ import com.dasoops.dasserver.cq.entity.dto.cq.entity.CqGroupAnonymous;
 import com.dasoops.dasserver.cq.entity.dto.cq.entity.CqStatus;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
-import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.dto.cq.retdata.*;
 import com.dasoops.dasserver.cq.entity.enums.ApiEnum;
 import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
@@ -78,7 +78,7 @@ public class CqTemplate {
      * @param param   param
      * @return {@link ApiData}<{@link MessageData}>
      */
-    public ApiData<MessageData> sendMsg(MappingMessage<? extends BaseParam<? extends BaseDo>> param, String message) {
+    public ApiData<MessageData> sendMsg(MessageParam<? extends BaseParam<? extends BaseDo>> param, String message) {
         if (param.getIsGroup()) {
             return sendGroupMsg(param.getGroupId(), message, false);
         }

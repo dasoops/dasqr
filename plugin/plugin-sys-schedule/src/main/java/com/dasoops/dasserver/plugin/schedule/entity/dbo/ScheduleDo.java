@@ -49,6 +49,11 @@ public class ScheduleDo extends BaseDo implements Serializable {
     private String parameterJson;
 
     /**
+     * 描述
+     */
+    private String description;
+
+    /**
      * 是否启用
      */
     @TableField("`enable`")

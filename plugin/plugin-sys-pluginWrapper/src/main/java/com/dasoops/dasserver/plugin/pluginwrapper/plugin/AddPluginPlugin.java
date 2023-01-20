@@ -4,7 +4,7 @@ import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
-import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.PluginEnableEnum;
 import com.dasoops.dasserver.cq.entity.result.PluginResult;
@@ -31,15 +31,15 @@ public class AddPluginPlugin extends CqPlugin {
     private final PluginService pluginService;
 
     @MessageMapping(prefix = "addPlugin", type = MessageMappingTypeEnum.ALL)
-    public PluginResult addPlugin(CqTemplate cqTemplate, MappingMessage<AddPluginParam> mappingMessage) {
-        CqMessageAssert.getInstance().allMustNotNull(mappingMessage, mappingMessage.getMatchKeyword(), mappingMessage.getParam());
-        AddPluginParam param = mappingMessage.getParam();
+    public PluginResult addPlugin(CqTemplate cqTemplate, MessageParam<AddPluginParam> messageParam) {
+        CqMessageAssert.getInstance().allMustNotNull(messageParam, messageParam.getMatchKeyword(), messageParam.getParam());
+        AddPluginParam param = messageParam.getParam();
         CqMessageAssert.getInstance().allMustNotNull(param.getClassPath(), param.getDescription(), param.getLevel());
 
         Integer maxOrder = pluginService.getMaxOrder();
 
         PluginDo pluginDo = new PluginDo();
-        pluginDo.setName(mappingMessage.getMatchKeyword());
+        pluginDo.setName(messageParam.getMatchKeyword());
         pluginDo.setClassPath(param.getClassPath());
         pluginDo.setDescription(param.getDescription());
         Integer enable = param.getEnable();

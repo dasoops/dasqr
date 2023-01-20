@@ -3,6 +3,7 @@ package com.dasoops.dasserver.plugin.schedule;
 import com.dasoops.dasserver.plugin.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.CronTask;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
@@ -27,7 +28,7 @@ public class SchedulingConfiguration implements SchedulingConfigurer {
     private final ScheduleService scheduleService;
 
     @Override
-    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+    public void configureTasks(@NotNull ScheduledTaskRegistrar taskRegistrar) {
 
         List<CronTask> cronTaskList = scheduleService.getCronTasksList();
         taskRegistrar.setCronTasksList(cronTaskList);

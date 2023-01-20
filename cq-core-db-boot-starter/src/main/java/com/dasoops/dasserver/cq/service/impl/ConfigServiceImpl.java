@@ -2,6 +2,7 @@ package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.entity.enums.base.IRedisHashKeyEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
@@ -80,6 +81,14 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
             return;
         }
         PluginResult.setFastFailImageUrl(fastFailImageUrl);
+    }
+
+    @Override
+    public void setConfig(IRedisHashKeyEnum redisHashKeyEnum, String value) {
+        ConfigDo configDo = super.lambdaQuery().eq(ConfigDo::getKeyword, redisHashKeyEnum.getKey()).one();
+        configDo.setValue(value);
+        super.updateById(configDo);
+        configCache.setConfig(redisHashKeyEnum, value);
     }
 
 }

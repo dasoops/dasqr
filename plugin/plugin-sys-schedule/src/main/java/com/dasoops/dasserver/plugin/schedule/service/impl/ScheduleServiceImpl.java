@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Administrator
@@ -62,7 +63,7 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, ScheduleDo>
                 log.error("schedule初始化异常:", e);
                 return null;
             }
-        }).toList();
+        }).filter(Objects::nonNull).toList();
         return cronTaskList;
     }
 

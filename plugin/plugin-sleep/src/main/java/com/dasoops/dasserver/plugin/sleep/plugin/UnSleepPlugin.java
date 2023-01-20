@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.sleep.plugin;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
-import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.plugin.sleep.cache.SleepCache;
 import com.dasoops.dasserver.plugin.sleep.entity.param.SleepParam;
@@ -30,7 +30,7 @@ public class UnSleepPlugin extends CqPlugin {
     }
 
     @MessageMapping(equal = {"unSleep", "unQuiet", "醒醒"}, at = true, type = MessageMappingTypeEnum.ALL)
-    public String sleep(MappingMessage<SleepParam> param, CqTemplate cqTemplate) {
+    public String sleep(MessageParam<SleepParam> param, CqTemplate cqTemplate) {
         sleepCache.removeFlag(param.getIsGroup(), param.getRegisterId());
         return "醒了醒了";
     }

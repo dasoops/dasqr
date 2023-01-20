@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class MappingMessage<T extends BaseParam<? extends BaseDo>> {
+public class MessageParam<T extends BaseParam<? extends BaseDo>> {
 
     /**
      * 是否为群组消息

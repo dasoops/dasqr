@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.sleep.entity.param;
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
-import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  * @Date 2023/01/10
  * @Version 1.0.0
  * @Description: 睡眠param
- * @see MappingMessage
+ * @see MessageParam
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

@@ -29,6 +29,7 @@
         <module>plugin/plugin-sys-webManager</module>
         <module>plugin/plugin-sys-wsWrapper</module>
         <module>plugin/plugin-sys-schedule</module>
+        <module>plugin/plugin-starcraft2</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -140,6 +141,12 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-log</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-starcraft2</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 

@@ -5,7 +5,7 @@ import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
-import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.plugin.echo.cache.EchoCache;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class EchoPlugin extends CqPlugin {
     private final EchoCache echoCache;
 
     @MessageMapping(prefix = {"echo", "print", "printf"}, type = MessageMappingTypeEnum.ALL)
-    public String echo(MappingMessage<SimpleParam> param, CqMessageEvent messageEvent) {
+    public String echo(MessageParam<SimpleParam> param, CqMessageEvent messageEvent) {
         //获取移除前缀后的消息
         String message = messageEvent.getMessage();
         String matchKeyword = param.getMatchKeyword();

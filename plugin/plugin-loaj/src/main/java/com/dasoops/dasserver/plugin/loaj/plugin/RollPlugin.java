@@ -9,7 +9,7 @@ import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
-import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.cq.entity.result.PluginResult;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
@@ -41,7 +41,7 @@ public class RollPlugin extends CqPlugin {
     private final ConfigCache configCache;
 
     @MessageMapping(prefix = "endRoll", type = MessageMappingTypeEnum.GROUP)
-    public PluginResult endRoll(CqTemplate cqTemplate, MappingMessage<SimpleParam> param) {
+    public PluginResult endRoll(CqTemplate cqTemplate, MessageParam<SimpleParam> param) {
         log.debug("(RollPlugin) 进入endRoll点逻辑");
         Long groupId = param.getGroupId();
 
@@ -90,7 +90,7 @@ public class RollPlugin extends CqPlugin {
     final String rollPrefix = "roll";
 
     @MessageMapping(prefix = rollPrefix, type = MessageMappingTypeEnum.GROUP)
-    public String roll(CqTemplate cqTemplate, MappingMessage<SimpleParam> param) {
+    public String roll(CqTemplate cqTemplate, MessageParam<SimpleParam> param) {
         log.debug("(RollPlugin) 进入roll点逻辑");
 
         int randomInt = RandomUtil.randomInt(1, 101);

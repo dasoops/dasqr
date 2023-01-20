@@ -4,7 +4,7 @@ import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
-import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.plugin.exec.ExecTemplate;
 import com.dasoops.dasserver.plugin.exec.entity.param.ExecParam;
@@ -30,7 +30,7 @@ public class ExecPlugin extends CqPlugin {
 
     @MessageMapping(prefix = "exec", at = true, type = MessageMappingTypeEnum.ALL)
     @SuppressWarnings("all")
-    public String exec(MappingMessage<ExecParam> message, CqTemplate cqTemplate) {
+    public String exec(MessageParam<ExecParam> message, CqTemplate cqTemplate) {
         cqTemplate.sendMsg(message, "gogogo");
         try {
             execTemplate.exec(message.getParam().getExecFileKeyword());

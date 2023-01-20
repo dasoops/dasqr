@@ -8,7 +8,6 @@ import com.dasoops.common.entity.enums.base.IRedisHashKeyEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.entity.enums.ConfigKeyEnum;
-import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -41,7 +40,7 @@ public class ConfigCache extends BaseCache {
         super.hset(ConfigKeyEnum.CONFIG, valueMap);
     }
 
-    public void setConfig(ConfigHashKeyEnum configHashKeyEnum, String value) {
+    public void setConfig(IRedisHashKeyEnum configHashKeyEnum, String value) {
         super.hset(ConfigKeyEnum.CONFIG, configHashKeyEnum.getKey(), value);
     }
 

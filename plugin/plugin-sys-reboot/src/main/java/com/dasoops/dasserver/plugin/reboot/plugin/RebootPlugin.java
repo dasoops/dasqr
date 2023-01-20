@@ -6,7 +6,7 @@ import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
-import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.ServerModeEnum;
@@ -37,7 +37,7 @@ public class RebootPlugin extends CqPlugin {
 
     @SuppressWarnings("all")
     @MessageMapping(equal = {"reboot", "rebootServer", "rebootWeb"}, at = true, type = MessageMappingTypeEnum.ALL)
-    public String reboot(CqTemplate cqTemplate, MappingMessage<RebootParam> param) {
+    public String reboot(CqTemplate cqTemplate, MessageParam<RebootParam> param) {
         if (!configCache.getIntegerConfig(ConfigHashKeyEnum.SERVER_MODE).equals(ServerModeEnum.PROD.getDbValue())) {
             return "dev环境无法使用reboot指令";
         }

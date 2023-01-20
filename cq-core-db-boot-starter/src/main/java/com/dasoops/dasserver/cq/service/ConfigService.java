@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.cq.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dasoops.common.entity.enums.base.IRedisHashKeyEnum;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 
@@ -47,4 +48,12 @@ public interface ConfigService extends IService<ConfigDo> {
      * 初始化或更新快速失败图片
      */
     void initOrUpdateFastFailImage();
+
+    /**
+     * 设置配置
+     *
+     * @param redisHashKeyEnum 复述,散列值枚举
+     * @param value            值
+     */
+    void setConfig(IRedisHashKeyEnum redisHashKeyEnum, String value);
 }

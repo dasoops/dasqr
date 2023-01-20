@@ -14,7 +14,7 @@ import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.dto.MatchKeywordDto;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
-import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.enums.*;
 import com.dasoops.dasserver.cq.entity.result.PluginResult;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
@@ -56,7 +56,7 @@ public class MessageMappingReslover {
             List<ParameterizedType> messageParamTypeList = Arrays.stream(types)
                     .filter(type -> type instanceof ParameterizedType)
                     .map(type -> (ParameterizedType) type)
-                    .filter(type -> ((Class<?>) type.getRawType()).isAssignableFrom(MappingMessage.class))
+                    .filter(type -> ((Class<?>) type.getRawType()).isAssignableFrom(MessageParam.class))
                     .toList();
 
             int messageParamSize = messageParamTypeList.size();
@@ -72,17 +72,17 @@ public class MessageMappingReslover {
                 //构建MessageParam对象
                 //已经经过类型检查
                 @SuppressWarnings("all")
-                Class<MappingMessage<T>> messageParamClazz = (Class<MappingMessage<T>>) messageParamParameterizedType.getRawType();
+                Class<MessageParam<T>> messageParamClazz = (Class<MessageParam<T>>) messageParamParameterizedType.getRawType();
                 //实例化对象
-                MappingMessage<T> mappingMessage = ReflectUtil.newInstance(messageParamClazz);
+                MessageParam<T> messageParam = ReflectUtil.newInstance(messageParamClazz);
                 //获取泛型类型
                 //已经经过类型检查
                 @SuppressWarnings("all")
                 Class<T> genericParameterClazz = (Class<T>) messageParamParameterizedType.getActualTypeArguments()[0];
                 //注入属性
-                injectionValue(mappingMessage, eventTypeEnum, pluginMethod.getAnnotation(MessageMapping.class), messageEvent, genericParameterClazz, matchKeywordDto);
+                injectionValue(messageParam, eventTypeEnum, pluginMethod.getAnnotation(MessageMapping.class), messageEvent, genericParameterClazz, matchKeywordDto);
                 //构建参数集合
-                params = buildParams(paramClazzs, cqTemplate, messageEvent, mappingMessage);
+                params = buildParams(paramClazzs, cqTemplate, messageEvent, messageParam);
             }
             //执行方法
             Object result;
@@ -225,7 +225,7 @@ public class MessageMappingReslover {
         return true;
     }
 
-    private static Object[] buildParams(Class<?>[] paramClazzs, CqTemplate cqTemplate, CqMessageEvent messageEvent, MappingMessage<? extends BaseParam<? extends BaseDo>> mappingMessage) {
+    private static Object[] buildParams(Class<?>[] paramClazzs, CqTemplate cqTemplate, CqMessageEvent messageEvent, MessageParam<? extends BaseParam<? extends BaseDo>> messageParam) {
         Object[] params = new Object[paramClazzs.length];
         for (int i = 0; i < paramClazzs.length; i++) {
             Class<?> paramClazz = paramClazzs[i];
@@ -237,12 +237,12 @@ public class MessageMappingReslover {
                 params[i] = messageEvent;
             }
             //没这个参数直接过就行了
-            if (mappingMessage == null) {
+            if (messageParam == null) {
                 continue;
             }
-            if (MappingMessage.class.isAssignableFrom(paramClazz)) {
+            if (MessageParam.class.isAssignableFrom(paramClazz)) {
                 //注入messageParam
-                params[i] = mappingMessage;
+                params[i] = messageParam;
             }
             //其余情况不需要注入,因为没东西注入,可能会搞个自定义注入器?那还要配套解析器欸
         }
@@ -291,16 +291,16 @@ public class MessageMappingReslover {
     }
 
 
-    private static <T extends BaseParam<? extends BaseDo>> void injectionValue(final MappingMessage<T> mappingMessageParam, EventTypeEnum eventTypeEnum, MessageMapping annotation, CqMessageEvent messageEvent, Class<T> genericParameterClazz, MatchKeywordDto matchKeywordDto) {
+    private static <T extends BaseParam<? extends BaseDo>> void injectionValue(final MessageParam<T> messageParamParam, EventTypeEnum eventTypeEnum, MessageMapping annotation, CqMessageEvent messageEvent, Class<T> genericParameterClazz, MatchKeywordDto matchKeywordDto) {
         //设置isGroup
         boolean isGroup = eventTypeEnum.equals(EventTypeEnum.MESSAGE_GROUP);
-        mappingMessageParam.setIsGroup(isGroup);
-        mappingMessageParam.setUserId(messageEvent.getUserId());
+        messageParamParam.setIsGroup(isGroup);
+        messageParamParam.setUserId(messageEvent.getUserId());
         if (isGroup) {
-            mappingMessageParam.setGroupId(((CqGroupMessageEvent) messageEvent).getGroupId());
+            messageParamParam.setGroupId(((CqGroupMessageEvent) messageEvent).getGroupId());
         }
-        mappingMessageParam.setMatchKeyword(matchKeywordDto.getMatchKeyword());
-        mappingMessageParam.setMatchType(matchKeywordDto.getMatchType());
+        messageParamParam.setMatchKeyword(matchKeywordDto.getMatchKeyword());
+        messageParamParam.setMatchType(matchKeywordDto.getMatchType());
         //获取泛型实例对象
         T param = ReflectUtil.newInstance(genericParameterClazz);
         //获取字段,根据注解判断是否需要注入
@@ -330,7 +330,7 @@ public class MessageMappingReslover {
             String paramString = paramStringList.get(order);
             ReflectUtil.setFieldValue(param, field, paramString);
         }
-        mappingMessageParam.setParam(param);
+        messageParamParam.setParam(param);
     }
 
     private static List<Field> getSortedNeedSetField(Field[] paramFields) {
@@ -392,7 +392,7 @@ public class MessageMappingReslover {
             if (annotation.ignoreDbc()) {
                 equal = Convert.toDBC(equal);
             }
-            if (StrUtil.equals(message, atPrefix == null ? "" : atPrefix + equal, ignoreCase)) {
+            if (StrUtil.equals(message, (atPrefix == null ? "" : atPrefix) + equal, ignoreCase)) {
                 return MatchKeywordDto.equal(equal);
             }
         }

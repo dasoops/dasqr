@@ -4,7 +4,7 @@ import com.dasoops.common.util.TimeUtil;
 import com.dasoops.common.util.entity.TimeDto;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
-import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.cq.utils.CqMessageAssert;
 import com.dasoops.dasserver.plugin.sleep.cache.SleepCache;
@@ -34,7 +34,7 @@ public class SleepPlugin extends CqPlugin {
     }
 
     @MessageMapping(prefix = {"sleep", "quiet", "打晕", "闭嘴", "shutUp"}, type = MessageMappingTypeEnum.ALL)
-    public String sleep(MappingMessage<SleepParam> param) {
+    public String sleep(MessageParam<SleepParam> param) {
         CqMessageAssert.getInstance().allMustNotNull(param);
 
         TimeDto timeDto;

@@ -20,11 +20,11 @@ public enum DbBooleanEnum implements IDbColumnEnum {
     /**
      * 真
      */
-    TRUE(0),
+    TRUE(1),
     /**
      * 假
      */
-    FALSE(1),
+    FALSE(0),
     ;
 
     final Integer dbValue;
