@@ -51,7 +51,7 @@ public class EchoPlugin extends CqPlugin {
             return "None";
         } else if (keySet.size() > 1) {
             List<String> keyList = keySet.stream().map(key -> cachePrefix + key).toList();
-            return StrUtil.format("any Result:[{}]", StrUtil.join(",", keyList));
+            return StrUtil.format("any Result:\r\n[{}\r\n]", StrUtil.join(",", keyList));
         } else {
             return echoCache.get(keySet.iterator().next());
         }

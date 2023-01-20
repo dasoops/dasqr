@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.core;
+package com.dasoops.dasserver.plugin.webmanager;
 
 import com.dasoops.common.config.BaseExceptionHandler;
 import com.dasoops.common.entity.enums.ExceptionEnum;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @Title: GlobalExceptionHandler
- * @ClassPath com.dasoops.dasserver.core.GlobalExceptionHandler
+ * @ClassPath com.dasoops.dasserver.plugin.webmanager.GlobalExceptionHandler
  * @Author DasoopsNicole@Gmail.com
  * @Date 2022/12/31
  * @Version 1.0.0

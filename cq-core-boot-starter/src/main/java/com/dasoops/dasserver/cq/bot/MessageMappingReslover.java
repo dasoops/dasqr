@@ -11,7 +11,10 @@ import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
-import com.dasoops.dasserver.cq.entity.enums.*;
+import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
+import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
+import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.entity.enums.MessageParamResloveExceptionEnum;
 import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
@@ -381,12 +384,13 @@ public class MessageMappingReslover {
             message = Convert.toDBC(message);
         }
 
+        boolean ignoreCase = annotation.ignoreCase();
         //全文匹配
         for (String equal : annotation.equal()) {
             if (annotation.ignoreDbc()) {
                 equal = Convert.toDBC(equal);
             }
-            if (message.equals(atPrefix == null ? "" : atPrefix + equal)) {
+            if (StrUtil.equals(message, atPrefix == null ? "" : atPrefix + equal, ignoreCase)) {
                 return equal;
             }
         }
@@ -399,12 +403,11 @@ public class MessageMappingReslover {
             if (atPrefix != null) {
                 prefix += atPrefix;
             }
-
-            if (message.equals(prefix)) {
+            if (StrUtil.equals(message, atPrefix == null ? "" : atPrefix + prefix, ignoreCase)) {
                 return prefix;
             }
             //匹配通过直接return
-            if (StrUtil.startWith(message, prefix + " ", annotation.ignoreCase())) {
+            if (StrUtil.startWith(message, prefix + " ", ignoreCase)) {
                 return prefix;
             }
         }

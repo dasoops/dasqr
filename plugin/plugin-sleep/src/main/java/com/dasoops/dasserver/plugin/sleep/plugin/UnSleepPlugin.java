@@ -29,7 +29,7 @@ public class UnSleepPlugin extends CqPlugin {
         this.sleepCache = sleepCache;
     }
 
-    @MessageMapping(prefix = {"unSleep", "unQuiet", "醒醒"}, type = MessageMappingTypeEnum.ALL)
+    @MessageMapping(equal = {"unSleep", "unQuiet", "醒醒"}, at = true, type = MessageMappingTypeEnum.ALL)
     public String sleep(MappingMessage<SleepParam> param, CqTemplate cqTemplate) {
         sleepCache.removeFlag(param.getIsGroup(), param.getRegisterId());
         return "醒了醒了";
