@@ -44,6 +44,10 @@ public enum PostTypeEnum {
      * http请求
      */
     HTTP_REQUEST("httpRequest"),
+    /**
+     * 定时任务
+     */
+    SCHEDULE_TASK("scheduleTask"),
     ;
 
     final String key;

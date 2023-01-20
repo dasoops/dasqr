@@ -24,4 +24,4 @@
 7. ( - ) webManager register password
 8. ( - ) webManager token续签
 9. ( - ) plugin-style
-10. 
+10. ( - ) help文档

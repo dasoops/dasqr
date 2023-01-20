@@ -10,9 +10,8 @@ import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.WrapperGlobal;
 import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.conf.NamedThreadFactory;
-import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.conf.properties.EventProperties;
-import com.dasoops.dasserver.cq.wrapper.ExceptionWrapper;
+import com.dasoops.dasserver.cq.exception.ExceptionTemplate;
 import com.dasoops.dasserver.cq.wrapper.WsWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
@@ -45,10 +44,10 @@ public class WsHandler extends TextWebSocketHandler {
     private final ApiHandler apiHandler;
     private final EventHandler eventHandler;
     private final ExecutorService executor;
-    private final CqProperties cqProperties;
+    private final ExceptionTemplate exceptionTemplate;
     private boolean initIsCompleted = false;
 
-    public WsHandler(CqFactory cqFactory, ApiHandler apiHandler, EventHandler eventHandler, EventProperties eventProperties, CqProperties cqProperties) {
+    public WsHandler(CqFactory cqFactory, ApiHandler apiHandler, EventHandler eventHandler, EventProperties eventProperties, ExceptionTemplate exceptionTemplate) {
         this.cqFactory = cqFactory;
         this.apiHandler = apiHandler;
         this.eventHandler = eventHandler;
@@ -59,7 +58,7 @@ public class WsHandler extends TextWebSocketHandler {
                 TimeUnit.MILLISECONDS,
                 new ArrayBlockingQueue<>(eventProperties.getWorkQueueSize()),
                 new NamedThreadFactory("ws"));
-        this.cqProperties = cqProperties;
+        this.exceptionTemplate = exceptionTemplate;
     }
 
     /**
@@ -147,16 +146,7 @@ public class WsHandler extends TextWebSocketHandler {
                 try {
                     eventHandler.handle(finalCqTemplate, messageObj);
                 } catch (Exception e) {
-                    //异常处理
-                    Assert.getInstance().ifTrue(
-                            cqProperties.isConsolePrintStack(),
-                            () -> Assert.getInstance().ifTrueOrElse(
-                                    cqProperties.isNativePrintStack(),
-                                    e::printStackTrace,
-                                    () -> log.error("消息处理发生异常: {}", e instanceof LogicException logicException ? logicException.getStackMessage() : e)
-                            ));
-                    List<ExceptionWrapper> exceptionWrapperList = WrapperGlobal.getExceptionWrapperList();
-                    Assert.getInstance().ifNotNull(exceptionWrapperList, () -> exceptionWrapperList.forEach(exceptionWrapper -> exceptionWrapper.invoke(e)));
+                    exceptionTemplate.resloveException(e);
                 }
             });
         }

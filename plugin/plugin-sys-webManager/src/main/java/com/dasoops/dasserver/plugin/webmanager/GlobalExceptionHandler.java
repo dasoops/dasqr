@@ -57,7 +57,6 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
                     }
                 }
             }
-//            CqAssert.getInstance()ifNotNull(exceptionWrapper, () -> exceptionWrapper.invoke(e));
         } catch (Exception e2) {
             log.error("Exception at ExceptionHandler", e2);
             return SimpleResult.fail(ExceptionEnum.UN_EXPECTED);

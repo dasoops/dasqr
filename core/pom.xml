@@ -67,6 +67,11 @@
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-schedule</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-sys-pluginWrapper</artifactId>
         </dependency>
 

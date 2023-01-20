@@ -28,6 +28,7 @@
         <module>plugin/plugin-sys-webAuth</module>
         <module>plugin/plugin-sys-webManager</module>
         <module>plugin/plugin-sys-wsWrapper</module>
+        <module>plugin/plugin-sys-schedule</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -175,6 +176,12 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-sys-pluginWrapper</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-sys-schedule</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 

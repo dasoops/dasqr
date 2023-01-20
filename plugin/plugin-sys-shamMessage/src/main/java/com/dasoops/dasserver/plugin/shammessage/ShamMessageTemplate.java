@@ -2,6 +2,7 @@ package com.dasoops.dasserver.plugin.shammessage;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.dasserver.cq.CqGlobal;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.bot.EventHandler;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,11 @@ public class ShamMessageTemplate {
         JSONObject rawEventJson = EventUtil.get().getRawEventJson();
         rawEventJson.put("message", message);
         rawEventJson.put("raw_message", message);
-        eventHandler.handle(CqGlobal.get(), rawEventJson);
+        this.sendMsg(CqGlobal.get(), rawEventJson);
+    }
+
+    public void sendMsg(CqTemplate cqTemplate, JSONObject rawEventJson) {
+        eventHandler.handle(cqTemplate, rawEventJson);
     }
 
 }

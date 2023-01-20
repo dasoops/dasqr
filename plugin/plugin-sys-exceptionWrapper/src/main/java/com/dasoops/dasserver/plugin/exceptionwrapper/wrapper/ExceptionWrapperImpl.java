@@ -4,14 +4,14 @@ import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
-import com.dasoops.dasserver.cq.wrapper.ExceptionWrapper;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
-import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.utils.entity.EventInfo;
+import com.dasoops.dasserver.cq.wrapper.ExceptionWrapper;
 import com.dasoops.dasserver.plugin.exceptionwrapper.entity.dbo.ExceptionDo;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
@@ -76,9 +76,6 @@ public class ExceptionWrapperImpl implements ExceptionWrapper {
             case MESSAGE_GROUP ->
                     //群聊at
                     cqTemplate.sendGroupMsg(eventInfo.getGroupId(), buildNoticeMsg(true, false, eventInfo, exceptionDo), false);
-            case HTTP_REQUEST ->
-                    //群聊atAdmin
-                    cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), buildNoticeMsg(true, true, eventInfo, exceptionDo), false);
             default ->
                     //群聊普通消息
                     cqTemplate.sendGroupMsg(eventInfo.getGroupId(), buildNoticeMsg(false, true, eventInfo, exceptionDo), false);

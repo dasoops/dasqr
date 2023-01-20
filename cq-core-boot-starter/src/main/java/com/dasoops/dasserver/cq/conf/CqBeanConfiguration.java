@@ -6,9 +6,9 @@ import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.bot.CqFactory;
 import com.dasoops.dasserver.cq.bot.EventHandler;
 import com.dasoops.dasserver.cq.bot.WsHandler;
-import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.conf.properties.EventProperties;
 import com.dasoops.dasserver.cq.conf.properties.WsProperties;
+import com.dasoops.dasserver.cq.exception.ExceptionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -48,9 +48,9 @@ public class CqBeanConfiguration {
             ApiHandler apiHandler,
             EventHandler eventHandler,
             EventProperties eventProperties,
-            CqProperties cqProperties
+            ExceptionTemplate exceptionTemplate
     ) {
-        return new WsHandler(cqFactory, apiHandler, eventHandler, eventProperties, cqProperties);
+        return new WsHandler(cqFactory, apiHandler, eventHandler, eventProperties, exceptionTemplate);
     }
 
     @Bean

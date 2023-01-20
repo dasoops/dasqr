@@ -93,6 +93,10 @@ public enum EventTypeEnum {
      */
     HTTP_REQUEST("httpRequest"),
     /**
+     * 定时任务
+     */
+    SCHEDULE_TASK("scheduleTask"),
+    /**
      * 群成员名片更新
      */
     NOTICE_GROUP_CARD("group_card");
