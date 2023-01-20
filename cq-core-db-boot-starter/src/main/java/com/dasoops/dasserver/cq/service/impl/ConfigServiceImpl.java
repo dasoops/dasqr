@@ -5,9 +5,10 @@ import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
+import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
+import com.dasoops.dasserver.cq.entity.result.PluginResult;
 import com.dasoops.dasserver.cq.mapper.ConfigMapper;
 import com.dasoops.dasserver.cq.service.ConfigService;
-import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -70,6 +71,15 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
         int version = Integer.parseInt(getConfig(ConfigHashKeyEnum.CLOUD_VERSION));
         super.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.LOCAL_VERSION.getKey()).set(ConfigDo::getValue, version).update();
         configCache.setConfig(ConfigHashKeyEnum.LOCAL_VERSION, String.valueOf(version));
+    }
+
+    @Override
+    public void initOrUpdateFastFailImage() {
+        String fastFailImageUrl = configCache.getStringConfig(ConfigHashKeyEnum.FAST_FAIL_IMAGE_URL);
+        if (fastFailImageUrl == null) {
+            return;
+        }
+        PluginResult.setFastFailImageUrl(fastFailImageUrl);
     }
 
 }

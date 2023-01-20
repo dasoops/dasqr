@@ -9,7 +9,6 @@ import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.PluginStatusEnum;
 import com.dasoops.dasserver.cq.service.PluginService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,11 +26,9 @@ import java.util.List;
 @Slf4j
 public class GetPluginPlugin extends CqPlugin {
     private final PluginService pluginService;
-    private final ApplicationContext context;
 
-    public GetPluginPlugin(PluginService pluginService, ApplicationContext context) {
+    public GetPluginPlugin(PluginService pluginService) {
         this.pluginService = pluginService;
-        this.context = context;
     }
 
     @MessageMapping(prefix = {"getPlugin", "getPluginList", "getAllPlugin", "allPlugin"}, type = MessageMappingTypeEnum.ALL)

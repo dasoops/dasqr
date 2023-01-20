@@ -26,11 +26,31 @@ import java.util.Optional;
 public class MinioTemplate {
 
     private final MinioClient minioClient;
-    private final MinioProperties properties;
+    private final MinioProperties minioProperties;
 
-    public MinioTemplate(MinioClient minioClient, MinioProperties properties) {
+    public MinioTemplate(MinioClient minioClient, MinioProperties minioProperties) {
         this.minioClient = minioClient;
-        this.properties = properties;
+        this.minioProperties = minioProperties;
+    }
+
+
+    /**
+     * 构建图片连接
+     *
+     * @param imageName 文件名
+     * @return {@link String}
+     */
+    public String buildImagePath(String imageName) {
+        return "http://" + getServerPath() + ":" + minioProperties.getPort() + "/" + minioProperties.getBucket() + "/" + imageName;
+    }
+
+    /**
+     * 获取服务器路径
+     *
+     * @return {@link String}
+     */
+    public String getServerPath() {
+        return minioProperties.getUrl();
     }
 
     /**
@@ -55,7 +75,7 @@ public class MinioTemplate {
         String filename = uuid + "." + type;
         PutObjectArgs putObjectArgs = PutObjectArgs.builder()
                 .contentType(type)
-                .bucket(properties.getBucket())
+                .bucket(minioProperties.getBucket())
                 .contentType("image/" + type)
                 .object(filename)
                 .stream(inputStream, inputStream.available(), -1)
@@ -71,7 +91,7 @@ public class MinioTemplate {
         String filename = uuid + "." + type;
         PutObjectArgs putObjectArgs = PutObjectArgs.builder()
                 .contentType(contentType)
-                .bucket(properties.getBucket())
+                .bucket(minioProperties.getBucket())
                 .object(filename)
                 .stream(inputStream, inputStream.available(), -1)
                 .build();
@@ -96,7 +116,7 @@ public class MinioTemplate {
      * @throws InternalException         内部异常
      */
     public String saveImage(String url) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
-        File file = HttpUtil.downloadFileFromUrl(url, properties.getTempDownloadPath());
+        File file = HttpUtil.downloadFileFromUrl(url, minioProperties.getTempDownloadPath());
         return saveImage(file);
     }
 
@@ -108,7 +128,7 @@ public class MinioTemplate {
      */
     public byte[] getImage(String path) {
         GetObjectArgs getObjectArgs = GetObjectArgs.builder()
-                .bucket(properties.getBucket())
+                .bucket(minioProperties.getBucket())
                 .object(path)
                 .build();
         byte[] bytes = new byte[0];
@@ -130,7 +150,7 @@ public class MinioTemplate {
     public boolean checkFileIsExists(String fileName) {
         try {
             StatObjectArgs statObjectArgs = StatObjectArgs.builder()
-                    .bucket(properties.getBucket())
+                    .bucket(minioProperties.getBucket())
                     .object(fileName)
                     .build();
             minioClient.statObject(statObjectArgs);

@@ -42,4 +42,9 @@ public interface ConfigService extends IService<ConfigDo> {
      * 从云端版本号更新本地版本号
      */
     void updateLocalVersionFromCloudVersion();
+
+    /**
+     * 初始化或更新快速失败图片
+     */
+    void initOrUpdateFastFailImage();
 }

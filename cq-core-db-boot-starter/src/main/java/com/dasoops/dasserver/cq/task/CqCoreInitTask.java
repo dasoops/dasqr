@@ -45,6 +45,10 @@ public class CqCoreInitTask extends BaseInitTask {
         configService.updateLocalVersionFromCloudVersion();
     }
 
+    public void initOrUpdateFastFailImage() {
+        configService.initOrUpdateFastFailImage();
+    }
+
     public void initOrUpdateRegisterIdOtoTypeMap2Cache() {
         registerService.initOrUpdateRegisterIdOtoTypeMap2Cache();
         registerService.initOrUpdateRegisterTypeRegisterIdOtoId2Cache();

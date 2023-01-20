@@ -47,7 +47,10 @@ public enum ConfigHashKeyEnum implements IRedisHashKeyEnum {
      * 服务模式(0:prod;1:dev)
      */
     SERVER_MODE("serverMode"),
-    ;
+    /**
+     * pluginResult快速失败图片
+     */
+    FAST_FAIL_IMAGE_URL("fastFailImageUrl");
 
     @Getter
     final String key;

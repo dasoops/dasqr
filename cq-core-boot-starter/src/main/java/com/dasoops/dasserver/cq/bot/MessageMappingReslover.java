@@ -401,9 +401,9 @@ public class MessageMappingReslover {
                 prefix = Convert.toDBC(prefix);
             }
             if (atPrefix != null) {
-                prefix += atPrefix;
+                prefix = atPrefix + prefix;
             }
-            if (StrUtil.equals(message, atPrefix == null ? "" : atPrefix + prefix, ignoreCase)) {
+            if (StrUtil.equals(message, prefix, ignoreCase)) {
                 return prefix;
             }
             //匹配通过直接return

@@ -23,4 +23,5 @@
 6. ( - ) webManager rule | register | reply | shell
 7. ( - ) webManager register password
 8. ( - ) webManager token续签
-9. ( - ) 
+9. ( - ) plugin-style
+10. 
