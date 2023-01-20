@@ -20,7 +20,7 @@ public enum ExecExceptionEnum implements IExceptionEnum {
      * eem快速生成
      */
     UNDEFINED_KEYWORD("未定义的关键词"),
-    ;
+    NO_SUCH_FILE("没有指定的文件");
 
 
     @Override

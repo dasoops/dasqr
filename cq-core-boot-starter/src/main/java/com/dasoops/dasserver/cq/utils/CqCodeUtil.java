@@ -2,7 +2,7 @@ package com.dasoops.dasserver.cq.utils;
 
 import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.ReUtil;
-import com.dasoops.dasserver.cq.entity.CqCode;
+import com.dasoops.dasserver.cq.entity.dto.cq.CqCode;
 import com.dasoops.dasserver.cq.entity.enums.CqCodeTypeEnum;
 
 import java.util.*;

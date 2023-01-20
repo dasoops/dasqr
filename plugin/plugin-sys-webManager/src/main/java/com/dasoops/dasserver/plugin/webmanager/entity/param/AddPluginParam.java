@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.webmanager.entity.param;
 import com.dasoops.common.entity.param.base.BaseAddParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
-import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

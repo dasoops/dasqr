@@ -1,13 +1,13 @@
 package com.dasoops.dasserver.cq;
 
-import com.dasoops.dasserver.cq.entity.event.message.CqDiscussMessageEvent;
-import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
-import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
-import com.dasoops.dasserver.cq.entity.event.meta.CqHeartBeatMetaEvent;
-import com.dasoops.dasserver.cq.entity.event.meta.CqLifecycleMetaEvent;
-import com.dasoops.dasserver.cq.entity.event.notice.*;
-import com.dasoops.dasserver.cq.entity.event.request.CqFriendRequestEvent;
-import com.dasoops.dasserver.cq.entity.event.request.CqGroupRequestEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqDiscussMessageEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqGroupMessageEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqPrivateMessageEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.meta.CqHeartBeatMetaEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.meta.CqLifecycleMetaEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.notice.*;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.request.CqFriendRequestEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.request.CqGroupRequestEvent;
 
 /**
  * @Title: CqPlugin

@@ -2,8 +2,8 @@ package com.dasoops.dasserver.plugin.loaj.plugin;
 
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
-import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
 import com.dasoops.dasserver.cq.utils.CqMessageAssert;
 import com.dasoops.dasserver.plugin.loaj.cache.ReplyCache;
 import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;

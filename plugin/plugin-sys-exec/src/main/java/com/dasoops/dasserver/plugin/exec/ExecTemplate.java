@@ -51,7 +51,7 @@ public class ExecTemplate {
                     log.info(line);
                 }
             } catch (IOException e) {
-                throw new LogicException(e);
+                throw new LogicException(ExecExceptionEnum.NO_SUCH_FILE);
             }
         }
     }

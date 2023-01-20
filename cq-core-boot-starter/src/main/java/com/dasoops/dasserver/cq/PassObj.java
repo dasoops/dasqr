@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.cq;
 
-import com.dasoops.dasserver.cq.entity.event.CqEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.CqEvent;
 import lombok.Getter;
 
 /**

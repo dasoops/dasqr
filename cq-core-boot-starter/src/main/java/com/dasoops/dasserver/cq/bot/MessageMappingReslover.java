@@ -11,22 +11,20 @@ import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
-import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
-import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
-import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
-import com.dasoops.dasserver.cq.entity.enums.MessageParamResloveExceptionEnum;
-import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
-import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
-import com.dasoops.dasserver.cq.entity.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.dto.MatchKeywordDto;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqGroupMessageEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MappingMessage;
+import com.dasoops.dasserver.cq.entity.enums.*;
 import com.dasoops.dasserver.cq.entity.result.PluginResult;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.cq.utils.DqCodeUtil;
 
 import java.lang.reflect.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @Title: MessageParamReslover
@@ -44,8 +42,8 @@ public class MessageMappingReslover {
         Method[] pluginMethods = clazz.getMethods();
         for (Method pluginMethod : pluginMethods) {
             //检查是否需要解析
-            String matchKeyword = checkNeedReslove(pluginMethod, messageEvent, defaultMethodName, eventTypeEnum);
-            if (matchKeyword == null) {
+            MatchKeywordDto matchKeywordDto = checkNeedReslove(pluginMethod, messageEvent, defaultMethodName, eventTypeEnum);
+            if (matchKeywordDto.getMatchType().equals(MessageMatchTypeEnum.NONE)) {
                 continue;
             }
             //开始反射获取实体类
@@ -82,7 +80,7 @@ public class MessageMappingReslover {
                 @SuppressWarnings("all")
                 Class<T> genericParameterClazz = (Class<T>) messageParamParameterizedType.getActualTypeArguments()[0];
                 //注入属性
-                injectionValue(mappingMessage, eventTypeEnum, pluginMethod.getAnnotation(MessageMapping.class), messageEvent, genericParameterClazz, matchKeyword);
+                injectionValue(mappingMessage, eventTypeEnum, pluginMethod.getAnnotation(MessageMapping.class), messageEvent, genericParameterClazz, matchKeywordDto);
                 //构建参数集合
                 params = buildParams(paramClazzs, cqTemplate, messageEvent, mappingMessage);
             }
@@ -166,29 +164,29 @@ public class MessageMappingReslover {
      * @param eventTypeEnum     事件类型枚举
      * @return boolean
      */
-    private static String checkNeedReslove(Method pluginMethod, CqMessageEvent messageEvent, String defaultMethodName, EventTypeEnum eventTypeEnum) {
+    private static MatchKeywordDto checkNeedReslove(Method pluginMethod, CqMessageEvent messageEvent, String defaultMethodName, EventTypeEnum eventTypeEnum) {
         //检查是否有注解(需要解析),没有直接过
         if (!hasAnnotation(pluginMethod)) {
-            return null;
+            return MatchKeywordDto.none();
         }
         //从注解获取type,根据type检查是否匹配
         MessageMapping annotation = pluginMethod.getAnnotation(MessageMapping.class);
         boolean typeIsMatch = typeIsMatch(defaultMethodName, eventTypeEnum, pluginMethod, annotation);
         if (!typeIsMatch) {
-            return null;
+            return MatchKeywordDto.none();
         }
         //检查是否匹配解析规则,不匹配直接过
         String message = messageEvent.getMessage();
-        String matchKeyword = checkMessageIsMatch(message, annotation, messageEvent.getSelfId());
-        if (matchKeyword == null) {
-            return null;
+        MatchKeywordDto dto = checkMessageIsMatch(message, annotation, messageEvent.getSelfId());
+        if (dto.getMatchType().equals(MessageMatchTypeEnum.NONE)) {
+            return dto;
         }
         //检查返回值类型是否通过,不过抛异常,不惯着你直接抛,咱不做低声下气的人
         boolean returnTypeIsMatch = checkReturnType(pluginMethod);
         if (!returnTypeIsMatch) {
             throw new LogicException(MessageParamResloveExceptionEnum.RETURN_TYPE_IS_NOT_PASSOBJ);
         }
-        return matchKeyword;
+        return dto;
     }
 
     private static boolean checkReturnType(Method pluginMethod) {
@@ -293,7 +291,7 @@ public class MessageMappingReslover {
     }
 
 
-    private static <T extends BaseParam<? extends BaseDo>> void injectionValue(final MappingMessage<T> mappingMessageParam, EventTypeEnum eventTypeEnum, MessageMapping annotation, CqMessageEvent messageEvent, Class<T> genericParameterClazz, String matchKeyword) {
+    private static <T extends BaseParam<? extends BaseDo>> void injectionValue(final MappingMessage<T> mappingMessageParam, EventTypeEnum eventTypeEnum, MessageMapping annotation, CqMessageEvent messageEvent, Class<T> genericParameterClazz, MatchKeywordDto matchKeywordDto) {
         //设置isGroup
         boolean isGroup = eventTypeEnum.equals(EventTypeEnum.MESSAGE_GROUP);
         mappingMessageParam.setIsGroup(isGroup);
@@ -301,10 +299,8 @@ public class MessageMappingReslover {
         if (isGroup) {
             mappingMessageParam.setGroupId(((CqGroupMessageEvent) messageEvent).getGroupId());
         }
-        if (!Objects.equals(matchKeyword, "")) {
-            mappingMessageParam.setMatchKeyword(matchKeyword);
-        }
-
+        mappingMessageParam.setMatchKeyword(matchKeywordDto.getMatchKeyword());
+        mappingMessageParam.setMatchType(matchKeywordDto.getMatchType());
         //获取泛型实例对象
         T param = ReflectUtil.newInstance(genericParameterClazz);
         //获取字段,根据注解判断是否需要注入
@@ -317,7 +313,13 @@ public class MessageMappingReslover {
         List<Field> sortedNeedSetFieldList = getSortedNeedSetField(paramFields);
         //调用dq码工具类获取paramString
         String message = messageEvent.getMessage();
-        List<String> paramStringList = DqCodeUtil.getParamStr(message, getMatchPrefix(message, annotation), getMatchSuffix(message, annotation), annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
+        List<String> paramStringList;
+        switch (matchKeywordDto.getMatchType()) {
+            case PREFIX -> paramStringList = DqCodeUtil.getParamStr(message, matchKeywordDto.getResloveKeyword(), "", annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
+            case SUFFIX -> paramStringList = DqCodeUtil.getParamStr(message, "", matchKeywordDto.getMatchKeyword(), annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
+            case CONTAIN -> paramStringList = DqCodeUtil.getParamStr(message, "", "", annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
+            default -> paramStringList = new ArrayList<>();
+        }
         //开始调用set方法注入字段,考虑可选参数情况,取小的set,多的不赋值了
         int paramNeedSetFieldCount = sortedNeedSetFieldList.size();
         int insertParamCount = paramStringList.size();
@@ -365,9 +367,9 @@ public class MessageMappingReslover {
      * @param annotation 注释
      * @return boolean
      */
-    private static String checkMessageIsMatch(String message, MessageMapping annotation, Long messageSelfId) {
+    private static MatchKeywordDto checkMessageIsMatch(String message, MessageMapping annotation, Long messageSelfId) {
         if (annotation.matchAll()) {
-            return "";
+            return MatchKeywordDto.matchAll();
         }
         //at匹配
         String atPrefix = null;
@@ -375,7 +377,7 @@ public class MessageMappingReslover {
             //是否包含at
             String atMe = CqCodeUtil.at(messageSelfId);
             if (!message.startsWith(atMe)) {
-                return null;
+                return MatchKeywordDto.none();
             }
             atPrefix = atMe + " ";
         }
@@ -391,7 +393,7 @@ public class MessageMappingReslover {
                 equal = Convert.toDBC(equal);
             }
             if (StrUtil.equals(message, atPrefix == null ? "" : atPrefix + equal, ignoreCase)) {
-                return equal;
+                return MatchKeywordDto.equal(equal);
             }
         }
 
@@ -400,15 +402,10 @@ public class MessageMappingReslover {
             if (annotation.ignoreDbc()) {
                 prefix = Convert.toDBC(prefix);
             }
-            if (atPrefix != null) {
-                prefix = atPrefix + prefix;
-            }
-            if (StrUtil.equals(message, prefix, ignoreCase)) {
-                return prefix;
-            }
+            String reslovPrefix = atPrefix == null ? prefix : atPrefix + prefix;
             //匹配通过直接return
-            if (StrUtil.startWith(message, prefix + " ", ignoreCase)) {
-                return prefix;
+            if (StrUtil.startWith(message, reslovPrefix + " ", ignoreCase)) {
+                return MatchKeywordDto.prefix(prefix, reslovPrefix);
             }
         }
         //后缀匹配
@@ -417,49 +414,17 @@ public class MessageMappingReslover {
                 suffix = Convert.toDBC(suffix);
             }
             if (StrUtil.endWith(message, suffix, annotation.ignoreCase())) {
-                return suffix;
+                return MatchKeywordDto.suffix(suffix);
             }
         }
         //包含关键词匹配
         for (String keyword : annotation.contains()) {
             if (message.contains(keyword)) {
-                return keyword;
+                return MatchKeywordDto.contain(keyword);
             }
         }
         //全部不匹配
-        return null;
-    }
-
-    private static String getMatchPrefix(String message, MessageMapping annotation) {
-        if (annotation.ignoreDbc()) {
-            message = Convert.toDBC(message);
-        }
-        for (String prefix : annotation.prefix()) {
-            if (annotation.ignoreDbc()) {
-                prefix = Convert.toDBC(prefix);
-            }
-            //匹配通过直接return
-            if (StrUtil.startWith(message, prefix, annotation.ignoreCase())) {
-                return prefix;
-            }
-        }
-        return "";
-    }
-
-    private static String getMatchSuffix(String message, MessageMapping annotation) {
-        if (annotation.ignoreDbc()) {
-            message = Convert.toDBC(message);
-        }
-        for (String suffix : annotation.suffix()) {
-            if (annotation.ignoreDbc()) {
-                suffix = Convert.toDBC(suffix);
-            }
-            //匹配通过直接return
-            if (StrUtil.endWith(message, suffix, annotation.ignoreCase())) {
-                return suffix;
-            }
-        }
-        return "";
+        return MatchKeywordDto.none();
     }
 
 

@@ -5,9 +5,9 @@ import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.PassObj;
-import com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent;
-import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
-import com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqGroupMessageEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqPrivateMessageEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

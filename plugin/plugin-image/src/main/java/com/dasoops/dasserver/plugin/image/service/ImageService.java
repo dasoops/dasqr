@@ -2,7 +2,7 @@ package com.dasoops.dasserver.plugin.image.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dasoops.dasserver.cq.entity.event.message.CqMessageEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
 import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo;
 import com.dasoops.dasserver.plugin.image.entity.dto.ExportImageInfoDto;
 import com.dasoops.dasserver.plugin.image.entity.param.*;
