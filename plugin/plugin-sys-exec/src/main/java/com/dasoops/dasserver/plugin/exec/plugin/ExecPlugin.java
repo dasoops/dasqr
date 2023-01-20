@@ -28,7 +28,7 @@ public class ExecPlugin extends CqPlugin {
 
     private final ExecTemplate execTemplate;
 
-    @MessageMapping(prefix = "exec", type = MessageMappingTypeEnum.ALL)
+    @MessageMapping(prefix = "exec", at = true, type = MessageMappingTypeEnum.ALL)
     @SuppressWarnings("all")
     public String exec(MappingMessage<ExecParam> message, CqTemplate cqTemplate) {
         cqTemplate.sendMsg(message, "gogogo");
