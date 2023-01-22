@@ -1,7 +1,9 @@
 package com.dasoops.dasserver.plugin.authwrapper.task;
 
 import com.dasoops.common.task.BaseInitTask;
+import com.dasoops.dasserver.cq.CqPluginGlobal;
 import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.bot.CqPluginLoadReslover;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperPluginService;
 import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperRegisterMtmPluginService;
@@ -31,6 +33,16 @@ public class AuthInitTask extends BaseInitTask {
     public void initOrUpdateAll(CqTemplate cqTemplate) {
         initOrUpdateRegisterList(cqTemplate);
         initOrUpdateRegisterMtmPluginList();
+        initPluginGlobalReslover();
+    }
+
+    private void initPluginGlobalReslover() {
+        CqPluginLoadReslover reslover = CqPluginGlobal.getReslover();
+        CqPluginGlobal.setReslover(2147483645, applicationContext -> {
+            initOrUpdateRegisterMtmPluginList();
+            return reslover.refresh(applicationContext);
+        });
+
     }
 
     /**

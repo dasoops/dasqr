@@ -33,7 +33,7 @@ public class CqPluginGlobal {
     /**
      * 默认解析器
      */
-    public static CqPluginLoadReslover reslover = new DefaultPluginLoadReslover();
+    private static CqPluginLoadReslover reslover = new DefaultPluginLoadReslover();
 
     public static Integer resloverOrder = 2147483647;
 
@@ -71,5 +71,9 @@ public class CqPluginGlobal {
         if (orber < resloverOrder) {
             CqPluginGlobal.reslover = reslover;
         }
+    }
+
+    public static CqPluginLoadReslover getReslover() {
+        return reslover;
     }
 }

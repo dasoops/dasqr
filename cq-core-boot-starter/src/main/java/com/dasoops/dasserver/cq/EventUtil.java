@@ -102,6 +102,6 @@ public final class EventUtil {
     public static boolean isGroup() {
         EventInfo eventInfo = EventUtil.get();
         Long groupId = eventInfo.getGroupId();
-        return groupId == null;
+        return groupId != null;
     }
 }

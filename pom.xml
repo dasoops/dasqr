@@ -30,6 +30,7 @@
         <module>plugin/plugin-sys-wsWrapper</module>
         <module>plugin/plugin-sys-schedule</module>
         <module>plugin/plugin-starcraft2</module>
+        <module>plugin/plugin-setu</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -147,6 +148,12 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-starcraft2</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-setu</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 

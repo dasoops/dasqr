@@ -95,7 +95,7 @@ public class StarCraftPlugin extends CqPlugin {
      */
     @MessageMapping(prefix = {"因子查询", "getFactor"}, type = MessageMappingTypeEnum.ALL)
     public String getFactor(MessageParam<GetFactorParam> messageParam) {
-        Assert.getInstance().allMustNull(messageParam, messageParam.getParam(), messageParam.getParam().getName());
+        Assert.getInstance().allMustNotNull(messageParam, messageParam.getParam(), messageParam.getParam().getName());
 
         FactorDo factorDo = factorService.getFactorByName(messageParam.getParam().getName());
         //无参

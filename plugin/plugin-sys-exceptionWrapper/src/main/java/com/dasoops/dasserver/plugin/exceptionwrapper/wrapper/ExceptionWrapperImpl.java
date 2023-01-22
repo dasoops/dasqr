@@ -63,7 +63,7 @@ public class ExceptionWrapperImpl implements ExceptionWrapper {
     private void sendNoticeMsg(EventInfo eventInfo, ExceptionDo exceptionDo) {
         CqTemplate cqTemplate = CqGlobal.findFirst().orElseThrow(() -> new CqLogicException(CqExceptionEnum.CQ_GLOBAL_EMPTY));
         //网页访问/定时任务 产生的异常汇报管理群
-        if (EventUtil.isEmpty()) {
+        if (eventInfo == null) {
             cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), buildNoticeMsg(false, true, cqProperties, exceptionDo), false);
             return;
         }
@@ -72,7 +72,7 @@ public class ExceptionWrapperImpl implements ExceptionWrapper {
         switch (eventTypeEnum) {
             case MESSAGE_PRIVATE ->
                     //私聊发送
-                    cqTemplate.sendPrivateMsg(eventInfo.getAuthorId(), buildNoticeMsg(false, false, eventInfo, exceptionDo), false);
+                    cqTemplate.sendPrivateMsg(eventInfo.getAuthorId(), buildNoticeMsg(false, false, eventInfo, exceptionDo));
             case MESSAGE_GROUP ->
                     //群聊at
                     cqTemplate.sendGroupMsg(eventInfo.getGroupId(), buildNoticeMsg(true, false, eventInfo, exceptionDo), false);

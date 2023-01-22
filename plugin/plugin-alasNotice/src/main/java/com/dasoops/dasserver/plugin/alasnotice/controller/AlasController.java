@@ -53,7 +53,7 @@ public class AlasController {
         final SendMessageFunction function;
         switch (noticeTypeEnum) {
             case GROUP -> function = (cqTemplate, message) -> cqTemplate.sendGroupMsg(groupId, message, false);
-            case PRIVATE -> function = (cqTemplate, message) -> cqTemplate.sendPrivateMsg(groupId, message, false);
+            case PRIVATE -> function = (cqTemplate, message) -> cqTemplate.sendPrivateMsg(groupId, message);
             case GROUP_AT_USER -> function = (cqTemplate, message) -> cqTemplate.sendGroupMsg(groupId, CqCodeUtil.at(userId) + message, false);
             default -> {
                 return "noNotice";
@@ -68,7 +68,7 @@ public class AlasController {
                 """;
         String massage = StrUtil.format(messageFormat, param.getTitle(), param.getContent());
 
-        if (xSelfIdList == null || xSelfIdList.size() == 0){
+        if (xSelfIdList == null || xSelfIdList.size() == 0) {
             throw new LogicException(AlasExceptionEnum.NO_NOTICE_CQ_TEMPLATE);
         }
         for (Long xSelfId : xSelfIdList) {

@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.starcraft2;
+package com.dasoops.dasserver.plugin.setu;
 
 import org.springframework.context.annotation.ComponentScan;
 

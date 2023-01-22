@@ -3,15 +3,12 @@ package com.dasoops.minio;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.http.HttpUtil;
+import com.dasoops.common.exception.LogicException;
 import io.minio.*;
-import io.minio.errors.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 /**
@@ -58,44 +55,43 @@ public class MinioTemplate {
      *
      * @param file 文件
      * @return {@link Optional}<{@link String}> 文件名
-     * @throws IOException               IO异常
-     * @throws ServerException           服务器异常
-     * @throws InsufficientDataException 足够数据异常
-     * @throws ErrorResponseException    错误反应异常
-     * @throws NoSuchAlgorithmException  没有这样算法异常
-     * @throws InvalidKeyException       无效关键例外
-     * @throws InvalidResponseException  无效反应异常
-     * @throws XmlParserException        xml解析器异常
-     * @throws InternalException         内部异常
      */
-    public String saveImage(File file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+    public String saveImage(File file) {
         String uuid = UUID.fastUUID().toString();
         String type = FileUtil.getType(file);
         InputStream inputStream = FileUtil.getInputStream(file);
         String filename = uuid + "." + type;
-        PutObjectArgs putObjectArgs = PutObjectArgs.builder()
-                .contentType(type)
-                .bucket(minioProperties.getBucket())
-                .contentType("image/" + type)
-                .object(filename)
-                .stream(inputStream, inputStream.available(), -1)
-                .build();
-        minioClient.putObject(putObjectArgs);
+        try {
+            PutObjectArgs putObjectArgs = PutObjectArgs.builder()
+                    .contentType(type)
+                    .bucket(minioProperties.getBucket())
+                    .contentType("image/" + type)
+                    .object(filename)
+                    .stream(inputStream, inputStream.available(), -1)
+                    .build();
+            minioClient.putObject(putObjectArgs);
+        } catch (Exception e) {
+            throw new LogicException(MinioExceptionEnum.SAVE_ERROR);
+        }
         log.info("minio putObject({})", filename);
         return filename;
     }
 
-    public String saveImage(InputStream inputStream, String contentType) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+    public String saveImage(InputStream inputStream, String contentType) {
         String uuid = UUID.fastUUID().toString();
         String type = contentType.substring(contentType.lastIndexOf("/") + 1);
         String filename = uuid + "." + type;
-        PutObjectArgs putObjectArgs = PutObjectArgs.builder()
-                .contentType(contentType)
-                .bucket(minioProperties.getBucket())
-                .object(filename)
-                .stream(inputStream, inputStream.available(), -1)
-                .build();
-        minioClient.putObject(putObjectArgs);
+        try {
+            PutObjectArgs putObjectArgs = PutObjectArgs.builder()
+                    .contentType(contentType)
+                    .bucket(minioProperties.getBucket())
+                    .object(filename)
+                    .stream(inputStream, inputStream.available(), -1)
+                    .build();
+            minioClient.putObject(putObjectArgs);
+        } catch (Exception e) {
+            throw new LogicException(MinioExceptionEnum.SAVE_ERROR);
+        }
         log.info("minio putObject({})", filename);
         return filename;
     }
@@ -105,17 +101,8 @@ public class MinioTemplate {
      *
      * @param url url
      * @return {@link Optional}<{@link String}> 文件名
-     * @throws ServerException           服务器异常
-     * @throws InsufficientDataException 足够数据异常
-     * @throws ErrorResponseException    错误反应异常
-     * @throws IOException               IO异常
-     * @throws NoSuchAlgorithmException  没有这样算法异常
-     * @throws InvalidKeyException       无效关键例外
-     * @throws InvalidResponseException  无效反应异常
-     * @throws XmlParserException        xml解析器异常
-     * @throws InternalException         内部异常
      */
-    public String saveImage(String url) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+    public String saveImage(String url) {
         File file = HttpUtil.downloadFileFromUrl(url, minioProperties.getTempDownloadPath());
         return saveImage(file);
     }

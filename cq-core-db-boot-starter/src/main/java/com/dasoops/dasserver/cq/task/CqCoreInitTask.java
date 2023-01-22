@@ -31,18 +31,18 @@ public class CqCoreInitTask extends BaseInitTask {
     @PostConstruct
     public void initOrUpdateAll() {
         CqPluginGlobal.setReslover(2147483646, applicationContext ->
-//                pluginService.getAllLoadPlugin().stream().collect(Collectors.toMap(plugin -> plugin.getClass().getName(), plugin -> plugin))
-                        pluginService.getAllLoadPlugin().stream().collect(Collectors.toMap(
-                                cqPlugin -> cqPlugin.getClass().getName(), // 1. actual String as KEY
-                                cqPlugin -> cqPlugin,  // 2. String length as their VALUE
-                                (key1, key2) -> key1, // 3. duplicate KEY resolver
-                                LinkedHashMap::new // 4. implementation-class
-                        ))
+                pluginService.getAllLoadPlugin().stream().collect(Collectors.toMap(
+                        cqPlugin -> cqPlugin.getClass().getName(), // 1. actual String as KEY
+                        cqPlugin -> cqPlugin,  // 2. String length as their VALUE
+                        (key1, key2) -> key1, // 3. duplicate KEY resolver
+                        LinkedHashMap::new // 4. implementation-class
+                ))
         );
         CqPluginGlobal.refresh();
         initOrUpdateRegisterIdOtoTypeMap2Cache();
         configService.initOrUpdateConfig();
         configService.updateLocalVersionFromCloudVersion();
+        initOrUpdateFastFailImage();
     }
 
     public void initOrUpdateFastFailImage() {

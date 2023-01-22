@@ -46,6 +46,11 @@ public class MessageParam<T extends BaseParam<? extends BaseDo>> {
     private MessageMatchTypeEnum matchType;
 
     /**
+     * 原始消息
+     */
+    private String rawMessage;
+
+    /**
      * 用户输入参数
      */
     private T param;

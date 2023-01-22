@@ -7,6 +7,7 @@ import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.WrapperGlobal;
 import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.conf.NamedThreadFactory;
@@ -144,9 +145,14 @@ public class WsHandler extends TextWebSocketHandler {
             CqTemplate finalCqTemplate = cqTemplate;
             executor.execute(() -> {
                 try {
+                    EventUtil.set(messageObj);
+                    CqGlobal.setThreadLocal(finalCqTemplate);
                     eventHandler.handle(finalCqTemplate, messageObj);
                 } catch (Exception e) {
                     exceptionTemplate.resloveException(e);
+                } finally {
+                    EventUtil.remove();
+                    CqGlobal.removeThreadLocal();
                 }
             });
         }

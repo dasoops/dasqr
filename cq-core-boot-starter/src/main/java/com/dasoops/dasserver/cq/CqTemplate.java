@@ -68,7 +68,7 @@ public class CqTemplate {
         if ("group".equals(messageType)) {
             return sendGroupMsg(((CqGroupMessageEvent) event).getGroupId(), message, false);
         }
-        return sendPrivateMsg(event.getUserId(), message, false);
+        return sendPrivateMsg(null, event.getUserId(), message, false);
     }
 
     /**
@@ -82,7 +82,7 @@ public class CqTemplate {
         if (param.getIsGroup()) {
             return sendGroupMsg(param.getGroupId(), message, false);
         }
-        return sendPrivateMsg(param.getUserId(), message, false);
+        return sendPrivateMsg(null, param.getUserId(), message, false);
     }
 
     /**
@@ -93,11 +93,12 @@ public class CqTemplate {
      * @param autoEscape 消息内容是否作为纯文本发送（即不解析 CQ 码），只在 message 字段是字符串时有效
      * @return 结果
      */
-    public ApiData<MessageData> sendPrivateMsg(Long qId, String message, boolean autoEscape) {
+    public ApiData<MessageData> sendPrivateMsg(Long groupId, Long qId, String message, boolean autoEscape) {
         ApiEnum action = ApiEnum.SEND_PRIVATE_MSG;
 
         JSONObject params = new JSONObject();
         params.put("user_id", qId);
+        params.put("group_id", groupId);
         params.put("message", message);
         params.put("auto_escape", autoEscape);
 
@@ -116,7 +117,18 @@ public class CqTemplate {
      * @return 结果
      */
     public ApiData<MessageData> sendPrivateMsg(Long qId, String message) {
-        return sendPrivateMsg(qId, message, false);
+        return sendPrivateMsg(null, qId, message, false);
+    }
+
+    /**
+     * 发送私聊消息
+     *
+     * @param qId     对方 QQ 号
+     * @param message 要发送的内容
+     * @return 结果
+     */
+    public ApiData<MessageData> sendPrivateMsg(Long groupId, Long qId, String message) {
+        return sendPrivateMsg(groupId, qId, message, false);
     }
 
     /**

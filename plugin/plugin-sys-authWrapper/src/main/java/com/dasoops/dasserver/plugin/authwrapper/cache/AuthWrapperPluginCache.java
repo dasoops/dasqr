@@ -41,7 +41,6 @@ public class AuthWrapperPluginCache extends BaseCache {
     public Long getIdByPluginClassPath(String classPath) {
         String value = super.hget(PluginRedisKeyEnum.PLUGIN_CALSSPATH_OTO_ID, classPath);
         if (value == null || value.isEmpty()) {
-            log.info("classPath:{},not found id",classPath);
             log.error("classPath:{},not found id",classPath);
             throw new LogicException(ExceptionEnum.REDIS_DATA_NOT_NULL);
         }

@@ -294,6 +294,8 @@ public class MessageMappingReslover {
     private static <T extends BaseParam<? extends BaseDo>> void injectionValue(final MessageParam<T> messageParamParam, EventTypeEnum eventTypeEnum, MessageMapping annotation, CqMessageEvent messageEvent, Class<T> genericParameterClazz, MatchKeywordDto matchKeywordDto) {
         //设置isGroup
         boolean isGroup = eventTypeEnum.equals(EventTypeEnum.MESSAGE_GROUP);
+        String message = messageEvent.getMessage();
+        messageParamParam.setRawMessage(message);
         messageParamParam.setIsGroup(isGroup);
         messageParamParam.setUserId(messageEvent.getUserId());
         if (isGroup) {
@@ -312,7 +314,6 @@ public class MessageMappingReslover {
         //获取排序后的需要注入的字段集合
         List<Field> sortedNeedSetFieldList = getSortedNeedSetField(paramFields);
         //调用dq码工具类获取paramString
-        String message = messageEvent.getMessage();
         List<String> paramStringList;
         switch (matchKeywordDto.getMatchType()) {
             case PREFIX -> paramStringList = DqCodeUtil.getParamStr(message, matchKeywordDto.getResloveKeyword(), "", annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
@@ -371,6 +372,12 @@ public class MessageMappingReslover {
         if (annotation.matchAll()) {
             return MatchKeywordDto.matchAll();
         }
+
+        //dbc转换
+        if (annotation.ignoreDbc()) {
+            message = Convert.toDBC(message);
+        }
+
         //at匹配
         String atPrefix = null;
         if (annotation.at()) {
@@ -380,10 +387,6 @@ public class MessageMappingReslover {
                 return MatchKeywordDto.none();
             }
             atPrefix = atMe + " ";
-        }
-        //dbc转换
-        if (annotation.ignoreDbc()) {
-            message = Convert.toDBC(message);
         }
 
         boolean ignoreCase = annotation.ignoreCase();

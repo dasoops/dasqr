@@ -15,8 +15,8 @@
 
 `-: 未开始;√:已完成`
 
-1. ( - ) 定时任务(plugin-sys-schedule)
-2. ( - ) sc2下周突变(每周提醒入土了)
+1. ( √ ) 定时任务(plugin-sys-schedule)
+2. ( √ ) sc2下周突变(每周提醒入土了)
 3. ( - ) webManager路由动态渲染
 4. ( - ) plugin-setu实现
 5. ( - ) plugin-sys-shell(暂未定实现方式,通过伪造CqTemplate?)
@@ -25,3 +25,4 @@
 8. ( - ) webManager token续签
 9. ( - ) plugin-style
 10. ( - ) help文档
+11. ( - ) rss对接?

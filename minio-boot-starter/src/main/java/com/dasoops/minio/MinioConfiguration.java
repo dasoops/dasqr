@@ -4,7 +4,6 @@ import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,7 +19,6 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @EnableConfigurationProperties({MinioProperties.class})
 @ComponentScan("com.dasoops.minio")
-@ConditionalOnProperty(prefix = "minio", value = "enable", havingValue = "true")
 public class MinioConfiguration {
 
     @Bean

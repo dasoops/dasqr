@@ -46,9 +46,7 @@ public class EventHandler {
      * @param eventJson  事件json
      */
     public void handle(CqTemplate cqTemplate, JSONObject eventJson) {
-        try {
-            EventInfo eventInfo = EventUtil.set(eventJson);
-            CqGlobal.setThreadLocal(cqTemplate);
+            EventInfo eventInfo = EventUtil.get();
 
             List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
             boolean pass = wsWrapperList.stream().allMatch(wsWrapper -> wsWrapper.beforeHandleTextMessage(cqTemplate, eventInfo));
@@ -105,10 +103,6 @@ public class EventHandler {
                 }
                 default -> log.error("not found reslove method");
             }
-        } finally {
-            EventUtil.remove();
-            CqGlobal.removeThreadLocal();
-        }
     }
 
     /**
@@ -174,7 +168,7 @@ public class EventHandler {
      * @param mustAuth        是否必须认证
      */
     private void handleMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqEvent> clazz, HandleFunction defaultFunction, boolean mustAuth) {
-        handleResloveMessage(cqTemplate, eventJson, clazz, defaultFunction, mustAuth, null, null);
+        handleMessage(cqTemplate, eventJson, clazz, defaultFunction, mustAuth, null, null);
     }
 
     /**
@@ -188,7 +182,7 @@ public class EventHandler {
      * @param eventTypeEnum     消息类型枚举
      */
     private void handleResloveMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqMessageEvent> clazz, HandleFunction defaultFunction, String defaultMethodName, EventTypeEnum eventTypeEnum) {
-        handleResloveMessage(cqTemplate, eventJson, clazz, defaultFunction, true, defaultMethodName, eventTypeEnum);
+        handleMessage(cqTemplate, eventJson, clazz, defaultFunction, true, defaultMethodName, eventTypeEnum);
     }
 
     /**
@@ -202,7 +196,7 @@ public class EventHandler {
      * @param defaultMethodName 默认调用方法名称
      * @param eventTypeEnum     消息类型枚举
      */
-    private void handleResloveMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqEvent> clazz, HandleFunction defaultFunction, boolean mustAuth, String defaultMethodName, EventTypeEnum eventTypeEnum) {
+    private void handleMessage(CqTemplate cqTemplate, JSONObject eventJson, Class<? extends CqEvent> clazz, HandleFunction defaultFunction, boolean mustAuth, String defaultMethodName, EventTypeEnum eventTypeEnum) {
         //实际只有俩会走这里,其余的不会走这个方法,所以通过硬编码实现,但是考虑到以后可能会改,所以先不删而是注释
         /*
         if (!messageTypeEnum.equals(MessageTypeEnum.MESSAGE_GROUP) && !messageTypeEnum.equals(MessageTypeEnum.MESSAGE_PRIVATE)) {
@@ -248,7 +242,9 @@ public class EventHandler {
                 return;
             }
         }
-//        log.debug("消息解析结束,执行器链:{}", pluginChainStringBuilder.append(" -> block"));
+        if (eventTypeEnum != null && !eventTypeEnum.equals(EventTypeEnum.META_EVENT_HEARTBEAT) && !eventTypeEnum.equals(EventTypeEnum.META_EVENT_LIFECYCLE)) {
+            log.debug("消息解析结束,执行器链:{}", pluginChainStringBuilder.append(" -> block"));
+        }
     }
 
 }
