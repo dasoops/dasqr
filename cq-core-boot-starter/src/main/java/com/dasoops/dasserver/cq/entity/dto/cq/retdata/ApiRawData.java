@@ -3,6 +3,7 @@ package com.dasoops.dasserver.cq.entity.dto.cq.retdata;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @Title: ApiRawData
@@ -12,14 +13,11 @@ import lombok.Data;
  * @Version 1.0.0
  * @Description: api原始数据
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class ApiRawData {
-    @JSONField(name = "status")
-    private String status;
-
-    @JSONField(name = "retcode")
-    private int retcode;
+public class ApiRawData extends BaseApiData {
 
     @JSONField(name = "data")
     private JSONObject data;
+
 }

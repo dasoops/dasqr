@@ -25,7 +25,7 @@ public enum CqExceptionEnum implements IExceptionEnum {
     UNKNOWN_POST_TYPE("未知的postType"),
     PARAM_RESLOVE_ERROR("参数解析失败"),
     REFLECT_INVOKE_ERROR("反射调用失败"),
-    UNDEFINED_EVENT_TYPE("未定义的事件类型"), CQ_TEMPLATE_NO_CONNECTION("不存在的cq连接");
+    UNDEFINED_EVENT_TYPE("未定义的事件类型"), CQ_TEMPLATE_NO_CONNECTION("不存在的cq连接"), SEND_ERROR("消息发送失败"), EMPTY_MSG("消息解析后为空");
 
 
     @Override

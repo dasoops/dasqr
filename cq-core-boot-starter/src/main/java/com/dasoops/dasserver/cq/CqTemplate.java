@@ -873,21 +873,14 @@ public class CqTemplate {
         return result;
     }
 
-
-    private void checkResultCode(ApiListData<?> result) {
+    private void checkResultCode(BaseApiData result) {
         if (result.getRetcode() != 0) {
-            throw new CqLogicException(CqExceptionEnum.RESPONSE_ERROR);
-        }
-    }
-
-    private void checkResultCode(ApiData<?> result) {
-        if (result.getRetcode() != 0) {
-            throw new CqLogicException(CqExceptionEnum.RESPONSE_ERROR);
-        }
-    }
-
-    private void checkResultCode(ApiRawData result) {
-        if (result.getRetcode() != 0) {
+            if ("请参考 go-cqhttp 端输出".equals(result.getWording())) {
+                throw new CqLogicException(CqExceptionEnum.SEND_ERROR);
+            }
+            if ("empty message".equals(result.getWording())) {
+                throw new CqLogicException(CqExceptionEnum.EMPTY_MSG);
+            }
             throw new CqLogicException(CqExceptionEnum.RESPONSE_ERROR);
         }
     }

@@ -2,8 +2,8 @@ package com.dasoops.dasserver.plugin.setu.plugin;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
+import com.dasoops.common.entity.enums.base.IExceptionEnum;
 import com.dasoops.common.entity.param.SimpleParam;
-import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
@@ -11,9 +11,9 @@ import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.exception.CqLogicException;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.plugin.setu.SetuTemplate;
-import com.dasoops.dasserver.plugin.setu.cache.SetuCache;
 import com.dasoops.dasserver.plugin.setu.entity.dto.SetuInfoDto;
 import com.dasoops.dasserver.plugin.setu.entity.enums.SetuConfigRedisHashKeyEnum;
 import com.dasoops.dasserver.plugin.setu.entity.enums.SetuSizeEnum;
@@ -42,12 +42,10 @@ public class SetuPlugin extends CqPlugin {
     private final SetuTemplate setuTemplate;
     private final MinioTemplate minioTemplate;
     private final ConfigCache configCache;
-    private final SetuCache setuCache;
 
     final List<String> noParamEqualStringList = List.of("来点涩图", "setu", "getSetu");
     final String hasParamPrefix = "来点";
     final String hasParamSuffix = "涩图";
-    final String pixivArtWorksUrl = "https://www.pixiv.net/artworks/";
 
     @MessageMapping(matchAll = true, type = MessageMappingTypeEnum.GROUP)
     public boolean getSetu(CqTemplate cqTemplate, MessageParam<SimpleParam> param) {
@@ -78,32 +76,52 @@ public class SetuPlugin extends CqPlugin {
 
         //发送
         SetuInfoDto setuInfo = setuTemplate.getSetuInfo(setuParam);
+        if (setuInfo == null) {
+            cqTemplate.sendMsg(param, "没有包含这个tag的涩图哦");
+            return false;
+        }
+        long pid = setuInfo.getPid();
+        String pixivArtWorksUrl = configCache.getStringConfig(SetuConfigRedisHashKeyEnum.PIXIV_ART_WORKS_URL);
+        String proxyArtWorksUrl = configCache.getStringConfig(SetuConfigRedisHashKeyEnum.PROXY_ART_WORKS_URL);
         cqTemplate.sendMsg(param, StrUtil.format("""
                         [{}]: {}
                         tags: {}
                         画廊url: {}
+                        代理画廊url: {}
                         图片绝赞下载中...
                         """,
                 setuInfo.getAuthor(), setuInfo.getTitle(),
                 StrUtil.join(",", setuInfo.getTags()),
-                pixivArtWorksUrl + setuInfo.getPid()
+                pixivArtWorksUrl + pid,
+                proxyArtWorksUrl + pid
         ));
         log.info(JSON.toJSONString(setuInfo));
 
         //试图发送图片
         try {
             cqTemplate.sendMsg(param, CqCodeUtil.image(setuInfo.getUrls().getRegular()));
-        } catch (LogicException e) {
-            if (e.getExceptionEnum().equals(CqExceptionEnum.RESPONSE_ERROR)) {
-                log.error("图片发送失败, 将通过私聊发送");
+        } catch (CqLogicException e) {
+            IExceptionEnum exceptionEnum = e.getExceptionEnum();
+            if (exceptionEnum.equals(CqExceptionEnum.SEND_ERROR) || exceptionEnum.equals(CqExceptionEnum.EMPTY_MSG)) {
+                log.error("图片代理站404,可能是画廊更新");
+                cqTemplate.sendMsg(param, StrUtil.format("""
+                                发送失败,代理站未保留画廊更新记录,请前往pixiv画廊查看喵
+                                pixiv   : {}
+                                pixivel : {}
+                                """,
+                        pixivArtWorksUrl + pid,
+                        "pixivel.moe/illust/") + pid
+                );
+            } else if (exceptionEnum.equals(CqExceptionEnum.RESPONSE_ERROR)) {
+                log.error("图片发送失败");
                 String fileName = minioTemplate.saveImage(setuInfo.getUrls().getOriginal());
                 String imagePath = minioTemplate.buildImagePath(fileName);
                 cqTemplate.sendMsg(param, StrUtil.format("""
                         群聊图片发送失败, 腾讯色情管家鉴定为: 一伯分!
                         可以通过链接查看图片喵
                         {}
-                        """, imagePath));
-//                cqTemplate.sendPrivateMsg(param.getGroupId(), param.getUserId(), CqCodeUtil.image(setuInfo.getUrls().getRegular()));
+                        """, imagePath)
+                );
             }
         }
         return false;

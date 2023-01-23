@@ -33,7 +33,17 @@ public enum SetuConfigRedisHashKeyEnum implements IRedisHashKeyEnum {
     /**
      * 默认r18
      */
-    DEFAULT_R18("defaultR18");
+    DEFAULT_R18("defaultR18"),
+    /**
+     * pixiv画廊url
+     */
+    PIXIV_ART_WORKS_URL("pixivArtWorksUrl"),
+    /**
+     * 代理画廊url
+     */
+    PROXY_ART_WORKS_URL("proxyArtWorksUrl"),
+
+    ;
 
     final String key;
 }

@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -63,8 +64,11 @@ public class SetuTemplate {
         if (!setuResponseEntity.getStatusCode().equals(HttpStatus.OK)) {
             throw new LogicException(SetuExceptionEnum.API_REQUEST_ERROR);
         }
-        SetuInfoDto setuInfoDto = Objects.requireNonNull(setuResponseEntity.getBody()).getData().get(0);
-        return setuInfoDto;
+        List<SetuInfoDto> setuInfoDtoList = Objects.requireNonNull(setuResponseEntity.getBody()).getData();
+        if (setuInfoDtoList.size() <= 0) {
+            return null;
+        }
+        return setuInfoDtoList.get(0);
     }
 
 }

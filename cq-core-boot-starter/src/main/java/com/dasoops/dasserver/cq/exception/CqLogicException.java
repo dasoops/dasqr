@@ -14,9 +14,14 @@ import com.dasoops.common.exception.LogicException;
  * @see AbstractBaseCustomException
  */
 public class CqLogicException extends LogicException {
+    /**
+     * 错误信息
+     */
+
     public CqLogicException(IExceptionEnum exceptionEnum) {
         super(exceptionEnum);
     }
+
 
     public CqLogicException(Exception exception) {
         super(exception);
@@ -26,7 +31,7 @@ public class CqLogicException extends LogicException {
         super(exceptionEnum, stackMessage);
     }
 
-    public CqLogicException(IExceptionEnum exceptionEnum, Exception e) {
-        super(exceptionEnum, e);
+    public CqLogicException(IExceptionEnum exceptionEnum, Exception exception) {
+        super(exceptionEnum, exception);
     }
 }
