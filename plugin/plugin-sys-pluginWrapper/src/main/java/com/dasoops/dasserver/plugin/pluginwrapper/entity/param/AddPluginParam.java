@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.pluginwrapper.entity.param;
 
-import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "添加插件param", description = "添加插件param")
-public class AddPluginParam extends BaseParam<PluginDo> {
+public class AddPluginParam extends BaseFastBuildParam<PluginDo> {
 
     /**
      * 关键字

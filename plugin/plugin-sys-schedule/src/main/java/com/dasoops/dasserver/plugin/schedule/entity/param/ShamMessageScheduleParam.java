@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.schedule.entity.param;
 
-import com.dasoops.common.entity.param.SimpleParam;
+import com.dasoops.common.entity.param.base.BaseParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,11 +11,11 @@ import lombok.EqualsAndHashCode;
  * @Date 2023/01/20
  * @Version 1.0.0
  * @Description: 虚假消息定时任务param
- * @see SimpleParam
+ * @see BaseParam
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ShamMessageScheduleParam extends SimpleParam {
+public class ShamMessageScheduleParam extends BaseParam {
     /**
      * 消息
      */

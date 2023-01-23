@@ -1,8 +1,8 @@
 package com.dasoops.dasserver.plugin.image.entity.param;
 
-import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.common.entity.param.base.BaseDeleteParam;
+import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,12 +17,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "删除图片param", description = "删除图片param")
-public class DeleteImageParam extends BaseParam {
+public class DeleteImageParam extends BaseDeleteParam<ImageDo> {
 
-    /**
-     * rowId
-     */
-    @ApiModelProperty(value = "rowId", notes = "rowId", example = "65", required = true)
-    private Long rowId;
 
 }

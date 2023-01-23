@@ -4,9 +4,9 @@ import cn.hutool.core.util.EnumUtil;
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.entity.dto.base.BaseDto;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.entity.enums.base.ISortColumnEnum;
 import com.dasoops.common.entity.enums.SortRuleEnum;
-import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.common.entity.enums.base.ISortColumnEnum;
+import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.common.exception.LogicException;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -26,7 +26,7 @@ import java.util.Optional;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SortParam<T extends BaseDo> extends BaseParam<T> {
+public class SortParam<T extends BaseDo> extends BaseFastBuildParam<T> {
 
     /**
      * 排序字段

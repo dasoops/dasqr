@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.setu.plugin;
+package com.dasoops.dasserver.plugin.template.plugin;
 
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;

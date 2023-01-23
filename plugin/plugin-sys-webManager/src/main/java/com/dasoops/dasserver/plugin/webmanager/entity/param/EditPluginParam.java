@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.param;
 
 import com.dasoops.common.entity.param.base.BaseEditParam;
-import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  * @Date 2023/01/12
  * @Version 1.0.0
  * @Description: 编辑插件param
- * @see BaseParam
+ * @see BaseFastBuildParam
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

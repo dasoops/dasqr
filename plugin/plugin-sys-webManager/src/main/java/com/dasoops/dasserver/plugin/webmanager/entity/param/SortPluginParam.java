@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.param;
 
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginInnerParam;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,11 +17,11 @@ import java.util.List;
  * @Date 2023/01/12
  * @Version 1.0.0
  * @Description: 排序插件param
- * @see BaseParam
+ * @see BaseFastBuildParam
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SortPluginParam extends BaseParam<PluginDo> {
+public class SortPluginParam extends BaseFastBuildParam<PluginDo> {
 
     /**
      * 插件排序集合

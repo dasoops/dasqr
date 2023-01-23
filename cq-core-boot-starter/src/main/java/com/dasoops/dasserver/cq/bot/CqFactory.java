@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.cq.bot;
 
 import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.DefaultCqTemplate;
 import com.dasoops.dasserver.cq.api.ApiHandler;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -18,7 +19,8 @@ public class CqFactory {
     public CqFactory(ApiHandler apiHandler) {
         this.apiHandler = apiHandler;
     }
+
     public CqTemplate create(Long selfId, WebSocketSession webSocketSession) {
-        return new CqTemplate(selfId, webSocketSession, apiHandler);
+        return new DefaultCqTemplate(selfId, webSocketSession, apiHandler);
     }
 }

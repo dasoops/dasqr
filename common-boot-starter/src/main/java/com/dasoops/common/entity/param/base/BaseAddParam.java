@@ -1,8 +1,6 @@
 package com.dasoops.common.entity.param.base;
 
 import com.dasoops.common.entity.dbo.base.BaseDo;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * @Title: BaseAddParam
@@ -11,9 +9,7 @@ import lombok.EqualsAndHashCode;
  * @Date 2023/01/13
  * @Version 1.0.0
  * @Description: 新增param基类
- * @see BaseParam
+ * @see BaseFastBuildParam
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
-public abstract class BaseAddParam<T extends BaseDo> extends BaseParam<T>{
+public abstract class BaseAddParam<T extends BaseDo> extends BaseFastBuildParam<T> {
 }

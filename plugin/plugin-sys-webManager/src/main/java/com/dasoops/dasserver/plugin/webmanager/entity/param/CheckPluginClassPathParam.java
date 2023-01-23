@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.param;
 
-import com.dasoops.common.entity.param.SimpleParam;
+import com.dasoops.common.entity.param.base.BaseParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "检查插件类路径param", description = "检查插件类路径param")
-public class CheckPluginClassPathParam extends SimpleParam {
+public class CheckPluginClassPathParam extends BaseParam {
 
     /**
      * 类路径

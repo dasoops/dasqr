@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @Title: UrlDto
- * @ClassPath com.dasoops.dasserver.plugin.setu.entity.dto.UrlDto
+ * @ClassPath com.dasoops.dasserver.plugin.shell.entity.dto.UrlDto
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/22
  * @Version 1.0.0

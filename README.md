@@ -4,6 +4,11 @@
 
 越来越杂，好事啊
 
+#### keyword
+
+- string - str
+- WebSocket - ws
+
 #### 错误码:
 
 - 65535 - 65535: 未预料的异常
@@ -18,7 +23,7 @@
 1. ( √ ) 定时任务(plugin-sys-schedule)
 2. ( √ ) sc2下周突变(每周提醒入土了)
 3. ( - ) webManager路由动态渲染
-4. ( - ) plugin-setu实现
+4. ( √ ) plugin-setu实现
 5. ( - ) plugin-sys-shell(暂未定实现方式,通过伪造CqTemplate?)
 6. ( - ) webManager rule | register | reply | shell
 7. ( - ) webManager register password

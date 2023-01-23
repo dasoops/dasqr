@@ -1,11 +1,11 @@
 package com.dasoops.dasserver.cq.conf;
 
+import com.dasoops.dasserver.cq.bot.WsHandler;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.conf.properties.EventProperties;
 import com.dasoops.dasserver.cq.conf.properties.WsProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
@@ -24,16 +24,16 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableConfigurationProperties({WsProperties.class, EventProperties.class, CqProperties.class})
 public class CqConfiguration implements WebSocketConfigurer {
 
-    final WebSocketHandler webSocketHandler;
+    final WsHandler wsHandler;
     final WsProperties wsProperties;
 
-    public CqConfiguration(WebSocketHandler webSocketHandler, WsProperties wsProperties) {
-        this.webSocketHandler = webSocketHandler;
+    public CqConfiguration(WsHandler wsHandler, WsProperties wsProperties) {
+        this.wsHandler = wsHandler;
         this.wsProperties = wsProperties;
     }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketHandler, wsProperties.getUrl()).setAllowedOrigins("*");
+        registry.addHandler(wsHandler, wsProperties.getUrl()).setAllowedOrigins("*");
     }
 }

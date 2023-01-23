@@ -31,6 +31,7 @@
         <module>plugin/plugin-sys-schedule</module>
         <module>plugin/plugin-starcraft2</module>
         <module>plugin/plugin-setu</module>
+        <module>plugin/plugin-sys-shell</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -142,6 +143,12 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-log</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-sys-shell</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 

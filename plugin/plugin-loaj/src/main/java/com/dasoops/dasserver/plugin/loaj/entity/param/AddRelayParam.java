@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.loaj.entity.param;
 
-import com.dasoops.common.entity.param.SimpleParam;
+import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import lombok.Data;
@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AddRelayParam extends SimpleParam {
+public class AddRelayParam extends BaseParam {
 
     /**
      * 关键字

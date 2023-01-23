@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.setu.entity.param;
 
-import com.dasoops.common.entity.param.SimpleParam;
+import com.dasoops.common.entity.param.base.BaseParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @Title: SetuParam
- * @ClassPath com.dasoops.dasserver.plugin.setu.entity.param.SetuParam
+ * @ClassPath com.dasoops.dasserver.plugin.shell.entity.param.SetuParam
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/22
  * @Version 1.0.0
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SetuParam extends SimpleParam {
+public class SetuParam extends BaseParam {
 
     /**
      * 0为非 R18，1为 R18，2为混合（在库中的分类，不等同于作品本身的 R18 标识）

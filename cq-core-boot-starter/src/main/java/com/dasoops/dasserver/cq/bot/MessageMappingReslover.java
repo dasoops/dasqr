@@ -3,7 +3,6 @@ package com.dasoops.dasserver.cq.bot;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
@@ -36,7 +35,7 @@ import java.util.List;
  */
 public class MessageMappingReslover {
 
-    public static <T extends BaseParam<? extends BaseDo>> PassObj resloveParamAndHandle(CqPlugin cqPlugin, CqTemplate cqTemplate, CqMessageEvent messageEvent, String defaultMethodName, EventTypeEnum eventTypeEnum) {
+    public static <T extends BaseParam> PassObj resloveParamAndHandle(CqPlugin cqPlugin, CqTemplate cqTemplate, CqMessageEvent messageEvent, String defaultMethodName, EventTypeEnum eventTypeEnum) {
         //开始选择方法,优先判断包含注解的方法,都不符合再调用继承的,再不符合直接调用CqPlugin的默认实现
         Class<? extends CqPlugin> clazz = cqPlugin.getClass();
         Method[] pluginMethods = clazz.getMethods();
@@ -225,7 +224,7 @@ public class MessageMappingReslover {
         return true;
     }
 
-    private static Object[] buildParams(Class<?>[] paramClazzs, CqTemplate cqTemplate, CqMessageEvent messageEvent, MessageParam<? extends BaseParam<? extends BaseDo>> messageParam) {
+    private static Object[] buildParams(Class<?>[] paramClazzs, CqTemplate cqTemplate, CqMessageEvent messageEvent, MessageParam<? extends BaseParam> messageParam) {
         Object[] params = new Object[paramClazzs.length];
         for (int i = 0; i < paramClazzs.length; i++) {
             Class<?> paramClazz = paramClazzs[i];
@@ -291,7 +290,7 @@ public class MessageMappingReslover {
     }
 
 
-    private static <T extends BaseParam<? extends BaseDo>> void injectionValue(final MessageParam<T> messageParamParam, EventTypeEnum eventTypeEnum, MessageMapping annotation, CqMessageEvent messageEvent, Class<T> genericParameterClazz, MatchKeywordDto matchKeywordDto) {
+    private static <T extends BaseParam> void injectionValue(final MessageParam<T> messageParamParam, EventTypeEnum eventTypeEnum, MessageMapping annotation, CqMessageEvent messageEvent, Class<T> genericParameterClazz, MatchKeywordDto matchKeywordDto) {
         //设置isGroup
         boolean isGroup = eventTypeEnum.equals(EventTypeEnum.MESSAGE_GROUP);
         String message = messageEvent.getMessage();

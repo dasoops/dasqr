@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.loaj.plugin;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.entity.param.SimpleParam;
+import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
@@ -41,7 +41,7 @@ public class RollPlugin extends CqPlugin {
     private final ConfigCache configCache;
 
     @MessageMapping(prefix = "endRoll", type = MessageMappingTypeEnum.GROUP)
-    public PluginResult endRoll(CqTemplate cqTemplate, MessageParam<SimpleParam> param) {
+    public PluginResult endRoll(CqTemplate cqTemplate, MessageParam<BaseParam> param) {
         log.debug("(RollPlugin) 进入endRoll点逻辑");
         Long groupId = param.getGroupId();
 
@@ -90,7 +90,7 @@ public class RollPlugin extends CqPlugin {
     final String rollPrefix = "roll";
 
     @MessageMapping(prefix = rollPrefix, type = MessageMappingTypeEnum.GROUP)
-    public String roll(CqTemplate cqTemplate, MessageParam<SimpleParam> param) {
+    public String roll(CqTemplate cqTemplate, MessageParam<BaseParam> param) {
         log.debug("(RollPlugin) 进入roll点逻辑");
 
         int randomInt = RandomUtil.randomInt(1, 101);

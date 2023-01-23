@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.starcraft2.plugin;
 
-import com.dasoops.common.entity.param.SimpleParam;
+import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
@@ -36,7 +36,7 @@ public class MutationRecordPlugin extends CqPlugin {
      * @return {@link String}
      */
     @MessageMapping(equal = "incrementMutation", type = MessageMappingTypeEnum.ALL)
-    public void incrementMutationRecord(MessageParam<SimpleParam> messageParam, CqTemplate cqTemplate) {
+    public void incrementMutationRecord(MessageParam<BaseParam> messageParam, CqTemplate cqTemplate) {
         //记录数
         mutationService.incrementRecord();
 
@@ -51,7 +51,7 @@ public class MutationRecordPlugin extends CqPlugin {
      * @return {@link String}
      */
     @MessageMapping(equal = "quietIncrementMutation", type = MessageMappingTypeEnum.ALL)
-    public void quietIncrementMutation(MessageParam<SimpleParam> messageParam) {
+    public void quietIncrementMutation(MessageParam<BaseParam> messageParam) {
         mutationService.incrementRecord();
     }
 

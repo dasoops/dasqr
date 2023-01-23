@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.starcraft2.plugin;
 
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.entity.param.SimpleParam;
+import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
@@ -49,12 +49,14 @@ public class StarCraftPlugin extends CqPlugin {
     final String nextWeekKeyword = "下周突变";
 
     @MessageMapping(equal = {thisWeekKeyword, nextWeekKeyword}, type = MessageMappingTypeEnum.ALL)
-    public String getWeekMutation(MessageParam<SimpleParam> messageParam) {
+    public String getWeekMutation(MessageParam<BaseParam> messageParam) {
         //记录数
         Integer recordRowId = configCache.getIntegerConfig(StarCraft2ConfigHashKeyEnum.MUTATION_RECORD);
 
         String matchKeyword = messageParam.getMatchKeyword();
-        Integer bizzardLament = recordRowId - 168;
+        //死期
+        final int bizzardDieWeek = 168;
+        Integer bizzardLament = recordRowId - bizzardDieWeek;
         if (matchKeyword.equals(nextWeekKeyword)) {
             recordRowId++;
         }
@@ -81,7 +83,14 @@ public class StarCraftPlugin extends CqPlugin {
         for (int i = 0; i < mutationList.size(); i++) {
             MutationDo mutationDo = mutationList.get(i);
             sb.append("\n").append(i + 1).append(".");
-            String str = StrUtil.format("{}({})\n因子:{}\n分数:{}(残酷+{})", mutationDo.getName(), mutationDo.getMap(), mutationDo.getFactor(), mutationDo.getScore(), mutationDo.getLevel());
+            String str = StrUtil.format("""
+                            {}({})
+                            因子:{}
+                            分数:{}(残酷+{})
+                            """,
+                    mutationDo.getName(), mutationDo.getMap(),
+                    mutationDo.getFactor(),
+                    mutationDo.getScore(), mutationDo.getLevel());
             sb.append(str);
         }
         return sb.toString();

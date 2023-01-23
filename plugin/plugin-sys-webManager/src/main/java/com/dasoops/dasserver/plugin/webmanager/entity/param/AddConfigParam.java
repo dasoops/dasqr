@@ -1,6 +1,8 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.param;
 
-import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.common.entity.param.base.BaseAddParam;
+import com.dasoops.common.entity.param.base.BaseFastBuildParam;
+import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,11 +14,11 @@ import lombok.EqualsAndHashCode;
  * @Date 2022/12/30
  * @Version 1.0.0
  * @Description: 添加配置参数
- * @see BaseParam
+ * @see BaseFastBuildParam
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AddConfigParam extends BaseParam {
+public class AddConfigParam extends BaseAddParam<ConfigDo> {
 
     /**
      * 配置项关键词

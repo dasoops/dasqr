@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.cq.entity.dto.cq.event.message;
 
-import com.dasoops.common.entity.dbo.base.BaseDo;
+import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.dasserver.cq.entity.enums.MessageMatchTypeEnum;
 import lombok.Data;
@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
  * @Date 2023/01/07
  * @Version 1.0.0
  * @Description: 消息param
- * @see BaseParam
+ * @see BaseFastBuildParam
  */
 @Data
 @NoArgsConstructor
-public class MessageParam<T extends BaseParam<? extends BaseDo>> {
+public class MessageParam<T extends BaseParam> {
 
     /**
      * 是否为群组消息

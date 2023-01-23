@@ -77,6 +77,11 @@
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-shell</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-sys-schedule</artifactId>
         </dependency>
 

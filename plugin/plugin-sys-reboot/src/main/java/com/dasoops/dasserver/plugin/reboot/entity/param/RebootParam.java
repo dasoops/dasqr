@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.reboot.entity.param;
 
-import com.dasoops.common.entity.param.SimpleParam;
+import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,11 +12,11 @@ import lombok.EqualsAndHashCode;
  * @Date 2023/01/17
  * @Version 1.0.0
  * @Description: 重新启动param
- * @see SimpleParam
+ * @see BaseParam
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class RebootParam extends SimpleParam {
+public class RebootParam extends BaseParam {
 
     /**
      * 模式(all,server,webManager)

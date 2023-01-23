@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.plugin.image.entity.param;
 
-import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.common.entity.param.base.BaseAddParam;
+import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "添加图片param", description = "添加图片param")
-public class AddImageParam extends BaseParam {
+public class AddImageParam extends BaseAddParam<ImageDo> {
 
     /**
      * 关键词

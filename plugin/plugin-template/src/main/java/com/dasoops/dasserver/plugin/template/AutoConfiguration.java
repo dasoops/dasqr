@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.setu;
+package com.dasoops.dasserver.plugin.template;
 
 import org.springframework.context.annotation.ComponentScan;
 

@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.plugin.image.entity.param;
 
-import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.common.entity.param.base.BaseEditParam;
+import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,13 +18,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "编辑图片参数", description = "编辑图片参数")
-public class EditImageInfoParam extends BaseParam {
+public class EditImageInfoParam extends BaseEditParam<ImageDo> {
 
-    /**
-     * rowId
-     */
-    @ApiModelProperty(value = "rowId", notes = "rowId", example = "65", required = true)
-    private Long rowId;
 
     /**
      * 图片关键词

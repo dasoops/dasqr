@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @Title: SetuDto
- * @ClassPath com.dasoops.dasserver.plugin.setu.entity.dto.SetuDto
+ * @ClassPath com.dasoops.dasserver.plugin.shell.entity.dto.SetuDto
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/22
  * @Version 1.0.0

@@ -1,15 +1,6 @@
 package com.dasoops.dasserver.plugin.image.entity.param;
 
-
-/**
- * @Title: GetFantastyKeywordParam
- * @ClassPath com.dasoops.dasserver.plugin.image.entity.param.GetFantastyKeywordParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 获取联想关键词param
- */
-
+import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.common.entity.param.base.BaseParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -23,7 +14,7 @@ import lombok.EqualsAndHashCode;
  * @Date 2022/12/31
  * @Version 1.0.0
  * @Description: 获取联想关键词param
- * @see BaseParam
+ * @see BaseFastBuildParam
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  * @Date 2023/01/12
  * @Version 1.0.0
  * @Description: 编辑param基类
- * @see BaseParam
+ * @see BaseFastBuildParam
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

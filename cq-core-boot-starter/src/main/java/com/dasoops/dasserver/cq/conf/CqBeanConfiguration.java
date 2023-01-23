@@ -16,7 +16,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
 import javax.annotation.PostConstruct;
@@ -43,7 +42,7 @@ public class CqBeanConfiguration {
     @Bean
     @ConditionalOnMissingBean
     @Lazy
-    public WebSocketHandler createWebSocketHandler(
+    public WsHandler createWebSocketHandler(
             CqFactory cqFactory,
             ApiHandler apiHandler,
             EventHandler eventHandler,

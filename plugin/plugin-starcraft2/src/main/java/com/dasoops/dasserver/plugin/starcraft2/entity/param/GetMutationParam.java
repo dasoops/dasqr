@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.starcraft2.entity.param;
 
-import com.dasoops.common.entity.param.SimpleParam;
+import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,11 +12,11 @@ import lombok.EqualsAndHashCode;
  * @Date 2023/01/20
  * @Version 1.0.0
  * @Description: 获取突变param
- * @see SimpleParam
+ * @see BaseParam
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class GetMutationParam extends SimpleParam {
+public class GetMutationParam extends BaseParam {
 
     /**
      * 突变关键字

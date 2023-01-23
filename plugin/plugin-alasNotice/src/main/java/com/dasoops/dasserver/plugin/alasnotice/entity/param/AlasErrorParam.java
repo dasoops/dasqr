@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.plugin.alasnotice.entity.param;
 
 import com.alibaba.fastjson2.annotation.JSONField;
+import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.common.entity.param.base.BaseParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,7 +17,7 @@ import java.util.List;
  * @Date 2023/01/11
  * @Version 1.0.0
  * @Description: alasError推送 param
- * @see BaseParam
+ * @see BaseFastBuildParam
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
