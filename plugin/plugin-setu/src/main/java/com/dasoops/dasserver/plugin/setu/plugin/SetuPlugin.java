@@ -1,7 +1,6 @@
 package com.dasoops.dasserver.plugin.setu.plugin;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson2.JSON;
 import com.dasoops.common.entity.enums.base.IExceptionEnum;
 import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.dasserver.cq.CqPlugin;
@@ -95,7 +94,6 @@ public class SetuPlugin extends CqPlugin {
                 pixivArtWorksUrl + pid,
                 proxyArtWorksUrl + pid
         ));
-        log.info(JSON.toJSONString(setuInfo));
 
         //试图发送图片
         try {

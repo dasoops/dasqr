@@ -24,6 +24,11 @@ public class ShamMessageTemplate {
 
     private final EventHandler eventHandler;
 
+    /**
+     * 发送虚假消息(需EventUtil初始化)
+     *
+     * @param message 消息
+     */
     public void sendMsg(String message) {
         JSONObject rawEventJson = EventUtil.get().getRawEventJson();
         rawEventJson.put("message", message);
@@ -31,8 +36,18 @@ public class ShamMessageTemplate {
         this.sendMsg(CqGlobal.get(), rawEventJson);
     }
 
+    /**
+     * 发送虚假消息(需EventUtil初始化)
+     *
+     * @param cqTemplate
+     * @param rawEventJson
+     */
     public void sendMsg(CqTemplate cqTemplate, JSONObject rawEventJson) {
         eventHandler.handle(cqTemplate, rawEventJson);
     }
+
+//    public void sendMsg(CqTemplate cqTemplate, JSONObject rawEventJson) {
+//        eventHandler.handle(cqTemplate, rawEventJson);
+//    }
 
 }

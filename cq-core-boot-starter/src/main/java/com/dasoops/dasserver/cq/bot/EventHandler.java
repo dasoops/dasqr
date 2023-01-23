@@ -46,63 +46,63 @@ public class EventHandler {
      * @param eventJson  事件json
      */
     public void handle(CqTemplate cqTemplate, JSONObject eventJson) {
-            EventInfo eventInfo = EventUtil.get();
+        EventInfo eventInfo = EventUtil.get();
 
-            List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
-            boolean pass = wsWrapperList.stream().allMatch(wsWrapper -> wsWrapper.beforeHandleTextMessage(cqTemplate, eventInfo));
-            if (!pass) {
-                return;
-            }
+        List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
+        boolean pass = wsWrapperList.stream().allMatch(wsWrapper -> wsWrapper.beforeHandleTextMessage(cqTemplate, eventInfo));
+        if (!pass) {
+            return;
+        }
 
-            PostTypeEnum postTypeEnum = eventInfo.getPostTypeEnum();
-            EventTypeEnum eventTypeEnum = eventInfo.getEventTypeEnum();
-            if (eventTypeEnum == null) {
-                log.error("undefined event type: " + eventJson.toJSONString());
-                throw new LogicException(CqExceptionEnum.UNDEFINED_EVENT_TYPE);
-            }
+        PostTypeEnum postTypeEnum = eventInfo.getPostTypeEnum();
+        EventTypeEnum eventTypeEnum = eventInfo.getEventTypeEnum();
+        if (eventTypeEnum == null) {
+            log.error("undefined event type: " + eventJson.toJSONString());
+            throw new LogicException(CqExceptionEnum.UNDEFINED_EVENT_TYPE);
+        }
 
-            switch (postTypeEnum) {
-                case MESSAGE -> {
-                    switch (eventTypeEnum) {
-                        case MESSAGE_PRIVATE -> handleResloveMessage(cqTemplate, eventJson, CqPrivateMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onPrivateMessage(cqTemplate, (CqPrivateMessageEvent) cqEvent), "onPrivateMessage", EventTypeEnum.MESSAGE_PRIVATE);
-                        case MESSAGE_GROUP -> handleResloveMessage(cqTemplate, eventJson, CqGroupMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupMessage(cqTemplate, (CqGroupMessageEvent) cqEvent), "onGroupMessage", EventTypeEnum.MESSAGE_GROUP);
-                        case MESSAGE_DISCUSS -> handleMessage(cqTemplate, eventJson, CqDiscussMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onDiscussMessage(cqTemplate, (CqDiscussMessageEvent) cqEvent));
-                    }
+        switch (postTypeEnum) {
+            case MESSAGE -> {
+                switch (eventTypeEnum) {
+                    case MESSAGE_PRIVATE -> handleResloveMessage(cqTemplate, eventJson, CqPrivateMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onPrivateMessage(cqTemplate, (CqPrivateMessageEvent) cqEvent), "onPrivateMessage", EventTypeEnum.MESSAGE_PRIVATE);
+                    case MESSAGE_GROUP -> handleResloveMessage(cqTemplate, eventJson, CqGroupMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupMessage(cqTemplate, (CqGroupMessageEvent) cqEvent), "onGroupMessage", EventTypeEnum.MESSAGE_GROUP);
+                    case MESSAGE_DISCUSS -> handleMessage(cqTemplate, eventJson, CqDiscussMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onDiscussMessage(cqTemplate, (CqDiscussMessageEvent) cqEvent));
                 }
-                case MESSAGE_SENT -> {
-                    switch (eventTypeEnum) {
-                        case MESSAGE_SENT_PRIVATE -> handleMessage(cqTemplate, eventJson, CqPrivateMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onBotSentPrivateMessage(cqTemplate, (CqPrivateMessageEvent) cqEvent));
-                        case MESSAGE_SENT_GROUP -> handleMessage(cqTemplate, eventJson, CqGroupMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onBotSentGroupMessage(cqTemplate, (CqGroupMessageEvent) cqEvent));
-                        case MESSAGE_SENT_DISCUSS -> handleMessage(cqTemplate, eventJson, CqDiscussMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onBotSentDiscussMessage(cqTemplate, (CqDiscussMessageEvent) cqEvent));
-                    }
-                }
-                case NOTICE -> {
-                    switch (eventTypeEnum) {
-                        case NOTICE_FRIEND_ADD -> handleMessage(cqTemplate, eventJson, CqFriendAddNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onFriendAddNotice(cqTemplate, (CqFriendAddNoticeEvent) cqEvent));
-                        case NOTICE_GROUP_ADMIN -> handleMessage(cqTemplate, eventJson, CqGroupAdminNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupAdminNotice(cqTemplate, (CqGroupAdminNoticeEvent) cqEvent));
-                        case NOTICE_GROUP_BAN -> handleMessage(cqTemplate, eventJson, CqGroupBanNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupBanNotice(cqTemplate, (CqGroupBanNoticeEvent) cqEvent));
-                        case NOTICE_GROUP_DECREASE -> handleMessage(cqTemplate, eventJson, CqGroupDecreaseNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupDecreaseNotice(cqTemplate, (CqGroupDecreaseNoticeEvent) cqEvent));
-                        case NOTICE_GROUP_INCREASE -> handleMessage(cqTemplate, eventJson, CqGroupIncreaseNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupIncreaseNotice(cqTemplate, (CqGroupIncreaseNoticeEvent) cqEvent));
-                        case NOTICE_GROUP_UPLOAD -> handleMessage(cqTemplate, eventJson, CqGroupUploadNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupUploadNotice(cqTemplate, (CqGroupUploadNoticeEvent) cqEvent));
-                        case NOTICE_FRIEND_RECALL -> handleMessage(cqTemplate, eventJson, CqGroupRecallNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupRecallNotice(cqTemplate, (CqGroupRecallNoticeEvent) cqEvent));
-                        case NOTICE_GROUP_RECALL -> handleMessage(cqTemplate, eventJson, CqFriendRecallNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onFriendRecallNotice(cqTemplate, (CqFriendRecallNoticeEvent) cqEvent));
-                        case NOTICE_GROUP_CARD -> handleMessage(cqTemplate, eventJson, CqGroupCardNoticeEvent.class, (cqPluginPrama, cqTemplateParam, cqEvent) -> cqPluginPrama.onGroupCardNotice(cqTemplate, (CqGroupCardNoticeEvent) cqEvent));
-                    }
-                }
-                case REQUEST -> {
-                    switch (eventTypeEnum) {
-                        case REQUEST_FRIEND -> handleMessage(cqTemplate, eventJson, CqFriendRequestEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onFriendRequest(cqTemplate, (CqFriendRequestEvent) cqEvent));
-                        case REQUEST_GROUP -> handleMessage(cqTemplate, eventJson, CqGroupRequestEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupRequest(cqTemplate, (CqGroupRequestEvent) cqEvent));
-                    }
-                }
-                case META_EVENT -> {
-                    switch (eventTypeEnum) {
-                        case META_EVENT_HEARTBEAT -> handleMetaEvent(cqTemplate, eventJson, CqHeartBeatMetaEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onHeartBeatMeta(cqTemplate, (CqHeartBeatMetaEvent) cqEvent));
-                        case META_EVENT_LIFECYCLE -> handleMetaEvent(cqTemplate, eventJson, CqLifecycleMetaEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onLifecycleMeta(cqTemplate, (CqLifecycleMetaEvent) cqEvent));
-                    }
-                }
-                default -> log.error("not found reslove method");
             }
+            case MESSAGE_SENT -> {
+                switch (eventTypeEnum) {
+                    case MESSAGE_SENT_PRIVATE -> handleMessage(cqTemplate, eventJson, CqPrivateMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onBotSentPrivateMessage(cqTemplate, (CqPrivateMessageEvent) cqEvent));
+                    case MESSAGE_SENT_GROUP -> handleMessage(cqTemplate, eventJson, CqGroupMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onBotSentGroupMessage(cqTemplate, (CqGroupMessageEvent) cqEvent));
+                    case MESSAGE_SENT_DISCUSS -> handleMessage(cqTemplate, eventJson, CqDiscussMessageEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onBotSentDiscussMessage(cqTemplate, (CqDiscussMessageEvent) cqEvent));
+                }
+            }
+            case NOTICE -> {
+                switch (eventTypeEnum) {
+                    case NOTICE_FRIEND_ADD -> handleMessage(cqTemplate, eventJson, CqFriendAddNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onFriendAddNotice(cqTemplate, (CqFriendAddNoticeEvent) cqEvent));
+                    case NOTICE_GROUP_ADMIN -> handleMessage(cqTemplate, eventJson, CqGroupAdminNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupAdminNotice(cqTemplate, (CqGroupAdminNoticeEvent) cqEvent));
+                    case NOTICE_GROUP_BAN -> handleMessage(cqTemplate, eventJson, CqGroupBanNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupBanNotice(cqTemplate, (CqGroupBanNoticeEvent) cqEvent));
+                    case NOTICE_GROUP_DECREASE -> handleMessage(cqTemplate, eventJson, CqGroupDecreaseNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupDecreaseNotice(cqTemplate, (CqGroupDecreaseNoticeEvent) cqEvent));
+                    case NOTICE_GROUP_INCREASE -> handleMessage(cqTemplate, eventJson, CqGroupIncreaseNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupIncreaseNotice(cqTemplate, (CqGroupIncreaseNoticeEvent) cqEvent));
+                    case NOTICE_GROUP_UPLOAD -> handleMessage(cqTemplate, eventJson, CqGroupUploadNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupUploadNotice(cqTemplate, (CqGroupUploadNoticeEvent) cqEvent));
+                    case NOTICE_FRIEND_RECALL -> handleMessage(cqTemplate, eventJson, CqGroupRecallNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupRecallNotice(cqTemplate, (CqGroupRecallNoticeEvent) cqEvent));
+                    case NOTICE_GROUP_RECALL -> handleMessage(cqTemplate, eventJson, CqFriendRecallNoticeEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onFriendRecallNotice(cqTemplate, (CqFriendRecallNoticeEvent) cqEvent));
+                    case NOTICE_GROUP_CARD -> handleMessage(cqTemplate, eventJson, CqGroupCardNoticeEvent.class, (cqPluginPrama, cqTemplateParam, cqEvent) -> cqPluginPrama.onGroupCardNotice(cqTemplate, (CqGroupCardNoticeEvent) cqEvent));
+                }
+            }
+            case REQUEST -> {
+                switch (eventTypeEnum) {
+                    case REQUEST_FRIEND -> handleMessage(cqTemplate, eventJson, CqFriendRequestEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onFriendRequest(cqTemplate, (CqFriendRequestEvent) cqEvent));
+                    case REQUEST_GROUP -> handleMessage(cqTemplate, eventJson, CqGroupRequestEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onGroupRequest(cqTemplate, (CqGroupRequestEvent) cqEvent));
+                }
+            }
+            case META_EVENT -> {
+                switch (eventTypeEnum) {
+                    case META_EVENT_HEARTBEAT -> handleMetaEvent(cqTemplate, eventJson, CqHeartBeatMetaEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onHeartBeatMeta(cqTemplate, (CqHeartBeatMetaEvent) cqEvent));
+                    case META_EVENT_LIFECYCLE -> handleMetaEvent(cqTemplate, eventJson, CqLifecycleMetaEvent.class, (cqPluginParam, cqTemplateParam, cqEvent) -> cqPluginParam.onLifecycleMeta(cqTemplate, (CqLifecycleMetaEvent) cqEvent));
+                }
+            }
+            default -> log.error("not found reslove method");
+        }
     }
 
     /**

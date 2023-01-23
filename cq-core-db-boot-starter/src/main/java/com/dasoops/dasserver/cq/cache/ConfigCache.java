@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.cq.cache;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSON;
 import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.entity.enums.base.IDbColumnEnum;
@@ -100,5 +101,9 @@ public class ConfigCache extends BaseCache {
     public List<Long> getLongListConfig(IRedisHashKeyEnum configHashKeyEnum) {
         return getConfig(configHashKeyEnum, str -> StrUtil.split(str, ","))
                 .stream().map(Long::valueOf).collect(Collectors.toList());
+    }
+
+    public <T> T getJsonConfig(IRedisHashKeyEnum configHashKeyEnum, Class<T> clazz) {
+        return getConfig(configHashKeyEnum, str -> JSON.parseObject(str, clazz));
     }
 }

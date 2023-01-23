@@ -10,7 +10,7 @@ import lombok.Getter;
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/23
  * @Version 1.0.0
- * @Description: 壳牌异常枚举
+ * @Description: shell异常枚举(108xx)
  * @see Enum
  * @see IExceptionEnum
  */
@@ -21,13 +21,12 @@ public enum ShellExceptionEnum implements IExceptionEnum {
     /**
      * eem快速生成
      */
-    TEMPLATE("template"),
-    ;
+    UNSUPPORTED_OPERATION("不支持的操作"), SEND_ERROR("消息发送失败"), RESLOVE_ERROR("解析失败");
 
 
     @Override
     public Integer getCode() {
-        return 10000 + ordinal();
+        return 10800 + ordinal();
     }
 
     @Getter

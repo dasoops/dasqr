@@ -23,7 +23,10 @@ public enum ShellRedisHashKeyEnum implements IRedisHashKeyEnum {
      * shell连接地址
      */
     WEB_SOCKET_URL("webSocketUrl"),
-    ;
+    /**
+     * shell配置
+     */
+    SHELL_CONFIG("shellConfig");
 
     final String key;
 }

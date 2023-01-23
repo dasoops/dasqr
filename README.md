@@ -8,6 +8,7 @@
 
 - string - str
 - WebSocket - ws
+- message - msg
 
 #### 错误码:
 

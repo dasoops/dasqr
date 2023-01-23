@@ -1,10 +1,12 @@
 package com.dasoops.dasserver.plugin.schedule.task;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqPrivateMessageEvent;
@@ -68,7 +70,9 @@ public class ScheduleTask {
 
         cqTemplateList.forEach(cqTemplate -> {
             event.setSelfId(cqTemplate.getSelfId());
-            shamMessageTemplate.sendMsg(cqTemplate, JSON.parseObject(JSON.toJSONString(event)));
+            JSONObject eventJson = JSON.parseObject(JSON.toJSONString(event));
+            EventUtil.set(eventJson);
+            shamMessageTemplate.sendMsg(cqTemplate, eventJson);
         });
     }
 

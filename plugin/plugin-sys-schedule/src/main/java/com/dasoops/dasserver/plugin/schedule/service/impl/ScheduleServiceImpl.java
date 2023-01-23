@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.base.DbBooleanEnum;
 import com.dasoops.common.util.RegexUtil;
+import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.exception.ExceptionTemplate;
 import com.dasoops.dasserver.plugin.schedule.entity.dbo.ScheduleDo;
 import com.dasoops.dasserver.plugin.schedule.mapper.ScheduleMapper;
@@ -55,7 +56,9 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, ScheduleDo>
                     try {
                         method.invoke(methodClassObj, param);
                     } catch (Exception e) {
-                        exceptionTemplate.resloveException(e);
+                        CqGlobal.getAll().forEach(cqTemplate -> {
+                            exceptionTemplate.resloveException(cqTemplate, e);
+                        });
                     }
                 };
                 return new CronTask(runnable, cron);

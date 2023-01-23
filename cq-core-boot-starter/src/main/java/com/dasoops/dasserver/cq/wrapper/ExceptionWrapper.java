@@ -1,5 +1,7 @@
 package com.dasoops.dasserver.cq.wrapper;
 
+import com.dasoops.dasserver.cq.CqTemplate;
+
 /**
  * @Title: ExceptionHandlerReinforced
  * @ClassPath com.dasoops.common.exception.handler.ExceptionHandlerReinforced
@@ -15,7 +17,7 @@ public interface ExceptionWrapper {
      *
      * @param e e
      */
-    void invoke(Exception e);
+    void invoke(CqTemplate cqTemplate, Exception e);
 
     /**
      * 获取排序

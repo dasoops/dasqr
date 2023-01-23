@@ -2,6 +2,7 @@ package com.dasoops.dasserver.cq.exception;
 
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
+import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.WrapperGlobal;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
 import com.dasoops.dasserver.cq.wrapper.ExceptionWrapper;
@@ -18,7 +19,7 @@ public class ExceptionTemplate {
 
     private final CqProperties cqProperties;
 
-    public void resloveException(Exception e) {
+    public void resloveException(CqTemplate cqTemplate, Exception e) {
         //异常处理
         Assert.getInstance().ifTrue(
                 cqProperties.isConsolePrintStack(),
@@ -28,7 +29,7 @@ public class ExceptionTemplate {
                         () -> log.error("消息处理发生异常: {}", e instanceof LogicException logicException ? logicException.getStackMessage() : e)
                 ));
         List<ExceptionWrapper> exceptionWrapperList = WrapperGlobal.getExceptionWrapperList();
-        Assert.getInstance().ifNotNull(exceptionWrapperList, () -> exceptionWrapperList.forEach(exceptionWrapper -> exceptionWrapper.invoke(e)));
+        Assert.getInstance().ifNotNull(exceptionWrapperList, () -> exceptionWrapperList.forEach(exceptionWrapper -> exceptionWrapper.invoke(cqTemplate, e)));
     }
 
 }

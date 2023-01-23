@@ -2,11 +2,9 @@ package com.dasoops.dasserver.plugin.exceptionwrapper.wrapper;
 
 import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.conf.properties.CqProperties;
-import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
 import com.dasoops.dasserver.cq.utils.CqCodeUtil;
@@ -39,7 +37,7 @@ public class ExceptionWrapperImpl implements ExceptionWrapper {
     }
 
     @Override
-    public void invoke(Exception e) {
+    public void invoke(CqTemplate cqTemplate, Exception e) {
 
         CqLogicException finalException;
         if (e instanceof CqLogicException) {
@@ -57,11 +55,10 @@ public class ExceptionWrapperImpl implements ExceptionWrapper {
 
         //非web逻辑异常发送错误通知
         //这里不会有web异常!
-        sendNoticeMsg(EventUtil.get(), exceptionDo);
+        sendNoticeMsg(cqTemplate, EventUtil.get(), exceptionDo);
     }
 
-    private void sendNoticeMsg(EventInfo eventInfo, ExceptionDo exceptionDo) {
-        CqTemplate cqTemplate = CqGlobal.findFirst().orElseThrow(() -> new CqLogicException(CqExceptionEnum.CQ_GLOBAL_EMPTY));
+    private void sendNoticeMsg(CqTemplate cqTemplate, EventInfo eventInfo, ExceptionDo exceptionDo) {
         //网页访问/定时任务 产生的异常汇报管理群
         if (eventInfo == null) {
             cqTemplate.sendGroupMsg(cqProperties.getDevGroupId(), buildNoticeMsg(false, true, cqProperties, exceptionDo), false);
@@ -81,6 +78,7 @@ public class ExceptionWrapperImpl implements ExceptionWrapper {
                     cqTemplate.sendGroupMsg(eventInfo.getGroupId(), buildNoticeMsg(false, true, eventInfo, exceptionDo), false);
         }
     }
+
 
     private String buildNoticeMsg(boolean hasAt, boolean isAdminNotice, EventInfo eventInfo, ExceptionDo exceptionDo) {
         String msgTemplate = "{}消息解析发生异常{}\r\ntype: {}\r\nmessageId: {}\r\nerrorId: {}";

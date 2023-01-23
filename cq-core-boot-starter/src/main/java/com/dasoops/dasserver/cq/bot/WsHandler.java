@@ -149,7 +149,7 @@ public class WsHandler extends TextWebSocketHandler {
                     CqGlobal.setThreadLocal(finalCqTemplate);
                     eventHandler.handle(finalCqTemplate, messageObj);
                 } catch (Exception e) {
-                    exceptionTemplate.resloveException(e);
+                    exceptionTemplate.resloveException(cqTemplate, e);
                 } finally {
                     EventUtil.remove();
                     CqGlobal.removeThreadLocal();
