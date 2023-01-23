@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.starcraft2.plugin;
 
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
@@ -49,7 +49,7 @@ public class StarCraftPlugin extends CqPlugin {
     final String nextWeekKeyword = "下周突变";
 
     @MessageMapping(equal = {thisWeekKeyword, nextWeekKeyword}, type = MessageMappingTypeEnum.ALL)
-    public String getWeekMutation(MessageParam<BaseParam> messageParam) {
+    public String getWeekMutation(MessageParam<SimpleParam> messageParam) {
         //记录数
         Integer recordRowId = configCache.getIntegerConfig(StarCraft2ConfigHashKeyEnum.MUTATION_RECORD);
 

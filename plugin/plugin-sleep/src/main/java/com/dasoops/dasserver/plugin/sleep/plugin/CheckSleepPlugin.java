@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.sleep.plugin;
 
-import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
@@ -30,7 +30,7 @@ public class CheckSleepPlugin extends CqPlugin {
     }
 
     @MessageMapping(matchAll = true, type = MessageMappingTypeEnum.ALL)
-    public boolean isSleep(MessageParam<BaseParam> param, CqTemplate cqTemplate) {
+    public boolean isSleep(MessageParam<SimpleParam> param, CqTemplate cqTemplate) {
         return !sleepCache.isSleep(param.getIsGroup(), param.getRegisterId());
     }
 

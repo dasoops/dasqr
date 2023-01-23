@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.setu.plugin;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.dasoops.common.entity.enums.base.IExceptionEnum;
-import com.dasoops.common.entity.param.base.BaseParam;
+import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
@@ -48,7 +48,7 @@ public class SetuPlugin extends CqPlugin {
     final String hasParamSuffix = "涩图";
 
     @MessageMapping(matchAll = true, type = MessageMappingTypeEnum.GROUP)
-    public boolean getSetu(CqTemplate cqTemplate, MessageParam<BaseParam> param) {
+    public boolean getSetu(CqTemplate cqTemplate, MessageParam<SimpleParam> param) {
 
         String message = param.getRawMessage();
 
