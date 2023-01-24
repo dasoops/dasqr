@@ -60,7 +60,6 @@ export default {
   watch: {
     sortDataList: {
       handler(newList, oldList) {
-        console.log(newList);
         this.list = newList;
       },
       deep: true,

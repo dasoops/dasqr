@@ -5,7 +5,6 @@
 <script>
 import DasDrag from "@/components/dasDrag";
 export default {
-  name: "RegisterManagerView",
   components: {DasDrag}
 }
 </script>

@@ -30,12 +30,11 @@ import {defineComponent, reactive, ref, toRefs} from "vue";
 import {useRouter} from "vue-router";
 import {LoginData, LoginRes} from "@/entity/param/RegisterParam";
 import {FormInstance, FormRules} from "element-plus";
-import {login} from "@/request/RegisterRequest";
+import {login} from "@/request/registerRequest";
 import {getStore} from "@/conf/store";
 
 
 export default defineComponent({
-
   setup() {
     let router = useRouter();
     let store = getStore();
@@ -74,7 +73,9 @@ export default defineComponent({
         }
         login(data.formData).then((res: LoginRes) => {
           localStorage.setItem('token', res.data.token);
-          router.push('/config');
+          localStorage.setItem("loginUserName", res.data.name);
+          localStorage.setItem("loginRegisterId", res.data.registerId.toString());
+          router.push('/system/config');
           store.commit("refresh");
         })
       }));

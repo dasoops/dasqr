@@ -30,3 +30,10 @@ export interface PluginSortInnerVo {
     description: string;
     order: number;
 }
+
+/**
+ * 获取注册路由关键词集合
+ */
+export interface GetRegisterRouteKeywordVo {
+    registerRouteKeywordList: string[],
+}

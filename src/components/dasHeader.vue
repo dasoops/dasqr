@@ -1,78 +1,104 @@
 <template>
   <el-header>
-    <el-row :gutter="20">
-      <el-col :span="20">
-        <nav>
-          <router-link to='/config'>Config</router-link>
-          <span> | </span>
-          <router-link to='/register'>Register</router-link>
-          <span> | </span>
-          <router-link to='/plugin'>Plugin</router-link>
-          <span> | </span>
-          <router-link to='/role'>Role</router-link>
-          <span> | </span>
-          <router-link to='/image'>Image</router-link>
-        </nav>
-      </el-col>
-      <el-col :span="4">
-        <nav id="loginNav">
-          <a v-if="$store.state.token" href="javascript:void(0)" class="router-link-active router-link-exact-active"
-             @click="logout"> logOut</a>
-          <router-link v-else to='/login'>Login</router-link>
-        </nav>
-      </el-col>
-    </el-row>
+    <el-menu
+        class="el-menu-route"
+        mode="horizontal"
+        background-color="transparent"
+        text-color="white"
+        :ellipsis="false"
+        :default-active="router.currentRoute.value.path"
+        active-text-color="greenYellow"
+        :router="true"
+    >
+      <template v-for="(route,index) in routes" :key="index">
+        <el-sub-menu class="el-sub-menu-route" v-if="route.meta.isMenuRoute" :index="index.toString()">
+          <template #title>{{ route.name }}</template>
+          <template v-for="childrenRoute in route.children">
+            <el-menu-item v-if="childrenRoute.meta.show" :key="childrenRoute.path"
+                          :index="route.path + '/' + childrenRoute.path">
+              {{ childrenRoute.name }}
+            </el-menu-item>
+          </template>
+        </el-sub-menu>
+      </template>
+      <div class="flex-grow"/>
+      <el-menu-item class="el-sub-menu-route el-menu-item-route" v-if="store.state.token" index="login" key="logout"
+                    @click="logout">
+        logout
+      </el-menu-item>
+      <el-menu-item class="el-sub-menu-route el-menu-item-route" v-else index="login" key="login">
+        login
+      </el-menu-item>
+    </el-menu>
   </el-header>
 </template>
 
-<script>
-import {defineComponent} from "vue";
+<script lang="ts" setup>
 import {useRouter} from "vue-router";
 import {getStore} from "@/conf/store";
 
-export default defineComponent({
+const name = "dasDrag";
+const router = useRouter();
+let routes = router.options.routes;
+let store = getStore();
+
+const logout = function () {
+  localStorage.removeItem("token");
+  store.commit("refresh");
+
+  router.push("/login");
+};
+
+</script>
+
+<script lang="ts">
+export default {
   name: 'dasHeader',
-  setup() {
-    const router = useRouter();
-    let store = getStore();
-
-    const logout = function () {
-      localStorage.removeItem("token");
-      store.commit("refresh");
-
-      router.push("/login");
-    };
-
-    return {logout};
-  }
-})
+}
 </script>
 
 <style lang="scss" scoped>
 .el-header {
-  border-bottom: 1px solid white;
+  padding: 0;
 }
 
-nav {
-  padding: 30px;
-  text-align: left;
+:deep .el-menu-route {
+  padding-left: 50px;
+  padding-right: 50px;
 
-  a {
+  .el-sub-menu__title {
+    font-size: 16px;
     font-weight: bold;
-    color: #42b983;
-
-    &.router-link-exact-active {
-      color: white;
-    }
+    text-decoration: underline;
   }
 }
 
-#loginNav {
-  text-align: right;
+.el-menu-item-route {
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: underline;
+}
 
-  a {
-    font-weight: bold;
-    color: #42b983;
-  }
+:deep .el-menu--horizontal > .el-sub-menu .el-sub-menu__title:hover {
+  background: #363636 !important;
+  color: greenyellow !important;
+}
+
+.el-menu {
+  border-bottom: 2px solid #b3b3b3 !important;
+}
+
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+  color: greenyellow;
+  background: #363636;
+}
+
+.el-menu--horizontal {
+  border-bottom: none;
+}
+
+.flex-grow {
+  flex-grow: 1;
 }
 </style>

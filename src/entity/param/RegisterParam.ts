@@ -25,6 +25,8 @@ export interface LoginRes {
     code: number;
     data: {
         token: string;
+        registerId: number;
+        name: string;
     };
     msg: string;
 }

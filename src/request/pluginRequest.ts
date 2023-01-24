@@ -9,7 +9,7 @@ import {
     SortPluginParam
 } from "@/entity/param/PluginParam";
 import {DeleteParam} from "@/entity/param/BaseParam";
-import {GetPluginSortVo, GetPluginVo} from "@/entity/vo/PluginVo";
+import {GetRegisterRouteKeywordVo, GetPluginSortVo, GetPluginVo} from "@/entity/vo/PluginVo";
 import {GetNextRowIdVo} from "@/entity/vo/BaseVo";
 
 const axiosClient = getInstance('plugin');
@@ -113,15 +113,23 @@ export const sortPlugin = function (param: SortPluginParam): Promise<SimpleResul
     })
 }
 
-
 /**
  * 导出所有插件信息
- * @returns
  */
 export const exportAllPlugin = function (): Promise<AxiosResponse> {
     return axiosClient({
         url: "/exportAllPlugin",
         method: "GET",
         responseType: "blob"
+    })
+}
+
+/**
+ * 获取注册路由关键词集合
+ */
+export const getRegisterRouteKeywordList = function(): Promise<Result<GetRegisterRouteKeywordVo>>{
+    return axiosClient({
+        url: "/getRegisterRouteKeywordList",
+        method: "GET",
     })
 }

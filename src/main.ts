@@ -5,18 +5,21 @@ import App from './App.vue'
 import router from './conf/router'
 import {store, key} from './conf/store'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import {initConfig} from "@/request/initRequest";
+// @ts-ignore
+import Terminal from 'vue-web-terminal'
 
 const app = createApp(App);
+
+app.use(router)
+app.use(Terminal);
 app.use(ElementPlus)
 app.use(store, key)
-app.use(router)
+
+//注册图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
-
 const token = localStorage.getItem("token");
 store.state.token = token ? token : undefined;
 
-initConfig();
 app.mount('#app')

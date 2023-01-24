@@ -8,7 +8,7 @@ export default function () {
     /**
      * 当前点击的表头字段名
      */
-    let currentClickColumn: number = 0;
+    let currentClickColumn = 0;
 
 
     /**
@@ -88,7 +88,7 @@ export default function () {
         setTimeout(() => {
             if (param.sortParamList) {
                 for (let i = 0; i < param.sortParamList.length; i++) {
-                    let sortParam = param.sortParamList[i];
+                    const sortParam = param.sortParamList[i];
                     if (sortParam.sortColumn === getColumnInteger(column.label)) {
                         if (sortParam.sortRule === 1) {
                             column.order = 'ascending';

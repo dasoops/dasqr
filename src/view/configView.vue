@@ -193,12 +193,11 @@ import {
   exportAllConfig,
   getConfigPage,
   getNextConfigId
-} from "@/request/ConfigRequest";
+} from "@/request/configRequest";
 import {ElMessageBox} from "element-plus";
 import { simpleExport } from "@/util/DownloadUtil";
 
 export default defineComponent({
-  name: "configManagerView",
   setup() {
     let tableData: Array<ConfigData> = reactive([]);
     const getConfigParam: GetConfigPageParam = reactive({

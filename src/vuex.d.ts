@@ -1,11 +1,14 @@
 // vuex.d.ts
 import {Store} from 'vuex'
 import {BaseResult} from "@/entity/result/BaseResult";
+import {RouteMeta} from "vue-router";
 
 declare module '@vue/runtime-core' {
     // 声明自己的 store state
     interface State {
         token?: string,
+        loginUserName?: string,
+        loginRegisterId?: number,
     }
 
     // 为 `this.$store` 提供类型声明
@@ -27,5 +30,14 @@ declare module 'axios' {
         (config: AxiosRequestConfig): Promise<any>
 
         <T extends BaseResult>(config: AxiosRequestConfig): Promise<T>,
+    }
+}
+
+declare module 'vue-router'{
+    export interface RouteMeta{
+        show?: boolean,
+        isMenuRoute?: boolean,
+        title?: string,
+        showOnRegister?: string,
     }
 }

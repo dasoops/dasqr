@@ -263,7 +263,7 @@
 import {reactive, ref} from "vue";
 import {Check, Close, Delete, Download, Edit, Plus, Search, Sort} from '@element-plus/icons-vue'
 import {ElMessageBox, FormInstance, FormRules} from "element-plus";
-import {GetPluginVo} from "@/entity/vo/PluginVo";
+import {GetPluginVo, PluginSortInnerVo} from "@/entity/vo/PluginVo";
 import {
   AddPluginParam,
   CheckPluginClassPathParam,
@@ -278,13 +278,12 @@ import {
   exportAllPlugin,
   getNextPluginId,
   getPluginPage, getPluginSort, sortPlugin
-} from "@/request/PluginRequest";
+} from "@/request/pluginRequest";
 import {simpleExport} from "@/util/DownloadUtil";
 import {DeleteParam} from "@/entity/param/BaseParam";
 import {PluginShowDto} from "@/entity/dto/PluginDto";
 import UseTableSort from "@/composables/use-table-sort";
 import DasDrag from "@/components/dasDrag.vue";
-
 
 //global begin
 const dataMap = reactive({
@@ -292,7 +291,14 @@ const dataMap = reactive({
   showAddDialog: false,
   showSortDialog: false,
   isLoading: false,
-  pluginSortList: [],
+  pluginSortList: [
+    new class implements PluginSortInnerVo {
+      description = '1';
+      name = '0';
+      order = 1;
+      rowId = 1;
+    }
+  ],
   addTitle: '',
   total: 0,
   editTitle: '',
@@ -322,7 +328,7 @@ const toSort = function () {
     dataMap.showSortDialog = true;
   })
 }
-const handleSortListChange = function (list) {
+const handleSortListChange = function (list: PluginSortInnerVo[]) {
   dataMap.pluginSortList = list;
 }
 const handleSort = function () {
@@ -721,6 +727,7 @@ init();
 /* dialog */
 .dialog :deep {
   --el-color-white: white;
+
   span {
     color: white;
   }

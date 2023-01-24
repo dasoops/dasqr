@@ -235,14 +235,13 @@ import {
   getImageInfoPage, getNextImageId,
   uploadImageMethod,
   uploadImageUrl
-} from "@/request/ImageRequest";
+} from "@/request/imageRequest";
 import {UploadRawFile} from "element-plus/lib/components";
 import {AxiosHeaders} from "axios";
 import {Result} from "@/entity/result/BaseResult";
 import { simpleExport } from "@/util/DownloadUtil";
 
 export default defineComponent({
-  name: "imageManagerView",
   setup() {
     let tableData: Array<ImageData> = reactive([]);
     const getImageInfoPageParam: GetImageInfoPageParam = reactive({
