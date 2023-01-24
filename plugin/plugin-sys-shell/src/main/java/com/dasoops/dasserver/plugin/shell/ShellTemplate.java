@@ -1,7 +1,10 @@
 package com.dasoops.dasserver.plugin.shell;
 
+import com.alibaba.fastjson2.JSON;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.plugin.shell.entity.enums.ShellExceptionEnum;
+import com.dasoops.dasserver.plugin.shell.entity.vo.LogDto;
+import com.dasoops.dasserver.plugin.shell.param.ShellMessageVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;
@@ -23,8 +26,8 @@ public class ShellTemplate {
 
     private final WebSocketSession session;
 
-    public void sendMsg(String msg) {
-        TextMessage textMessage = new TextMessage(msg);
+    public synchronized void sendMsg(ShellMessageVo msg) {
+        TextMessage textMessage = new TextMessage(JSON.toJSONString(msg));
         try {
             session.sendMessage(textMessage);
         } catch (IOException e) {
@@ -33,5 +36,11 @@ public class ShellTemplate {
         }
     }
 
+    public void sendMsg(String msg) {
+        sendMsg(ShellMessageVo.msg(msg));
+    }
 
+    public void sendLog(LogDto logDto) {
+        sendMsg(ShellMessageVo.log(logDto));
+    }
 }

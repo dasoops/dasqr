@@ -32,4 +32,4 @@
 9. ( - ) plugin-style
 10. ( - ) help文档
 11. ( - ) 看看丢人实现(撤回记录)
-12. ( - ) rss对接?
+12. ( - ) rss对接?(rssHub,plugin-rss)

@@ -1,9 +1,13 @@
 package com.dasoops.dasserver.plugin.schedule;
 
+import com.dasoops.dasserver.plugin.webmanager.entity.WebManagerRouteRegistry;
+import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @Title: AutoConfiguration
@@ -17,6 +21,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan("com.dasoops.dasserver.plugin.schedule")
 @MapperScan("com.dasoops.dasserver.plugin.schedule.mapper")
 @EnableScheduling
+@RequiredArgsConstructor
 public class AutoConfiguration {
+
+    private final WebManagerRouteRegistry registry;
+
+    @PostConstruct
+    public void registerWebRoute() {
+        registry.registerRoute("schedule");
+    }
 
 }

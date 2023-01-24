@@ -28,6 +28,10 @@
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>cq-core-db-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-sys-webManager</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

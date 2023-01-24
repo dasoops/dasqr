@@ -4,15 +4,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.CheckPluginClassPathParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginSortVo;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.SortPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.DeletePluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.EditPluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageSortParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.*;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginSortVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetRegisterRouteKeywordVo;
 
 import java.util.List;
 
@@ -90,4 +87,11 @@ public interface PluginWebService extends IService<PluginDo> {
      * @param param param
      */
     void checkPluginClassPath(CheckPluginClassPathParam param);
+
+    /**
+     * 获取注册路由关键词集合
+     *
+     * @return {@link GetRegisterRouteKeywordVo}
+     */
+    GetRegisterRouteKeywordVo getRegisterRouteKeywordList();
 }

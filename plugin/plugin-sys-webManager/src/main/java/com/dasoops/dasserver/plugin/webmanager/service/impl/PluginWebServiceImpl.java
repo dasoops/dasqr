@@ -20,6 +20,7 @@ import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperPluginService;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.WebManagerRouteRegistry;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginInnerParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.CheckPluginRepeatEnum;
@@ -29,10 +30,7 @@ import com.dasoops.dasserver.plugin.webmanager.entity.param.CheckPluginClassPath
 import com.dasoops.dasserver.plugin.webmanager.entity.param.DeletePluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.EditPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageSortParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginSortVo;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginVo;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.PluginSortInnerVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.*;
 import com.dasoops.dasserver.plugin.webmanager.mapper.PluginWebMapper;
 import com.dasoops.dasserver.plugin.webmanager.service.PluginWebService;
 import lombok.RequiredArgsConstructor;
@@ -67,6 +65,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
     private final PluginService pluginService;
     private final ApplicationContext applicationContext;
     private final AuthWrapperPluginService authWrapperPluginService;
+    private final WebManagerRouteRegistry registry;
 
     @Override
     public IPage<GetPluginVo> getPluginPageData(GetPluginPageSortParam param) {
@@ -259,6 +258,17 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
     public void checkPluginClassPath(CheckPluginClassPathParam param) {
         Assert.getInstance().allMustNotNull(param, param.getClassPath(), param.getCheckRepeatClassPath());
         checkPluginClassPath(param.getCheckRepeatClassPath().equals(CheckPluginRepeatEnum.TRUE.getIntegerValue()), param.getClassPath());
+    }
+
+    @Override
+    public GetRegisterRouteKeywordVo getRegisterRouteKeywordList() {
+
+        //加载的插件
+        List<String> registerRouteList = registry.getRegisterRouteList();
+        GetRegisterRouteKeywordVo getRegisterRouteKeywordVo = new GetRegisterRouteKeywordVo();
+        getRegisterRouteKeywordVo.setRegisterRouteKeywordList(registerRouteList);
+
+        return getRegisterRouteKeywordVo;
     }
 
     /**

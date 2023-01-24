@@ -18,4 +18,8 @@ public class LoginVo extends BaseVo {
 
     private String token;
 
+    private Long registerId;
+
+    private String name;
+
 }

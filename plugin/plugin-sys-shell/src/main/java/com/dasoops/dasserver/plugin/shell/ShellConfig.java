@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.shell;
 
-import com.dasoops.dasserver.plugin.shell.entity.enums.ShellMessageTypeEnum;
+import com.dasoops.dasserver.plugin.shell.entity.enums.ShellRunMessageTypeEnum;
 import lombok.Data;
 
 /**
@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class ShellConfig {
 
-    private ShellMessageTypeEnum type = ShellMessageTypeEnum.GROUP;
+    private ShellRunMessageTypeEnum type = ShellRunMessageTypeEnum.GROUP;
 
     private Long groupId;
 

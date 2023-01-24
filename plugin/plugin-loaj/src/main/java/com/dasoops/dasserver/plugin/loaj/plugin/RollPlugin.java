@@ -40,7 +40,7 @@ public class RollPlugin extends CqPlugin {
     private final RollCache rollCache;
     private final ConfigCache configCache;
 
-    @MessageMapping(prefix = "endRoll", type = MessageMappingTypeEnum.GROUP)
+    @MessageMapping(equal = "endRoll", type = MessageMappingTypeEnum.GROUP)
     public PluginResult endRoll(CqTemplate cqTemplate, MessageParam<SimpleParam> param) {
         log.debug("(RollPlugin) 进入endRoll点逻辑");
         Long groupId = param.getGroupId();
@@ -89,7 +89,7 @@ public class RollPlugin extends CqPlugin {
 
     final String rollPrefix = "roll";
 
-    @MessageMapping(prefix = rollPrefix, type = MessageMappingTypeEnum.GROUP)
+    @MessageMapping(equal = rollPrefix, type = MessageMappingTypeEnum.GROUP)
     public String roll(CqTemplate cqTemplate, MessageParam<SimpleParam> param) {
         log.debug("(RollPlugin) 进入roll点逻辑");
 

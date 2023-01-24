@@ -6,15 +6,12 @@ import com.dasoops.common.entity.vo.result.Result;
 import com.dasoops.common.entity.vo.result.SimpleResult;
 import com.dasoops.common.util.ExcelUtil;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.SortPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.CheckPluginClassPathParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.DeletePluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.EditPluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageSortParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.*;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginSortVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetRegisterRouteKeywordVo;
 import com.dasoops.dasserver.plugin.webmanager.service.PluginWebService;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
@@ -105,4 +102,10 @@ public class PluginController {
         return SimpleResult.success();
     }
 
+    @GetMapping("getRegisterRouteKeywordList")
+    @ApiOperation(value = "获取注册路由关键词集合", notes = "获取注册路由关键词集合")
+    public Result<GetRegisterRouteKeywordVo> getRegisterRouteKeywordList() {
+        GetRegisterRouteKeywordVo vo = pluginWebService.getRegisterRouteKeywordList();
+        return Result.success(vo);
+    }
 }

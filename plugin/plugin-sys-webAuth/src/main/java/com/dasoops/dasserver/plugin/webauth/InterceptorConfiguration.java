@@ -25,7 +25,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
         };
         registry.addInterceptor(new AuthInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/error", "/register/login", "/git/push", "/alas/error", "/swagger-resources")
+                .excludePathPatterns("/error", "/register/login", "/plugin/getRegisterRouteKeywordList", "/git/push", "/alas/error", "/swagger-resources")
                 .excludePathPatterns(staticPath);
         WebMvcConfigurer.super.addInterceptors(registry);
     }

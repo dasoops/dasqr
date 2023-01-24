@@ -9,7 +9,7 @@ package com.dasoops.dasserver.plugin.shell.entity.enums;
  * @Description: shell消息类型枚举
  * @see Enum
  */
-public enum ShellMessageTypeEnum {
+public enum ShellRunMessageTypeEnum {
 
     /**
      * 群聊

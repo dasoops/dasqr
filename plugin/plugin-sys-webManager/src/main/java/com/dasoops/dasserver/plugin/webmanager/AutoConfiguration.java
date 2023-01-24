@@ -1,9 +1,9 @@
 package com.dasoops.dasserver.plugin.webmanager;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import com.dasoops.dasserver.plugin.webmanager.entity.WebManagerRouteRegistry;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 /**
  * @Title: Configuration
@@ -16,5 +16,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 @ComponentScan("com.dasoops.dasserver.plugin.webmanager")
 @MapperScan("com.dasoops.dasserver.plugin.webmanager.mapper")
 public class AutoConfiguration {
-
+    @Bean
+    public WebManagerRouteRegistry webManagerRouteRegister() {
+        WebManagerRouteRegistry webManagerRouteRegistry = new WebManagerRouteRegistry();
+        webManagerRouteRegistry.registerRoute("config", "register", "plugin");
+        return webManagerRouteRegistry;
+    }
 }

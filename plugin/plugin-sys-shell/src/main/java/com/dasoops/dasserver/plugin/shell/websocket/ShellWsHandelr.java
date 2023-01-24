@@ -11,14 +11,16 @@ import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqPrivateMessageEvent;
 import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.PostTypeEnum;
+import com.dasoops.dasserver.cq.exception.ExceptionTemplate;
 import com.dasoops.dasserver.cq.service.ConfigService;
 import com.dasoops.dasserver.plugin.shammessage.ShamMessageTemplate;
 import com.dasoops.dasserver.plugin.shell.ShellConfig;
 import com.dasoops.dasserver.plugin.shell.ShellCqTemplate;
 import com.dasoops.dasserver.plugin.shell.ShellTemplate;
 import com.dasoops.dasserver.plugin.shell.entity.enums.ShellExceptionEnum;
-import com.dasoops.dasserver.plugin.shell.entity.enums.ShellMessageTypeEnum;
 import com.dasoops.dasserver.plugin.shell.entity.enums.ShellRedisHashKeyEnum;
+import com.dasoops.dasserver.plugin.shell.entity.enums.ShellRunMessageTypeEnum;
+import com.dasoops.dasserver.plugin.shell.log.LogSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -45,6 +47,7 @@ public class ShellWsHandelr extends TextWebSocketHandler {
 
     private final ConfigCache configCache;
     private final ConfigService configService;
+    private final ExceptionTemplate exceptionTemplate;
     /**
      * 虚假消息template
      */
@@ -65,6 +68,11 @@ public class ShellWsHandelr extends TextWebSocketHandler {
      */
     private ShellConfig shellConfig;
 
+    /**
+     * 日志发送方
+     */
+    private LogSender logSender;
+
     @Override
     protected void handleTextMessage(@NotNull WebSocketSession session, @NotNull TextMessage textMessage) {
         if (shellTemplate == null) {
@@ -72,7 +80,7 @@ public class ShellWsHandelr extends TextWebSocketHandler {
         }
         String message = textMessage.getPayload();
 
-        boolean isConfig = resloveMessage(message);
+        boolean isConfig = resloveConfig(message);
         if (isConfig) {
             return;
         }
@@ -81,7 +89,7 @@ public class ShellWsHandelr extends TextWebSocketHandler {
         Long userId = shellConfig.getUserId();
 
         CqMessageEvent event;
-        if (shellConfig.getType().equals(ShellMessageTypeEnum.GROUP)) {
+        if (shellConfig.getType().equals(ShellRunMessageTypeEnum.GROUP)) {
             CqGroupMessageEvent cqGroupMessageEvent = new CqGroupMessageEvent();
             cqGroupMessageEvent.setGroupId(groupId);
             event = cqGroupMessageEvent;
@@ -97,7 +105,11 @@ public class ShellWsHandelr extends TextWebSocketHandler {
 
         JSONObject eventJson = JSON.parseObject(JSON.toJSONString(event));
         EventUtil.set(eventJson);
-        shamMessageTemplate.sendMsg(shellCqTemplate, JSON.parseObject(JSON.toJSONString(event)));
+        try {
+            shamMessageTemplate.sendMsg(shellCqTemplate, JSON.parseObject(JSON.toJSONString(event)));
+        } catch (Exception e) {
+            exceptionTemplate.resloveException(shellCqTemplate, e);
+        }
         shellTemplate.sendMsg("ok");
     }
 
@@ -109,7 +121,7 @@ public class ShellWsHandelr extends TextWebSocketHandler {
     final String type = "type";
     final String selfId = "selfId";
 
-    private boolean resloveMessage(String message) {
+    private boolean resloveConfig(String message) {
         if (ping.equals(message)) {
             //ping pong
             shellTemplate.sendMsg("pong");
@@ -123,7 +135,7 @@ public class ShellWsHandelr extends TextWebSocketHandler {
                 //set userId
                 shellConfig.setUserId(Long.valueOf(config.substring(groupId.length() + 1)));
             } else if (config.startsWith(type)) {
-                shellConfig.setType(ShellMessageTypeEnum.valueOf(config.substring(type.length() + 1)));
+                shellConfig.setType(ShellRunMessageTypeEnum.valueOf(config.substring(type.length() + 1)));
             } else if (config.startsWith(selfId)) {
                 shellConfig.setSelfId(Long.valueOf(config.substring(selfId.length() + 1)));
             } else {
@@ -147,8 +159,6 @@ public class ShellWsHandelr extends TextWebSocketHandler {
         } else {
             return false;
         }
-
-
         return true;
     }
 
@@ -158,11 +168,18 @@ public class ShellWsHandelr extends TextWebSocketHandler {
         shellCqTemplate = new ShellCqTemplate(shellTemplate);
         shellConfig = configCache.getJsonConfig(ShellRedisHashKeyEnum.SHELL_CONFIG, ShellConfig.class);
         shellTemplate.sendMsg("connection completed");
+        if (logSender != null) {
+            logSender.beStop();
+        }
+        logSender = new LogSender(shellTemplate);
+        logSender.start();
     }
 
     @Override
     public void afterConnectionClosed(@NotNull WebSocketSession session, @NotNull CloseStatus status) {
         shellTemplate = null;
         shellCqTemplate = null;
+        logSender.beStop();
+        logSender = null;
     }
 }

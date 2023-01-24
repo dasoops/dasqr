@@ -31,7 +31,7 @@ public class GetPluginPlugin extends CqPlugin {
         this.pluginService = pluginService;
     }
 
-    @MessageMapping(prefix = {"getPlugin", "getPluginList", "getAllPlugin", "allPlugin"}, type = MessageMappingTypeEnum.ALL)
+    @MessageMapping(equal = {"getPlugin", "getPluginList", "getAllPlugin", "allPlugin"}, type = MessageMappingTypeEnum.ALL)
     public String getAllPlugin() {
         List<PluginStatusDto> pluginStatusDtoList = pluginService.getAllPluginAndStatus();
         StringBuilder sb = new StringBuilder();

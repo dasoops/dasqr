@@ -1,7 +1,11 @@
 package com.dasoops.dasserver.plugin.shell;
 
+import com.dasoops.dasserver.plugin.webmanager.entity.WebManagerRouteRegistry;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @Title: AutoConfiguration
@@ -13,6 +17,15 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan("com.dasoops.dasserver.plugin.shell")
+@RequiredArgsConstructor
 public class AutoConfiguration {
+
+    private final WebManagerRouteRegistry registry;
+
+    @PostConstruct
+    public void registerWebRoute() {
+        registry.registerRoute("shell");
+    }
+
 
 }

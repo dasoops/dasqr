@@ -1,8 +1,12 @@
 package com.dasoops.dasserver.plugin.loaj;
 
+import com.dasoops.dasserver.plugin.webmanager.entity.WebManagerRouteRegistry;
+import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @Title: AutoConfiguration
@@ -15,7 +19,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan("com.dasoops.dasserver.plugin.loaj")
 @MapperScan("com.dasoops.dasserver.plugin.loaj.mapper")
 @EnableTransactionManagement
+@RequiredArgsConstructor
 public class AutoConfiguration {
 
+    private final WebManagerRouteRegistry registry;
+
+    @PostConstruct
+    public void registerWebRoute() {
+        registry.registerRoute("reply");
+    }
 
 }

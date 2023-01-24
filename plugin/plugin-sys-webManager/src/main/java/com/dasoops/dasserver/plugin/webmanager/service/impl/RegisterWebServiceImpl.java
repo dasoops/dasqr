@@ -20,6 +20,7 @@ import com.dasoops.dasserver.plugin.webmanager.entity.param.LoginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.LoginVo;
 import com.dasoops.dasserver.plugin.webmanager.mapper.RegisterWebMapper;
 import com.dasoops.dasserver.plugin.webmanager.service.RegisterWebService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -39,18 +40,13 @@ import java.util.Map;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, RegisterDo>
         implements RegisterWebService {
 
     private final ConfigCache configCache;
     private final RegisterCache registerCache;
     private final RegisterWebCache registerWebCache;
-
-    public RegisterWebServiceImpl(ConfigCache configCache, RegisterCache registerCache, RegisterWebCache registerWebCache) {
-        this.configCache = configCache;
-        this.registerCache = registerCache;
-        this.registerWebCache = registerWebCache;
-    }
 
     @Override
     public LoginVo login(LoginParam loginParam) {
@@ -82,11 +78,14 @@ public class RegisterWebServiceImpl extends ServiceImpl<RegisterWebMapper, Regis
         LoginVo loginVo = new LoginVo();
 
         Long registerId = registerDo.getRegisterId();
+        String registerName = registerWebCache.getRegisterNameByRowId(registerCache.getUserRowIdByRegisterId(registerId));
         AuthUserDto authUserDto = new AuthUserDto();
         authUserDto.setRowId(registerDo.getRowId());
         authUserDto.setRegisterId(registerId);
-        authUserDto.setName(registerWebCache.getRegisterNameByRowId(registerCache.getUserRowIdByRegisterId(registerId)));
+        authUserDto.setName(registerName);
         loginVo.setToken(JwtUtil.createToken(authUserDto));
+        loginVo.setRegisterId(registerId);
+        loginVo.setName(registerName);
         return loginVo;
 
     }
