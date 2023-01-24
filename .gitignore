@@ -35,4 +35,5 @@ build/
 ### DasServer ###
 *.yaml
 *.bak
+logback.xml
 
