@@ -32,8 +32,8 @@ public class RepeatReadPlugin extends CqPlugin {
         String message = event.getMessage();
         long groupId = event.getGroupId();
         RepeatReadRedisDto dto = repeatReadCache.get(groupId);
-        //无记录,初始化
-        if (dto == null) {
+        //无记录,初始化 || 消息不相同 覆盖,return
+        if (dto == null || !dto.getMessage().equals(message)) {
             dto = new RepeatReadRedisDto();
             dto.setMessage(message);
             dto.setCount(1);
@@ -54,7 +54,9 @@ public class RepeatReadPlugin extends CqPlugin {
             //不大于
             dto.setCount(count);
             repeatReadCache.put(groupId, dto);
+            return true;
         }
+
         return true;
     }
 }
