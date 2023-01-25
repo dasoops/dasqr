@@ -171,7 +171,7 @@ router.beforeEach((to, form, next) => {
     if (!token && to.path != '/login') {
         next('/login');
     } else if (token && to.path == '/login') {
-        next('/index');
+        next('/');
     } else {
         next();
     }

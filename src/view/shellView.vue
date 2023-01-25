@@ -10,7 +10,7 @@
       @execCmd="onExecCmd"
       :warn-log-count-limit=-1
       :show-handler=false
-      :drag-conf="{width: 700, height: 500, init:{ x: 230, y: 80}}"
+      :drag-conf="{width: '37%', height: '50%', init:{ x: clientWidth * 0.07, y: 120}}"
   >
   </terminal>
   <terminal
@@ -24,7 +24,7 @@
       @execCmd="onExecCmd"
       :warn-log-count-limit=-1
       :show-handler=false
-      :drag-conf="{width: 900, height: 850,zIndex:99, init:{ x: 950, y: 45}}"
+      :drag-conf="{width: '37%', height: clientHeight - 90,zIndex:99, init:{ x: clientWidth * 0.46, y: 60}}"
   >
   </terminal>
 </template>
@@ -37,13 +37,15 @@ import {LogDto} from "@/entity/dto/shellDto";
 import {onBeforeMount, onMounted, onUnmounted} from "vue";
 import {getWsUrl} from "@/request/shellRequest";
 import {getBaseUrl, getRawBaseUrl} from "@/conf/applicationConfiguration";
+import router from "@/conf/router";
 
 const context = localStorage.getItem('loginUserName') + '(' + localStorage.getItem('loginRegisterId') + ')';
 const log = [{type: 'normal', message: "this terminal show logs"}];
+let clientWidth = document.body.clientWidth;
+let clientHeight = document.body.clientHeight;
 
 let wsUrl = '';
 let isReconnection = false;
-// let wsUrl = 'ws://127.0.0.1:4901/ws/shell';
 let webSocket: WebSocket | undefined;
 
 async function initWsUrl() {
@@ -84,15 +86,19 @@ const onExecCmd = function (key: any, command: any, success: any, failed: any) {
 
 
 function reConnection() {
-  webSocket = new WebSocket(wsUrl);
+  let token = localStorage.getItem('token');
+  if (!token) {
+    router.push('login');
+    return;
+  }
+  webSocket = new WebSocket(wsUrl, [token]);
   isReconnection = true;
   webSocket.onerror = function () {
     Terminal.$api.pushMessage('terminal', {
           type: 'normal',
-          content: 'link error, is reConnectioning...'
+          content: 'link error, press any key and enter to Connection'
         }
     );
-    reConnection();
   }
   webSocket.onopen = function () {
     isReconnection = false;
