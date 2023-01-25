@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.shell.websocket;
 
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
@@ -18,10 +19,9 @@ import com.dasoops.dasserver.plugin.shell.ShellConfig;
 import com.dasoops.dasserver.plugin.shell.ShellCqTemplate;
 import com.dasoops.dasserver.plugin.shell.ShellTemplate;
 import com.dasoops.dasserver.plugin.shell.entity.enums.ShellExceptionEnum;
-import com.dasoops.dasserver.plugin.shell.entity.enums.ShellRedisHashKeyEnum;
 import com.dasoops.dasserver.plugin.shell.entity.enums.ShellRunMessageTypeEnum;
 import com.dasoops.dasserver.plugin.shell.log.LogSender;
-import lombok.RequiredArgsConstructor;
+import com.dasoops.dasserver.plugin.webauth.entity.dto.AuthUserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -29,6 +29,8 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import static com.dasoops.dasserver.plugin.shell.entity.enums.ShellRedisHashKeyEnum.SHELL_CONFIG;
 
 /**
  * @Title: shellWebSocketHandler
@@ -42,7 +44,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
  */
 @Component
 @Slf4j
-@RequiredArgsConstructor
 public class ShellWsHandelr extends TextWebSocketHandler {
 
     private final ConfigCache configCache;
@@ -66,17 +67,34 @@ public class ShellWsHandelr extends TextWebSocketHandler {
     /**
      * shell配置
      */
-    private ShellConfig shellConfig;
+    private final ShellConfig shellConfig;
 
     /**
      * 日志发送方
      */
     private LogSender logSender;
 
+    public ShellWsHandelr(ConfigCache configCache, ConfigService configService, ExceptionTemplate exceptionTemplate, ShamMessageTemplate shamMessageTemplate) {
+        this.configCache = configCache;
+        this.configService = configService;
+        this.exceptionTemplate = exceptionTemplate;
+        this.shamMessageTemplate = shamMessageTemplate;
+        this.shellConfig = configCache.getJsonConfig(SHELL_CONFIG, ShellConfig.class);
+    }
+
+    public void setUserId(Long userId) {
+        //是否需要更新配置
+        if (!shellConfig.getUserId().equals(userId)) {
+            shellConfig.setUserId(userId);
+            configService.setConfig(SHELL_CONFIG, JSON.toJSONString(shellConfig));
+        }
+    }
+
     @Override
     protected void handleTextMessage(@NotNull WebSocketSession session, @NotNull TextMessage textMessage) {
-        if (shellTemplate == null) {
-            log.error("shellTemplate is null");
+        if (shellTemplate == null || shellCqTemplate == null || logSender == null) {
+            log.error("dependeny is null");
+            return;
         }
         String message = textMessage.getPayload();
 
@@ -88,6 +106,7 @@ public class ShellWsHandelr extends TextWebSocketHandler {
         Long groupId = shellConfig.getGroupId();
         Long userId = shellConfig.getUserId();
 
+        //构建event
         CqMessageEvent event;
         if (shellConfig.getType().equals(ShellRunMessageTypeEnum.GROUP)) {
             CqGroupMessageEvent cqGroupMessageEvent = new CqGroupMessageEvent();
@@ -113,10 +132,38 @@ public class ShellWsHandelr extends TextWebSocketHandler {
         shellTemplate.sendMsg("ok");
     }
 
+    @Override
+    public void afterConnectionEstablished(@NotNull WebSocketSession session) {
+        //必须全部关闭,不然等待
+        while (!(shellTemplate == null && shellCqTemplate == null && logSender == null)) {
+            log.debug("wait close");
+            ThreadUtil.safeSleep(200);
+        }
+        AuthUserDto authUserDto = (AuthUserDto) session.getAttributes().get(WebSocketInterceptor.AUTH_USER_DTO);
+        shellTemplate = new ShellTemplate(session);
+        shellCqTemplate = new ShellCqTemplate(shellTemplate);
+
+        //启动日志线程
+        if (logSender != null) {
+            logSender.beStop();
+        }
+        logSender = new LogSender(shellTemplate);
+        logSender.start();
+
+        shellTemplate.sendMsg("connection completed");
+    }
+
+    @Override
+    public void afterConnectionClosed(@NotNull WebSocketSession session, @NotNull CloseStatus status) {
+        shellTemplate = null;
+        shellCqTemplate = null;
+        logSender.beStop();
+        logSender = null;
+    }
+
     final String ping = ".ping";
     final String set = ".set";
     final String get = ".get";
-    final String userId = "userId";
     final String groupId = "groupId";
     final String type = "type";
     final String selfId = "selfId";
@@ -128,10 +175,7 @@ public class ShellWsHandelr extends TextWebSocketHandler {
         } else if (StrUtil.startWith(message, set)) {
             //set
             String config = message.substring(set.length() + 1);
-            if (config.startsWith(userId)) {
-                //set userId
-                shellConfig.setUserId(Long.valueOf(config.substring(userId.length() + 1)));
-            } else if (config.startsWith(groupId)) {
+            if (config.startsWith(groupId)) {
                 //set userId
                 shellConfig.setUserId(Long.valueOf(config.substring(groupId.length() + 1)));
             } else if (config.startsWith(type)) {
@@ -142,14 +186,14 @@ public class ShellWsHandelr extends TextWebSocketHandler {
                 throw new LogicException(ShellExceptionEnum.RESLOVE_ERROR);
             }
             //更新数据库缓存
-            configService.setConfig(ShellRedisHashKeyEnum.SHELL_CONFIG, JSON.toJSONString(shellConfig));
+            configService.setConfig(SHELL_CONFIG, JSON.toJSONString(shellConfig));
             shellTemplate.sendMsg("ok");
         } else if (StrUtil.startWith(message, get)) {
             shellTemplate.sendMsg(StrUtil.format("""
-                            type:   {},
-                            selfId: {},
-                            groupId:{},
-                            userId: {},
+                            type:    {},
+                            selfId:  {},
+                            groupId: {},
+                            userId:  {},
                             """,
                     shellConfig.getType().name(),
                     shellConfig.getSelfId(),
@@ -160,26 +204,5 @@ public class ShellWsHandelr extends TextWebSocketHandler {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public void afterConnectionEstablished(@NotNull WebSocketSession session) {
-        shellTemplate = new ShellTemplate(session);
-        shellCqTemplate = new ShellCqTemplate(shellTemplate);
-        shellConfig = configCache.getJsonConfig(ShellRedisHashKeyEnum.SHELL_CONFIG, ShellConfig.class);
-        shellTemplate.sendMsg("connection completed");
-        if (logSender != null) {
-            logSender.beStop();
-        }
-        logSender = new LogSender(shellTemplate);
-        logSender.start();
-    }
-
-    @Override
-    public void afterConnectionClosed(@NotNull WebSocketSession session, @NotNull CloseStatus status) {
-        shellTemplate = null;
-        shellCqTemplate = null;
-        logSender.beStop();
-        logSender = null;
     }
 }

@@ -19,6 +19,7 @@
 - string - str
 - WebSocket - ws
 - message - msg
+- optional - opt
 
 #### 错误码:
 
