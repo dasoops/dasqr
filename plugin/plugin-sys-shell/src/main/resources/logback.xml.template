@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="1 seconds">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <contextName>logback</contextName>
+    <property name="log.path" value="{inesrt #/temp/logs/dasserver/dasserver.log}"/>
+    <property name="log.pattern"
+              value="%clr(%-5level) %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){cyan} %clr([%-6thread]){cyan} %clr(%-20logger{0}){yellow} : %msg%n"/>
+
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- <filter class="com.example.logback.filter.MyFilter" /> -->
+        <!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+        <!--            <level>ERROR</level>-->
+        <!--        </filter>-->
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <filter class="com.dasoops.dasserver.plugin.shell.log.LogFilter"/>
+    </appender>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="com.dasoops" level="debug"/>
+    <logger name="org.springframework.data.mongodb.core.MongoTemplate" level="debug"/>
+    <logger name="com.dasoops.dasserver.plugin.webauth" level="info"/>
+
+    <root level="info">
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="fileAppender"/>
+        <!--<appender-ref ref="STDOUT" />-->
+    </root>
+
+</configuration>

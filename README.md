@@ -1,8 +1,18 @@
 # dasServer
 
-#### 介绍:
+### 介绍:
 
 越来越杂，好事啊
+
+### development
+
+#### 配置
+
+- core 依赖: go_cqhttp, jdk17
+- 部分核心插件(推荐配置): mysql, redis
+- WebManager 依赖: nginx(可通过配置忽略)
+- plugin-image | plugin-setu 依赖: minio
+- plugin-log | plugin-sys-exceptionWrapper 依赖: mongo
 
 #### keyword
 
@@ -23,9 +33,9 @@
 
 1. ( √ ) 定时任务(plugin-sys-schedule)
 2. ( √ ) sc2下周突变(每周提醒入土了)
-3. ( - ) webManager路由动态渲染
+3. ( √ ) webManager路由动态渲染
 4. ( √ ) plugin-setu实现
-5. ( - ) plugin-sys-shell(暂未定实现方式,通过伪造CqTemplate?)
+5. ( √ ) plugin-sys-shell(暂未定实现方式,通过伪造CqTemplate?)
 6. ( - ) webManager rule | register | reply | shell
 7. ( - ) webManager register password
 8. ( - ) webManager token续签

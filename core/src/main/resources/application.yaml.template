@@ -1,0 +1,99 @@
+server:
+  port: 4901
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://{insert #127.0.0.1:3306/das_server}?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&useSSL=true&allowMultiQueries=true
+    username: root
+    password: root
+
+  data:
+    mongodb:
+      uri: mongodb://{insert #root:dasqServer@127.0.0.1:27017/DASQ}
+
+  redis:
+    host: {insert #127.0.0.1}
+    port: 6379
+    database: 3
+    password: {insert}
+
+mybatis-plus:
+  global-config:
+    db-config:
+      # 全局逻辑删除的实体字段名
+      logic-delete-field: isDelete
+
+minio:
+  url: {insert #127.0.0.1}
+  port: 9000
+  bucket: dasqserver
+  accessKey: {insert}
+  secretKey: {insert}
+  tempDownloadPath: temp
+
+ocr:
+  tencent:
+    secret-id: {insert}
+    secret-key: {insert}
+    end-point: ocr.tencentcloudapi.com
+    region: ap-beijing
+
+
+knife4j:
+  enable: true
+  setting:
+    language: zh-CN
+  openapi:
+    title: DasServer
+    description: "DasServer docs"
+    email: DasoopsNicole@gmail.com
+    concat: Dasoops
+    url: https://gitee.com/dasoopsnicole/dasServer
+    version: v1.0.0
+
+dasq:
+  cq:
+    core:
+      # 控制台日志打印
+      console-print-stack: true
+      # 是否使用jdb原生堆栈异常打印
+      native-print-stack: false
+      # 使用配置文件加载插件
+      load-local-plugin-list: false
+      # 是否为demo环境
+      is-demo: true
+      # 开发群id
+      dev-group-id: 673745932
+      # 主开发者id
+      dev-user-id: {insert}
+      #webSocket配置
+      ws:
+        # wsUrl
+        url: "/ws/DasServer/"
+        # 文本消息缓冲区大小
+        max-text-message-buffer-size: 512000
+        # 二进制消息缓冲区大小
+        max-binary-message-buffer-size: 512000
+        # 连接最长闲置时间(默认15min)
+        max-session-idle-timeout: 900000
+        # api超时时间(默认2min)
+        #        api-timeout: 120000
+        api-timeout: 15000
+      # 异步消息上报配置
+      event:
+        # 线程池核心线程数量
+        core-pool-size: 5
+        # 线程池线程数最大值
+        max-pool-size: 20
+        # 线程保持时间
+        keep-alive-time: 2000
+        # 工作队列大小
+        work-queue-size: 512
+  # 插件信息配置
+  plugin:
+    # exec
+    exec:
+      execPathMap:
+        minecraft: /usr/local/minecraft/nohupRun.sh
+        reboot: ./reboot.sh

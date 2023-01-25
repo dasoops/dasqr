@@ -108,8 +108,8 @@ public class SetuPlugin extends CqPlugin {
                                 pixivel : {}
                                 """,
                         pixivArtWorksUrl + pid,
-                        "pixivel.moe/illust/") + pid
-                );
+                        proxyArtWorksUrl + pid
+                ));
             } else if (exceptionEnum.equals(CqExceptionEnum.RESPONSE_ERROR)) {
                 log.error("图片发送失败");
                 String fileName = minioTemplate.saveImage(setuInfo.getUrls().getOriginal());
