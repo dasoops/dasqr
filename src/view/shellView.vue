@@ -42,6 +42,7 @@ const context = localStorage.getItem('loginUserName') + '(' + localStorage.getIt
 const log = [{type: 'normal', message: "this terminal show logs"}];
 
 let wsUrl = '';
+let isReconnection = false;
 // let wsUrl = 'ws://127.0.0.1:4901/ws/shell';
 let webSocket: WebSocket | undefined;
 
@@ -50,24 +51,59 @@ async function initWsUrl() {
   reConnection();
 }
 
-
 onMounted(async () => {
   //调用方法
   await initWsUrl()
 });
 
+/**
+ * 当用户输入自定义命令时调用
+ */
+const onExecCmd = function (key: any, command: any, success: any, failed: any) {
+  //无连接 || 关闭 -> 重连
+  if (!webSocket || webSocket.readyState == webSocket.CLOSED || webSocket.readyState == webSocket.CLOSING) {
+    reConnection();
+    Terminal.$api.pushMessage('terminal', {
+          type: 'normal',
+          content: 'reConnection'
+        }
+    );
+    //正在重连 ->
+  } else if (webSocket.readyState == webSocket.CONNECTING) {
+    Terminal.$api.pushMessage('terminal', {
+          type: 'normal',
+          content: 'reConnectioning...'
+        }
+    );
+  } else {
+    webSocket.send(command);
+  }
+  success();
+  return;
+}
+
+
 function reConnection() {
   webSocket = new WebSocket(wsUrl);
-  webSocket.onerror = function (e) {
-    Terminal.$api.pushMessage('terminal', {type: 'normal', content: 'connection error!'});
+  isReconnection = true;
+  webSocket.onerror = function () {
+    Terminal.$api.pushMessage('terminal', {
+          type: 'normal',
+          content: 'link error, is reConnectioning...'
+        }
+    );
     reConnection();
   }
+  webSocket.onopen = function () {
+    isReconnection = false;
+  }
   webSocket.onclose = function () {
-    Terminal.$api.pushMessage('terminal', {
-      type: 'normal',
-      content: 'server broken link, press enter to reConnection.'
-    });
-    reConnection();
+    if (!isReconnection) {
+      Terminal.$api.pushMessage('terminal', {
+        type: 'normal',
+        content: 'server broken link, press any key and enter to Connection'
+      });
+    }
   }
   webSocket.onmessage = function (res) {
     const messageVo: ShellMessageVo = JSON.parse(res.data);
@@ -102,34 +138,14 @@ function reConnection() {
   }
 }
 
-
+/**
+ * 销毁
+ */
 onUnmounted(() => {
   if (webSocket) {
     webSocket.close(3001, 'user leave');
   }
 })
-
-/**
- * 当用户输入自定义命令时调用
- *
- * @param key     命令行key，用于唯一标识
- * @param command 命令行
- * @param success 成功回调
- * @param failed  失败回调
- */
-const onExecCmd = function (key: any, command: any, success: any, failed: any) {
-  if (!webSocket) {
-    return;
-  }
-  let isOpen = webSocket.readyState == webSocket.OPEN;
-  if (!isOpen) {
-    reConnection();
-    success('reConnection');
-    return;
-  }
-  webSocket.send(command);
-  success();
-}
 
 
 </script>
