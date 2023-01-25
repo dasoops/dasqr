@@ -27,16 +27,15 @@
 
 <script lang="ts">
 import {defineComponent, reactive, ref, toRefs} from "vue";
-import {useRouter} from "vue-router";
 import {LoginData, LoginRes} from "@/entity/param/RegisterParam";
 import {FormInstance, FormRules} from "element-plus";
 import {login} from "@/request/registerRequest";
 import {getStore} from "@/conf/store";
+import router from "@/conf/router";
 
 
 export default defineComponent({
   setup() {
-    let router = useRouter();
     let store = getStore();
 
     const data = reactive(new LoginData());
@@ -75,8 +74,8 @@ export default defineComponent({
           localStorage.setItem('token', res.data.token);
           localStorage.setItem("loginUserName", res.data.name);
           localStorage.setItem("loginRegisterId", res.data.registerId.toString());
-          router.push('/system/config');
           store.commit("refresh");
+          router.push('/');
         })
       }));
     };

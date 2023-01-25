@@ -11,5 +11,9 @@ export function setBaseUrl(baseUrl: string) {
 }
 
 export function getBaseUrl() {
+    return 'http://' + BASE_URL;
+}
+
+export function getRawBaseUrl() {
     return BASE_URL;
 }

@@ -31,13 +31,20 @@
         </el-col>
         <el-col :span="3">
           <el-form-item>
-            <el-button :icon="Search" @click="loadData" circle/>
-            <span>&nbsp;&nbsp;</span>
-            <el-button :icon="Plus" @click="toAdd" circle/>
-            <span>&nbsp;&nbsp;</span>
-            <el-button :icon="Download" @click="handleExport" circle/>
-            <span>&nbsp;&nbsp;</span>
-            <el-button :icon="Sort" @click="toSort" circle/>
+            <el-row :gutter="15">
+              <el-col :span="6">
+                <el-button :icon="Search" @click="loadData" circle/>
+              </el-col>
+              <el-col :span="6">
+                <el-button :icon="Plus" @click="toAdd" circle/>
+              </el-col>
+              <el-col :span="6">
+                <el-button :icon="Download" @click="handleExport" circle/>
+              </el-col>
+              <el-col :span="6">
+                <el-button :icon="Sort" @click="toSort" circle/>
+              </el-col>
+            </el-row>
           </el-form-item>
         </el-col>
       </el-row>

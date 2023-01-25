@@ -34,11 +34,10 @@
 </template>
 
 <script lang="ts" setup>
-import {useRouter} from "vue-router";
 import {getStore} from "@/conf/store";
+import router from "@/conf/router";
 
 const name = "dasDrag";
-const router = useRouter();
 let routes = router.options.routes;
 let store = getStore();
 

@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router'
+import {createRouter, createWebHashHistory, RouteRecordRaw, useRouter} from 'vue-router'
 import {getRegisterRouteKeywordList} from "@/request/pluginRequest";
 import {getBaseUrl, setBaseUrl} from "@/conf/applicationConfiguration";
 import {initConfiguration} from "@/request/initRequest";

@@ -1,6 +1,6 @@
 import axios, {AxiosInstance, ParamsSerializerOptions} from "axios";
 import {ElMessage} from "element-plus";
-import {useRouter} from "vue-router";
+import router from "./router";
 import qs from "qs";
 import {getBaseUrl} from "@/conf/applicationConfiguration";
 // const axiosClient = axios.create({
@@ -46,8 +46,8 @@ function setInterceptors(axiosInstance: AxiosInstance) {
                     localStorage.removeItem("token");
                     localStorage.removeItem("loginUserName");
                     localStorage.removeItem("loginRegisterId");
-                    const router = useRouter();
-                    router.push("/login").then();
+                    router.push("/login").then(r => console.log(r));
+                    return null;
                 }
                 return Promise.reject(res.data);
             }
