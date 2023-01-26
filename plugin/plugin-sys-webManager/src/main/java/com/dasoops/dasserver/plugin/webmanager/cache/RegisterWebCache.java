@@ -30,7 +30,7 @@ public class RegisterWebCache extends BaseCache {
     }
 
     /**
-     * 设置 id名称 映射
+     * 设置 rowId to 名称 映射
      *
      * @param valueMap 值映射
      */
@@ -39,7 +39,7 @@ public class RegisterWebCache extends BaseCache {
     }
 
     /**
-     * 通过id获取注册名字
+     * 通过 id获取注册名字
      *
      * @param id id
      * @return {@link String}

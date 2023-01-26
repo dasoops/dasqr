@@ -1,27 +1,22 @@
-package com.dasoops.dasserver.plugin.loaj.entity.po;
+package com.dasoops.dasserver.plugin.loaj.entity.vo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.dasoops.common.entity.dbo.base.BaseDo;
+import com.dasoops.common.entity.vo.base.BaseVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-
 /**
- * @Title: ReplyPo
- * @ClassPath com.dasoops.dasserver.plugin.loaj.entity.po.ReplyPo
+ * @Title: GetReplyVo
+ * @ClassPath com.dasoops.dasserver.plugin.loaj.entity.vo.GetReplyVo
  * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/11
+ * @Date 2023/01/26
  * @Version 1.0.0
- * @Description: 回复订单
- * @see BaseDo
- * @see Serializable
+ * @Description: 获取回复vo
+ * @see BaseVo
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value ="tb_plugin_loaj_reply")
 @Data
-public class ReplyDo extends BaseDo implements Serializable {
+public class GetReplyVo extends BaseVo {
 
     /**
      * 触发关键词
@@ -53,4 +48,5 @@ public class ReplyDo extends BaseDo implements Serializable {
      */
     @TableField("`enable`")
     private Integer enable;
+
 }

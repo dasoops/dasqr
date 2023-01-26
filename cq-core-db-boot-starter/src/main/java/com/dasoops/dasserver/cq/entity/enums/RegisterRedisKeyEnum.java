@@ -21,11 +21,11 @@ import static com.dasoops.common.entity.enums.base.BaseRedisKeyEnum.REGISTER;
 public enum RegisterRedisKeyEnum implements IRedisKeyEnum {
 
     /**
-     * 注册表id名称映射集合
+     * 注册表rowId名称映射集合
      */
     REGISTER_ROW_ID_OTO_NAME_MAP(getBasePath() + "row_id_oto_name"),
     /**
-     * 注册表id类型映射集合
+     * 注册表rowId类型映射集合
      */
     REGISTER_ROW_ID_OTO_TYPE_MAP(getBasePath() + "row_id_oto_type"),
     /**

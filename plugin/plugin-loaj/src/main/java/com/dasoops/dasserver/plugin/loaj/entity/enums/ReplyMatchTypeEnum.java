@@ -35,7 +35,6 @@ public enum ReplyMatchTypeEnum implements IDbColumnEnum {
     CONTAINS(3),
     ;
 
-
     final Integer dbValue;
 
 }

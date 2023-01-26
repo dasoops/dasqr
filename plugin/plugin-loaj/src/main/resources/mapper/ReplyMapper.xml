@@ -8,6 +8,7 @@
         <id property="rowId" column="row_id" jdbcType="BIGINT"/>
         <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
         <result property="reply" column="reply" jdbcType="VARCHAR"/>
+        <result property="enable" column="`enable`" jdbcType="TINYINT"/>
         <result property="ignoreCase" column="ignore_case" jdbcType="TINYINT"/>
         <result property="ignoreDbc" column="ignore_dbc" jdbcType="TINYINT"/>
         <result property="matchType" column="matchType" jdbcType="TINYINT"/>
@@ -19,6 +20,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        row_id,keyword,reply,ignore_case,ignore_dbc,matchType,isDelete,createUser,createTime,updateUser,updateTime
+        row_id
+        ,keyword,reply,`enable`,ignore_case,ignore_dbc,matchType,isDelete,createUser,createTime,updateUser,updateTime
     </sql>
 </mapper>

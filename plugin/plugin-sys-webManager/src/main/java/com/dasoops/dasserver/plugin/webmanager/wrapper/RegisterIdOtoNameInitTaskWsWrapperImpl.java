@@ -29,7 +29,7 @@ public class RegisterIdOtoNameInitTaskWsWrapperImpl implements WsWrapper {
 
     @Override
     public void afterConnectionEstablishedWrapper(CqTemplate cqTemplate) {
-        webManagerInitTask.initOrUpdateRegisterIdOtoNameMap2Cache(cqTemplate);
+        webManagerInitTask.initOrUpdateAll(cqTemplate);
         initIsCompleted = true;
     }
 

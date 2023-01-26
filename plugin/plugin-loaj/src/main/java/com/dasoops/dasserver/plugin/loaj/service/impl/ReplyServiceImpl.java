@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.plugin.loaj.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dasoops.common.entity.enums.base.DbBooleanEnum;
 import com.dasoops.dasserver.plugin.loaj.cache.ReplyCache;
 import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreCaseEnum;
@@ -37,7 +38,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
     @Override
     public void initOrUpdateRelayMap2Cache() {
         log.info("初始化/更新 关键词 单对单 回复 映射集合 缓存");
-        List<ReplyDo> list = super.list();
+        List<ReplyDo> list = super.lambdaQuery().eq(ReplyDo::getEnable, DbBooleanEnum.TRUE).list();
         if (list.size() <= 0) {
             return;
         }
