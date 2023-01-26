@@ -1,14 +1,22 @@
 package com.dasoops.dasserver.plugin.loaj.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.base.DbBooleanEnum;
 import com.dasoops.dasserver.plugin.loaj.cache.ReplyCache;
+import com.dasoops.dasserver.plugin.loaj.entity.dto.ExportReplyDto;
 import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreCaseEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreDbcEnum;
+import com.dasoops.dasserver.plugin.loaj.entity.param.AddReplyParam;
+import com.dasoops.dasserver.plugin.loaj.entity.param.DeleteReplyParam;
+import com.dasoops.dasserver.plugin.loaj.entity.param.EditReplyParam;
+import com.dasoops.dasserver.plugin.loaj.entity.param.GetReplyPageParam;
 import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
+import com.dasoops.dasserver.plugin.loaj.entity.vo.GetReplyVo;
 import com.dasoops.dasserver.plugin.loaj.mapper.ReplyMapper;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -53,6 +61,36 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
             return dto;
         }).collect(Collectors.toSet());
         replyCache.setReplySet(replyRedisValueSet);
+    }
+
+    @Override
+    public IPage<GetReplyVo> getReplyPageData(GetReplyPageParam param) {
+        return null;
+    }
+
+    @Override
+    public GetNextIdVo getNextId() {
+        return null;
+    }
+
+    @Override
+    public void editReply(EditReplyParam param) {
+
+    }
+
+    @Override
+    public void addReply(AddReplyParam param) {
+
+    }
+
+    @Override
+    public void deleteReply(DeleteReplyParam param) {
+
+    }
+
+    @Override
+    public List<ExportReplyDto> exportAllReply() {
+        return null;
     }
 }
 
