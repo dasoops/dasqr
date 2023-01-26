@@ -10,7 +10,7 @@ import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreCaseEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreDbcEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyMatchTypeEnum;
-import com.dasoops.dasserver.plugin.loaj.entity.param.AddRelayParam;
+import com.dasoops.dasserver.plugin.loaj.entity.param.AddReplyParam;
 import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
 import lombok.RequiredArgsConstructor;
@@ -35,13 +35,13 @@ public class AddReplyPlugin extends CqPlugin {
 
 
     @MessageMapping(prefix = {"addReply", "跟我学"}, type = MessageMappingTypeEnum.ALL)
-    public String addReply(MessageParam<AddRelayParam> message) {
-        CqMessageAssert.getInstance().allMustNotNull(message, message.getParam(), message.getParam().getRelay(), message.getParam().getKeyword());
+    public String addReply(MessageParam<AddReplyParam> message) {
+        CqMessageAssert.getInstance().allMustNotNull(message, message.getParam(), message.getParam().getReply(), message.getParam().getKeyword());
 
-        AddRelayParam param = message.getParam();
+        AddReplyParam param = message.getParam();
         ReplyDo replyDo = new ReplyDo();
         replyDo.setKeyword(param.getKeyword());
-        replyDo.setReply(param.getRelay());
+        replyDo.setReply(param.getReply());
         replyDo.setIgnoreCase(ReplyIgnoreCaseEnum.TRUE.getDbValue());
         replyDo.setIgnoreDbc(ReplyIgnoreDbcEnum.TRUE.getDbValue());
         replyDo.setMatchType(ReplyMatchTypeEnum.ALL.getDbValue());
@@ -49,7 +49,7 @@ public class AddReplyPlugin extends CqPlugin {
 
         ReplyRedisValueDto replyDto = new ReplyRedisValueDto();
         replyDto.setKeyword(param.getKeyword());
-        replyDto.setReply(param.getRelay());
+        replyDto.setReply(param.getReply());
         replyDto.setIgnoreCase(true);
         replyDto.setIgnoreDbc(true);
         replyDto.setMatchType(ReplyMatchTypeEnum.ALL.getDbValue());

@@ -30,6 +30,6 @@ public class GetReplyPageParam extends BasePageParam<ReplyDo> {
     /**
      * 匹配类型(0:全局匹配;1:前缀匹配;2:后缀匹配;3:包含匹配)
      */
-    @ApiModelProperty(value = "匹配类型", notes = "匹配类型(0:全局匹配;1:前缀匹配;2:后缀匹配;3:包含匹配)", example = "[0,1]", required = false)
+    @ApiModelProperty(value = "匹配类型(0:全局匹配;1:前缀匹配;2:后缀匹配;3:包含匹配)", notes = "匹配类型(0:全局匹配;1:前缀匹配;2:后缀匹配;3:包含匹配)", example = "[0,1]", required = false)
     private Integer matchTypeList;
 }
