@@ -30,6 +30,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AddReplyPlugin extends CqPlugin {
 
+    @Override
+    public CqPlugin getRawPlugin() {
+        return this;
+    }
+
+
     private final ReplyService replyService;
     private final ReplyCache replyCache;
 

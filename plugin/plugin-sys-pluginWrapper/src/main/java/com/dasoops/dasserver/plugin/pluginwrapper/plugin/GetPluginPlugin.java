@@ -25,6 +25,12 @@ import java.util.List;
 @Component
 @Slf4j
 public class GetPluginPlugin extends CqPlugin {
+
+    @Override
+    public CqPlugin getRawPlugin() {
+        return this;
+    }
+
     private final PluginService pluginService;
 
     public GetPluginPlugin(PluginService pluginService) {

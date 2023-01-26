@@ -40,9 +40,9 @@ public class PluginController {
 
     private final PluginWebService pluginWebService;
 
-    @PostMapping("getPluginPage")
+    @GetMapping("getPluginPage")
     @ApiOperation(value = "获取分页插件信息", notes = "获取分页插件信息")
-    public PageResult<GetPluginVo> getPluginPage(@RequestBody GetPluginPageSortParam param) {
+    public PageResult<GetPluginVo> getPluginPage(GetPluginPageSortParam param) {
         IPage<GetPluginVo> PluginDoPage = pluginWebService.getPluginPageData(param);
         return PageResult.success(PluginDoPage);
     }

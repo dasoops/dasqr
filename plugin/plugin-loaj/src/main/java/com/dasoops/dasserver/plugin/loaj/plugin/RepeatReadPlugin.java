@@ -24,6 +24,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class RepeatReadPlugin extends CqPlugin {
 
+    @Override
+    public CqPlugin getRawPlugin() {
+        return this;
+    }
+
+
     private final RepeatReadCache repeatReadCache;
     private final ConfigCache configCache;
 

@@ -46,7 +46,7 @@ public class CqPluginGlobal {
     }
 
     public static void remove(CqPlugin cqPlugin) {
-        pluginMap.remove(cqPlugin.getClass().getName());
+        pluginMap.remove(cqPlugin.getRawPlugin().getClass().getName());
     }
 
     public static void replace(Map<String, CqPlugin> pluginMap) {
@@ -56,7 +56,7 @@ public class CqPluginGlobal {
     public static void refresh() {
         log.info("重新加载插件");
         CqPluginGlobal.pluginMap = reslover.refresh(applicationContext);
-        log.info("\n插件加载完成:\n\t-{}", CollectionUtil.join(pluginMap.values(), "\n\t-"));
+        log.info("\n插件加载完成:\n\t-{}", CollectionUtil.join(pluginMap.keySet(), "\n\t-"));
     }
 
     public static void setApplicationContext(ApplicationContext applicationContext) {

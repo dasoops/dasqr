@@ -20,6 +20,6 @@ public class DefaultPluginLoadReslover implements CqPluginLoadReslover {
     public Map<String, CqPlugin> refresh(ApplicationContext applicationContext) {
         return applicationContext
                 .getBeansOfType(CqPlugin.class).values().stream()
-                .collect(Collectors.toMap(cqPlugin -> cqPlugin.getClass().getName(), cqPlugin -> cqPlugin));
+                .collect(Collectors.toMap(cqPlugin -> cqPlugin.getRawPlugin().getClass().getName(), cqPlugin -> cqPlugin));
     }
 }

@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * @Title: GetReplyPageParam
  * @ClassPath com.dasoops.dasserver.plugin.loaj.entity.param.GetReplyPageParam
@@ -31,5 +33,5 @@ public class GetReplyPageParam extends BasePageParam<ReplyDo> {
      * 匹配类型(0:全局匹配;1:前缀匹配;2:后缀匹配;3:包含匹配)
      */
     @ApiModelProperty(value = "匹配类型(0:全局匹配;1:前缀匹配;2:后缀匹配;3:包含匹配)", notes = "匹配类型(0:全局匹配;1:前缀匹配;2:后缀匹配;3:包含匹配)", example = "[0,1]", required = false)
-    private Integer matchTypeList;
+    private List<Integer> matchTypeList;
 }

@@ -31,8 +31,8 @@ public class CqCoreInitTask extends BaseInitTask {
     @PostConstruct
     public void initOrUpdateAll() {
         CqPluginGlobal.setReslover(2147483646, applicationContext ->
-                pluginService.getAllLoadPlugin().stream().collect(Collectors.toMap(
-                        cqPlugin -> cqPlugin.getClass().getName(), // 1. actual String as KEY
+                pluginService.getAllLoadDbCqPlugin().stream().collect(Collectors.toMap(
+                        cqPlugin -> cqPlugin.getRawPlugin().getClass().getName(), // 1. actual String as KEY
                         cqPlugin -> cqPlugin,  // 2. String length as their VALUE
                         (key1, key2) -> key1, // 3. duplicate KEY resolver
                         LinkedHashMap::new // 4. implementation-class

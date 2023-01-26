@@ -3,6 +3,7 @@ package com.dasoops.dasserver.plugin.shell.log;
 import com.dasoops.dasserver.plugin.shell.ShellTemplate;
 import com.dasoops.dasserver.plugin.shell.entity.vo.LogDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Title: LogSender
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
  * @see Thread
  */
 @RequiredArgsConstructor
+@Slf4j
 public class LogSender extends Thread {
 
     private final ShellTemplate shellTemplate;
@@ -22,9 +24,13 @@ public class LogSender extends Thread {
     @Override
     public void run() {
         LogQueue.getInstance().clear();
-        while (!beStop) {
-            LogDto logDto = LogQueue.getInstance().poll();
-            shellTemplate.sendLog(logDto);
+        try {
+            while (!beStop) {
+                LogDto logDto = LogQueue.getInstance().poll();
+                shellTemplate.sendLog(logDto);
+            }
+        } catch (Exception e) {
+            log.error("sendLog Error");
         }
     }
 

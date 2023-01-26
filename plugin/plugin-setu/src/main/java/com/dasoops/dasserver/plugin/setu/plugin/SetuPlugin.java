@@ -38,6 +38,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SetuPlugin extends CqPlugin {
 
+    @Override
+    public CqPlugin getRawPlugin() {
+        return this;
+    }
+
+
     private final SetuTemplate setuTemplate;
     private final MinioTemplate minioTemplate;
     private final ConfigCache configCache;

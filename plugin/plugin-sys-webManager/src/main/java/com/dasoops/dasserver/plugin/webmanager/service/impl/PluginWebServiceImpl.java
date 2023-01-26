@@ -11,6 +11,7 @@ import com.dasoops.common.util.Assert;
 import com.dasoops.common.util.QueryWrapperUtil;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqPluginGlobal;
+import com.dasoops.dasserver.cq.DbRecordCqPlugin;
 import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
@@ -42,7 +43,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Title: PluginServiceImpl
@@ -79,14 +79,14 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
         }
 
         //加载的插件
-        Map<String, CqPlugin> loadPluginMap = applicationContext.getBeansOfType(CqPlugin.class);
-        List<String> loadPluginClassPath = loadPluginMap.values().stream().map(cqPlugin -> cqPlugin.getClass().getName()).toList();
+        List<DbRecordCqPlugin> allLoadPluginList = CqPluginGlobal.getAll().stream().map(cqPlugin -> (DbRecordCqPlugin) cqPlugin).toList();
+        List<Long> loadPluginRowIdList = allLoadPluginList.stream().map(cqPlugin -> cqPlugin.getPluginDo().getRowId()).toList();
 
         List<PluginDo> pluginDoList = super.list(wrapper);
         List<GetPluginVo> getPluginVoList = new ArrayList<>(pluginDoList.stream().map(pluginDo -> {
             GetPluginVo getPluginVo = new GetPluginVo();
             BeanUtil.copyProperties(pluginDo, getPluginVo);
-            boolean isLoad = loadPluginClassPath.contains(pluginDo.getClassPath());
+            boolean isLoad = loadPluginRowIdList.contains(pluginDo.getRowId());
             getPluginVo.setStatus(isLoad ? PluginStatusEnum.LOAD.getIntegerValue() : PluginStatusEnum.ENABLE_UNLOAD.getIntegerValue());
             return getPluginVo;
         }).toList());
@@ -102,9 +102,10 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
         Integer paramCurrent = param.getCurrent();
         Page<GetPluginVo> getPluginVoPage = new Page<>(paramCurrent, paramSize);
 
+        //关键词匹配 不需要
         //包含无记录加载插件 需要
-        //null集合 || 空集合 需要
-        boolean needNoRecord = (statusList == null || statusList.size() <= 0) || statusList.contains(PluginStatusEnum.NO_RECORD.getIntegerValue());
+        //(null集合 || 空集合) 需要
+        boolean needNoRecord = keyword == null && ((statusList == null || statusList.size() <= 0) || statusList.contains(PluginStatusEnum.NO_RECORD.getIntegerValue()));
         //不需要 || 没有未加载插件
         List<PluginStatusDto> noRecordPluginList = pluginService.getAllNoRecordPlugin();
         if (noRecordPluginList.size() <= 0 || !needNoRecord) {

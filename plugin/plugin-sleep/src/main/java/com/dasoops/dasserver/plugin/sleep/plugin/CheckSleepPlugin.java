@@ -23,6 +23,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class CheckSleepPlugin extends CqPlugin {
 
+    @Override
+    public CqPlugin getRawPlugin() {
+        return this;
+    }
+
+
     private final SleepCache sleepCache;
 
     public CheckSleepPlugin(SleepCache sleepCache) {

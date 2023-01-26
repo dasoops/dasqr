@@ -3,9 +3,10 @@ package com.dasoops.dasserver.cq.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.dbo.base.BaseDo;
+import com.dasoops.common.entity.enums.base.DbBooleanEnum;
 import com.dasoops.common.util.Assert;
-import com.dasoops.common.util.ClassNameUtil;
 import com.dasoops.dasserver.cq.CqPlugin;
+import com.dasoops.dasserver.cq.DbRecordCqPlugin;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
@@ -68,7 +69,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
             if (enable.equals(PluginEnableEnum.FALSE.getDbValue())) {
                 status = PluginStatusEnum.UNABLE.getIntegerValue();
             } else {
-                boolean isLoad = loadPluginMap.values().stream().anyMatch(cqPlugin -> cqPlugin.getClass().getName().equals(pluginDo.getClassPath()));
+                boolean isLoad = loadPluginMap.values().stream().anyMatch(cqPlugin -> cqPlugin.getRawPlugin().getClass().getName().equals(pluginDo.getClassPath()));
                 status = isLoad ? PluginStatusEnum.LOAD.getIntegerValue() : PluginStatusEnum.ENABLE_UNLOAD.getIntegerValue();
             }
             PluginStatusDto pluginStatusDto = new PluginStatusDto();
@@ -98,13 +99,13 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
         List<String> pluginClassNameList = pluginDoList.stream().map(PluginDo::getClassPath).toList();
         List<CqPlugin> noRecordButLoadPluginList = loadPluginMap.values().stream()
                 .filter(cqPlugin ->
-                        !pluginClassNameList.contains(cqPlugin.getClass().getName())
+                        !pluginClassNameList.contains(cqPlugin.getRawPlugin().getClass().getName())
                 ).toList();
         List<PluginStatusDto> noRecordPluginList = noRecordButLoadPluginList.stream().map(cqPlugin -> {
             PluginStatusDto pluginStatusDto = new PluginStatusDto();
             pluginStatusDto.setRowId(-1L);
             pluginStatusDto.setName("noRecord");
-            pluginStatusDto.setClassPath(cqPlugin.getClass().getName());
+            pluginStatusDto.setClassPath(cqPlugin.getRawPlugin().getClass().getName());
             pluginStatusDto.setOrder(-1);
             pluginStatusDto.setLevel(-1);
             pluginStatusDto.setDescription("未知插件");
@@ -116,26 +117,36 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
     }
 
     @Override
-    public List<CqPlugin> getAllLoadPlugin() {
+    public List<DbRecordCqPlugin> getAllLoadDbCqPlugin() {
         //获取所有启用的类全路径
-        List<PluginDo> pluginDoList = super.list();
-        Map<String, Integer> classPathOtoOrderMap = pluginDoList.stream().collect(Collectors.toMap(PluginDo::getClassPath, PluginDo::getOrder));
-        List<String> allClassPathList = pluginDoList.stream().map(PluginDo::getClassPath).toList();
+        List<PluginDo> pluginDoList = super.lambdaQuery().list();
+        Map<String, PluginDo> classPathOtoPluginDoMap = pluginDoList.stream().collect(Collectors.toMap(PluginDo::getClassPath, pluginDo -> pluginDo));
 
         //加载的所有插件
         Collection<CqPlugin> loadPluginList = applicationContext.getBeansOfType(CqPlugin.class).values();
+        List<DbRecordCqPlugin> dbRecordCqPluginList = loadPluginList.stream().map(cqPlugin -> {
+            DbRecordCqPlugin dbRecordCqPlugin = new DbRecordCqPlugin(cqPlugin);
+            dbRecordCqPlugin.setPluginDo(classPathOtoPluginDoMap.get(cqPlugin.getRawPlugin().getClass().getName()));
+            return dbRecordCqPlugin;
+        }).toList();
 
         //在数据库中有启用记录的才是需要加载的
-        List<CqPlugin> needloadPluginList = loadPluginList.stream()
+        List<DbRecordCqPlugin> needloadPluginList = dbRecordCqPluginList.stream()
+                //enable过滤
                 .filter(cqPlugin -> {
-                    boolean needLoad = allClassPathList.stream().anyMatch(classPath -> ClassNameUtil.removeCglibSuffix(cqPlugin.getClass().getName()).equals(classPath));
-                    Assert.getInstance().ifFalse(needLoad, () -> log.error("存在未知插件({}),请及时添加数据库记录以加载该插件", ClassNameUtil.removeCglibSuffix(cqPlugin.getClass().getName())));
-                    return needLoad;
+                    PluginDo pluginDo = cqPlugin.getPluginDo();
+                    if (pluginDo == null) {
+                        log.error("存在未知插件({}),请及时添加数据库记录以加载该插件", cqPlugin.getRawPlugin().getClass().getName());
+                        return false;
+                    }
+                    //未启用
+                    if (pluginDo.getEnable().equals(DbBooleanEnum.FALSE.getDbValue())) {
+                        log.info("未启用插件: {}", cqPlugin.getRawPlugin().getClass().getName());
+                        return false;
+                    }
+                    return true;
                 })
-                .sorted(Comparator.comparingInt(cqPlugin -> {
-                    String classPath = ClassNameUtil.removeCglibSuffix(cqPlugin.getClass().getName());
-                    return classPathOtoOrderMap.get(classPath);
-                })).toList();
+                .sorted(Comparator.comparingInt(cqPlugin -> cqPlugin.getPluginDo().getOrder())).toList();
 
         return needloadPluginList;
     }

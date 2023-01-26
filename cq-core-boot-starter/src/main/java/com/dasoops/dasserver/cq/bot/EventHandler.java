@@ -130,7 +130,7 @@ public class EventHandler {
         List<AuthWrapper> authWrapperList = WrapperGlobal.getAuthWrapperList();
         if (authWrapperList != null && !WrapperGlobal.getAuthWrapperList().isEmpty()) {
             //全部通过才是通过
-            return authWrapperList.stream().allMatch(authWrapper -> authWrapper.auth(cqPlugin.getClass().getName()));
+            return authWrapperList.stream().allMatch(authWrapper -> authWrapper.auth(cqPlugin.getRawPlugin().getClass().getName()));
         }
         //没有权限增强直接通过
         return true;
@@ -233,7 +233,8 @@ public class EventHandler {
                 if (pluginChainStringBuilder.length() > 0) {
                     pluginChainStringBuilder.append(" -> ");
                 }
-                pluginChainStringBuilder.append(cqPlugin.getClass().getSimpleName());
+                String classPath = cqPlugin.getRawPlugin().getClass().getName();
+                pluginChainStringBuilder.append(classPath.substring(classPath.lastIndexOf(".") + 1));
             }
 
             if (!(passObj.isPass())) {

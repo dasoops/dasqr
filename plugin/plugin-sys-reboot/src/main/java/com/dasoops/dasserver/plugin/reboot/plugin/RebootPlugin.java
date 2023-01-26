@@ -32,6 +32,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RebootPlugin extends CqPlugin {
 
+    @Override
+    public CqPlugin getRawPlugin() {
+        return this;
+    }
+
+
     private final ConfigCache configCache;
     private final ExecTemplate execTemplate;
 

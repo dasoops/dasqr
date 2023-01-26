@@ -3,7 +3,6 @@ package com.dasoops.dasserver.plugin.shell;
 import com.dasoops.common.entity.param.base.BaseParam;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqTemplate;
-import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.api.IApiRequest;
 import com.dasoops.dasserver.cq.entity.dto.cq.entity.CqGroupAnonymous;
 import com.dasoops.dasserver.cq.entity.dto.cq.entity.CqStatus;
@@ -32,21 +31,6 @@ public class ShellCqTemplate implements CqTemplate {
 
     @Override
     public void setBotSession(WebSocketSession session) {
-        throw new LogicException(ShellExceptionEnum.UNSUPPORTED_OPERATION);
-    }
-
-    @Override
-    public WebSocketSession getBotSession() {
-        throw new LogicException(ShellExceptionEnum.UNSUPPORTED_OPERATION);
-    }
-
-    @Override
-    public ApiHandler getApiHandler() {
-        throw new LogicException(ShellExceptionEnum.UNSUPPORTED_OPERATION);
-    }
-
-    @Override
-    public void setApiHandler(ApiHandler apiHandler) {
         throw new LogicException(ShellExceptionEnum.UNSUPPORTED_OPERATION);
     }
 

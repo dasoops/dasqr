@@ -17,7 +17,7 @@ import com.dasoops.dasserver.cq.entity.dto.cq.event.request.CqGroupRequestEvent;
  * @Version 1.0.0
  * @Description: cqTemplate插件, 提供消息接收功能拓展
  */
-public class CqPlugin {
+public abstract class CqPlugin {
 
     /**
      * 收到私聊消息时调用此方法
@@ -219,7 +219,21 @@ public class CqPlugin {
         return PassObj.pass(event);
     }
 
+    /**
+     * 群名片更新提醒
+     *
+     * @param cqTemplate cq模板
+     * @param event      事件
+     * @return {@link PassObj}
+     */
     public PassObj onGroupCardNotice(CqTemplate cqTemplate, CqGroupCardNoticeEvent event) {
         return PassObj.pass(event);
     }
+
+    /**
+     * 获取真实插件
+     *
+     * @return {@link CqPlugin}
+     */
+    public abstract CqPlugin getRawPlugin();
 }

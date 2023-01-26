@@ -32,6 +32,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class MessageLogPlugin extends CqPlugin {
 
+    @Override
+    public CqPlugin getRawPlugin() {
+        return this;
+    }
+
+
     private final AsyncMongoTemplate asyncMongoTemplate;
 
     public MessageLogPlugin(AsyncMongoTemplate asyncMongoTemplate) {

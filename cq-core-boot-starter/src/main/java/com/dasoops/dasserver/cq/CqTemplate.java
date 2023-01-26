@@ -1,7 +1,6 @@
 package com.dasoops.dasserver.cq;
 
 import com.dasoops.common.entity.param.base.BaseParam;
-import com.dasoops.dasserver.cq.api.ApiHandler;
 import com.dasoops.dasserver.cq.api.IApiRequest;
 import com.dasoops.dasserver.cq.entity.dto.cq.entity.CqGroupAnonymous;
 import com.dasoops.dasserver.cq.entity.dto.cq.entity.CqStatus;
@@ -28,27 +27,6 @@ public interface CqTemplate {
      * @param session
      */
     void setBotSession(WebSocketSession session);
-
-    /**
-     * 获取机器人会话
-     *
-     * @return {@link WebSocketSession}
-     */
-    WebSocketSession getBotSession();
-
-    /**
-     * 获取api处理程序
-     *
-     * @return {@link ApiHandler}
-     */
-    ApiHandler getApiHandler();
-
-    /**
-     * 设置api处理程序
-     *
-     * @param apiHandler api处理程序
-     */
-    void setApiHandler(ApiHandler apiHandler);
 
     /**
      * 获取botId

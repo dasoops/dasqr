@@ -35,6 +35,12 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class ImagePlugin extends CqPlugin {
 
+    @Override
+    public CqPlugin getRawPlugin() {
+        return this;
+    }
+
+
     private final String FLAG = "flag";
 
     private final ImageService imageService;

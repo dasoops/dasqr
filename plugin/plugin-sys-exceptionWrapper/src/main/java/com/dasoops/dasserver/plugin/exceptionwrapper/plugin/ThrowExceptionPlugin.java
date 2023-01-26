@@ -25,6 +25,12 @@ import org.springframework.stereotype.Component;
 public class ThrowExceptionPlugin extends CqPlugin {
 
     @Override
+    public CqPlugin getRawPlugin() {
+        return this;
+    }
+
+
+    @Override
     public PassObj onPrivateMessage(CqTemplate cqTemplate, CqPrivateMessageEvent event) {
         return onMessage(cqTemplate, event);
     }

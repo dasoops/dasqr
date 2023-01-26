@@ -20,6 +20,12 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class TemplatePlugin extends CqPlugin {
+
+    @Override
+    public CqPlugin getRawPlugin() {
+        return this;
+    }
+
     @Override
     public PassObj onPrivateMessage(CqTemplate cqTemplate, CqPrivateMessageEvent event) {
         return PassObj.pass(event);
@@ -29,5 +35,4 @@ public class TemplatePlugin extends CqPlugin {
     public PassObj onGroupMessage(CqTemplate cqTemplate, CqGroupMessageEvent event) {
         return super.onGroupMessage(cqTemplate, event);
     }
-
 }

@@ -14,7 +14,8 @@ import com.dasoops.dasserver.cq.entity.dto.cq.retdata.*;
 import com.dasoops.dasserver.cq.entity.enums.ApiEnum;
 import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
@@ -27,12 +28,16 @@ import java.io.IOException;
  * @Version 1.0.0
  * @Description: cq对外暴露模板类, 提供cq消息发送
  */
-@Data
 public class DefaultCqTemplate implements CqTemplate {
 
+    @Setter
     private WebSocketSession botSession;
-    private ApiHandler apiHandler;
+
+    @Setter
+    @Getter
     private long selfId;
+
+    private final ApiHandler apiHandler;
 
     public DefaultCqTemplate(Long selfId, WebSocketSession botSession, ApiHandler apiHandler) {
         this.selfId = selfId;

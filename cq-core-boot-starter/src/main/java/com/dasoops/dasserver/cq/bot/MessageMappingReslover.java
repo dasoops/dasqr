@@ -37,7 +37,8 @@ public class MessageMappingReslover {
 
     public static <T extends BaseParam> PassObj resloveParamAndHandle(CqPlugin cqPlugin, CqTemplate cqTemplate, CqMessageEvent messageEvent, String defaultMethodName, EventTypeEnum eventTypeEnum) {
         //开始选择方法,优先判断包含注解的方法,都不符合再调用继承的,再不符合直接调用CqPlugin的默认实现
-        Class<? extends CqPlugin> clazz = cqPlugin.getClass();
+        CqPlugin rawPlugin = cqPlugin.getRawPlugin();
+        Class<? extends CqPlugin> clazz = rawPlugin.getClass();
         Method[] pluginMethods = clazz.getMethods();
         for (Method pluginMethod : pluginMethods) {
             //检查是否需要解析
@@ -87,7 +88,7 @@ public class MessageMappingReslover {
             Object result;
             //捕获断言抛出的参数异常
             try {
-                result = pluginMethod.invoke(cqPlugin, params);
+                result = pluginMethod.invoke(rawPlugin, params);
 //                result = ReflectUtil.invoke(cqPlugin, pluginMethod, params);
             } catch (LogicException e) {
                 //非参数解析异常直接抛出,由wsHandler处理
