@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.setu.plugin;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import com.dasoops.common.entity.enums.base.IExceptionEnum;
 import com.dasoops.common.entity.param.SimpleParam;
@@ -69,6 +70,7 @@ public class SetuPlugin extends CqPlugin {
             //提取tag
             String tagListStr = StrUtil.removePrefix(message, hasParamPrefix);
             tagListStr = StrUtil.removeSuffix(tagListStr, hasParamSuffix);
+            tagListStr = Convert.toDBC(tagListStr);
             List<String> tagList = StrUtil.split(tagListStr, ",");
             setuParam.setTag(tagList);
 
