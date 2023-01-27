@@ -623,6 +623,9 @@ public class DefaultCqTemplate implements CqTemplate {
 
     private void checkResultCode(BaseApiData result) {
         if (result.getRetcode() != 0) {
+            if (result.getWording() == null) {
+                throw new CqLogicException(CqExceptionEnum.RESPONSE_ERROR);
+            }
             if (result.getWording().contains("参考")) {
                 throw new CqLogicException(CqExceptionEnum.SEND_ERROR);
             }

@@ -36,7 +36,6 @@ import com.dasoops.dasserver.plugin.webmanager.mapper.PluginWebMapper;
 import com.dasoops.dasserver.plugin.webmanager.service.PluginWebService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +62,6 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
     private final PluginWebMapper pluginWebMapper;
     private final RegisterService registerService;
     private final PluginService pluginService;
-    private final ApplicationContext applicationContext;
     private final AuthWrapperPluginService authWrapperPluginService;
     private final WebManagerRouteRegistry registry;
 
