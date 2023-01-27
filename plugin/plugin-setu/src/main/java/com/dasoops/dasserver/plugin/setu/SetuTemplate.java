@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.setu;
 
+import cn.hutool.core.exceptions.ExceptionUtil;
 import com.alibaba.fastjson2.JSON;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
@@ -59,7 +60,7 @@ public class SetuTemplate {
             setuResponseEntity = restTemplate.postForEntity(apiUrl, httpEntity, SetuResultDto.class);
         } catch (Exception e) {
             log.error("", e);
-            throw new LogicException(SetuExceptionEnum.API_REQUEST_ERROR);
+            throw new LogicException(SetuExceptionEnum.API_REQUEST_ERROR, ExceptionUtil.stacktraceToString(e));
         }
         if (!setuResponseEntity.getStatusCode().equals(HttpStatus.OK)) {
             throw new LogicException(SetuExceptionEnum.API_REQUEST_ERROR);

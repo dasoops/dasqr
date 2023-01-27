@@ -14,6 +14,7 @@ import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.PostTypeEnum;
 import com.dasoops.dasserver.cq.exception.ExceptionTemplate;
 import com.dasoops.dasserver.cq.service.ConfigService;
+import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.plugin.shammessage.ShamMessageTemplate;
 import com.dasoops.dasserver.plugin.shell.ShellConfig;
 import com.dasoops.dasserver.plugin.shell.ShellCqTemplate;
@@ -21,7 +22,6 @@ import com.dasoops.dasserver.plugin.shell.ShellTemplate;
 import com.dasoops.dasserver.plugin.shell.entity.enums.ShellExceptionEnum;
 import com.dasoops.dasserver.plugin.shell.entity.enums.ShellRunMessageTypeEnum;
 import com.dasoops.dasserver.plugin.shell.log.LogSender;
-import com.dasoops.dasserver.plugin.webauth.entity.dto.AuthUserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -46,7 +46,6 @@ import static com.dasoops.dasserver.plugin.shell.entity.enums.ShellRedisHashKeyE
 @Slf4j
 public class ShellWsHandelr extends TextWebSocketHandler {
 
-    private final ConfigCache configCache;
     private final ConfigService configService;
     private final ExceptionTemplate exceptionTemplate;
     /**
@@ -75,7 +74,6 @@ public class ShellWsHandelr extends TextWebSocketHandler {
     private LogSender logSender;
 
     public ShellWsHandelr(ConfigCache configCache, ConfigService configService, ExceptionTemplate exceptionTemplate, ShamMessageTemplate shamMessageTemplate) {
-        this.configCache = configCache;
         this.configService = configService;
         this.exceptionTemplate = exceptionTemplate;
         this.shamMessageTemplate = shamMessageTemplate;
@@ -102,6 +100,9 @@ public class ShellWsHandelr extends TextWebSocketHandler {
         if (isConfig) {
             return;
         }
+        if (message.startsWith("@")) {
+            message = message.replace("@", CqCodeUtil.at(shellConfig.getSelfId()) + " ");
+        }
 
         Long groupId = shellConfig.getGroupId();
         Long userId = shellConfig.getUserId();
@@ -118,6 +119,7 @@ public class ShellWsHandelr extends TextWebSocketHandler {
             event.setMessageType(EventTypeEnum.MESSAGE_PRIVATE.getKey());
         }
         event.setPostType(PostTypeEnum.MESSAGE.getKey());
+        event.setSelfId(shellConfig.getSelfId());
         event.setMessage(message);
         event.setRawMessage(message);
         event.setUserId(userId);
@@ -139,7 +141,6 @@ public class ShellWsHandelr extends TextWebSocketHandler {
             log.debug("wait close");
             ThreadUtil.safeSleep(200);
         }
-        AuthUserDto authUserDto = (AuthUserDto) session.getAttributes().get(WebSocketInterceptor.AUTH_USER_DTO);
         shellTemplate = new ShellTemplate(session);
         shellCqTemplate = new ShellCqTemplate(shellTemplate);
 
