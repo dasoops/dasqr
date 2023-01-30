@@ -1,8 +1,14 @@
 package com.dasoops.dasserver.plugin.loaj.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.injector.methods.Insert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.base.DbBooleanEnum;
+import com.dasoops.common.util.Assert;
+import com.dasoops.common.util.Convert;
 import com.dasoops.dasserver.plugin.loaj.cache.ReplyCache;
 import com.dasoops.dasserver.plugin.loaj.entity.dto.ExportReplyDto;
 import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;
@@ -19,6 +25,7 @@ import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,6 +49,9 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
         implements ReplyService {
 
     private final ReplyCache replyCache;
+//
+//    @Autowired
+//    private  ReplyMapper ;
 
     @Override
     public void initOrUpdateRelayMap2Cache() {
@@ -75,22 +85,39 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
 
     @Override
     public void editReply(EditReplyParam param) {
+    super.lambdaUpdate().eq(ReplyDo::getRowId,param.getRowId()).set(ReplyDo::getReply,param.getReply())
+            .set(ReplyDo::getEnable,param.getEnable())
+            .set(ReplyDo::getMatchType,param.getMatchType())
+            .set(ReplyDo::getIgnoreCase,param.getIgnoreCase())
+            .set(ReplyDo::getIgnoreDbc,param.getIgnoreDbc())
+            .update();
 
     }
 
     @Override
     public void addReply(AddReplyParam param) {
-
+        ReplyDo replyDo = Convert.to(param, ReplyDo.class);
+//        replyDo.setEnable();
+        super.save(replyDo);
+        //replyMapper.insert(replyDo);
     }
 
     @Override
     public void deleteReply(DeleteReplyParam param) {
-
+//        ReplyDo replyDo = Convert.to(param, ReplyDo.class);
+        //replyDo.setIsDelete(1);
+//        QueryWrapper<ReplyDo> replyDoWrapper = new QueryWrapper<>().lambda(ReplyDo::setRowId,param.getRowId());
+//        replyDoWrapper.set
+//        replyMapper.selectOne()
+        super.lambdaUpdate().eq(ReplyDo::getRowId,param.getRowId())
+                .set(ReplyDo::getIsDelete,DbBooleanEnum.FALSE)
+                .update();
     }
 
     @Override
     public List<ExportReplyDto> exportAllReply() {
-        return null;
+        List<ReplyDo> replyDos = super.lambdaQuery().eq(ReplyDo::getIsDelete, 0).list();
+        return Convert.to(replyDos, ExportReplyDto.class);
     }
 }
 
