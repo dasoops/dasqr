@@ -43,6 +43,8 @@
 8. ( - ) webManager token续签
 9. ( - ) plugin-style
 10. ( - ) help文档
-11. ( - ) 看看丢人实现(撤回记录)
+11. ( √ ) 看看丢人实现(撤回记录)
 12. ( - ) rss对接?(rssHub,plugin-rss)
 13. ( - ) json包改为jackSon
+14. ( - ) pluginLoader
+15. ( - ) pluginStore
