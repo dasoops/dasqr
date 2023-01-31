@@ -105,7 +105,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
 
     @Override
     public void editReply(EditReplyParam param) {
-        Assert.getInstance().allMustNotNull(param, param.getRowId(), param.getReply(), param.getEnable(), param.getIgnoreCase(), param.getIgnoreDbc(), param.getMatchType());
+        Assert.getInstance().allMustNotNull(param, param.getRowId(), param.getKeyword(), param.getReply(), param.getEnable(), param.getIgnoreCase(), param.getIgnoreDbc(), param.getMatchType());
         checkRowId(param.getRowId());
         ReplyDo replyDo = param.buildDo();
         super.updateById(replyDo);
