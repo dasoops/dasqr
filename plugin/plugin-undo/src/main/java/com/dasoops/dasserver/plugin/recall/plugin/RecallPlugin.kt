@@ -24,21 +24,23 @@ class RecallPlugin(
 ) : CqPlugin() {
 
     override fun getRawPlugin(): CqPlugin {
-        return this;
+        return this
     }
 
-    @MessageMapping(equal = ["recall", "看看丢人"], type = MessageMappingTypeEnum.GROUP)
-    fun undo(messageParam: MessageParam<SimpleParam>): String? {
-        val messageId = recallCache.get(messageParam.groupId) ?: return null;
+    @MessageMapping(equal = ["recall", "看看丢人", "kkdr"], type = MessageMappingTypeEnum.GROUP)
+    fun undo(messageParam: MessageParam<SimpleParam>): String {
+        val messageId = recallCache.get(messageParam.groupId) ?: return "没有丢人记录捏"
         val messageDoList =
             mongoTemplate.find(Query.query(Criteria.where("messageId").`is`(messageId)), MessageDo::class.java)
-                ?: return "没有撤回记录捏";
-        val messageDo: MessageDo = messageDoList[0];
-        val registerName = registerCache.getRegisterNameById(messageDo.userId);
+        if (messageDoList.isEmpty()) {
+            return "没有丢人记录捏"
+        }
+        val messageDo: MessageDo = messageDoList[0]
+        val registerName = registerCache.getRegisterNameById(messageDo.userId)
 
         return """
-            $registerName(${DateUtil.date(messageDo.time * 1000)}):
-            ${messageDo.message}
-        """.trimIndent();
+            |$registerName(${DateUtil.date(messageDo.time!! * 1000)}):
+            |${messageDo.message}
+        """.trimMargin()
     }
 }

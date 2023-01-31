@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.cq.conf;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -13,13 +14,10 @@ import org.springframework.stereotype.Component;
  * @Description: 异步mongoTemplate
  */
 @Component
+@RequiredArgsConstructor
 public class AsyncMongoTemplate {
 
     private final MongoTemplate mongoTemplate;
-
-    public AsyncMongoTemplate(@SuppressWarnings("all") MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
 
     @Async
     public <T> void save(T t) {
