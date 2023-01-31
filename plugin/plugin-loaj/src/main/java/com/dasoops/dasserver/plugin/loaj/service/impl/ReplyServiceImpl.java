@@ -56,14 +56,13 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
     @Override
     public void initOrUpdateRelayMap2Cache() {
         log.info("初始化/更新 关键词 单对单 回复 映射集合 缓存");
-        List<ReplyDo> list = super.lambdaQuery().eq(ReplyDo::getEnable, DbBooleanEnum.TRUE).list();
+        replyCache.clear();
+        List<ReplyDo> list = super.lambdaQuery().eq(ReplyDo::getEnable, DbBooleanEnum.TRUE.getDbValue()).list();
         if (list.size() <= 0) {
             return;
         }
         //获取 关键词回复 映射集合
         Set<ReplyRedisValueDto> replyRedisValueSet = list.stream()
-                //启用的
-                .filter(replyDo -> DbBooleanEnum.TRUE.getDbValue().equals(replyDo.getEnable()))
                 //convert
                 .map(replyDo -> {
                     ReplyRedisValueDto dto = new ReplyRedisValueDto();
@@ -140,7 +139,3 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
         return byId;
     }
 }
-
-
-
-

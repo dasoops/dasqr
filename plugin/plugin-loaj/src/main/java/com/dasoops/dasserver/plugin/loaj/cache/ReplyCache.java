@@ -46,4 +46,8 @@ public class ReplyCache extends BaseCache {
     public void addreply(ReplyRedisValueDto dto) {
         super.sadd(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_SET, JSON.toJSONString(dto));
     }
+
+    public void clear() {
+        super.remove(LoajRedisKeyEnum.REPLY_KEYWORD_OTO_REPLY_SET);
+    }
 }
