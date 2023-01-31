@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.loaj.mapper;
 
-import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dasoops.dasserver.plugin.loaj.entity.dbo.ReplyDo;
 
 /**
  * @Title: ReplyMapper
@@ -14,6 +14,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface ReplyMapper extends BaseMapper<ReplyDo> {
 
+    /**
+     * 查询自增id
+     *
+     * @return {@link Long}
+     */
+    Long selectMaxId();
 }
 
 

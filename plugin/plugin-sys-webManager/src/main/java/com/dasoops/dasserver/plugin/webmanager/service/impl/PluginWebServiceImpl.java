@@ -68,7 +68,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
     @Override
     public IPage<GetPluginVo> getPluginPageData(GetPluginPageSortParam param) {
         Assert.getInstance().allMustNotNull(param);
-        QueryWrapper<PluginDo> wrapper = param.buildWrapper();
+        QueryWrapper<PluginDo> wrapper = param.buildQueryWrapper();
         List<SortParam<PluginDo>> sortParamList = param.getSortParamList();
         QueryWrapperUtil.addSortParam(wrapper, sortParamList, GetPluginSortColumnEnum.class);
         String keyword = param.getKeyword();
@@ -77,7 +77,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
         }
 
         //加载的插件
-        List<DbRecordCqPlugin> allLoadPluginList = CqPluginGlobal.getAll().stream().map(cqPlugin -> (DbRecordCqPlugin) cqPlugin).toList();
+        List<DbRecordCqPlugin> allLoadPluginList = CqPluginGlobal.getAll().stream().map(DbRecordCqPlugin.class::cast).toList();
         List<Long> loadPluginRowIdList = allLoadPluginList.stream().map(cqPlugin -> cqPlugin.getPluginDo().getRowId()).toList();
 
         List<PluginDo> pluginDoList = super.list(wrapper);

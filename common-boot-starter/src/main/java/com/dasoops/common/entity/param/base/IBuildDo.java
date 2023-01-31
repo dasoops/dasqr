@@ -20,11 +20,9 @@ public interface IBuildDo<T extends BaseDo> {
      * @return {@link T}
      */
     default T buildDo() {
-        {
-            T t = ReflectUtil.getGenericInstance(getClass(), 0);
-            BeanUtil.copyProperties(this, t);
-            return t;
-        }
+        T t = ReflectUtil.getGenericInstance(getClass(), 0);
+        BeanUtil.copyProperties(this, t);
+        return t;
     }
 
 }
