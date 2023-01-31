@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import DasDrag from "@/components/dasDrag";
+import DasDrag from "@/components/drag";
 export default {
   components: {DasDrag}
 }

@@ -1,8 +1,8 @@
 /**
  * 表格数据自定义排序通用方法
  */
-import {GetPluginPageSortParam} from "@/entity/param/PluginParam";
-import {SortParam} from "@/entity/param/BaseParam";
+import {GetPluginPageSortParam} from "@/entity/param/pluginParam";
+import {SortParam} from "@/entity/param/baseParam";
 
 export default function () {
     /**

@@ -225,7 +225,7 @@ import {
   GetFantastyUserParam,
   GetImageInfoPageParam,
   ImageData, UploadImageRes
-} from "@/entity/param/ImageParam";
+} from "@/entity/param/imageParam";
 import {
   addImage,
   deleteImage,
@@ -384,7 +384,7 @@ export default defineComponent({
     }
     const toDelete = function (rowData: ImageData) {
       ElMessageBox.confirm(
-          'You could lose him for dasDrag.vue long time. Continue?',
+          'You could lose him for index.vue long time. Continue?',
           'Warning',
           {
             confirmButtonText: 'OK',

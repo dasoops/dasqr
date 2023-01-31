@@ -7,17 +7,17 @@ import {
     EditPluginParam,
     GetPluginPageSortParam,
     SortPluginParam
-} from "@/entity/param/PluginParam";
-import {DeleteParam} from "@/entity/param/BaseParam";
-import {GetRegisterRouteKeywordVo, GetPluginSortVo, GetPluginVo} from "@/entity/vo/PluginVo";
-import {GetNextRowIdVo} from "@/entity/vo/BaseVo";
+} from "@/entity/param/pluginParam";
+import {DeleteParam} from "@/entity/param/baseParam";
+import {GetRegisterRouteKeywordVo, GetPluginSortVo, GetPluginVo} from "@/entity/vo/pluginVo";
+import {GetNextRowIdVo} from "@/entity/vo/baseVo";
 
 const axiosClient = getInstance('plugin');
 
 /**
  * 新增插件
  */
-export const addPlugin = function (param: AddPluginParam): Promise<PageResult<AddPluginParam>> {
+export const addPlugin = function (param: AddPluginParam): Promise<SimpleResult> {
     return axiosClient({
         url: "/addPlugin",
         method: "POST",
@@ -116,7 +116,7 @@ export const sortPlugin = function (param: SortPluginParam): Promise<SimpleResul
 /**
  * 导出所有插件信息
  */
-export const exportAllPlugin = function (): Promise<AxiosResponse> {
+export const exportAllPlugin = function (): Promise<any> {
     return axiosClient({
         url: "/exportAllPlugin",
         method: "GET",
@@ -127,7 +127,7 @@ export const exportAllPlugin = function (): Promise<AxiosResponse> {
 /**
  * 获取注册路由关键词集合
  */
-export const getRegisterRouteKeywordList = function(): Promise<Result<GetRegisterRouteKeywordVo>>{
+export const getRegisterRouteKeywordList = function (): Promise<Result<GetRegisterRouteKeywordVo>> {
     return axiosClient({
         url: "/getRegisterRouteKeywordList",
         method: "GET",

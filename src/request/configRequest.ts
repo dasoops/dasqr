@@ -1,4 +1,4 @@
-import {AddConfigParam, DeleteConfigParam, EditConfigParam, GetConfigPageParam} from "@/entity/param/ConfigParam";
+import {AddConfigParam, DeleteConfigParam, EditConfigParam, GetConfigPageParam} from "@/entity/param/configParam";
 import {getInstance} from "@/conf/axiosClient";
 
 const axiosClient = getInstance("config");

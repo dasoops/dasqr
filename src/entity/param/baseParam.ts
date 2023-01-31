@@ -1,5 +1,3 @@
-
-
 /**
  * Param基类
  */
@@ -24,9 +22,14 @@ export interface BaseDeleteAndEditParam extends BaseParam {
 }
 
 /**
+ * 编辑Param基类
+ */
+export type BaseEditParam = BaseDeleteAndEditParam;
+
+/**
  * 编辑和删除Param基类
  */
-export type DeleteParam = BaseDeleteAndEditParam
+export type DeleteParam = BaseDeleteAndEditParam;
 
 /**
  * 分页Param

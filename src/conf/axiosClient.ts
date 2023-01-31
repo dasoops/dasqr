@@ -2,7 +2,7 @@ import axios, {AxiosInstance, ParamsSerializerOptions} from "axios";
 import {ElMessage} from "element-plus";
 import router from "./router";
 import qs from "qs";
-import {getBaseUrl} from "@/conf/applicationConfiguration";
+import {getBaseUrl} from "@/conf/application";
 // const axiosClient = axios.create({
 //     baseURL: getBaseUrl(),
 //     timeout: 5000,
@@ -25,7 +25,7 @@ function setInterceptors(axiosInstance: AxiosInstance) {
             config.params = config.data;
             config.paramsSerializer = new class implements ParamsSerializerOptions {
                 serialize = function (params: Record<string, any>) {
-                    return qs.stringify(params, {indices: false});
+                    return qs.stringify(params, {arrayFormat: "repeat"});
                 }
             }
 

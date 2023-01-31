@@ -1,7 +1,7 @@
 /**
  * Result基类
  */
-import {BaseVo} from "@/entity/vo/BaseVo";
+import {BaseVo} from "@/entity/vo/baseVo";
 
 export interface BaseResult {
     code: number;

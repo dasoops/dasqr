@@ -1,4 +1,4 @@
-import {RegisterParam} from "@/entity/param/RegisterParam";
+import {RegisterParam} from "@/entity/param/registerParam";
 import {getInstance} from "@/conf/axiosClient";
 
 const axiosClient = getInstance("register");

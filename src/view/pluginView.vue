@@ -61,6 +61,7 @@
           style="width: 100%"
           empty-text=""
           resizable
+          stripe
           :header-cell-class-name="(params: GetPluginPageSortParam) => handleHeaderCellClass(params,getPluginParam,getColumnInteger)"
           @sort-change="(params: GetPluginPageSortParam) => handleSortChange(params,getPluginParam,loadData,getColumnInteger)"
           @header-click="(column)=>headerClick(column,getColumnInteger)"
@@ -140,7 +141,7 @@
           :page-sizes="[16, 32, 64, 128]"
           small
           background
-          layout="dataMap.total, sizes, prev, pager, next, jumper"
+          layout="total, sizes, prev, pager, next, jumper"
           :total="dataMap.total"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -270,13 +271,13 @@
 import {reactive, ref} from "vue";
 import {Check, Close, Delete, Download, Edit, Plus, Search, Sort} from '@element-plus/icons-vue'
 import {ElMessageBox, FormInstance, FormRules} from "element-plus";
-import {GetPluginVo, PluginSortInnerVo} from "@/entity/vo/PluginVo";
+import {GetPluginVo, PluginSortInnerVo} from "@/entity/vo/pluginVo";
 import {
   AddPluginParam,
   CheckPluginClassPathParam,
   EditPluginParam,
   GetPluginPageSortParam, SortPluginInnerParam, SortPluginParam
-} from "@/entity/param/PluginParam";
+} from "@/entity/param/pluginParam";
 import {
   addPlugin,
   checkPluginClassPathNoError,
@@ -287,10 +288,10 @@ import {
   getPluginPage, getPluginSort, sortPlugin
 } from "@/request/pluginRequest";
 import {simpleExport} from "@/util/DownloadUtil";
-import {DeleteParam} from "@/entity/param/BaseParam";
+import {DeleteParam} from "@/entity/param/baseParam";
 import {PluginShowDto} from "@/entity/dto/PluginDto";
-import UseTableSort from "@/composables/use-table-sort";
-import DasDrag from "@/components/dasDrag.vue";
+import UseTableSort from "@/components/drag/use-table-sort";
+import DasDrag from "@/components/drag/index.vue";
 
 //global begin
 const dataMap = reactive({

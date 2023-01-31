@@ -36,7 +36,7 @@ import {ShellMessageVo} from "@/entity/vo/shellVo";
 import {LogDto} from "@/entity/dto/shellDto";
 import {onBeforeMount, onMounted, onUnmounted} from "vue";
 import {getWsUrl} from "@/request/shellRequest";
-import {getBaseUrl, getRawBaseUrl} from "@/conf/applicationConfiguration";
+import {getBaseUrl, getRawBaseUrl} from "@/conf/application";
 import router from "@/conf/router";
 
 const context = localStorage.getItem('loginUserName') + '(' + localStorage.getItem('loginRegisterId') + ')';

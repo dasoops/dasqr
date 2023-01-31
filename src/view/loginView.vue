@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import {defineComponent, reactive, ref, toRefs} from "vue";
-import {LoginData, LoginRes} from "@/entity/param/RegisterParam";
+import {LoginData, LoginRes} from "@/entity/param/registerParam";
 import {FormInstance, FormRules} from "element-plus";
 import {login} from "@/request/registerRequest";
 import {getStore} from "@/conf/store";

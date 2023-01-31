@@ -12,7 +12,7 @@
     "@element-plus/icons-vue": "^2.0.10",
     "axios": "^1.2.1",
     "core-js": "^3.8.3",
-    "element-plus": "^2.2.27",
+    "element-plus": "^2.2.28",
     "qs": "^6.11.0",
     "sortablejs": "^1.15.0",
     "vue": "^3.2.13",
@@ -32,7 +32,7 @@
     "@vue/eslint-config-typescript": "^9.1.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "sass": "^1.32.7",
+    "sass": "^1.57.1",
     "sass-loader": "^12.0.0",
     "typescript": "~4.5.5"
   }

@@ -1,7 +1,6 @@
 // vuex.d.ts
 import {Store} from 'vuex'
 import {BaseResult} from "@/entity/result/BaseResult";
-import {RouteMeta} from "vue-router";
 
 declare module '@vue/runtime-core' {
     // 声明自己的 store state
@@ -33,11 +32,12 @@ declare module 'axios' {
     }
 }
 
-declare module 'vue-router'{
-    export interface RouteMeta{
+declare module 'vue-router' {
+    export interface RouteMeta {
         show?: boolean,
         isMenuRoute?: boolean,
         title?: string,
         showOnRegister?: string,
     }
 }
+

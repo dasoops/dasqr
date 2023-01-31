@@ -1,7 +1,7 @@
 <template>
   <div style="height: 5%">
     <el-form :model="getConfigParam" class="searchForm" @keydown.enter="loadData">
-      <el-row :gutter="35">
+      <el-row :gutter="35" @keydown.enter="loadData">
         <el-col :offset="1" :span="6">
           <el-form-item label="keyword like" class="text-color">
             <el-input v-model="getConfigParam.keyword" placeholder="% enter %" class="input-line" clearable/>
@@ -16,13 +16,17 @@
 
         </el-col>
         <el-col :span="3">
-          <el-form-item>
-            <el-button :icon="Search" @click="loadData" circle/>
-            <span>&nbsp;&nbsp;</span>
-            <el-button :icon="Plus" @click="toAdd" circle/>
-            <span>&nbsp;&nbsp;</span>
-            <el-button :icon="Download" @click="handleExport" circle/>
-          </el-form-item>
+          <el-row :gutter="15">
+            <el-col :span="5">
+              <el-button :icon="Search" @click="loadData" circle/>
+            </el-col>
+            <el-col :span="5">
+              <el-button :icon="Plus" @click="toAdd" circle/>
+            </el-col>
+            <el-col :span="5">
+              <el-button :icon="Download" @click="handleExport" circle/>
+            </el-col>
+          </el-row>
         </el-col>
       </el-row>
     </el-form>
@@ -184,7 +188,7 @@ import {
   DeleteConfigParam,
   EditConfigParam,
   GetConfigPageParam
-} from "@/entity/param/ConfigParam";
+} from "@/entity/param/configParam";
 import {Check, Close, Delete, Download, Edit, Plus, Search} from '@element-plus/icons-vue'
 import {
   addConfig,
@@ -280,7 +284,7 @@ export default defineComponent({
     }
     const toDelete = function (rowData: ConfigData) {
       ElMessageBox.confirm(
-          'You could lose him for dasDrag.vue long time. Continue?',
+          'You could lose him for index.vue long time. Continue?',
           'Warning',
           {
             confirmButtonText: 'OK',

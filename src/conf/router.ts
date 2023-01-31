@@ -1,6 +1,6 @@
 import {createRouter, createWebHashHistory, RouteRecordRaw, useRouter} from 'vue-router'
 import {getRegisterRouteKeywordList} from "@/request/pluginRequest";
-import {getBaseUrl, setBaseUrl} from "@/conf/applicationConfiguration";
+import {getBaseUrl, setBaseUrl} from "@/conf/application";
 import {initConfiguration} from "@/request/initRequest";
 
 const routes: Array<RouteRecordRaw> = [
@@ -104,6 +104,16 @@ const routes: Array<RouteRecordRaw> = [
                     showOnRegister: 'image',
                 },
                 component: () => import('../view/imageView.vue')
+            },
+            {
+                path: 'reply',
+                name: 'reply',
+                meta: {
+                    title: 'reply',
+                    show: false,
+                    showOnRegister: 'reply',
+                },
+                component: () => import('@/view/replyView.vue')
             },
         ]
     },

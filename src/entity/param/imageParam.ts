@@ -1,7 +1,7 @@
 /**
  * 编辑图片信息Param
  */
-import {BaseDeleteAndEditParam, BaseParam, PageParam} from "@/entity/param/BaseParam";
+import {BaseDeleteAndEditParam, BaseParam, PageParam} from "@/entity/param/baseParam";
 
 export interface EditImageInfoParam extends BaseDeleteAndEditParam {
     fileName: string;

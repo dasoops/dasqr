@@ -1,7 +1,7 @@
 /**
  * 配置数据
  */
-import {BaseDeleteAndEditParam, BaseParam, PageParam} from "@/entity/param/BaseParam";
+import {BaseDeleteAndEditParam, BaseParam, PageParam} from "@/entity/param/baseParam";
 
 export interface ConfigData {
     rowId: number;

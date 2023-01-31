@@ -4,9 +4,9 @@ import {
     EditImageInfoParam, GetFantastyUserParam,
     GetFantasyKeywordParam,
     GetImageInfoPageParam
-} from "@/entity/param/ImageParam";
+} from "@/entity/param/imageParam";
 import {getInstance} from "@/conf/axiosClient";
-import {getBaseUrl} from "@/conf/applicationConfiguration";
+import {getBaseUrl} from "@/conf/application";
 
 const axiosClient = getInstance("image");
 

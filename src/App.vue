@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import DasHeader from "@/components/dasHeader.vue";
+import DasHeader from "@/components/header/index.vue";
 import {defineComponent} from "vue";
 
 export default defineComponent({
@@ -26,18 +26,33 @@ export default defineComponent({
 html, body, #app {
   width: 100%;
   height: 100%;
-  background-color: rgba(43, 43, 43, 100);
 }
 
 #app {
-  font-family: "Consolas", "Microsoft YaHei", "Avenir", "Helvetica", "Arial", "sans-serif";
+  --el-font-family: 'consolas', 'Microsoft YaHei', '微软雅黑', 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', Arial, sans-serif;
+  font-family: var(--el-font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: white;
-  --el-font-family: 'consolas','Microsoft YaHei','微软雅黑','Helvetica Neue',Helvetica,'PingFang SC','Hiragino Sans GB',Arial,sans-serif;
-  --el-color-primary: greenYellow;
 }
+
+html.dark {
+  --el-color-primary: greenYellow;
+  color: white;
+  --el-color-info: white;
+  --el-border-color: white;
+  --el-button-hover-bg-color: #2b2b2b;
+  --el-color-primary-light-3: #adff2f;
+  --el-color-primary-light-5: #9fe72f;
+  --el-color-primary-light-7: #ffffff;
+  --el-color-primary-light-8: #ffffff;
+  --el-color-primary-light-9: #2b2b2b;
+  --el-color-primary-dark-2: #9fe72f;
+  --el-text-color-disabled: #b1ff9c;
+  --el-bg-color: #2b2b2b;
+  background: #2b2b2b;
+}
+
 
 .el-form-item__label {
   color: white;
@@ -53,7 +68,7 @@ html, body, #app {
 }
 
 .el-scrollbar {
-  background: #2b2b2b;
+  //background: #2b2b2b;
 }
 
 .el-select-dropdown__item {
@@ -61,7 +76,7 @@ html, body, #app {
 }
 
 .el-select-dropdown__item.hover, .el-select-dropdown__item:hover, .el-select-dropdown__item.selected {
-  background: #363636FF;
+  background: #363636;
   color: greenyellow;
 }
 
@@ -104,7 +119,7 @@ html, body, #app {
 }
 
 .el-autocomplete-suggestion li:hover {
-  background: #363636FF;
+  background: #363636;
   color: greenyellow;
 }
 
@@ -121,8 +136,8 @@ html, body, #app {
 }
 
 .el-select__popper.el-popper {
-  background: none;
-  border: 1px solid white;
+  //background: none;
+  //border: 1px solid white;
 }
 
 .el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover {
@@ -136,7 +151,6 @@ html, body, #app {
 }
 
 .el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
-  background-color: transparent;
   color: greenyellow;
 }
 
