@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -171,6 +172,37 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         List<RegisterDo> groupRegisterDoList = groupByTypeRegisterDoMap.get(RegisterTypeEnum.GROUP.getDbValue());
         Map<Long, Long> groupValueMap = groupRegisterDoList.stream().collect(Collectors.toMap(RegisterDo::getRegisterId, RegisterDo::getRowId));
         registerCache.setGroupRegisterIdOtoRowIdMap(groupValueMap);
+    }
+
+
+    @Override
+    public void initOrUpdateRegisterRowIdOtoNameMapAndRegisterUserIdOtoNameMap2Cache(CqTemplate cqTemplate) {
+        log.info("初始化/更新 注册表rowId 单对单 插件集合 映射集合");
+        Map<Long, String> registerIdOtoNameMap = new HashMap<>(16);
+        Map<Long, String> registerRowIdOtoNameMap = new HashMap<>(16);
+
+        //好友
+        List<FriendData> friendDataList = cqTemplate.getFriendList().getData();
+        friendDataList.forEach(friendData -> {
+            registerRowIdOtoNameMap.put(registerCache.getUserRowIdByRegisterId(friendData.getUserId()), friendData.getNickname());
+            registerIdOtoNameMap.put(friendData.getUserId(), friendData.getNickname());
+        });
+
+
+        //群组
+        List<GroupData> groupDataList = cqTemplate.getGroupList().getData();
+        groupDataList.stream()
+                .mapToLong(GroupData::getGroupId)
+                .mapToObj(groupId -> cqTemplate.getGroupMemberList(groupId).getData())
+                .forEach(userInfoDataList -> userInfoDataList.forEach(userInfoData -> {
+                    registerRowIdOtoNameMap.put(registerCache.getUserRowIdByRegisterId(userInfoData.getUserId()), userInfoData.getNickname());
+                    registerIdOtoNameMap.put(userInfoData.getUserId(), userInfoData.getNickname());
+                }));
+
+        registerCache.removeRegisterRowIdOtoNameMap();
+        registerCache.removeRegisterIdOtoNameMap();
+        registerCache.setRegisterRowIdOtoNameMap(registerRowIdOtoNameMap);
+        registerCache.setRegisterIdOtoNameMap(registerIdOtoNameMap);
     }
 }
 

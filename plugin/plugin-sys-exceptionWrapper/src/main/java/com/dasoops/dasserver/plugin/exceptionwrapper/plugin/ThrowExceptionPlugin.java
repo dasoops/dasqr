@@ -24,10 +24,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ThrowExceptionPlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
 
     @Override

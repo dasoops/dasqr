@@ -18,11 +18,9 @@ public class RepeatReadRedisKeyShamEnum implements IRedisKeyEnum {
     private final String key;
 
     public RepeatReadRedisKeyShamEnum(Long groupId) {
-        this.key = getBasePath() + groupId;
+        this.key = BASE_PATH + groupId;
     }
 
 
-    private static String getBasePath() {
-        return BaseRedisKeyEnum.PLUGIN.getKey() + "repeatRead:";
-    }
+    private static final String BASE_PATH = BaseRedisKeyEnum.PLUGIN.getKey() + "repeatRead:";
 }

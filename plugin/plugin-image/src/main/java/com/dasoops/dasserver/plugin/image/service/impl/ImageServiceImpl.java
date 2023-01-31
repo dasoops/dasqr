@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.EventUtil;
+import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqGroupMessageEvent;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
@@ -26,9 +27,9 @@ import com.dasoops.dasserver.plugin.image.entity.vo.GetImageVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.UploadImageVo;
 import com.dasoops.dasserver.plugin.image.mapper.ImageMapper;
 import com.dasoops.dasserver.plugin.image.service.ImageService;
-import com.dasoops.dasserver.plugin.webmanager.cache.RegisterWebCache;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import com.dasoops.minio.MinioTemplate;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,21 +51,14 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         implements ImageService {
 
     private final MinioTemplate minioTemplate;
     private final ImageMapper imageMapper;
-    private final RegisterWebCache registerWebCache;
+    private final RegisterCache registerCache;
     private final ImageCache imageCache;
-
-    @SuppressWarnings("all")
-    public ImageServiceImpl(MinioTemplate minioTemplate, ImageMapper imageMapper, RegisterWebCache registerWebCache, ImageCache imageCache) {
-        this.minioTemplate = minioTemplate;
-        this.imageMapper = imageMapper;
-        this.registerWebCache = registerWebCache;
-        this.imageCache = imageCache;
-    }
 
     @Override
     public boolean keywordIsRepeat(String keyword) {
@@ -158,7 +152,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
             resVo.setFilePath(minioTemplate.buildImagePath(fileName));
             resVo.setGroupId(imageDo.getGroupId());
             resVo.setAuthorId(registerId);
-            resVo.setAuthorName(registerWebCache.getRegisterNameById(registerId));
+            resVo.setAuthorName(registerCache.getRegisterNameById(registerId));
             resVo.setUpdateTime(DateUtil.format(imageDo.getUpdateTime(), DatePattern.NORM_DATETIME_FORMAT));
             resVo.setCanEdit(authorId.equals(registerId) ? ImageCanEditEnum.TRUE.getDbValue() : ImageCanEditEnum.FALSE.getDbValue());
             return resVo;
@@ -189,7 +183,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
     public GetFantastyUserVo getFantasyUser(GetFantastyUserParam param) {
         Assert.getInstance().allMustNotNull(param);
 
-        Map<String, String> allRegisterUser = registerWebCache.getAllRegisterIdOtoNameMap();
+        Map<String, String> allRegisterUser = registerCache.getAllRegisterIdOtoNameMap();
 
         List<FantastyUserDto> fantasyUserList = new ArrayList<>();
 
@@ -310,7 +304,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
             dto.setFilePath(minioTemplate.buildImagePath(imageDo.getFileName()));
             Long authorId = imageDo.getAuthorId();
             dto.setAuthorId(authorId);
-            dto.setAuthorName(registerWebCache.getRegisterNameByRowId(authorId));
+            dto.setAuthorName(registerCache.getRegisterNameByRowId(authorId));
             dto.setCreateTime(DateUtil.format(imageDo.getCreateTime(), DatePattern.NORM_DATETIME_FORMATTER));
             return dto;
         }).toList();

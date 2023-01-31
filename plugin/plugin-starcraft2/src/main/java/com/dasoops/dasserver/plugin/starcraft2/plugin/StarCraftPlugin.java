@@ -37,10 +37,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StarCraftPlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
 
     private final ConfigCache configCache;

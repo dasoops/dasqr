@@ -27,11 +27,6 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class SleepPlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
-
 
     private final SleepCache sleepCache;
 
@@ -39,7 +34,7 @@ public class SleepPlugin extends CqPlugin {
         this.sleepCache = sleepCache;
     }
 
-    @MessageMapping(prefix = {"sleep", "quiet", "打晕", "闭嘴", "shutUp"}, type = MessageMappingTypeEnum.ALL)
+    @MessageMapping(prefix = {"sleep", "quiet", "打晕", "闭嘴", "shutUp"}, at = true, type = MessageMappingTypeEnum.ALL)
     public String sleep(MessageParam<SleepParam> param) {
         CqMessageAssert.getInstance().allMustNotNull(param);
 

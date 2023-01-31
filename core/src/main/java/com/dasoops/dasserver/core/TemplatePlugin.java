@@ -21,10 +21,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class TemplatePlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
     @Override
     public PassObj onPrivateMessage(CqTemplate cqTemplate, CqPrivateMessageEvent event) {

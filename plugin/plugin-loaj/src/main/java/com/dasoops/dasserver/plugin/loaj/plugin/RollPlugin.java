@@ -37,10 +37,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RollPlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
 
     private final RollCache rollCache;

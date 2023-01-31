@@ -29,10 +29,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ReplyPlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
 
     private final ReplyCache replyCache;

@@ -26,10 +26,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ExecPlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
 
     private final ExecTemplate execTemplate;

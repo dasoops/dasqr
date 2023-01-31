@@ -29,10 +29,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class EchoPlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
     private final EchoCache echoCache;
 

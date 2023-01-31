@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.template;
+package com.dasoops.dasserver.plugin.recall;
 
 import org.springframework.context.annotation.ComponentScan;
 

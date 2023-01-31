@@ -235,5 +235,7 @@ public abstract class CqPlugin {
      *
      * @return {@link CqPlugin}
      */
-    public abstract CqPlugin getRawPlugin();
+    public CqPlugin getRawPlugin() {
+        return this;
+    }
 }

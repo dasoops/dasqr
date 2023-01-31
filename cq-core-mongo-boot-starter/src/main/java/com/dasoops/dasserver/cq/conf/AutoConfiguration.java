@@ -1,6 +1,9 @@
 package com.dasoops.dasserver.cq.conf;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
@@ -14,4 +17,11 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @ComponentScan("com.dasoops.dasserver.cq")
 @EnableAsync
 public class AutoConfiguration {
+
+    @Bean
+    @SuppressWarnings("all")
+    public MongoTemplate mongoTemplate(MongoDatabaseFactory mongoDatabaseFactory) {
+        return new MongoTemplate(mongoDatabaseFactory);
+    }
+
 }

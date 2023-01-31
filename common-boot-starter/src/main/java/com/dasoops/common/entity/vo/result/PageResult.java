@@ -59,6 +59,10 @@ public class PageResult<T> extends BaseResult {
         PageResult<T> result = new PageResult<>();
         result.setCode(200);
         result.setMsg("请求成功");
+        if (page == null) {
+            result.setTotal(0);
+            return result;
+        }
         result.setData(page.getRecords());
         result.setTotal((int) page.getTotal());
         return result;

@@ -23,10 +23,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class UnSleepPlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
 
     private final SleepCache sleepCache;

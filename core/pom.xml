@@ -132,6 +132,11 @@
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-undo</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-loaj</artifactId>
         </dependency>
 

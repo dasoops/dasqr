@@ -28,10 +28,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AddPluginPlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
     private final PluginService pluginService;
 

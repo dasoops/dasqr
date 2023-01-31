@@ -54,4 +54,5 @@ public class CqCoreInitTask extends BaseInitTask {
         registerService.initOrUpdateRegisterTypeRegisterIdOtoId2Cache();
     }
 
+
 }

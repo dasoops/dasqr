@@ -30,10 +30,6 @@ import java.util.List;
 @Component
 public class GetErrorPlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
 
     private final MongoTemplate mongoTemplate;

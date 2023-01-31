@@ -1,9 +1,9 @@
-package com.dasoops.dasserver.plugin.webmanager.wrapper;
+package com.dasoops.dasserver.cq.wrapper;
 
 import com.dasoops.dasserver.cq.CqTemplate;
-import com.dasoops.dasserver.cq.wrapper.WsWrapper;
-import com.dasoops.dasserver.plugin.webmanager.task.WebManagerInitTask;
+import com.dasoops.dasserver.cq.task.RegisterInitTask;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,26 +16,23 @@ import org.springframework.stereotype.Component;
  * @see WsWrapper
  */
 @Component
+@RequiredArgsConstructor
 public class RegisterIdOtoNameInitTaskWsWrapperImpl implements WsWrapper {
 
-    private final WebManagerInitTask webManagerInitTask;
+    private final RegisterInitTask registerInitTask;
 
     @Getter
     private Boolean initIsCompleted = false;
 
-    public RegisterIdOtoNameInitTaskWsWrapperImpl(WebManagerInitTask webManagerInitTask) {
-        this.webManagerInitTask = webManagerInitTask;
-    }
 
     @Override
     public void afterConnectionEstablishedWrapper(CqTemplate cqTemplate) {
-        webManagerInitTask.initOrUpdateAll(cqTemplate);
+        registerInitTask.initOrUpdateAll(cqTemplate);
         initIsCompleted = true;
     }
 
     @Override
     public void afterConnectionClosedWrapper(CqTemplate cqTemplate) {
-        
 
     }
 

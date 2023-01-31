@@ -18,6 +18,7 @@
         <module>plugin/plugin-log</module>
         <module>plugin/plugin-sleep</module>
         <module>plugin/plugin-style</module>
+        <module>plugin/plugin-undo</module>
         <module>plugin/plugin-sys-shamMessage</module>
         <module>plugin/plugin-sys-exec</module>
         <module>plugin/plugin-sys-authWrapper</module>
@@ -46,6 +47,7 @@
     <packaging>pom</packaging>
     <description>dasServer parent</description>
     <properties>
+        <kotlin.version>1.8.0</kotlin.version>
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -55,7 +57,7 @@
         <fastjson2.version>2.0.15</fastjson2.version>
         <fastjson2-extension.version>2.0.15</fastjson2-extension.version>
         <hutool.version>5.8.8</hutool.version>
-<!--        <log4j.version>1.2.17</log4j.version>-->
+        <!--        <log4j.version>1.2.17</log4j.version>-->
         <tencentSdk.version>3.1.625</tencentSdk.version>
         <knife4j.version>4.0.0</knife4j.version>
         <easyExcel.version>3.1.4</easyExcel.version>
@@ -131,6 +133,12 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-gitNotice</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-undo</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 
@@ -337,6 +345,12 @@
                 <version>${jwt.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+
         </dependencies>
 
     </dependencyManagement>
@@ -364,25 +378,96 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
 
-    </dependencies>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
 
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <mainClass>com.dasoops.dasserver.core.DasServerApplication</mainClass>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>repackage</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                                <sourceDir>${project.basedir}/src/main/java</sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                                <sourceDir>${project.basedir}/src/test/java</sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <!-- 替换会被 maven 特别处理的 default-compile -->
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <!-- 替换会被 maven 特别处理的 default-testCompile -->
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>java-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>java-test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.springframework.boot</groupId>-->
+    <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--                <configuration>-->
+    <!--                    <mainClass>com.dasoops.dasserver.core.DasServerApplication</mainClass>-->
+    <!--                </configuration>-->
+    <!--                <executions>-->
+    <!--                    <execution>-->
+    <!--                        <goals>-->
+    <!--                            <goal>repackage</goal>-->
+    <!--                        </goals>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
 
 </project>

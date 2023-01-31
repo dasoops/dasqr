@@ -2,7 +2,6 @@ package com.dasoops.dasserver.plugin.webmanager.cache;
 
 import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.util.Convert;
-import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.entity.enums.RegisterRedisKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -22,11 +21,8 @@ import java.util.Map;
 @Slf4j
 public class RegisterWebCache extends BaseCache {
 
-    private final RegisterCache registerCache;
-
-    public RegisterWebCache(StringRedisTemplate stringRedisTemplate, RegisterCache registerCache) {
+    public RegisterWebCache(StringRedisTemplate stringRedisTemplate) {
         super(stringRedisTemplate);
-        this.registerCache = registerCache;
     }
 
     /**

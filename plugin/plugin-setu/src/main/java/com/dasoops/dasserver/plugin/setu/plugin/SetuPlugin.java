@@ -39,10 +39,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SetuPlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
 
     private final SetuTemplate setuTemplate;

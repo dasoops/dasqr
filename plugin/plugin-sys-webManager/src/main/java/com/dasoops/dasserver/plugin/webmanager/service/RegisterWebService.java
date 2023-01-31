@@ -1,7 +1,6 @@
 package com.dasoops.dasserver.plugin.webmanager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.LoginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.LoginVo;
@@ -24,12 +23,5 @@ public interface RegisterWebService extends IService<RegisterDo> {
      * @return {@link LoginVo}
      */
     LoginVo login(LoginParam loginParam);
-
-    /**
-     * 初始化或更新 注册表主键id 单对单 名称,注册表用户id 单对单 名称 to缓存
-     *
-     * @param cqTemplate cqTemplate
-     */
-    void initOrUpdateRegisterRowIdOtoNameMapAndRegisterUserIdOtoNameMap2Cache(CqTemplate cqTemplate);
 
 }

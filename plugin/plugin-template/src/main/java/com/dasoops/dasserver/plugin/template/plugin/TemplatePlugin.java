@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.template.plugin;
+package com.dasoops.dasserver.plugin.recall.plugin;
 
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
@@ -10,10 +10,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class TemplatePlugin extends CqPlugin {
 
-    @Override
-    public CqPlugin getRawPlugin() {
-        return this;
-    }
 
 
     @MessageMapping(prefix = "template", type = MessageMappingTypeEnum.ALL)
