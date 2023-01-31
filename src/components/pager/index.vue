@@ -3,7 +3,7 @@
     <el-pagination
         :current-page="current"
         :page-size="size"
-        :page-sizes="[16, 32, 64, 2]"
+        :page-sizes="[16, 32, 64, 128]"
         small
         background
         layout="total, sizes, prev, pager, next, jumper"
