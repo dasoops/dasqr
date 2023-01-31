@@ -109,6 +109,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
         checkRowId(param.getRowId());
         ReplyDo replyDo = param.buildDo();
         super.updateById(replyDo);
+        this.initOrUpdateRelayMap2Cache();
     }
 
     @Override
@@ -116,12 +117,14 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
         Assert.getInstance().allMustNotNull(param, param.getReply(), param.getEnable(), param.getIgnoreCase(), param.getIgnoreDbc(), param.getMatchType());
         ReplyDo replyDo = Convert.to(param, ReplyDo.class);
         super.save(replyDo);
+        this.initOrUpdateRelayMap2Cache();
     }
 
     @Override
     public void deleteReply(DeleteReplyParam param) {
         Assert.getInstance().allMustNotNull(param, param.getRowId());
         super.removeById(param.getRowId());
+        this.initOrUpdateRelayMap2Cache();
     }
 
     @Override
