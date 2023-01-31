@@ -26,7 +26,7 @@ public abstract class BaseEditAndDeleteParam<T extends BaseDo> extends BaseFastB
     private Long rowId;
 
     @Override
-    public QueryWrapper<T> buildWrapper() {
-        return super.buildWrapper().eq("rowId", rowId);
+    public QueryWrapper<T> buildQueryWrapper() {
+        return super.buildQueryWrapper().eq("rowId", rowId);
     }
 }

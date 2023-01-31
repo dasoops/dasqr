@@ -17,7 +17,7 @@ public interface IBuildWrapper<T> {
      *
      * @return {@link QueryWrapper}<{@link T}>
      */
-    default QueryWrapper<T> buildWrapper() {
+    default QueryWrapper<T> buildQueryWrapper() {
         return new QueryWrapper<>();
     }
 

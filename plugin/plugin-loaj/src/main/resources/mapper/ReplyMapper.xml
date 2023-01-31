@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dasoops.dasserver.plugin.loaj.mapper.ReplyMapper">
 
-    <resultMap id="BaseResultMap" type="com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo">
+    <resultMap id="BaseResultMap" type="com.dasoops.dasserver.plugin.loaj.entity.dbo.ReplyDo">
         <id property="rowId" column="row_id" jdbcType="BIGINT"/>
         <result property="keyword" column="keyword" jdbcType="VARCHAR"/>
         <result property="reply" column="reply" jdbcType="VARCHAR"/>
@@ -23,4 +23,8 @@
         row_id
         ,keyword,reply,`enable`,ignore_case,ignore_dbc,matchType,isDelete,createUser,createTime,updateUser,updateTime
     </sql>
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT MAX(`row_id`)
+        FROM `tb_plugin_loaj_reply`;
+    </select>
 </mapper>

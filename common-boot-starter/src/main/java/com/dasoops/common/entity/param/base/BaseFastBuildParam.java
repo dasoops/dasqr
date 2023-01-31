@@ -19,8 +19,8 @@ import java.io.Serializable;
 public abstract class BaseFastBuildParam<T extends BaseDo> extends BaseParam implements IBuildWrapper<T>, IBuildDo<T> {
 
     @Override
-    public QueryWrapper<T> buildWrapper() {
-        QueryWrapper<T> wrapper = IBuildWrapper.super.buildWrapper();
+    public QueryWrapper<T> buildQueryWrapper() {
+        QueryWrapper<T> wrapper = IBuildWrapper.super.buildQueryWrapper();
         wrapper.setEntity(IBuildDo.super.buildDo());
         return wrapper;
     }

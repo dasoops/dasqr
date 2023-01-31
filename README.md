@@ -20,6 +20,7 @@
 - WebSocket - ws
 - message - msg
 - optional - opt
+- array - arr
 
 #### 错误码:
 
@@ -44,3 +45,4 @@
 10. ( - ) help文档
 11. ( - ) 看看丢人实现(撤回记录)
 12. ( - ) rss对接?(rssHub,plugin-rss)
+13. ( - ) json包改为jackSon

@@ -34,6 +34,10 @@ public enum ReflectUtilExceptionEnum implements IExceptionEnum {
         return 90000 + ordinal();
     }
 
-    @Getter
     final String msg;
+
+    @Override
+    public String getMsg() {
+        return msg;
+    }
 }

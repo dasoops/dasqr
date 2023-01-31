@@ -1,8 +1,7 @@
 package com.dasoops.common.util;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.bean.copier.CopyOptions;
-import com.alibaba.fastjson2.util.BeanUtils;
+import cn.hutool.core.util.ReflectUtil;
 import com.dasoops.common.entity.enums.ExceptionEnum;
 import com.dasoops.common.exception.LogicException;
 
@@ -43,7 +42,7 @@ public class Convert {
     public static <R, T> R to(T t, Class<R> clazz) {
         R r;
         try {
-            r = clazz.getConstructor(clazz).newInstance();
+            r = ReflectUtil.newInstance(clazz);
             BeanUtil.copyProperties(t, r);
         } catch (Exception e) {
             throw new LogicException(ExceptionEnum.TYPE_CONVERT);
@@ -61,7 +60,7 @@ public class Convert {
     public static <E, T> List<E> to(List<T> tList, Class<E> clazz) {
         return tList.stream().map(t -> {
             try {
-                E e = clazz.getConstructor().newInstance();
+                E e = ReflectUtil.newInstance(clazz);
                 BeanUtil.copyProperties(t, e);
                 return e;
             } catch (Exception e) {

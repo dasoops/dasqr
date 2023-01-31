@@ -1,8 +1,8 @@
 package com.dasoops.common.util;
 
 import com.dasoops.common.entity.enums.ExceptionEnum;
-import com.dasoops.common.util.entity.ReflectUtilExceptionEnum;
 import com.dasoops.common.exception.LogicException;
+import com.dasoops.common.util.entity.ReflectUtilExceptionEnum;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
@@ -22,7 +22,7 @@ public class ReflectUtil {
 
     private static final String SET_METHOD_PREFIX = "set";
 
-    public static <T> T getGenericInstance(Class<?> clazz,Integer index) {
+    public static <T> T getGenericInstance(Class<?> clazz, Integer index) {
         ParameterizedType superClass = (ParameterizedType) clazz.getGenericSuperclass();
         @SuppressWarnings("all")
         Class<T> type = (Class<T>) superClass.getActualTypeArguments()[index];

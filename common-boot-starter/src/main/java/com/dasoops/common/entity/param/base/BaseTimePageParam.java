@@ -41,7 +41,7 @@ public abstract class BaseTimePageParam<T extends BaseDo> extends BasePageParam<
     }
 
     @Override
-    public QueryWrapper<T> buildWrapper() {
+    public QueryWrapper<T> buildQueryWrapper() {
         return this.buildWrapper("CREATE_TIME");
     }
 

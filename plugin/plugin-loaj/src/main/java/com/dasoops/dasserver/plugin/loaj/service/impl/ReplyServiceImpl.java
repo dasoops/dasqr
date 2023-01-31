@@ -1,31 +1,33 @@
 package com.dasoops.dasserver.plugin.loaj.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.injector.methods.Insert;
+import cn.hutool.core.util.ObjUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.base.DbBooleanEnum;
+import com.dasoops.common.entity.enums.base.IDbColumnEnum;
+import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Assert;
 import com.dasoops.common.util.Convert;
 import com.dasoops.dasserver.plugin.loaj.cache.ReplyCache;
+import com.dasoops.dasserver.plugin.loaj.entity.dbo.ReplyDo;
 import com.dasoops.dasserver.plugin.loaj.entity.dto.ExportReplyDto;
 import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;
+import com.dasoops.dasserver.plugin.loaj.entity.enums.LoajExceptionEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreCaseEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreDbcEnum;
+import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyMatchTypeEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.param.AddReplyParam;
 import com.dasoops.dasserver.plugin.loaj.entity.param.DeleteReplyParam;
 import com.dasoops.dasserver.plugin.loaj.entity.param.EditReplyParam;
 import com.dasoops.dasserver.plugin.loaj.entity.param.GetReplyPageParam;
-import com.dasoops.dasserver.plugin.loaj.entity.po.ReplyDo;
 import com.dasoops.dasserver.plugin.loaj.entity.vo.GetReplyVo;
 import com.dasoops.dasserver.plugin.loaj.mapper.ReplyMapper;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
+import com.dasoops.dasserver.plugin.webmanager.entity.enums.WebManagerExceptionEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,9 +51,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
         implements ReplyService {
 
     private final ReplyCache replyCache;
-//
-//    @Autowired
-//    private  ReplyMapper ;
+    private final ReplyMapper replyMapper;
 
     @Override
     public void initOrUpdateRelayMap2Cache() {
@@ -61,63 +61,80 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
             return;
         }
         //获取 关键词回复 映射集合
-        Set<ReplyRedisValueDto> replyRedisValueSet = list.stream().map(replyDo -> {
-            ReplyRedisValueDto dto = new ReplyRedisValueDto();
-            dto.setKeyword(replyDo.getKeyword());
-            dto.setReply(replyDo.getReply());
-            dto.setMatchType(replyDo.getMatchType());
-            dto.setIgnoreCase(replyDo.getIgnoreCase().equals(ReplyIgnoreCaseEnum.TRUE.getDbValue()));
-            dto.setIgnoreDbc(replyDo.getIgnoreDbc().equals(ReplyIgnoreDbcEnum.TRUE.getDbValue()));
-            return dto;
-        }).collect(Collectors.toSet());
+        Set<ReplyRedisValueDto> replyRedisValueSet = list.stream()
+                //启用的
+                .filter(replyDo -> DbBooleanEnum.TRUE.getDbValue().equals(replyDo.getEnable()))
+                //convert
+                .map(replyDo -> {
+                    ReplyRedisValueDto dto = new ReplyRedisValueDto();
+                    dto.setKeyword(replyDo.getKeyword());
+                    dto.setReply(replyDo.getReply());
+                    dto.setMatchType(replyDo.getMatchType());
+                    dto.setIgnoreCase(ReplyIgnoreCaseEnum.TRUE.getDbValue().equals(replyDo.getIgnoreCase()));
+                    dto.setIgnoreDbc(ReplyIgnoreDbcEnum.TRUE.getDbValue().equals(replyDo.getIgnoreDbc()));
+                    return dto;
+                }).collect(Collectors.toSet());
         replyCache.setReplySet(replyRedisValueSet);
     }
 
     @Override
+    @SuppressWarnings("all")
     public IPage<GetReplyVo> getReplyPageData(GetReplyPageParam param) {
-        return null;
+        LambdaQueryWrapper<ReplyDo> wrapper = param.buildQueryWrapper().lambda()
+                .like(ObjUtil.isNotEmpty(param.getMatchKeyword()), ReplyDo::getKeyword, param.getMatchKeyword())
+                .in(ObjUtil.isNotEmpty(param.getMatchTypeList()), ReplyDo::getMatchType, param.getMatchTypeList());
+
+        List<Integer> matchTypeList = param.getMatchTypeList();
+        if (ObjUtil.isNotEmpty(matchTypeList)) {
+            List<Integer> allProbableValue = IDbColumnEnum.getAllProbableValue(ReplyMatchTypeEnum.class);
+            if (!allProbableValue.containsAll(matchTypeList)) {
+                throw new LogicException(LoajExceptionEnum.UNDEFINEND_MATCH_TYPE);
+            }
+        }
+
+        return super.page(param.buildSelectPage(), wrapper).convert(replyDo -> Convert.to(replyDo, GetReplyVo.class));
     }
 
     @Override
     public GetNextIdVo getNextId() {
-        return null;
+        Long maxRowId = replyMapper.selectMaxId();
+        GetNextIdVo getNextIdVo = new GetNextIdVo();
+        getNextIdVo.setRowId(maxRowId);
+        return getNextIdVo;
     }
 
     @Override
     public void editReply(EditReplyParam param) {
-    super.lambdaUpdate().eq(ReplyDo::getRowId,param.getRowId()).set(ReplyDo::getReply,param.getReply())
-            .set(ReplyDo::getEnable,param.getEnable())
-            .set(ReplyDo::getMatchType,param.getMatchType())
-            .set(ReplyDo::getIgnoreCase,param.getIgnoreCase())
-            .set(ReplyDo::getIgnoreDbc,param.getIgnoreDbc())
-            .update();
-
+        Assert.getInstance().allMustNotNull(param, param.getRowId(), param.getReply(), param.getEnable(), param.getIgnoreCase(), param.getIgnoreDbc(), param.getMatchType());
+        checkRowId(param.getRowId());
+        ReplyDo replyDo = param.buildDo();
+        super.updateById(replyDo);
     }
 
     @Override
     public void addReply(AddReplyParam param) {
+        Assert.getInstance().allMustNotNull(param, param.getReply(), param.getEnable(), param.getIgnoreCase(), param.getIgnoreDbc(), param.getMatchType());
         ReplyDo replyDo = Convert.to(param, ReplyDo.class);
-//        replyDo.setEnable();
         super.save(replyDo);
-        //replyMapper.insert(replyDo);
     }
 
     @Override
     public void deleteReply(DeleteReplyParam param) {
-//        ReplyDo replyDo = Convert.to(param, ReplyDo.class);
-        //replyDo.setIsDelete(1);
-//        QueryWrapper<ReplyDo> replyDoWrapper = new QueryWrapper<>().lambda(ReplyDo::setRowId,param.getRowId());
-//        replyDoWrapper.set
-//        replyMapper.selectOne()
-        super.lambdaUpdate().eq(ReplyDo::getRowId,param.getRowId())
-                .set(ReplyDo::getIsDelete,DbBooleanEnum.FALSE)
-                .update();
+        Assert.getInstance().allMustNotNull(param, param.getRowId());
+        super.removeById(param.getRowId());
     }
 
     @Override
     public List<ExportReplyDto> exportAllReply() {
-        List<ReplyDo> replyDos = super.lambdaQuery().eq(ReplyDo::getIsDelete, 0).list();
-        return Convert.to(replyDos, ExportReplyDto.class);
+        return Convert.to(super.list(), ExportReplyDto.class);
+    }
+
+    private ReplyDo checkRowId(Long rowId) {
+        ReplyDo byId = super.getById(rowId);
+        if (byId == null) {
+            throw new LogicException(WebManagerExceptionEnum.UNDEFINED_ID);
+        }
+        return byId;
     }
 }
 
