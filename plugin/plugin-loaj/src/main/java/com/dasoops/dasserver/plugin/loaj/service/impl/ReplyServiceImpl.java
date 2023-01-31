@@ -80,8 +80,13 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
     @SuppressWarnings("all")
     public IPage<GetReplyVo> getReplyPageData(GetReplyPageParam param) {
         LambdaQueryWrapper<ReplyDo> wrapper = param.buildQueryWrapper().lambda()
-                .like(ObjUtil.isNotEmpty(param.getMatchKeyword()), ReplyDo::getKeyword, param.getMatchKeyword())
-                .in(ObjUtil.isNotEmpty(param.getMatchTypeList()), ReplyDo::getMatchType, param.getMatchTypeList());
+                .in(ObjUtil.isNotEmpty(param.getMatchTypeList()), ReplyDo::getMatchType, param.getMatchTypeList())
+                .and(ObjUtil.isNotEmpty(param.getMatchKeyword()), tempWrapper ->
+                        tempWrapper
+                                .like(ReplyDo::getKeyword, param.getMatchKeyword())
+                                .or()
+                                .like(ReplyDo::getReply, param.getMatchKeyword())
+                );
 
         List<Integer> matchTypeList = param.getMatchTypeList();
         if (ObjUtil.isNotEmpty(matchTypeList)) {

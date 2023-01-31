@@ -48,6 +48,9 @@ public class ScheduleTask {
         if (cqTemplateList == null || cqTemplateList.size() <= 0) {
             throw new LogicException(CqExceptionEnum.CQ_TEMPLATE_NO_CONNECTION);
         }
+        if (param.getOnlyOnce()) {
+            cqTemplateList = cqTemplateList.subList(0, 1);
+        }
 
         String message = param.getMessage();
         Long groupId = param.getGroupId();

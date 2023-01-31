@@ -35,4 +35,9 @@ public class ShamMessageScheduleParam extends BaseParam {
      * botId,没有代表所有
      */
     private Long xSelfId;
+
+    /**
+     * 是否只执行一次
+     */
+    private Boolean onlyOnce;
 }
