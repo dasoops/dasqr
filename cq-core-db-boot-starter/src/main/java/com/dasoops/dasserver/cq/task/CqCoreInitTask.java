@@ -39,20 +39,8 @@ public class CqCoreInitTask extends BaseInitTask {
                 ))
         );
         CqPluginGlobal.refresh();
-        initOrUpdateRegisterIdOtoTypeMap2Cache();
         configService.initOrUpdateConfig();
         configService.updateLocalVersionFromCloudVersion();
-        initOrUpdateFastFailImage();
-    }
-
-    public void initOrUpdateFastFailImage() {
         configService.initOrUpdateFastFailImage();
     }
-
-    public void initOrUpdateRegisterIdOtoTypeMap2Cache() {
-        registerService.initOrUpdateRegisterIdOtoTypeMap2Cache();
-        registerService.initOrUpdateRegisterTypeRegisterIdOtoId2Cache();
-    }
-
-
 }

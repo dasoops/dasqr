@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.webmanager.entity.param;
+package com.dasoops.dasserver.plugin.webmanager.entity.param.plugin;
 
 import com.dasoops.common.entity.param.base.BaseAddParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;

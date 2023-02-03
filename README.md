@@ -21,6 +21,8 @@
 - message - msg
 - optional - opt
 - array - arr
+- minimum - min
+- maximum - max
 
 #### 错误码:
 

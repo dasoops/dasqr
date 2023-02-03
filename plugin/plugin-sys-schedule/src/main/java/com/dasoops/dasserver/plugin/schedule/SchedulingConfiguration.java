@@ -29,7 +29,6 @@ public class SchedulingConfiguration implements SchedulingConfigurer {
 
     @Override
     public void configureTasks(@NotNull ScheduledTaskRegistrar taskRegistrar) {
-
         List<CronTask> cronTaskList = scheduleService.getCronTasksList();
         taskRegistrar.setCronTasksList(cronTaskList);
     }

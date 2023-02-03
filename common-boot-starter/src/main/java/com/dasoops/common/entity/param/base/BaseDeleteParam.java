@@ -13,4 +13,5 @@ import com.dasoops.common.entity.dbo.base.BaseDo;
  */
 public abstract class BaseDeleteParam<T extends BaseDo> extends BaseEditAndDeleteParam<T> {
 
+
 }

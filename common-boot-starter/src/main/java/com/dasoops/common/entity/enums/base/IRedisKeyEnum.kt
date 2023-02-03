@@ -11,6 +11,10 @@ package com.dasoops.common.entity.enums.base
  */
 interface IRedisKeyEnum {
 
+    /**
+     * 获取key
+     * @return [String]
+     */
     fun getKey(): String;
 
 }

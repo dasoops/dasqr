@@ -34,16 +34,16 @@ public interface RegisterService extends IService<RegisterDo> {
     void initOrUpdateRegisterList(CqTemplate cqTemplate);
 
     /**
-     * 获取注册表id 类型 映射集合
+     * 获取注册表Rowid 类型 映射集合
      *
      * @return {@link Map}<{@link Long}, {@link Integer}>
      */
-    Map<Long, Integer> getRegisterIdOtoTypeMap();
+    Map<Long, Integer> getRegisterRowIdOtoTypeMap();
 
     /**
-     * 初始化或更新 注册 id类型映射表
+     * 初始化或更新 注册表对象RowId 单对单 类型映射表
      */
-    void initOrUpdateRegisterIdOtoTypeMap2Cache();
+    void initOrUpdateRegisterRowIdOtoTypeMap2Cache();
 
     /**
      * 初始化或更新 注册表类型 注册表id 单对单 id toCache

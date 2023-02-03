@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.webmanager.entity.param.register
+package com.dasoops.dasserver.plugin.webmanager.entity.vo.register
 
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty

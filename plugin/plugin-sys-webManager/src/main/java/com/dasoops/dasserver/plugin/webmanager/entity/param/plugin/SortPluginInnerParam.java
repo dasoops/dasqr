@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.webmanager.entity.dto;
+package com.dasoops.dasserver.plugin.webmanager.entity.param.plugin;
 
 import com.dasoops.common.entity.dto.base.BaseDto;
 import io.swagger.annotations.ApiModelProperty;

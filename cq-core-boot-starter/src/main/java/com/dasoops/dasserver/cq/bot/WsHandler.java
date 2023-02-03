@@ -10,8 +10,6 @@ import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.WrapperGlobal;
 import com.dasoops.dasserver.cq.api.ApiHandler;
-import com.dasoops.dasserver.cq.conf.NamedThreadFactory;
-import com.dasoops.dasserver.cq.conf.properties.EventProperties;
 import com.dasoops.dasserver.cq.exception.ExceptionTemplate;
 import com.dasoops.dasserver.cq.wrapper.WsWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +22,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Title: websocketHandler
@@ -48,17 +43,11 @@ public class WsHandler extends TextWebSocketHandler {
     private final ExceptionTemplate exceptionTemplate;
     private boolean initIsCompleted = false;
 
-    public WsHandler(CqFactory cqFactory, ApiHandler apiHandler, EventHandler eventHandler, EventProperties eventProperties, ExceptionTemplate exceptionTemplate) {
+    public WsHandler(CqFactory cqFactory, ApiHandler apiHandler, EventHandler eventHandler, ExecutorService executor, ExceptionTemplate exceptionTemplate) {
         this.cqFactory = cqFactory;
         this.apiHandler = apiHandler;
         this.eventHandler = eventHandler;
-        this.executor = new ThreadPoolExecutor(
-                eventProperties.getCorePoolSize(),
-                eventProperties.getMaxPoolSize(),
-                eventProperties.getKeepAliveTime(),
-                TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<>(eventProperties.getWorkQueueSize()),
-                new NamedThreadFactory("ws"));
+        this.executor = executor;
         this.exceptionTemplate = exceptionTemplate;
     }
 
@@ -70,24 +59,27 @@ public class WsHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) {
-        try {
-            Long qid = getQid(session);
-            log.info("{} connection", qid);
+        //得异步,不然阻塞
+        executor.execute(() -> {
+            try {
+                Long qid = getQid(session);
+                log.info("{} connection", qid);
 
-            //创建CqTemplate,存入CqGlobal方便取用
-            CqTemplate cqTemplate = cqFactory.create(qid, session);
-            CqGlobal.put(qid, cqTemplate);
+                //创建CqTemplate,存入CqGlobal方便取用
+                CqTemplate cqTemplate = cqFactory.create(qid, session);
+                CqGlobal.put(qid, cqTemplate);
 
-            List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
+                List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
 
-            Assert.getInstance().ifNotNull(wsWrapperList, () -> wsWrapperList
-                    .forEach(wsWrapper -> wsWrapper.afterConnectionEstablishedWrapper(cqTemplate)));
+                Assert.getInstance().ifNotNull(wsWrapperList, () -> wsWrapperList
+                        .forEach(wsWrapper -> wsWrapper.afterConnectionEstablishedWrapper(cqTemplate)));
 
-            //等待初始化完成
-        } catch (Exception e) {
-            log.error("", e);
-            throw new LogicException(ExceptionEnum.INIT_ERROR);
-        }
+                //等待初始化完成
+            } catch (Exception e) {
+                log.error("", e);
+                throw new LogicException(ExceptionEnum.INIT_ERROR);
+            }
+        });
     }
 
     /**

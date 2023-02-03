@@ -21,7 +21,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "tb_plugin_schedule")
 @Data
-public class ScheduleDo extends BaseDo implements Serializable {
+public class ScheduleDo extends BaseDo {
 
     /**
      * cron表达式

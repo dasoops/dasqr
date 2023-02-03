@@ -7,11 +7,11 @@ import com.dasoops.common.entity.vo.result.SimpleResult;
 import com.dasoops.common.util.ExcelUtil;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.*;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.*;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginSortVo;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetRegisterRouteKeywordVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginSortVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginVo;
 import com.dasoops.dasserver.plugin.webmanager.service.PluginWebService;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
@@ -79,7 +79,7 @@ public class PluginController {
     @ApiOperation(value = "导出所有插件", notes = "导出所有插件")
     public void exportAllPlugin(HttpServletResponse response) {
         List<ExportPluginDto> exportPluginDtoList = pluginWebService.exportAllPlugin();
-        ExcelUtil.simpleExport(response, exportPluginDtoList, "pluginData");
+        ExcelUtil.Companion.simpleExport(response, exportPluginDtoList, "pluginData");
     }
 
     @PostMapping("sortPlugin")

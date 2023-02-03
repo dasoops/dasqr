@@ -46,7 +46,7 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void initOrUpdateRegisterMtmPluginList() {
+    public void initRegisterMtmPluginList() {
         List<RegisterMtmPluginDo> noExistRegisterMtmPluginDoList = new ArrayList<>();
 
         List<RegisterMtmPluginDo> registerMtmPluginDoAllList = super.list();

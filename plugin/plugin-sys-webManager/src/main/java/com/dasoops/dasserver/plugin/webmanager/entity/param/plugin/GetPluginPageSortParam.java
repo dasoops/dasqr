@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.webmanager.entity.param;
+package com.dasoops.dasserver.plugin.webmanager.entity.param.plugin;
 
 import com.dasoops.common.entity.param.SortParam;
 import com.dasoops.common.entity.param.base.BasePageParam;

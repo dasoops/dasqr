@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.webmanager.entity.param;
+package com.dasoops.dasserver.plugin.webmanager.entity.param.config;
 
 import com.dasoops.common.entity.param.base.BaseDeleteParam;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;

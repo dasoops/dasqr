@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.webmanager.entity.vo;
+package com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin;
 
 import com.dasoops.common.entity.vo.base.BaseVo;
 import io.swagger.annotations.ApiModel;

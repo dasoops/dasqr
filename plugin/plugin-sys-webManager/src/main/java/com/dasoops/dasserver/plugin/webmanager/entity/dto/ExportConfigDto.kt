@@ -1,9 +1,9 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.dto
 
-import lombok.EqualsAndHashCode
-import com.dasoops.dasserver.cq.entity.dto.BaseExportDto
 import com.alibaba.excel.annotation.ExcelProperty
+import com.dasoops.dasserver.cq.entity.dto.BaseExportDto
 import lombok.Data
+import lombok.EqualsAndHashCode
 
 /**
  * @Title: ExportConfigDto
@@ -21,23 +21,23 @@ class ExportConfigDto : BaseExportDto() {
      * 关键字
      */
     @ExcelProperty(value = ["关键字"], index = 1)
-    private val keyword: String? = null
+    var keyword: String? = null
 
     /**
      * 值
      */
     @ExcelProperty(value = ["值"], index = 2)
-    private val value: String? = null
+    var value: String? = null
 
     /**
      * 描述
      */
     @ExcelProperty(value = ["描述"], index = 3)
-    private val description: String? = null
+    var description: String? = null
 
     /**
      * 是否可以编辑
      */
     @ExcelProperty(value = ["是否可以编辑"], index = 4)
-    private val canEdit = false
+    var canEdit = false
 }

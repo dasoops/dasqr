@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.webmanager.entity.param;
+package com.dasoops.dasserver.plugin.webmanager.entity.param.plugin;
 
 import com.dasoops.common.entity.param.base.BaseParam;
 import io.swagger.annotations.ApiModel;
@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @Title: CheckPluginClassPathParam
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.CheckPluginClassPathParam
+ * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.CheckPluginClassPathParam
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/14
  * @Version 1.0.0

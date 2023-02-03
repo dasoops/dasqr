@@ -22,7 +22,6 @@ public interface WsWrapper {
      * @param cqTemplate cqTemplate
      * @return {@link CompletableFuture}<{@link Void}>
      */
-    @Async
     default void afterConnectionEstablishedWrapper(CqTemplate cqTemplate) {
 
     }

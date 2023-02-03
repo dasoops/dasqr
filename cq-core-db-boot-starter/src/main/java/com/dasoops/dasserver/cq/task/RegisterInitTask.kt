@@ -13,14 +13,8 @@ class RegisterInitTask(private val registerService: RegisterService) : BaseInitT
      * @param [cqTemplate] cq模板
      */
     fun initOrUpdateAll(cqTemplate: CqTemplate?) {
-        initOrUpdateRegisterIdOtoNameMap2Cache(cqTemplate)
-    }
-
-    /**
-     * 初始化或更新注册表id单对单名字map to 缓存
-     * @param [cqTemplate] cqTemplate
-     */
-    private fun initOrUpdateRegisterIdOtoNameMap2Cache(cqTemplate: CqTemplate?) {
+        registerService.initOrUpdateRegisterRowIdOtoTypeMap2Cache()
+        registerService.initOrUpdateRegisterTypeRegisterIdOtoId2Cache()
         registerService.initOrUpdateRegisterRowIdOtoNameMapAndRegisterUserIdOtoNameMap2Cache(cqTemplate)
     }
 

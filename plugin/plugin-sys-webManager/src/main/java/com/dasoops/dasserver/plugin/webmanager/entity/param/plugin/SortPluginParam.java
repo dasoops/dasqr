@@ -1,9 +1,8 @@
-package com.dasoops.dasserver.plugin.webmanager.entity.param;
+package com.dasoops.dasserver.plugin.webmanager.entity.param.plugin;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
-import com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginInnerParam;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +11,7 @@ import java.util.List;
 
 /**
  * @Title: SortPluginParam
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.SortPluginParam
+ * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.SortPluginParam
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/12
  * @Version 1.0.0

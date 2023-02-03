@@ -64,7 +64,7 @@ public class Convert {
                 BeanUtil.copyProperties(t, e);
                 return e;
             } catch (Exception e) {
-                throw new LogicException(ExceptionEnum.TYPE_CONVERT);
+                throw new LogicException(ExceptionEnum.TYPE_CONVERT, e);
             }
         }).collect(Collectors.toList());
     }

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class AuthInitTask extends BaseInitTask {
+public class AuthTask extends BaseInitTask {
 
     private final RegisterService registerService;
     private final AuthWrapperRegisterMtmPluginService authWrapperRegisterMtmPluginService;
@@ -56,9 +56,30 @@ public class AuthInitTask extends BaseInitTask {
      * 初始化或更新注册表多对多插件集合
      */
     public void initOrUpdateRegisterMtmPluginList() {
-        authWrapperRegisterMtmPluginService.initOrUpdateRegisterMtmPluginList();
-        authWrapperRegisterMtmPluginService.initOrUpdateAuthIdOtmIsPassMap2Cache();
+        initRegisterMtmPluginList();
+        initOrUpdatePluginClassNameOtoIdMap2Cache();
+        initOrUpdateAuthIdOtmIsPassMap2Cache();
+    }
+
+    /**
+     * 初始化或更新注册mtm插件集合
+     */
+    public void initRegisterMtmPluginList() {
+        authWrapperRegisterMtmPluginService.initRegisterMtmPluginList();
+    }
+
+    /**
+     * 初始化或更新插件类名字单对单id map toCache
+     */
+    public void initOrUpdatePluginClassNameOtoIdMap2Cache() {
         authWrapperPluginService.initOrUpdatePluginClassNameOtoIdMap2Cache();
+    }
+
+    /**
+     * 初始化或更新身份验证 id单对多插件是否放行 toCache
+     */
+    public void initOrUpdateAuthIdOtmIsPassMap2Cache() {
+        authWrapperRegisterMtmPluginService.initOrUpdateAuthIdOtmIsPassMap2Cache();
     }
 
 }

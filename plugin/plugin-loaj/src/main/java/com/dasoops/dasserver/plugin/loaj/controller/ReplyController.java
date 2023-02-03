@@ -78,7 +78,7 @@ public class ReplyController {
     @ApiOperation(value = "导出所有回复", notes = "导出所有回复")
     public void exportAllReply(HttpServletResponse response) {
         List<ExportReplyDto> exportReplyDtoList = replyService.exportAllReply();
-        ExcelUtil.simpleExport(response, exportReplyDtoList, "ReplyData");
+        ExcelUtil.Companion.simpleExport(response, exportReplyDtoList, "ReplyData");
     }
 
 

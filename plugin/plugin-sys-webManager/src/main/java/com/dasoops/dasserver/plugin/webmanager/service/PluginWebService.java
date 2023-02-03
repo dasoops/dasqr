@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.*;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.*;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginSortVo;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginSortVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetRegisterRouteKeywordVo;
 
 import java.util.List;

@@ -13,7 +13,7 @@ public interface AuthWrapperRegisterMtmPluginService {
     /**
      * 初始化或更新注册mtm插件集合
      */
-    void initOrUpdateRegisterMtmPluginList();
+    void initRegisterMtmPluginList();
 
     /**
      * 初始化或更新身份验证 id单对多插件是否放行 toCache

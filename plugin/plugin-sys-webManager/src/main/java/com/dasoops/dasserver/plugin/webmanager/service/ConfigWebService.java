@@ -4,11 +4,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportConfigDto;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.AddConfigParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.DeleteConfigParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.EditConfigParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.GetConfigPageParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetConfigVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.config.AddConfigParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.config.DeleteConfigParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.config.EditConfigParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.config.GetConfigPageParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.config.GetConfigVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 
 import java.util.List;

@@ -5,14 +5,14 @@ import com.dasoops.common.entity.vo.result.PageResult;
 import com.dasoops.common.entity.vo.result.Result;
 import com.dasoops.common.entity.vo.result.SimpleResult;
 import com.dasoops.common.util.ExcelUtil;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.EditConfigParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.config.EditConfigParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import com.dasoops.dasserver.plugin.webmanager.service.ConfigWebService;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportConfigDto;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.AddConfigParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.DeleteConfigParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.GetConfigPageParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetConfigVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.config.AddConfigParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.config.DeleteConfigParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.config.GetConfigPageParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.config.GetConfigVo;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -78,8 +78,7 @@ public class ConfigController {
     @ApiOperation(value = "导出所有配置", notes = "导出所有配置")
     public void exportAllConfig(HttpServletResponse response) {
         List<ExportConfigDto> exportConfigDtoList = configWebService.exportAllConfig();
-        ExcelUtil.simpleExport(response, exportConfigDtoList, "ConfigData");
+        ExcelUtil.Companion.simpleExport(response, exportConfigDtoList, "ConfigData");
     }
-
 
 }

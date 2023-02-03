@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.webmanager.entity.param;
+package com.dasoops.dasserver.plugin.webmanager.entity.param.plugin;
 
 import com.dasoops.common.entity.param.base.BaseEditParam;
 import com.dasoops.common.entity.param.base.BaseFastBuildParam;
@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @Title: EditPluginParam
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.EditPluginParam
+ * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.EditPluginParam
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/12
  * @Version 1.0.0

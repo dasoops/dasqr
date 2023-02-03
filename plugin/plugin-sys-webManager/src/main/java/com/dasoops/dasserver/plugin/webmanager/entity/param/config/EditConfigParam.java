@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.webmanager.entity.param;
+package com.dasoops.dasserver.plugin.webmanager.entity.param.config;
 
 import com.dasoops.common.entity.param.base.BaseEditAndDeleteParam;
 import com.dasoops.common.entity.param.base.BaseFastBuildParam;

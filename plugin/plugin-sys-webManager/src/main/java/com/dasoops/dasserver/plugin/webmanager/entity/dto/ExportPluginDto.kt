@@ -1,9 +1,8 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.dto
 
-import lombok.EqualsAndHashCode
 import com.dasoops.dasserver.cq.entity.dto.BaseExportDto
-import com.alibaba.excel.annotation.ExcelProperty
 import lombok.Data
+import lombok.EqualsAndHashCode
 
 /**
  * @Title: ExportPluginDto

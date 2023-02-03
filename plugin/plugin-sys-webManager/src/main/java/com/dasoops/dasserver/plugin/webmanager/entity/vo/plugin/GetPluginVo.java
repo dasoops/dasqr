@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.webmanager.entity.vo;
+package com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin;
 
 import com.dasoops.common.entity.vo.base.BaseVo;
 import io.swagger.annotations.ApiModel;
@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @Title: GetPluginVo
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.vo.GetPluginVo
+ * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginVo
  * @Author DasoopsNicole@Gmail.com
  * @Date 2023/01/12
  * @Version 1.0.0

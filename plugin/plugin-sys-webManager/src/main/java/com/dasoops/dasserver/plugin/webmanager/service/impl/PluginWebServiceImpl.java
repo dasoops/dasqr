@@ -23,15 +23,16 @@ import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperPluginService
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.WebManagerRouteRegistry;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
-import com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginInnerParam;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.SortPluginInnerParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.CheckPluginRepeatEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.GetPluginSortColumnEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.WebManagerExceptionEnum;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.CheckPluginClassPathParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.DeletePluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.EditPluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageSortParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.*;
+import com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.*;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetRegisterRouteKeywordVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginSortVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.PluginSortInnerVo;
 import com.dasoops.dasserver.plugin.webmanager.mapper.PluginWebMapper;
 import com.dasoops.dasserver.plugin.webmanager.service.PluginWebService;
 import lombok.RequiredArgsConstructor;
@@ -96,8 +97,8 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
         }
 
         //构建返回参数
-        Integer paramSize = param.getSize();
-        Integer paramCurrent = param.getCurrent();
+        int paramSize = param.getSize();
+        int paramCurrent = param.getCurrent();
         Page<GetPluginVo> getPluginVoPage = new Page<>(paramCurrent, paramSize);
 
         //关键词匹配 不需要
@@ -201,7 +202,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void sortPlugin(com.dasoops.dasserver.plugin.webmanager.entity.param.SortPluginParam param) {
+    public void sortPlugin(SortPluginParam param) {
         List<SortPluginInnerParam> sortPluginParamList = param.getSortPluginParamList();
         List<Long> rowIdList = new ArrayList<>();
         List<Integer> orderList = new ArrayList<>();

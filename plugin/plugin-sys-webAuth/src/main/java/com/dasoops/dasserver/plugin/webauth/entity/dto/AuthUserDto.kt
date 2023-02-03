@@ -1,10 +1,5 @@
 package com.dasoops.dasserver.plugin.webauth.entity.dto
 
-import com.dasoops.common.entity.dto.base.BaseDto
-import lombok.Data
-import lombok.EqualsAndHashCode
-
-
 /**
  * @Title: AuthUserDto
  * @ClassPath com.dasoops.dasserver.plugin.webauth.entity.dto.AuthUserDto
@@ -14,19 +9,20 @@ import lombok.EqualsAndHashCode
  * @Description: 身份验证用户dto
  * @see [AuthUserDto]
  */
-class AuthUserDto(
+data class AuthUserDto(
     /**
      * rowId
      */
-    val rowId: Long,
+    val rowId: Long?,
+
     /**
      * 注册者id
      */
-    val registerId: Long,
+    val registerId: Long?,
 
     /**
      * 名字
      */
-    val name: String,
+    val name: String?,
 ) {
 }

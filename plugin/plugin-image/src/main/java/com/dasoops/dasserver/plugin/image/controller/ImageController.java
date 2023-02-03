@@ -95,7 +95,7 @@ public class ImageController {
     @ApiOperation(value = "导出所有图片信息", notes = "导出所有图片信息")
     public void exportAllImageInfo(HttpServletResponse response) {
         List<ExportImageInfoDto> exportImageInfoDtoList = imageService.exportAllImageInfo();
-        ExcelUtil.simpleExport(response, exportImageInfoDtoList, "imageInfo");
+        ExcelUtil.Companion.simpleExport(response, exportImageInfoDtoList, "imageInfo");
     }
 
     @PostMapping("uploadImage")

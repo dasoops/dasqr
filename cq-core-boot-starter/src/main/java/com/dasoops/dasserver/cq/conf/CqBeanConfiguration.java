@@ -15,10 +15,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
 import javax.annotation.PostConstruct;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Title: CqBeanConfiguration
@@ -41,15 +44,14 @@ public class CqBeanConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @Lazy
-    public WsHandler createWebSocketHandler(
-            CqFactory cqFactory,
-            ApiHandler apiHandler,
-            EventHandler eventHandler,
-            EventProperties eventProperties,
-            ExceptionTemplate exceptionTemplate
-    ) {
-        return new WsHandler(cqFactory, apiHandler, eventHandler, eventProperties, exceptionTemplate);
+    public ExecutorService executor(EventProperties eventProperties) {
+        return new ThreadPoolExecutor(
+                eventProperties.getCorePoolSize(),
+                eventProperties.getMaxPoolSize(),
+                eventProperties.getKeepAliveTime(),
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(eventProperties.getWorkQueueSize()),
+                new NamedThreadFactory("ws"));
     }
 
     @Bean
@@ -80,6 +82,18 @@ public class CqBeanConfiguration {
     public CqFactory createCqFactory(
             @Autowired(required = false) ApiHandler apiHandler) {
         return new CqFactory(apiHandler);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public WsHandler wsHandler(
+            CqFactory cqFactory,
+            ApiHandler apiHandler,
+            EventHandler eventHandler,
+            ExceptionTemplate exceptionTemplate,
+            ExecutorService executor
+    ) {
+        return new WsHandler(cqFactory, apiHandler, eventHandler, executor, exceptionTemplate);
     }
 
     @PostConstruct

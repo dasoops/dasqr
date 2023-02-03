@@ -96,7 +96,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         List<Long> groupIdList = new ArrayList<>();
         registerDoList.forEach(registerDo -> {
             Long registerId = registerDo.getRegisterId();
-            if (registerDo.getType().equals(RegisterTypeEnum.USER.getDbValue())) {
+            if (RegisterTypeEnum.USER.getDbValue().equals(registerDo.getType())) {
                 userIdList.add(registerId);
             } else {
                 groupIdList.add(registerId);
@@ -145,23 +145,22 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
     }
 
     @Override
-    public Map<Long, Integer> getRegisterIdOtoTypeMap() {
+    public Map<Long, Integer> getRegisterRowIdOtoTypeMap() {
         List<RegisterDo> registerDoList = super.list();
         Map<Long, Integer> map = registerDoList.stream().collect(Collectors.toMap(RegisterDo::getRowId, RegisterDo::getType));
         return map;
     }
 
-
     @Override
-    public void initOrUpdateRegisterIdOtoTypeMap2Cache() {
-        log.info("初始化/更新 注册表对象 单对单 注册表类型 缓存");
-        Map<Long, Integer> registerIdOtoTypeMap = this.getRegisterIdOtoTypeMap();
+    public void initOrUpdateRegisterRowIdOtoTypeMap2Cache() {
+        log.info("初始化/更新 注册表对象RowId 单对单 注册表类型 缓存");
+        Map<Long, Integer> registerIdOtoTypeMap = this.getRegisterRowIdOtoTypeMap();
         registerCache.setRegisterIdOtoTypeMap(registerIdOtoTypeMap);
     }
 
     @Override
     public void initOrUpdateRegisterTypeRegisterIdOtoId2Cache() {
-        log.info("初始化/更新 初始化或更新 注册表类型 用户idid 单对单 注册表id  缓存");
+        log.info("初始化/更新 初始化或更新 注册表类型 用户id 单对单 注册表id  缓存");
         List<RegisterDo> registerDoList = super.list();
         Map<Integer, List<RegisterDo>> groupByTypeRegisterDoMap = registerDoList.stream().collect(Collectors.groupingBy(RegisterDo::getType));
 
@@ -177,7 +176,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
 
     @Override
     public void initOrUpdateRegisterRowIdOtoNameMapAndRegisterUserIdOtoNameMap2Cache(CqTemplate cqTemplate) {
-        log.info("初始化/更新 注册表rowId 单对单 插件集合 映射集合");
+        log.info("初始化或更新 注册表主键id 单对单 名称,注册表用户id 单对单 名称 to缓存");
         Map<Long, String> registerIdOtoNameMap = new HashMap<>(16);
         Map<Long, String> registerRowIdOtoNameMap = new HashMap<>(16);
 
