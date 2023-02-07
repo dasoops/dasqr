@@ -1,8 +1,5 @@
 package com.dasoops.common.util.entity
 
-import com.dasoops.common.exception.LogicException
-import org.apache.poi.ss.formula.functions.T
-
 /**
  * @Title: ExportDto
  * @ClassPath com.dasoops.common.util.entity.ExportDto
@@ -12,7 +9,7 @@ import org.apache.poi.ss.formula.functions.T
  * @Description: 导出dto
  * @see [ExportInfo]
  */
-data class ExportInfo<out T>(
+data class ExportInfo<T>(
 
     /**
      * 数据集合
@@ -47,11 +44,8 @@ data class ExportInfo<out T>(
             return ExportInfo(dataList, T::class.java, sheetNo, sheetName)
         }
 
-        fun build(dataList: List<T>): ExportInfo<T> {
-            if (dataList.isEmpty()) {
-                throw LogicException(ExportExceptionEnum.DATA_NULL)
-            }
-            val java: Class<out T> = dataList.first()::class.java
+        fun <T> build(dataList: List<T>): ExportInfo<T> {
+            val java: Class<out T> = dataList.first()!!::class.java
             return ExportInfo(dataList, java)
         }
     }

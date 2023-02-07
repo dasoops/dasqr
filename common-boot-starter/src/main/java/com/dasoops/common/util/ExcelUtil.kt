@@ -22,19 +22,38 @@ class ExcelUtil {
 
         /**
          * 简单导出(自动提取基类)
+         * 仅支持kt
          *
          * @param [response] response
          * @param [dataList] 数据集合
          * @param [fileName] 文件名称
          */
-        fun simpleExport(response: HttpServletResponse, dataList: List<*>, fileName: String) {
+
+        @JvmSynthetic
+        inline fun <reified T> ktSimpleExport(response: HttpServletResponse, dataList: List<T>, fileName: String) {
             if (dataList.isEmpty()) {
                 throw LogicException(ExportExceptionEnum.DATA_NULL)
             }
             val exportInfo = ExportInfo.ktBuild(dataList)
 
-            simpleExport(response, fileName, exportInfo)
+            simpleExport(response, exportInfo, fileName)
         }
+
+        /**
+         * 简单导出(自动提取基类)
+         *
+         * @param [response] response
+         * @param [dataList] 数据集合
+         * @param [fileName] 文件名称
+         */
+
+        fun <T> simpleExport(response: HttpServletResponse, dataList: List<T>, fileName: String) {
+            if (dataList.isEmpty() || dataList[0] == null) {
+                throw LogicException(ExportExceptionEnum.DATA_NULL);
+            }
+            simpleExport(response, ExportInfo.build(dataList), fileName)
+        }
+
 
         /**
          * 简单导出(自动提取基类)
@@ -43,7 +62,7 @@ class ExcelUtil {
          * @param [fileName] 文件名称
          * @param [dto] dto
          */
-        fun simpleExport(response: HttpServletResponse, fileName: String, dto: ExportInfo<*>) {
+        fun <T> simpleExport(response: HttpServletResponse, dto: ExportInfo<T>, fileName: String) {
             export(response, fileName, listOf(dto))
         }
 
