@@ -51,3 +51,4 @@
 14. ( - ) pluginLoader
 15. ( - ) pluginStore
 16. ( - ) 后端扫包生成ts,request文件
+17. ( - ) 枚举扫描生成字典,缓存,前端使用字典替代硬编码
