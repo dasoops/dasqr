@@ -50,3 +50,4 @@
 13. ( - ) json包改为jackSon
 14. ( - ) pluginLoader
 15. ( - ) pluginStore
+16. ( - ) 后端扫包生成ts,request文件
