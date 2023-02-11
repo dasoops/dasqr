@@ -3,6 +3,7 @@ package com.dasoops.dasserver.plugin.loaj.service.impl
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import com.dasoops.dasserver.plugin.loaj.entity.dbo.ReplyDo
 import com.dasoops.dasserver.plugin.loaj.mapper.ReplyMapper
+import org.springframework.stereotype.Service
 
 /**
  * @Title: ReplySimpleSql
@@ -13,4 +14,5 @@ import com.dasoops.dasserver.plugin.loaj.mapper.ReplyMapper
  * @Description: 回复简单sql
  * @see [ReplySimpleSql]
  */
-class ReplySimpleSql : ServiceImpl<ReplyMapper, ReplyDo>()
+@Service
+open class ReplySimpleSql : ServiceImpl<ReplyMapper, ReplyDo>()
