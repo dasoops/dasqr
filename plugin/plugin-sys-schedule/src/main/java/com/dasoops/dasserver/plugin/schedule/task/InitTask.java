@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.schedule.task;
 
-import com.dasoops.common.task.BaseInitTask;
+import com.dasoops.common.task.BaseTask;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
  * @Date 2023/01/20
  * @Version 1.0.0
  * @Description: 初始化任务
- * @see BaseInitTask
+ * @see BaseTask
  */
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class InitTask extends BaseInitTask {
+public class InitTask extends BaseTask {
 
 //    private final ScheduleService scheduleService;
 //

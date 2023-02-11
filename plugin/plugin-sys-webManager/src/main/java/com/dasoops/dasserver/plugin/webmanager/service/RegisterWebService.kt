@@ -2,7 +2,6 @@ package com.dasoops.dasserver.plugin.webmanager.service
 
 import com.baomidou.mybatisplus.core.metadata.IPage
 import com.baomidou.mybatisplus.extension.service.IService
-import com.dasoops.dasserver.cq.entity.dbo.RegisterDo
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportRegisterDto
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportRegisterMtmDto
 import com.dasoops.dasserver.plugin.webmanager.entity.param.register.EditRegisterParam
@@ -20,7 +19,7 @@ import com.dasoops.dasserver.plugin.webmanager.entity.vo.register.LoginVo
  * @Description: 针对表【tb_core_register(注册表,储存用户注册信息,初始权限,群组注册信息)】的数据库操作Service
  * @see IService
  */
-interface RegisterWebService : IService<RegisterDo> {
+interface RegisterWebService {
     /**
      * 登录
      *

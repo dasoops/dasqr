@@ -1,7 +1,6 @@
 package com.dasoops.dasserver.plugin.webmanager.service.impl
 
 import com.baomidou.mybatisplus.core.metadata.IPage
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import com.dasoops.common.exception.LogicException
 import com.dasoops.common.util.Convert
 import com.dasoops.dasserver.cq.cache.ConfigCache
@@ -9,6 +8,8 @@ import com.dasoops.dasserver.cq.cache.RegisterCache
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo
 import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum
 import com.dasoops.dasserver.cq.entity.enums.RegisterTypeEnum
+import com.dasoops.dasserver.cq.simplesql.RegisterMtmPluginSimpleSql
+import com.dasoops.dasserver.cq.simplesql.RegisterSimpleSql
 import com.dasoops.dasserver.plugin.authwrapper.task.AuthTask
 import com.dasoops.dasserver.plugin.webauth.entity.dto.AuthUserDto
 import com.dasoops.dasserver.plugin.webauth.entity.enums.RegisterExceptionEnum
@@ -20,8 +21,6 @@ import com.dasoops.dasserver.plugin.webmanager.entity.param.register.GetRegister
 import com.dasoops.dasserver.plugin.webmanager.entity.param.register.LoginParam
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.register.GetRegisterVo
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.register.LoginVo
-import com.dasoops.dasserver.plugin.webmanager.mapper.RegisterWebMapper
-import com.dasoops.dasserver.plugin.webmanager.service.RegisterMtmPluginWebService
 import com.dasoops.dasserver.plugin.webmanager.service.RegisterWebService
 import lombok.RequiredArgsConstructor
 import lombok.extern.slf4j.Slf4j
@@ -40,11 +39,12 @@ import org.springframework.stereotype.Service
 @Slf4j
 @RequiredArgsConstructor
 open class RegisterWebServiceImpl(
+    private val simpleSql: RegisterSimpleSql,
     private val configCache: ConfigCache,
     private val registerCache: RegisterCache,
     private val authTask: AuthTask,
-    private val registerMtmPluginWebService: RegisterMtmPluginWebService,
-) : ServiceImpl<RegisterWebMapper, RegisterDo>(), RegisterWebService {
+    private val registerMtmPluginSimpleSql: RegisterMtmPluginSimpleSql,
+) : RegisterWebService {
 
     override fun login(loginParam: LoginParam): LoginVo {
         //密码暂无,账号应同密码
@@ -52,10 +52,9 @@ open class RegisterWebServiceImpl(
         if (username != password) {
             throw LogicException(RegisterExceptionEnum.LOGIN_FAIL)
         }
-        val registerDo: RegisterDo = super<ServiceImpl>.ktQuery()
-            .eq(RegisterDo::registerId, username)
-            .eq(RegisterDo::type, RegisterTypeEnum.USER.dbValue)
-            .one() ?: throw LogicException(RegisterExceptionEnum.LOGIN_FAIL)
+        val registerDo: RegisterDo =
+            simpleSql.ktQuery().eq(RegisterDo::registerId, username).eq(RegisterDo::type, RegisterTypeEnum.USER.dbValue)
+                .one() ?: throw LogicException(RegisterExceptionEnum.LOGIN_FAIL)
 
         //登录最低权限需求
         val loginLessThanLevel = configCache.getIntegerConfig(ConfigHashKeyEnum.LOGIN_NEED_MIN_LEVEL)
@@ -69,7 +68,6 @@ open class RegisterWebServiceImpl(
     }
 
     override fun getRegisterPage(param: GetRegisterParam): IPage<GetRegisterVo> {
-
         TODO("Not yet implemented")
     }
 
@@ -79,8 +77,8 @@ open class RegisterWebServiceImpl(
     }
 
     override fun exportAllRegister(): Pair<List<ExportRegisterDto>, List<ExportRegisterMtmDto>> {
-        val registerDoList = super<ServiceImpl>.list()
-        val registerMtmPluginDoList = registerMtmPluginWebService.list()
+        val registerDoList = simpleSql.list()
+        val registerMtmPluginDoList = registerMtmPluginSimpleSql.list()
 
         return Pair(
             Convert.to(registerDoList, ExportRegisterDto::class.java),

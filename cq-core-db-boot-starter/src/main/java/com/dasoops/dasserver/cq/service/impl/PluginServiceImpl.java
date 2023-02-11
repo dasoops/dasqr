@@ -16,11 +16,13 @@ import com.dasoops.dasserver.cq.entity.enums.PluginStatusEnum;
 import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
 import com.dasoops.dasserver.cq.mapper.PluginMapper;
 import com.dasoops.dasserver.cq.service.PluginService;
-import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
+import com.dasoops.dasserver.cq.simplesql.PluginSimpleSql;
+import com.dasoops.dasserver.cq.simplesql.RegisterMtmPluginSimpleSql;
+import com.dasoops.dasserver.cq.simplesql.RegisterSimpleSql;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,29 +41,27 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
-        implements PluginService {
+@RequiredArgsConstructor
+public class PluginServiceImpl implements PluginService {
 
-    private final PluginMapper pluginMapper;
-    private final RegisterService registerService;
-    private final RegisterMtmPluginService registerMtmPluginService;
     private final ApplicationContext applicationContext;
 
-    public PluginServiceImpl(@Lazy @SuppressWarnings("all") PluginMapper pluginMapper, @Lazy RegisterService registerService, @Lazy RegisterMtmPluginService registerMtmPluginService, ApplicationContext applicationContext) {
-        this.pluginMapper = pluginMapper;
-        this.registerService = registerService;
-        this.registerMtmPluginService = registerMtmPluginService;
-        this.applicationContext = applicationContext;
-    }
+    private final PluginSimpleSql simpleSql;
+    private final RegisterSimpleSql registerSimpleSql;
+    private final RegisterMtmPluginSimpleSql registerMtmPluginSimpleSql;
+
+    private final RegisterService registerService;
+
+    private final PluginMapper pluginMapper;
 
     @Override
     public List<PluginStatusDto> getAllPluginAndStatus() {
         //获取有记录的所有插件
-        List<PluginDo> pluginDoList = super.list();
+        List<PluginDo> pluginDoList = simpleSql.list();
         //加载的插件
         Map<String, CqPlugin> loadPluginMap = applicationContext.getBeansOfType(CqPlugin.class);
 
-        List<PluginStatusDto> pluginStatusDtoList = pluginDoList.stream().map(pluginDo -> {
+        List<PluginStatusDto> pluginStatusDtoList = new ArrayList<>(pluginDoList.stream().map(pluginDo -> {
             //0为未启用, 1启用未加载, 2加载, 3加载但无记录(不启用)
             Integer enable = pluginDo.getEnable();
             int status;
@@ -76,7 +76,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
             BeanUtil.copyProperties(pluginDo, pluginStatusDto);
             pluginStatusDto.setStatus(status);
             return pluginStatusDto;
-        }).toList();
+        }).toList());
 
         //说明有加载了但无数据库记录的插件
         if (loadPluginMap.size() > pluginDoList.size()) {
@@ -89,7 +89,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
     @Override
     public List<PluginStatusDto> getAllNoRecordPlugin() {
         //获取有记录的所有插件
-        List<PluginDo> pluginDoList = super.list();
+        List<PluginDo> pluginDoList = simpleSql.list();
         //加载的插件
         Map<String, CqPlugin> loadPluginMap = applicationContext.getBeansOfType(CqPlugin.class);
         return this.getAllNoRecordPlugin(pluginDoList, loadPluginMap);
@@ -100,7 +100,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
         List<CqPlugin> noRecordButLoadPluginList = loadPluginMap.values().stream()
                 .filter(cqPlugin ->
                         !pluginClassNameList.contains(cqPlugin.getRawPlugin().getClass().getName())
-                ).toList();
+                       ).toList();
         List<PluginStatusDto> noRecordPluginList = noRecordButLoadPluginList.stream().map(cqPlugin -> {
             PluginStatusDto pluginStatusDto = new PluginStatusDto();
             pluginStatusDto.setRowId(-1L);
@@ -119,7 +119,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
     @Override
     public List<DbRecordCqPlugin> getAllLoadDbCqPlugin() {
         //获取所有启用的类全路径
-        List<PluginDo> pluginDoList = super.lambdaQuery().list();
+        List<PluginDo> pluginDoList = simpleSql.lambdaQuery().list();
         Map<String, PluginDo> classPathOtoPluginDoMap = pluginDoList.stream().collect(Collectors.toMap(PluginDo::getClassPath, pluginDo -> pluginDo));
 
         //加载的所有插件
@@ -153,7 +153,7 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
 
     @Override
     public Optional<PluginDo> getByKeyWord(String keyWord) {
-        return super.lambdaQuery().eq(PluginDo::getName, keyWord).oneOpt();
+        return simpleSql.lambdaQuery().eq(PluginDo::getName, keyWord).oneOpt();
     }
 
     @Override
@@ -164,34 +164,35 @@ public class PluginServiceImpl extends ServiceImpl<PluginMapper, PluginDo>
 
         //默认启用,存储插件对象
         pluginPo.setEnable(1);
-        super.save(pluginPo);
+        simpleSql.save(pluginPo);
 
         //注册用户对象Level >= 插件对象Level 赋予使用权限
-        List<RegisterDo> registerDoList = registerService.list();
+        List<RegisterDo> registerDoList = registerSimpleSql.list();
 
         //构建registerPo对象
         List<RegisterMtmPluginDo> resList = registerDoList.stream().map(registerDo -> {
             RegisterMtmPluginDo registerMtmPluginDo = new RegisterMtmPluginDo();
             registerMtmPluginDo.setPluginId(pluginPo.getRowId());
             registerMtmPluginDo.setRegisterRowId(registerDo.getRowId());
+
             registerMtmPluginDo.setIsPass(registerDo.getLevel() <= pluginPo.getLevel() ? RegisterMtmPluginIsPassEnum.TRUE.getDbValue() : RegisterMtmPluginIsPassEnum.FALSE.getDbValue());
             return registerMtmPluginDo;
         }).collect(Collectors.toList());
 
         //持久化
-        registerMtmPluginService.saveBatch(resList);
+        registerMtmPluginSimpleSql.saveBatch(resList);
         return true;
     }
 
     @Override
     public boolean updateByKeyword(PluginDo pluginPo) {
-        Assert.getInstance().isTrue(super.lambdaUpdate().eq(PluginDo::getName, pluginPo.getName()).update(pluginPo));
+        Assert.getInstance().isTrue(simpleSql.lambdaUpdate().eq(PluginDo::getName, pluginPo.getName()).update(pluginPo));
         return true;
     }
 
     @Override
     public List<Long> getIdListByMinLevel(Integer minLevel) {
-        return super.lambdaQuery().le(PluginDo::getLevel, minLevel).list().stream().map(BaseDo::getRowId).collect(Collectors.toList());
+        return simpleSql.lambdaQuery().le(PluginDo::getLevel, minLevel).list().stream().map(BaseDo::getRowId).collect(Collectors.toList());
     }
 
     @Override

@@ -1,12 +1,12 @@
 package com.dasoops.dasserver.cq.task
 
-import com.dasoops.common.task.BaseInitTask
+import com.dasoops.common.task.BaseTask
 import com.dasoops.dasserver.cq.CqTemplate
 import com.dasoops.dasserver.cq.service.RegisterService
 import org.springframework.stereotype.Component
 
 @Component
-class RegisterInitTask(private val registerService: RegisterService) : BaseInitTask() {
+class RegisterInitTask(private val registerService: RegisterService) : BaseTask() {
 
     /**
      * 初始化或更新所有

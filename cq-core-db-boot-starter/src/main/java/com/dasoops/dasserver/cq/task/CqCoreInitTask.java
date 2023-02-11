@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.cq.task;
 
-import com.dasoops.common.task.BaseInitTask;
+import com.dasoops.common.task.BaseTask;
 import com.dasoops.dasserver.cq.CqPluginGlobal;
 import com.dasoops.dasserver.cq.service.ConfigService;
 import com.dasoops.dasserver.cq.service.PluginService;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 @Component
 @RequiredArgsConstructor
-public class CqCoreInitTask extends BaseInitTask {
+public class CqCoreInitTask extends BaseTask {
 
     private final RegisterService registerService;
     private final PluginService pluginService;

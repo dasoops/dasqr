@@ -1,6 +1,6 @@
 package com.dasoops.ocr;
 
-import com.dasoops.common.entity.vo.result.Result;
+import com.dasoops.common.entity.result.Result;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;

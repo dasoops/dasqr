@@ -1,7 +1,6 @@
 package com.dasoops.dasserver.plugin.webmanager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
 
 /**
  * @Title: RegisterMtmPluginService
@@ -12,6 +11,6 @@ import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
  * @Description: 针对表【tb_core_register_mtm_plugin】的数据库操作Service
  * @see IService
  */
-public interface RegisterMtmPluginWebService extends IService<RegisterMtmPluginDo> {
+public interface RegisterMtmPluginWebService {
 
 }

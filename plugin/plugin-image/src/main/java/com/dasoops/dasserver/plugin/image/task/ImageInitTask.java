@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.image.task;
 
-import com.dasoops.common.task.BaseInitTask;
+import com.dasoops.common.task.BaseTask;
 import com.dasoops.dasserver.plugin.image.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,11 +14,11 @@ import javax.annotation.PostConstruct;
  * @Date 2023/01/01
  * @Version 1.0.0
  * @Description: 图片初始化任务
- * @see BaseInitTask
+ * @see BaseTask
  */
 @Component
 @Slf4j
-public class ImageInitTask extends BaseInitTask {
+public class ImageInitTask extends BaseTask {
 
     private final ImageService imageService;
 

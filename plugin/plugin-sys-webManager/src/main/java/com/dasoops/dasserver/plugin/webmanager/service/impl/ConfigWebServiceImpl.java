@@ -9,6 +9,7 @@ import com.dasoops.common.util.Assert;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.entity.enums.ConfigCanEditEnum;
 import com.dasoops.dasserver.cq.service.ConfigService;
+import com.dasoops.dasserver.cq.simplesql.ConfigSimpleSql;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportConfigDto;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.WebManagerExceptionEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.config.AddConfigParam;
@@ -37,9 +38,9 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
-        implements ConfigWebService {
+public class ConfigWebServiceImpl implements ConfigWebService {
 
+    private final ConfigSimpleSql simpleSql;
     private final ConfigWebMapper configWebMapper;
     private final ConfigService configService;
 
@@ -49,7 +50,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         String keyword = param.getKeyword();
         String description = param.getDescription();
 
-        IPage<GetConfigVo> page = super.lambdaQuery()
+        IPage<GetConfigVo> page = simpleSql.lambdaQuery()
                 .like(keyword != null && !"".equals(keyword), ConfigDo::getKeyword, keyword)
                 .like(description != null && !"".equals(description), ConfigDo::getDescription, description)
                 .page(param.buildSelectPage())
@@ -71,12 +72,12 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         Long rowId = param.getRowId();
 
         //不同id是否有相同关键字
-        Long count = super.lambdaQuery().eq(ConfigDo::getKeyword, keyword).ne(ConfigDo::getRowId, rowId).count();
+        Long count = simpleSql.lambdaQuery().eq(ConfigDo::getKeyword, keyword).ne(ConfigDo::getRowId, rowId).count();
         if (count > 0) {
             throw new LogicException(WebManagerExceptionEnum.REPEAT_KEYWORD);
         }
 
-        ConfigDo oldConfigDo = super.lambdaQuery().eq(ConfigDo::getRowId, rowId).one();
+        ConfigDo oldConfigDo = simpleSql.lambdaQuery().eq(ConfigDo::getRowId, rowId).one();
         if (oldConfigDo == null) {
             throw new LogicException(WebManagerExceptionEnum.UNDEFINED_ID);
         }
@@ -91,7 +92,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         newConfigDo.setValue(value);
         newConfigDo.setDescription(param.getDescription());
 
-        super.updateById(newConfigDo);
+        simpleSql.updateById(newConfigDo);
         configService.initOrUpdateConfig();
     }
 
@@ -108,7 +109,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         Assert.getInstance().allMustNotNull(param, param.getKeyword(), param.getValue(), param.getDescription(), param.getCanEdit());
 
         String keyword = param.getKeyword();
-        Long count = super.lambdaQuery().eq(ConfigDo::getKeyword, keyword).count();
+        Long count = simpleSql.lambdaQuery().eq(ConfigDo::getKeyword, keyword).count();
         if (count > 0) {
             throw new LogicException(WebManagerExceptionEnum.REPEAT_KEYWORD);
         }
@@ -124,7 +125,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         configDo.setValue(param.getValue());
         configDo.setDescription(param.getDescription());
 
-        super.save(configDo);
+        simpleSql.save(configDo);
         configService.initOrUpdateConfig();
     }
 
@@ -133,7 +134,7 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
         Assert.getInstance().allMustNotNull(param, param.getRowId());
 
         Long id = param.getRowId();
-        ConfigDo configDo = super.getById(id);
+        ConfigDo configDo = simpleSql.getById(id);
         if (configDo == null) {
             throw new LogicException(WebManagerExceptionEnum.UNDEFINED_ID);
         }
@@ -142,13 +143,13 @@ public class ConfigWebServiceImpl extends ServiceImpl<ConfigWebMapper, ConfigDo>
             throw new LogicException(WebManagerExceptionEnum.CANT_EDIT);
         }
 
-        super.removeById(id);
+        simpleSql.removeById(id);
         configService.initOrUpdateConfig();
     }
 
     @Override
     public List<ExportConfigDto> exportAllConfig() {
-        List<ConfigDo> doList = super.list();
+        List<ConfigDo> doList = simpleSql.list();
         List<ExportConfigDto> resList = doList.stream().map(configDo -> {
             ExportConfigDto dto = new ExportConfigDto();
             dto.setRowId(configDo.getRowId());

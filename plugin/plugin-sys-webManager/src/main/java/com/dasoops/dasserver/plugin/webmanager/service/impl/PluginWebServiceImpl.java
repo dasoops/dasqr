@@ -18,12 +18,12 @@ import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 import com.dasoops.dasserver.cq.entity.dto.PluginStatusDto;
 import com.dasoops.dasserver.cq.entity.enums.PluginStatusEnum;
 import com.dasoops.dasserver.cq.service.PluginService;
-import com.dasoops.dasserver.cq.service.RegisterService;
+import com.dasoops.dasserver.cq.simplesql.PluginSimpleSql;
+import com.dasoops.dasserver.cq.simplesql.RegisterSimpleSql;
 import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperPluginService;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.WebManagerRouteRegistry;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
-import com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.SortPluginInnerParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.CheckPluginRepeatEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.GetPluginSortColumnEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.WebManagerExceptionEnum;
@@ -57,11 +57,11 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
-        implements PluginWebService {
+public class PluginWebServiceImpl implements PluginWebService {
 
+    private final PluginSimpleSql simpleSql;
     private final PluginWebMapper pluginWebMapper;
-    private final RegisterService registerService;
+    private final RegisterSimpleSql registerSimpleSql;
     private final PluginService pluginService;
     private final AuthWrapperPluginService authWrapperPluginService;
     private final WebManagerRouteRegistry registry;
@@ -81,7 +81,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
         List<DbRecordCqPlugin> allLoadPluginList = CqPluginGlobal.getAll().stream().map(DbRecordCqPlugin.class::cast).toList();
         List<Long> loadPluginRowIdList = allLoadPluginList.stream().map(cqPlugin -> cqPlugin.getPluginDo().getRowId()).toList();
 
-        List<PluginDo> pluginDoList = super.list(wrapper);
+        List<PluginDo> pluginDoList = simpleSql.list(wrapper);
         List<GetPluginVo> getPluginVoList = new ArrayList<>(pluginDoList.stream().map(pluginDo -> {
             GetPluginVo getPluginVo = new GetPluginVo();
             BeanUtil.copyProperties(pluginDo, getPluginVo);
@@ -145,7 +145,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
         checkPluginRowId(param.getRowId());
 
         PluginDo pluginDo = param.buildDo();
-        super.updateById(pluginDo);
+        simpleSql.updateById(pluginDo);
         CqPluginGlobal.refresh();
         authWrapperPluginService.initOrUpdatePluginClassNameOtoIdMap2Cache();
     }
@@ -168,7 +168,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
 
         PluginDo pluginDo = param.buildDo();
         pluginDo.setOrder(maxOrder + 1);
-        super.save(pluginDo);
+        simpleSql.save(pluginDo);
         CqPluginGlobal.refresh();
     }
 
@@ -181,18 +181,18 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
 
         //检查权限,需要当前用户有权限使用插件
         Integer level = pluginDo.getLevel();
-        RegisterDo registerDo = registerService.lambdaQuery().eq(RegisterDo::getRegisterId, EventUtil.get().getAuthorId()).one();
+        RegisterDo registerDo = registerSimpleSql.lambdaQuery().eq(RegisterDo::getRegisterId, EventUtil.get().getAuthorId()).one();
         if (registerDo.getLevel() > level) {
             throw new LogicException(WebManagerExceptionEnum.NEED_HIGH_LEVEL);
         }
 
-        super.removeById(rowId);
+        simpleSql.removeById(rowId);
         CqPluginGlobal.refresh();
     }
 
     @Override
     public List<ExportPluginDto> exportAllPlugin() {
-        List<PluginDo> list = super.list();
+        List<PluginDo> list = simpleSql.list();
         return list.stream().map(pluginDo -> {
             ExportPluginDto exportPluginDto = new ExportPluginDto();
             BeanUtil.copyProperties(pluginDo, exportPluginDto);
@@ -223,7 +223,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
 
         });
 
-        if (super.list().size() < rowIdList.size()) {
+        if (simpleSql.list().size() < rowIdList.size()) {
             throw new LogicException(WebManagerExceptionEnum.UNDEFINED_ID);
         }
 
@@ -234,13 +234,13 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
             return pluginDo;
         }).toList();
 
-        pluginDoList.forEach(super::updateById);
+        pluginDoList.forEach(simpleSql::updateById);
         CqPluginGlobal.refresh();
     }
 
     @Override
     public GetPluginSortVo getSortPlugin() {
-        List<PluginDo> list = super.list();
+        List<PluginDo> list = simpleSql.list();
         List<PluginSortInnerVo> sortPluginDtoList = list.stream()
                 .sorted(Comparator.comparingInt(PluginDo::getOrder))
                 .map(pluginDo -> {
@@ -274,7 +274,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
     /**
      * 检查插件类路径
      *
-     * @param classPath            类路径
+     * @param classPath 类路径
      * @param checkRepeatClassPath 检查重复类路径
      */
     private void checkPluginClassPath(boolean checkRepeatClassPath, String classPath) {
@@ -284,7 +284,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
                 throw new LogicException(WebManagerExceptionEnum.NO_CQ_PLUGIN);
             }
             if (checkRepeatClassPath) {
-                Long count = super.lambdaQuery().eq(PluginDo::getClassPath, classPath).count();
+                Long count = simpleSql.lambdaQuery().eq(PluginDo::getClassPath, classPath).count();
                 if (count > 0) {
                     throw new LogicException(WebManagerExceptionEnum.REPEAT_CLASS_PATH);
                 }
@@ -300,7 +300,7 @@ public class PluginWebServiceImpl extends ServiceImpl<PluginWebMapper, PluginDo>
      * @param rowId 行id
      */
     private PluginDo checkPluginRowId(Long rowId) {
-        PluginDo byId = super.getById(rowId);
+        PluginDo byId = simpleSql.getById(rowId);
         if (byId == null) {
             throw new LogicException(WebManagerExceptionEnum.UNDEFINED_ID);
         }

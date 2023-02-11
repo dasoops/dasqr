@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.shell.Controller;
 
-import com.dasoops.common.entity.vo.result.Result;
+import com.dasoops.common.entity.result.Result;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.plugin.shell.entity.enums.ShellRedisHashKeyEnum;
 import com.dasoops.dasserver.plugin.shell.entity.vo.GetWsUrlVo;

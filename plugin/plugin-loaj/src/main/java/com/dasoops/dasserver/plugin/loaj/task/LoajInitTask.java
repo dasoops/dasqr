@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.loaj.task;
 
-import com.dasoops.common.task.BaseInitTask;
+import com.dasoops.common.task.BaseTask;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import javax.annotation.PostConstruct;
  */
 @Slf4j
 @Component
-public class LoajInitTask extends BaseInitTask {
+public class LoajInitTask extends BaseTask {
 
     private final ReplyService replyService;
 

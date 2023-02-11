@@ -81,13 +81,13 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         if (keywordIsRepeat(keyword)) {
             return false;
         }
+
         String filename;
         try {
             filename = minioTemplate.saveImage(url);
         } catch (Exception e) {
             throw new CqLogicException(ImageExceptionEnum.IMAGE_SAVE_ERROR, e);
         }
-
 
         ImageDo imagePo = new ImageDo();
         imagePo.setKeyword(keyword);

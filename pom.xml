@@ -2,7 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modules>
-        <module>common-boot-starter</module>
         <module>core</module>
         <module>minio-boot-starter</module>
         <module>ocr-boot-starter</module>
@@ -52,7 +51,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <cq.version>1.0.0</cq.version>
-        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <lombok.version>1.18.24</lombok.version>
         <fastjson2.version>2.0.15</fastjson2.version>
         <fastjson2-extension.version>2.0.15</fastjson2-extension.version>
@@ -65,7 +64,7 @@
         <commons-compress.version>1.21</commons-compress.version>
         <jwt.version>4.2.1</jwt.version>
         <minio.version>8.4.5</minio.version>
-        <common-boot-starter.version>1.0.0</common-boot-starter.version>
+        <common-boot-starter.version>1.0.15</common-boot-starter.version>
     </properties>
 
 

@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.image.plugin;
 
 import cn.hutool.core.util.StrUtil;
-import com.dasoops.common.entity.vo.result.Result;
+import com.dasoops.common.entity.result.Result;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.CqTemplate;

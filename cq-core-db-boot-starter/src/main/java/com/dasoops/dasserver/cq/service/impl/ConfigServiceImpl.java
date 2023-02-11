@@ -8,8 +8,9 @@ import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 import com.dasoops.dasserver.cq.entity.result.PluginResult;
-import com.dasoops.dasserver.cq.mapper.ConfigMapper;
 import com.dasoops.dasserver.cq.service.ConfigService;
+import com.dasoops.dasserver.cq.simplesql.ConfigSimpleSql;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -29,28 +30,24 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
-        implements ConfigService {
+@RequiredArgsConstructor
+public class ConfigServiceImpl implements ConfigService {
 
+    private final ConfigSimpleSql simpleSql;
     private final ConfigCache configCache;
-
-    public ConfigServiceImpl(ConfigCache configCache) {
-        this.configCache = configCache;
-    }
-
 
     @Override
     public void initOrUpdateConfig() {
         log.info("初始化/更新 配置项 缓存");
 
-        Map<String, String> valueMap = super.list().stream().collect(Collectors.toMap(ConfigDo::getKeyword, ConfigDo::getValue));
+        Map<String, String> valueMap = simpleSql.list().stream().collect(Collectors.toMap(ConfigDo::getKeyword, ConfigDo::getValue));
         configCache.setConfig(valueMap);
     }
 
     @Override
     public String getConfig(ConfigHashKeyEnum config) {
         //获取配置对象
-        Optional<ConfigDo> configDoOptinal = super.lambdaQuery().eq(ConfigDo::getKeyword, config.getKey()).oneOpt();
+        Optional<ConfigDo> configDoOptinal = simpleSql.lambdaQuery().eq(ConfigDo::getKeyword, config.getKey()).oneOpt();
         if (configDoOptinal.isEmpty()) {
             throw new LogicException(ExceptionEnum.DB_EXECUTE_RETURN_NOT_NULL);
         }
@@ -62,7 +59,7 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
         //获取版本号对象,获取版本号,增加后更新
         int version = Integer.parseInt(getConfig(ConfigHashKeyEnum.CLOUD_VERSION));
         int endVersion = version + addVersion;
-        super.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.CLOUD_VERSION.getKey()).set(ConfigDo::getValue, endVersion).update();
+        simpleSql.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.CLOUD_VERSION.getKey()).set(ConfigDo::getValue, endVersion).update();
         configCache.setConfig(ConfigHashKeyEnum.CLOUD_VERSION, String.valueOf(endVersion));
         return endVersion;
     }
@@ -70,7 +67,7 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
     @Override
     public void updateLocalVersionFromCloudVersion() {
         int version = Integer.parseInt(getConfig(ConfigHashKeyEnum.CLOUD_VERSION));
-        super.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.LOCAL_VERSION.getKey()).set(ConfigDo::getValue, version).update();
+        simpleSql.lambdaUpdate().eq(ConfigDo::getKeyword, ConfigHashKeyEnum.LOCAL_VERSION.getKey()).set(ConfigDo::getValue, version).update();
         configCache.setConfig(ConfigHashKeyEnum.LOCAL_VERSION, String.valueOf(version));
     }
 
@@ -85,9 +82,9 @@ public class ConfigServiceImpl extends ServiceImpl<ConfigMapper, ConfigDo>
 
     @Override
     public void setConfig(IRedisHashKeyEnum redisHashKeyEnum, String value) {
-        ConfigDo configDo = super.lambdaQuery().eq(ConfigDo::getKeyword, redisHashKeyEnum.getKey()).one();
+        ConfigDo configDo = simpleSql.lambdaQuery().eq(ConfigDo::getKeyword, redisHashKeyEnum.getKey()).one();
         configDo.setValue(value);
-        super.updateById(configDo);
+        simpleSql.updateById(configDo);
         configCache.setConfig(redisHashKeyEnum, value);
     }
 
