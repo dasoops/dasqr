@@ -5,6 +5,7 @@ import com.dasoops.dasserver.plugin.starcraft2.entity.dbo.FactorDo
 import com.dasoops.dasserver.plugin.starcraft2.entity.dbo.MutationDo
 import com.dasoops.dasserver.plugin.starcraft2.mapper.FactorMapper
 import com.dasoops.dasserver.plugin.starcraft2.mapper.MutationMapper
+import org.springframework.stereotype.Service
 
 /**
  * @Title: FactorSimpleSql
@@ -15,6 +16,7 @@ import com.dasoops.dasserver.plugin.starcraft2.mapper.MutationMapper
  * @Description: 因子简单sql
  * @see [FactorSimpleSql]
  */
+@Service
 open class FactorSimpleSql : ServiceImpl<FactorMapper, FactorDo>()
 
 /**
@@ -26,4 +28,5 @@ open class FactorSimpleSql : ServiceImpl<FactorMapper, FactorDo>()
  * @Description: 突变简单sql
  * @see [MutationSimpleSql]
  */
+@Service
 open class MutationSimpleSql : ServiceImpl<MutationMapper, MutationDo>()
