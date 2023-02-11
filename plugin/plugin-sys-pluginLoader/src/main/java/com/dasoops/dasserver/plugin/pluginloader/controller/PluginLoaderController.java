@@ -1,7 +1,6 @@
 package com.dasoops.dasserver.plugin.pluginloader.controller;
 
-
-import com.dasoops.common.entity.vo.result.SimpleResult;
+import com.dasoops.common.entity.result.SimpleResult;
 import com.dasoops.dasserver.cq.CqPluginGlobal;
 import com.dasoops.dasserver.plugin.pluginloader.core.ModuleApplication;
 import lombok.RequiredArgsConstructor;

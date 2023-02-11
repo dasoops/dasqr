@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.authwrapper.task;
 
-import com.dasoops.common.task.BaseInitTask;
+import com.dasoops.common.task.BaseTask;
 import com.dasoops.dasserver.cq.CqPluginGlobal;
 import com.dasoops.dasserver.cq.CqTemplate;
 import com.dasoops.dasserver.cq.bot.CqPluginLoadReslover;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class AuthTask extends BaseInitTask {
+public class AuthTask extends BaseTask {
 
     private final RegisterService registerService;
     private final AuthWrapperRegisterMtmPluginService authWrapperRegisterMtmPluginService;

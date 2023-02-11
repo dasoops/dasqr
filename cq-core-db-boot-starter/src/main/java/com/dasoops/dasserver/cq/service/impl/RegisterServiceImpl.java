@@ -11,13 +11,13 @@ import com.dasoops.dasserver.cq.entity.dto.cq.retdata.FriendData;
 import com.dasoops.dasserver.cq.entity.dto.cq.retdata.GroupData;
 import com.dasoops.dasserver.cq.entity.dto.cq.retdata.GroupMemberInfoData;
 import com.dasoops.dasserver.cq.entity.enums.RegisterTypeEnum;
-import com.dasoops.dasserver.cq.mapper.RegisterMapper;
 import com.dasoops.dasserver.cq.service.PluginService;
-import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
+import com.dasoops.dasserver.cq.simplesql.RegisterMtmPluginSimpleSql;
+import com.dasoops.dasserver.cq.simplesql.RegisterSimpleSql;
 import com.dasoops.dasserver.cq.util.RegisterUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,28 +39,21 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
-        implements RegisterService {
+@RequiredArgsConstructor
+public class RegisterServiceImpl implements RegisterService {
 
+    private final RegisterSimpleSql simpleSql;
+    private final RegisterMtmPluginSimpleSql registerMtmPluginSimpleSql;
     private final PluginService pluginService;
-    private final RegisterMtmPluginService registerMtmPluginService;
     private final RegisterCache registerCache;
 
-    public RegisterServiceImpl(@Lazy PluginService pluginService, @Lazy RegisterMtmPluginService registerMtmPluginService, RegisterCache registerCache) {
-        this.pluginService = pluginService;
-        this.registerMtmPluginService = registerMtmPluginService;
-        this.registerCache = registerCache;
-    }
-
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean save(RegisterDo registerPo) {
         Assert.getInstance().allMustNotNull(registerPo, registerPo.getRegisterId(), registerPo.getType(), registerPo.getLevel());
         Assert.getInstance().allMustNull(registerPo.getRowId());
 
         //存储注册对象
-        Assert.getInstance().isTrue(super.save(registerPo));
+        Assert.getInstance().isTrue(simpleSql.save(registerPo));
 
         //插件对象Level <= 注册用户对象Level 赋予使用权限
         List<Long> pluginPoIdList = pluginService.getIdListByMinLevel(registerPo.getLevel());
@@ -73,13 +66,13 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         }).collect(Collectors.toList());
 
         //持久化
-        Assert.getInstance().isTrue(registerMtmPluginService.saveBatch(rpList));
+        Assert.getInstance().isTrue(registerMtmPluginSimpleSql.saveBatch(rpList));
         return true;
     }
 
     @Override
     public List<Long> getIdListByMaxLevel(Integer maxLevel) {
-        return super.lambdaQuery().ge(RegisterDo::getLevel, maxLevel).list().stream().map(BaseDo::getRowId).collect(Collectors.toList());
+        return simpleSql.lambdaQuery().ge(RegisterDo::getLevel, maxLevel).list().stream().map(BaseDo::getRowId).collect(Collectors.toList());
     }
 
     @Override
@@ -87,7 +80,7 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
     public void initOrUpdateRegisterList(CqTemplate cqTemplate) {
         log.info("初始化/更新 注册用户集合 缓存");
         //全表扫描
-        List<RegisterDo> registerDoList = super.list();
+        List<RegisterDo> registerDoList = simpleSql.list();
         //获取为注册用户集合
         List<RegisterDo> noExistRegisterDoList = new ArrayList<>();
         //已注册用户id集合
@@ -141,12 +134,13 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
         });
 
         //持久化
-        super.saveBatch(noExistRegisterDoList);
+        simpleSql.saveBatch(noExistRegisterDoList);
     }
 
     @Override
     public Map<Long, Integer> getRegisterRowIdOtoTypeMap() {
-        List<RegisterDo> registerDoList = super.list();
+        List<RegisterDo> registerDoList = simpleSql.list();
+        @SuppressWarnings("all")
         Map<Long, Integer> map = registerDoList.stream().collect(Collectors.toMap(RegisterDo::getRowId, RegisterDo::getType));
         return map;
     }
@@ -161,14 +155,17 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, RegisterDo>
     @Override
     public void initOrUpdateRegisterTypeRegisterIdOtoId2Cache() {
         log.info("初始化/更新 初始化或更新 注册表类型 用户id 单对单 注册表id  缓存");
-        List<RegisterDo> registerDoList = super.list();
+        List<RegisterDo> registerDoList = simpleSql.list();
+        @SuppressWarnings("all")
         Map<Integer, List<RegisterDo>> groupByTypeRegisterDoMap = registerDoList.stream().collect(Collectors.groupingBy(RegisterDo::getType));
 
         List<RegisterDo> userRegisterDoList = groupByTypeRegisterDoMap.get(RegisterTypeEnum.USER.getDbValue());
+        @SuppressWarnings("all")
         Map<Long, Long> userValueMap = userRegisterDoList.stream().collect(Collectors.toMap(RegisterDo::getRegisterId, RegisterDo::getRowId));
         registerCache.setUserRegisterIdOtoRowIdMap(userValueMap);
 
         List<RegisterDo> groupRegisterDoList = groupByTypeRegisterDoMap.get(RegisterTypeEnum.GROUP.getDbValue());
+        @SuppressWarnings("all")
         Map<Long, Long> groupValueMap = groupRegisterDoList.stream().collect(Collectors.toMap(RegisterDo::getRegisterId, RegisterDo::getRowId));
         registerCache.setGroupRegisterIdOtoRowIdMap(groupValueMap);
     }

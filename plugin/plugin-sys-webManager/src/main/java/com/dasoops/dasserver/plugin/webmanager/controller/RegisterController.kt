@@ -1,8 +1,7 @@
 package com.dasoops.dasserver.plugin.webmanager.controller
 
-import com.dasoops.common.entity.vo.result.PageResult
-import com.dasoops.common.entity.vo.result.Result
-import com.dasoops.common.entity.vo.result.SimpleResult
+import com.dasoops.common.entity.result.PageResult
+import com.dasoops.common.entity.result.SimpleResult
 import com.dasoops.common.util.ExcelUtil
 import com.dasoops.common.util.entity.ExportInfo
 import com.dasoops.dasserver.plugin.webmanager.entity.param.register.EditRegisterParam

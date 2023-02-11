@@ -1,8 +1,6 @@
 package com.dasoops.dasserver.cq.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
-import com.dasoops.dasserver.cq.mapper.RegisterMtmPluginMapper;
 import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +15,7 @@ import org.springframework.stereotype.Service;
  * @see RegisterMtmPluginService
  */
 @Service
-public class RegisterMtmPluginServiceImpl extends ServiceImpl<RegisterMtmPluginMapper, RegisterMtmPluginDo>
-    implements RegisterMtmPluginService{
+public class RegisterMtmPluginServiceImpl implements RegisterMtmPluginService{
 
 }
 

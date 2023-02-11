@@ -1,10 +1,10 @@
 package com.dasoops.dasserver.plugin.webauth.interceptor;
 
 import com.alibaba.fastjson2.JSON;
-import com.dasoops.common.entity.vo.result.SimpleResult;
+import com.dasoops.common.entity.result.SimpleResult;
+import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.PostTypeEnum;
-import com.dasoops.dasserver.cq.EventUtil;
 import com.dasoops.dasserver.cq.utils.entity.EventInfo;
 import com.dasoops.dasserver.plugin.webauth.entity.dto.AuthUserDto;
 import com.dasoops.dasserver.plugin.webauth.entity.enums.RegisterExceptionEnum;

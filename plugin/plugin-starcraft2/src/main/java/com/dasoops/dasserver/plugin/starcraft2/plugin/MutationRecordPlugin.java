@@ -26,8 +26,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MutationRecordPlugin extends CqPlugin {
 
-
-
     private final MutationService mutationService;
     private final ShamMessageTemplate shamMessageTemplate;
 

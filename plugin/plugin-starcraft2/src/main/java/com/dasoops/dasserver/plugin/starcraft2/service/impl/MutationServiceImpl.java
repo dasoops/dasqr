@@ -1,11 +1,9 @@
 package com.dasoops.dasserver.plugin.starcraft2.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.service.ConfigService;
 import com.dasoops.dasserver.plugin.starcraft2.entity.dbo.MutationDo;
 import com.dasoops.dasserver.plugin.starcraft2.entity.enums.StarCraft2ConfigHashKeyEnum;
-import com.dasoops.dasserver.plugin.starcraft2.mapper.MutationMapper;
 import com.dasoops.dasserver.plugin.starcraft2.service.MutationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,15 +17,15 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class MutationServiceImpl extends ServiceImpl<MutationMapper, MutationDo>
-        implements MutationService {
+public class MutationServiceImpl implements MutationService {
 
+    private final MutationSimpleSql mutationSimpleSql;
     private final ConfigCache configCache;
     private final ConfigService configService;
 
     @Override
     public List<MutationDo> getListByKeyword(String keyword) {
-        return super.lambdaQuery().like(MutationDo::getName, keyword).list();
+        return mutationSimpleSql.lambdaQuery().like(MutationDo::getName, keyword).list();
     }
 
     @Override

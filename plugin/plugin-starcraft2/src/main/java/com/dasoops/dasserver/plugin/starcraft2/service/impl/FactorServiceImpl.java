@@ -1,9 +1,8 @@
 package com.dasoops.dasserver.plugin.starcraft2.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.dasserver.plugin.starcraft2.entity.dbo.FactorDo;
-import com.dasoops.dasserver.plugin.starcraft2.mapper.FactorMapper;
 import com.dasoops.dasserver.plugin.starcraft2.service.FactorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,12 +11,14 @@ import org.springframework.stereotype.Service;
  * @createDate 2023-01-20 19:24:24
  */
 @Service
-public class FactorServiceImpl extends ServiceImpl<FactorMapper, FactorDo>
-        implements FactorService {
+@RequiredArgsConstructor
+public class FactorServiceImpl implements FactorService {
+
+    private final FactorSimpleSql simpleSql;
 
     @Override
     public FactorDo getFactorByName(String name) {
-        return super.lambdaQuery().eq(FactorDo::getName, name).one();
+        return simpleSql.lambdaQuery().eq(FactorDo::getName, name).one();
     }
 }
 

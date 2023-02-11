@@ -2,14 +2,13 @@ package com.dasoops.dasserver.plugin.webmanager.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.*;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetRegisterRouteKeywordVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginSortVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginVo;
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetRegisterRouteKeywordVo;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ import java.util.List;
  * @Description: 针对表【tb_core_plugin(插件表,储存插件注册信息,权限,描述,启用状态等)】的数据库操作Service
  * @see IService
  */
-public interface PluginWebService extends IService<PluginDo> {
+public interface PluginWebService {
 
     /**
      * 获取插件分页数据

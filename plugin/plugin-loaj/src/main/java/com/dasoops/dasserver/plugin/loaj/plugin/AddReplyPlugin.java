@@ -13,6 +13,7 @@ import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyIgnoreDbcEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyMatchTypeEnum;
 import com.dasoops.dasserver.plugin.loaj.entity.param.AddReplyParam;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
+import com.dasoops.dasserver.plugin.loaj.service.impl.ReplySimpleSql;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -31,8 +32,8 @@ import org.springframework.stereotype.Component;
 public class AddReplyPlugin extends CqPlugin {
 
 
-
     private final ReplyService replyService;
+    private final ReplySimpleSql replySimpleSql;
     private final ReplyCache replyCache;
 
 
@@ -47,7 +48,7 @@ public class AddReplyPlugin extends CqPlugin {
         replyDo.setIgnoreCase(ReplyIgnoreCaseEnum.TRUE.getDbValue());
         replyDo.setIgnoreDbc(ReplyIgnoreDbcEnum.TRUE.getDbValue());
         replyDo.setMatchType(ReplyMatchTypeEnum.ALL.getDbValue());
-        replyService.save(replyDo);
+        replySimpleSql.save(replyDo);
 
         ReplyRedisValueDto replyDto = new ReplyRedisValueDto();
         replyDto.setKeyword(param.getKeyword());

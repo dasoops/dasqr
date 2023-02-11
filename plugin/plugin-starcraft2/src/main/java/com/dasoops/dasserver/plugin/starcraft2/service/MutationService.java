@@ -1,6 +1,5 @@
 package com.dasoops.dasserver.plugin.starcraft2.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.plugin.starcraft2.entity.dbo.MutationDo;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
  * @description 针对表【tb_plugin_star_craft_2_mutation(sc2 突变)】的数据库操作Service
  * @createDate 2023-01-20 19:24:24
  */
-public interface MutationService extends IService<MutationDo> {
+public interface MutationService {
 
     /**
      * 通过关键字获取集合

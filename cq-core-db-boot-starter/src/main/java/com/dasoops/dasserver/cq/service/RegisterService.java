@@ -16,7 +16,7 @@ import java.util.Map;
  * @Description: 针对表【tb_core_register(注册表,储存用户注册信息,初始权限,群组注册信息)】的数据库操作Service
  * @see IService
  */
-public interface RegisterService extends IService<RegisterDo> {
+public interface RegisterService {
 
     /**
      * 根据最高等级获取注册者id集合 maxLevel >= RegisterLevel
@@ -56,4 +56,13 @@ public interface RegisterService extends IService<RegisterDo> {
      * @param cqTemplate cqTemplate
      */
     void initOrUpdateRegisterRowIdOtoNameMapAndRegisterUserIdOtoNameMap2Cache(CqTemplate cqTemplate);
+
+
+    /**
+     * 保存
+     *
+     * @param registerPo 注册对象
+     * @return boolean
+     */
+    boolean save(RegisterDo registerPo);
 }

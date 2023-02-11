@@ -17,7 +17,7 @@ import java.util.Optional;
  * @Description: 针对表【tb_core_plugin(插件表,储存插件注册信息,权限,描述,启用状态等)】的数据库操作Service
  * @see IService
  */
-public interface PluginService extends IService<PluginDo> {
+public interface PluginService {
 
 
     /**
@@ -55,7 +55,6 @@ public interface PluginService extends IService<PluginDo> {
      * @param pluginPo 插件
      * @return boolean
      */
-    @Override
     boolean save(PluginDo pluginPo);
 
     /**

@@ -47,9 +47,9 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
-        implements ReplyService {
+public class ReplyServiceImpl implements ReplyService {
 
+    private final ReplySimpleSql simpleSql;
     private final ReplyCache replyCache;
     private final ReplyMapper replyMapper;
 
@@ -57,7 +57,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
     public void initOrUpdateRelayMap2Cache() {
         log.info("初始化/更新 关键词 单对单 回复 映射集合 缓存");
         replyCache.clear();
-        List<ReplyDo> list = super.lambdaQuery().eq(ReplyDo::getEnable, DbBooleanEnum.TRUE.getDbValue()).list();
+        List<ReplyDo> list = simpleSql.lambdaQuery().eq(ReplyDo::getEnable, DbBooleanEnum.TRUE.getDbValue()).list();
         if (list.size() <= 0) {
             return;
         }
@@ -86,7 +86,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
                                 .like(ReplyDo::getKeyword, param.getMatchKeyword())
                                 .or()
                                 .like(ReplyDo::getReply, param.getMatchKeyword())
-                );
+                    );
 
         List<Integer> matchTypeList = param.getMatchTypeList();
         if (ObjUtil.isNotEmpty(matchTypeList)) {
@@ -96,7 +96,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
             }
         }
 
-        return super.page(param.buildSelectPage(), wrapper).convert(replyDo -> Convert.to(replyDo, GetReplyVo.class));
+        return simpleSql.page(param.buildSelectPage(), wrapper).convert(replyDo -> Convert.to(replyDo, GetReplyVo.class));
     }
 
     @Override
@@ -112,7 +112,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
         Assert.getInstance().allMustNotNull(param, param.getRowId(), param.getKeyword(), param.getReply(), param.getEnable(), param.getIgnoreCase(), param.getIgnoreDbc(), param.getMatchType());
         checkRowId(param.getRowId());
         ReplyDo replyDo = param.buildDo();
-        super.updateById(replyDo);
+        simpleSql.updateById(replyDo);
         this.initOrUpdateRelayMap2Cache();
     }
 
@@ -120,24 +120,24 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, ReplyDo>
     public void addReply(AddReplyParam param) {
         Assert.getInstance().allMustNotNull(param, param.getReply(), param.getEnable(), param.getIgnoreCase(), param.getIgnoreDbc(), param.getMatchType());
         ReplyDo replyDo = Convert.to(param, ReplyDo.class);
-        super.save(replyDo);
+        simpleSql.save(replyDo);
         this.initOrUpdateRelayMap2Cache();
     }
 
     @Override
     public void deleteReply(DeleteReplyParam param) {
         Assert.getInstance().allMustNotNull(param, param.getRowId());
-        super.removeById(param.getRowId());
+        simpleSql.removeById(param.getRowId());
         this.initOrUpdateRelayMap2Cache();
     }
 
     @Override
     public List<ExportReplyDto> exportAllReply() {
-        return Convert.to(super.list(), ExportReplyDto.class);
+        return Convert.to(simpleSql.list(), ExportReplyDto.class);
     }
 
     private ReplyDo checkRowId(Long rowId) {
-        ReplyDo byId = super.getById(rowId);
+        ReplyDo byId = simpleSql.getById(rowId);
         if (byId == null) {
             throw new LogicException(WebManagerExceptionEnum.UNDEFINED_ID);
         }

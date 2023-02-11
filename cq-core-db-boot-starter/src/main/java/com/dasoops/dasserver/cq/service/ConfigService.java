@@ -2,7 +2,6 @@ package com.dasoops.dasserver.cq.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.common.entity.enums.base.IRedisHashKeyEnum;
-import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 
 import java.util.Optional;
@@ -16,7 +15,7 @@ import java.util.Optional;
  * @Description: 针对表【tb_core_config(配置表,储存配置信息,如:version,mutation等)】的数据库操作Service
  * @see IService
  */
-public interface ConfigService extends IService<ConfigDo> {
+public interface ConfigService {
 
     /**
      * 初始化配置

@@ -1,9 +1,9 @@
 package com.dasoops.dasserver.plugin.webmanager.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.dasoops.common.entity.vo.result.PageResult;
-import com.dasoops.common.entity.vo.result.Result;
-import com.dasoops.common.entity.vo.result.SimpleResult;
+import com.dasoops.common.entity.result.PageResult;
+import com.dasoops.common.entity.result.Result;
+import com.dasoops.common.entity.result.SimpleResult;
 import com.dasoops.common.util.ExcelUtil;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
