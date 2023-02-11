@@ -16,7 +16,6 @@ import com.dasoops.dasserver.cq.entity.enums.PluginStatusEnum;
 import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
 import com.dasoops.dasserver.cq.mapper.PluginMapper;
 import com.dasoops.dasserver.cq.service.PluginService;
-import com.dasoops.dasserver.cq.service.RegisterService;
 import com.dasoops.dasserver.cq.simplesql.PluginSimpleSql;
 import com.dasoops.dasserver.cq.simplesql.RegisterMtmPluginSimpleSql;
 import com.dasoops.dasserver.cq.simplesql.RegisterSimpleSql;
@@ -49,8 +48,6 @@ public class PluginServiceImpl implements PluginService {
     private final PluginSimpleSql simpleSql;
     private final RegisterSimpleSql registerSimpleSql;
     private final RegisterMtmPluginSimpleSql registerMtmPluginSimpleSql;
-
-    private final RegisterService registerService;
 
     private final PluginMapper pluginMapper;
 
