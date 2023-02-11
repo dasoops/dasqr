@@ -16,6 +16,7 @@ import com.dasoops.dasserver.plugin.starcraft2.entity.param.GetFactorParam;
 import com.dasoops.dasserver.plugin.starcraft2.entity.param.GetMutationParam;
 import com.dasoops.dasserver.plugin.starcraft2.service.FactorService;
 import com.dasoops.dasserver.plugin.starcraft2.service.MutationService;
+import com.dasoops.dasserver.plugin.starcraft2.service.impl.MutationSimpleSql;
 import com.dasoops.minio.MinioTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,8 +39,8 @@ import java.util.List;
 public class StarCraftPlugin extends CqPlugin {
 
 
-
     private final ConfigCache configCache;
+    private final MutationSimpleSql mutationSimpleSql;
     private final MutationService mutationService;
     private final FactorService factorService;
     private final MinioTemplate minioTemplate;
@@ -63,7 +64,7 @@ public class StarCraftPlugin extends CqPlugin {
             recordRowId++;
         }
 
-        MutationDo mutationDo = mutationService.getById(recordRowId);
+        MutationDo mutationDo = mutationSimpleSql.getById(recordRowId);
         return StrUtil.format("""
                         星际死彻底的第{}周,阿门
                         {}: {}({})

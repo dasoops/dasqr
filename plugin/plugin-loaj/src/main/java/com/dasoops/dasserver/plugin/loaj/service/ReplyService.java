@@ -3,7 +3,6 @@ package com.dasoops.dasserver.plugin.loaj.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dasoops.dasserver.plugin.loaj.entity.dbo.ReplyDo;
 import com.dasoops.dasserver.plugin.loaj.entity.dto.ExportReplyDto;
 import com.dasoops.dasserver.plugin.loaj.entity.param.AddReplyParam;
 import com.dasoops.dasserver.plugin.loaj.entity.param.DeleteReplyParam;
@@ -23,7 +22,7 @@ import java.util.List;
  * @Description: 针对表【tb_plugin_loaj_reply】的数据库操作Service
  * @see IService
  */
-public interface ReplyService extends IService<ReplyDo> {
+public interface ReplyService {
 
     /**
      * 初始化/更新 关键词 单对单 回复 映射集合 缓存

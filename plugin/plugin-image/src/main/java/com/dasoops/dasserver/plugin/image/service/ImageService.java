@@ -1,7 +1,6 @@
 package com.dasoops.dasserver.plugin.image.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
 import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo;
 import com.dasoops.dasserver.plugin.image.entity.dto.ExportImageInfoDto;
@@ -21,7 +20,7 @@ import java.util.Optional;
 * @description 针对表【tb_plugin_image(图片信息)】的数据库操作Service
 * @createDate 2022-11-07 15:23:49
 */
-public interface ImageService extends IService<ImageDo> {
+public interface ImageService {
 
     /**
      * 关键字是否重复

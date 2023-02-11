@@ -52,9 +52,9 @@ import java.util.Optional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
-        implements ImageService {
+public class ImageServiceImpl implements ImageService {
 
+    private final ImageSimpleSql simpleSql;
     private final MinioTemplate minioTemplate;
     private final ImageMapper imageMapper;
     private final RegisterCache registerCache;
@@ -62,11 +62,11 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
     @Override
     public boolean keywordIsRepeat(String keyword) {
-        return super.lambdaQuery().eq(ImageDo::getKeyword, keyword).count() > 0;
+        return simpleSql.lambdaQuery().eq(ImageDo::getKeyword, keyword).count() > 0;
     }
 
     private boolean keywordIsRepeat(String keyword, Long id) {
-        return super.lambdaQuery().ne(ImageDo::getRowId, id).eq(ImageDo::getKeyword, keyword).count() > 0;
+        return simpleSql.lambdaQuery().ne(ImageDo::getRowId, id).eq(ImageDo::getKeyword, keyword).count() > 0;
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
         //信息持久化
         imageCache.addKeyword(keyword);
-        return save(imagePo);
+        return simpleSql.save(imagePo);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
 
     @Override
     public ImageDo getImageByKeyword(String keyword) {
-        return super.lambdaQuery().eq(ImageDo::getKeyword, keyword).one();
+        return simpleSql.lambdaQuery().eq(ImageDo::getKeyword, keyword).one();
     }
 
     @Override
@@ -141,7 +141,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
                 .orderByDesc(ImageDo::getUpdateTime);
 
         Long authorId = EventUtil.get().getAuthorId();
-        IPage<ImageDo> page = super.page(param.buildSelectPage(), wrapper);
+        IPage<ImageDo> page = simpleSql.page(param.buildSelectPage(), wrapper);
         IPage<GetImageVo> resVoPage = page.convert(imageDo -> {
             Long registerId = imageDo.getAuthorId();
             String fileName = imageDo.getFileName();
@@ -220,7 +220,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         Long id = param.getRowId();
 
         Long authorId = EventUtil.get().getAuthorId();
-        ImageDo imageDo = super.getById(id);
+        ImageDo imageDo = simpleSql.getById(id);
         if (!imageDo.getCreateUser().equals(authorId)) {
             throw new LogicException(ImageExceptionEnum.NO_AUTH);
         }
@@ -239,7 +239,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         newImageDo.setRowId(id);
         newImageDo.setKeyword(keyword);
         newImageDo.setFileName(fileName);
-        super.updateById(newImageDo);
+        simpleSql.updateById(newImageDo);
 
     }
 
@@ -272,7 +272,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         imageDo.setAuthorId(EventUtil.get().getAuthorId());
         imageDo.setGroupId(-1L);
 
-        super.save(imageDo);
+        simpleSql.save(imageDo);
     }
 
     @Override
@@ -280,7 +280,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
         Assert.getInstance().allMustNotNull(param, param.getRowId());
 
         Long id = param.getRowId();
-        ImageDo imageDo = super.getById(id);
+        ImageDo imageDo = simpleSql.getById(id);
 
         if (imageDo == null) {
             throw new LogicException(ImageExceptionEnum.ID_NOT_FOUND);
@@ -291,12 +291,12 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageDo>
             throw new LogicException(ImageExceptionEnum.NO_AUTH);
         }
 
-        super.removeById(id);
+        simpleSql.removeById(id);
     }
 
     @Override
     public List<ExportImageInfoDto> exportAllImageInfo() {
-        List<ImageDo> imageDoList = super.list();
+        List<ImageDo> imageDoList = simpleSql.list();
         return imageDoList.stream().map(imageDo -> {
             ExportImageInfoDto dto = new ExportImageInfoDto();
             dto.setRowId(imageDo.getRowId());

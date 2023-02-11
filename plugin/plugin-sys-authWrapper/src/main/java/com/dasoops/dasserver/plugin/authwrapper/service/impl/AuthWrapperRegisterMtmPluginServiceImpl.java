@@ -8,9 +8,12 @@ import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
 import com.dasoops.dasserver.cq.mapper.RegisterMtmPluginMapper;
 import com.dasoops.dasserver.cq.service.PluginService;
 import com.dasoops.dasserver.cq.service.RegisterService;
+import com.dasoops.dasserver.cq.simplesql.PluginSimpleSql;
+import com.dasoops.dasserver.cq.simplesql.RegisterSimpleSql;
 import com.dasoops.dasserver.cq.util.RegisterMtmPluginUtil;
 import com.dasoops.dasserver.plugin.authwrapper.cache.AuthWrapperRegisterMtmPluginCache;
 import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperRegisterMtmPluginService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,18 +34,14 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<RegisterMtmPluginMapper, RegisterMtmPluginDo>
         implements AuthWrapperRegisterMtmPluginService {
 
-    private final RegisterService registerService;
-    private final PluginService pluginService;
+    private final RegisterSimpleSql registerSimpleSql;
+    private final PluginSimpleSql pluginSimpleSql;
     private final AuthWrapperRegisterMtmPluginCache authWrapperRegisterMtmPluginCache;
 
-    public AuthWrapperRegisterMtmPluginServiceImpl(RegisterService registerService, PluginService pluginService, AuthWrapperRegisterMtmPluginCache authWrapperRegisterMtmPluginCache) {
-        this.registerService = registerService;
-        this.pluginService = pluginService;
-        this.authWrapperRegisterMtmPluginCache = authWrapperRegisterMtmPluginCache;
-    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -50,8 +49,8 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
         List<RegisterMtmPluginDo> noExistRegisterMtmPluginDoList = new ArrayList<>();
 
         List<RegisterMtmPluginDo> registerMtmPluginDoAllList = super.list();
-        List<RegisterDo> registerDoList = registerService.list();
-        List<PluginDo> pluginDoList = pluginService.list();
+        List<RegisterDo> registerDoList = registerSimpleSql.list();
+        List<PluginDo> pluginDoList = pluginSimpleSql.list();
 
         //补全缺少记录
         //按注册用户分组
@@ -63,18 +62,18 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
                 //全空,全补全
                 noExistRegisterMtmPluginDoList.addAll(
                         pluginDoList.stream().map(pluginDo -> RegisterMtmPluginUtil.buildNewRegisterMtmPluginDo(registerDo, pluginDo)).toList()
-                );
+                                                     );
             } else {
                 //缺多少补多少
                 pluginDoList.forEach(pluginDo -> {
                     //是否有记录
                     boolean isExist = registerMtmPluginDoList.stream().anyMatch(mtmDo ->
-                            mtmDo.getPluginId().equals(pluginDo.getRowId())
-                    );
+                                    mtmDo.getPluginId().equals(pluginDo.getRowId())
+                                                                               );
                     if (!isExist) {
                         noExistRegisterMtmPluginDoList.add(
                                 RegisterMtmPluginUtil.buildNewRegisterMtmPluginDo(registerDo, pluginDo)
-                        );
+                                                          );
                     }
                 });
             }
@@ -119,7 +118,7 @@ public class AuthWrapperRegisterMtmPluginServiceImpl extends ServiceImpl<Registe
             Map<Long, Integer> pluginIdIsPassMap = registerMtmPluginDoList.stream().collect(Collectors.toMap(
                     RegisterMtmPluginDo::getPluginId,
                     RegisterMtmPluginDo::getIsPass
-            ));
+                                                                                                            ));
             authWrapperRegisterMtmPluginCache.setAuthMap(registerId, pluginIdIsPassMap);
         });
     }

@@ -1,13 +1,11 @@
 package com.dasoops.dasserver.plugin.schedule.service.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dasoops.common.entity.enums.base.DbBooleanEnum;
 import com.dasoops.common.util.RegexUtil;
 import com.dasoops.dasserver.cq.CqGlobal;
 import com.dasoops.dasserver.cq.exception.ExceptionTemplate;
 import com.dasoops.dasserver.plugin.schedule.entity.dbo.ScheduleDo;
-import com.dasoops.dasserver.plugin.schedule.mapper.ScheduleMapper;
 import com.dasoops.dasserver.plugin.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,15 +25,15 @@ import java.util.Objects;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, ScheduleDo>
-        implements ScheduleService {
+public class ScheduleServiceImpl implements ScheduleService {
 
+    private final ScheduleSimpleSql simpleSql;
     private final ExceptionTemplate exceptionTemplate;
     private final ApplicationContext applicationContext;
 
     @Override
     public List<CronTask> getCronTasksList() {
-        List<ScheduleDo> scheduleDoList = super.list();
+        List<ScheduleDo> scheduleDoList = simpleSql.list();
         List<CronTask> cronTaskList = scheduleDoList.stream().map(scheduleDo -> {
             if (scheduleDo.getEnable().equals(DbBooleanEnum.FALSE.getDbValue())) {
                 return null;
@@ -69,8 +67,6 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, ScheduleDo>
         }).filter(Objects::nonNull).toList();
         return cronTaskList;
     }
-
-
 }
 
 
