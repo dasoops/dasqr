@@ -45,11 +45,11 @@ public class PluginServiceImpl implements PluginService {
 
     private final ApplicationContext applicationContext;
 
-    private final PluginSimpleSql simpleSql;
     private final RegisterSimpleSql registerSimpleSql;
     private final RegisterMtmPluginSimpleSql registerMtmPluginSimpleSql;
 
-    private final PluginMapper pluginMapper;
+    private final PluginSimpleSql simpleSql;
+    private final PluginMapper mapper;
 
     @Override
     public List<PluginStatusDto> getAllPluginAndStatus() {
@@ -194,7 +194,7 @@ public class PluginServiceImpl implements PluginService {
 
     @Override
     public Integer getMaxOrder() {
-        return pluginMapper.getMaxOrder();
+        return mapper.getMaxOrder();
     }
 
 
