@@ -1,7 +1,10 @@
 pid=`ps -ef | grep DasServerApplication | grep -v grep | cut -c 9-15`
 
-
 cd /usr/local/gitRepo/dasServer
+git pull
+mvn clean install
+
+cd /usr/local/gitRepo/common-boot-starter
 git pull
 mvn clean install
 

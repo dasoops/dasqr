@@ -4,6 +4,10 @@ cd /usr/local/gitRepo/webManager
 git pull
 npm run build
 
+cd /usr/local/gitRepo/common-boot-starter
+git pull
+mvn clean install
+
 cd /usr/local/gitRepo/dasServer
 git pull
 mvn clean install
