@@ -4,12 +4,12 @@ import com.dasoops.dasserver.cq.entity.dto.cq.event.CqEvent;
 import lombok.Getter;
 
 /**
- * @Title: PassObj
- * @ClassPath com.dasoops.dasserver.cq.PassObj
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/31
- * @Version 1.0.0
- * @Description: 插件判断放行对象
+ * @title: PassObj
+ * @classPath com.dasoops.dasserver.cq.PassObj
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/31
+ * @version 1.0.0
+ * @description 插件判断放行对象
  */
 public class PassObj {
 

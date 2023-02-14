@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @Title: plugin
- * @ClassPath com.dasoops.dasserver.core.plugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/01
- * @Version 1.0.0
- * @Description: 插件
+ * @title: plugin
+ * @classPath com.dasoops.dasserver.core.plugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/01
+ * @version 1.0.0
+ * @description 插件
  * @see CqPlugin
  */
 @Component

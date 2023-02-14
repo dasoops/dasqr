@@ -5,12 +5,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Title: AutoConfiguration
- * @ClassPath com.dasoops.dasserver.plugin.starcraft2.AutoConfiguration
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/20
- * @Version 1.0.0
- * @Description: 自动配置
+ * @title: AutoConfiguration
+ * @classPath com.dasoops.dasserver.plugin.starcraft2.AutoConfiguration
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/20
+ * @version 1.0.0
+ * @description 自动配置
  */
 
 @MapperScan("com.dasoops.dasserver.plugin.starcraft2.mapper")

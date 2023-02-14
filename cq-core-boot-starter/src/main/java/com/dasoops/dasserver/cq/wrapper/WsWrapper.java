@@ -7,12 +7,12 @@ import org.springframework.scheduling.annotation.Async;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * @Title: WsWrapper
- * @ClassPath com.dasoops.dasserver.cq.wrapper.WsWrapper
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/15
- * @Version 1.0.0
- * @Description: ws增强
+ * @title: WsWrapper
+ * @classPath com.dasoops.dasserver.cq.wrapper.WsWrapper
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/15
+ * @version 1.0.0
+ * @description ws增强
  */
 public interface WsWrapper {
 

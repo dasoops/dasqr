@@ -13,12 +13,12 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 
 /**
- * @Title: ShellTemplate
- * @ClassPath com.dasoops.dasserver.plugin.shell.ShellTemplate
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/23
- * @Version 1.0.0
- * @Description: shellTemplate(向前端发送消息)
+ * @title: ShellTemplate
+ * @classPath com.dasoops.dasserver.plugin.shell.ShellTemplate
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/23
+ * @version 1.0.0
+ * @description shellTemplate(向前端发送消息)
  */
 @Slf4j
 @RequiredArgsConstructor

@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: ReplyMatchTypeEnum
- * @ClassPath com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyMatchTypeEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/09
- * @Version 1.0.0
- * @Description: 回复匹配类型枚举
+ * @title: ReplyMatchTypeEnum
+ * @classPath com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyMatchTypeEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/09
+ * @version 1.0.0
+ * @description 回复匹配类型枚举
  * @see IDbColumnEnum
  */
 @Getter

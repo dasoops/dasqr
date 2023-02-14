@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @Title: DefaultPluginLoadReslover
- * @ClassPath com.dasoops.dasserver.cq.bot.DefaultPluginLoadReslover
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/10
- * @Version 1.0.0
- * @Description: 默认插件加载解析器
+ * @title: DefaultPluginLoadReslover
+ * @classPath com.dasoops.dasserver.cq.bot.DefaultPluginLoadReslover
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/10
+ * @version 1.0.0
+ * @description 默认插件加载解析器
  * @see CqPluginLoadReslover
  */
 public class DefaultPluginLoadReslover implements CqPluginLoadReslover {

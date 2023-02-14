@@ -8,12 +8,12 @@ import lombok.EqualsAndHashCode;
 
 
 /**
- * @Title: GetWsUrlVo
- * @ClassPath com.dasoops.dasserver.plugin.shell.entity.vo.GetWsUrlVo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/24
- * @Version 1.0.0
- * @Description: 获取wsurlvo
+ * @title: GetWsUrlVo
+ * @classPath com.dasoops.dasserver.plugin.shell.entity.vo.GetWsUrlVo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/24
+ * @version 1.0.0
+ * @description 获取wsurlvo
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

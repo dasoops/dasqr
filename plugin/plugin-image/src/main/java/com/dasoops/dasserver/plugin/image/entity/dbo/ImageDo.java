@@ -8,12 +8,12 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @Title: ImagePo
- * @ClassPath com.dasoops.dasserver.plugin.image.entity.po.ImagePo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/07
- * @Version 1.0.0
- * @Description: 图片信息
+ * @title: ImagePo
+ * @classPath com.dasoops.dasserver.plugin.image.entity.po.ImagePo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/07
+ * @version 1.0.0
+ * @description 图片信息
  * @see BaseDo
  * @see Serializable
  */

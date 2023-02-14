@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Title: CqPluginGlobal
- * @ClassPath com.dasoops.dasserver.cq.CqPluginGlobal
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/06
- * @Version 1.0.0
- * @Description: cqPluginGlobal
+ * @title: CqPluginGlobal
+ * @classPath com.dasoops.dasserver.cq.CqPluginGlobal
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/06
+ * @version 1.0.0
+ * @description cqPluginGlobal
  */
 @Slf4j
 public class CqPluginGlobal {

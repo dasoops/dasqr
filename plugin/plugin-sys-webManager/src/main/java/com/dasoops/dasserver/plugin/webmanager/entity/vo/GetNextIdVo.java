@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: GetNextIdVo
- * @ClassPath com.dasoops.dasserver.webManager.entity.vo.GetNextIdVo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/30
- * @Version 1.0.0
- * @Description: 获取下一个主键id
+ * @title: GetNextIdVo
+ * @classPath com.dasoops.dasserver.webManager.entity.vo.GetNextIdVo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/30
+ * @version 1.0.0
+ * @description 获取下一个主键id
  * @see BaseVo
  */
 @Data

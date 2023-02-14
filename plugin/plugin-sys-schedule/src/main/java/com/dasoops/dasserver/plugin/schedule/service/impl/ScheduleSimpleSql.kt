@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service
 
 
 /**
- * @Title: ScheduleSimpleSql
- * @ClassPath com.dasoops.dasserver.plugin.schedule.service.impl.ScheduleSimpleSql
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/02/11
- * @Version 1.0.0
- * @Description: 定时任务简单sql
+ * @title: ScheduleSimpleSql
+ * @classPath com.dasoops.dasserver.plugin.schedule.service.impl.ScheduleSimpleSql
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/02/11
+ * @version 1.0.0
+ * @description 定时任务简单sql
  * @see [ScheduleSimpleSql]
  */
 @Service

@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: CqMetaEvent
- * @ClassPath com.dasoops.dasserver.cq.entity.event.meta.CqMetaEvent
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description:
+ * @title: CqMetaEvent
+ * @classPath com.dasoops.dasserver.cq.entity.event.meta.CqMetaEvent
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description
  * @see CqEvent
  */
 @EqualsAndHashCode(callSuper = true)

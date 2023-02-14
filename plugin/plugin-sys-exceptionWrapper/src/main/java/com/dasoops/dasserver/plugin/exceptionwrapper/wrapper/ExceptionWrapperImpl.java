@@ -17,12 +17,12 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 /**
- * @Title: CustomExceptionWrapper
- * @ClassPath com.dasoops.dasserver.plugin.exceptionwrapper.CustomExceptionWrapper
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/04
- * @Version 1.0.0
- * @Description: 自定义异常增强
+ * @title: CustomExceptionWrapper
+ * @classPath com.dasoops.dasserver.plugin.exceptionwrapper.CustomExceptionWrapper
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/04
+ * @version 1.0.0
+ * @description 自定义异常增强
  * @see ExceptionWrapper
  */
 @Component

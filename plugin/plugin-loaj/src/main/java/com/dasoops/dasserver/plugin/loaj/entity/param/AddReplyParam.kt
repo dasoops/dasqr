@@ -7,12 +7,12 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
 /**
- * @Title: AddReplyParam
- * @ClassPath com.dasoops.dasserver.plugin.loaj.entity.param.AddReplyParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/30
- * @Version 1.0.0
- * @Description: 添加回复param
+ * @title: AddReplyParam
+ * @classPath com.dasoops.dasserver.plugin.loaj.entity.param.AddReplyParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/30
+ * @version 1.0.0
+ * @description 添加回复param
  * @see [AddReplyParam]
  */
 @ApiModel(value = "添加回复param", description = "添加回复param")

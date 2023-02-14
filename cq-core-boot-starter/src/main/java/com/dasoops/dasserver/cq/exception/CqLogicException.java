@@ -5,12 +5,12 @@ import com.dasoops.common.exception.AbstractBaseCustomException;
 import com.dasoops.common.exception.LogicException;
 
 /**
- * @Title: CqLogicException
- * @ClassPath com.dasoops.dasserver.cq.exception.CqLogicException
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: cq逻辑异常
+ * @title: CqLogicException
+ * @classPath com.dasoops.dasserver.cq.exception.CqLogicException
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description cq逻辑异常
  * @see AbstractBaseCustomException
  */
 public class CqLogicException extends LogicException {

@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: ApiEnum
- * @ClassPath com.dasoops.dasserver.cq.entity.enums.ApiEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: api枚举
+ * @title: ApiEnum
+ * @classPath com.dasoops.dasserver.cq.entity.enums.ApiEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description api枚举
  * @see Enum
  */
 @Getter

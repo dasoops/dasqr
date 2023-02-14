@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * @Title: RegisterCache
- * @ClassPath com.dasoops.dasserver.cq.cache.RegisterCache
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/03
- * @Version 1.0.0
- * @Description: 注册表缓存
+ * @title: RegisterCache
+ * @classPath com.dasoops.dasserver.cq.cache.RegisterCache
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/03
+ * @version 1.0.0
+ * @description 注册表缓存
  * @see BaseCache
  */
 @Component
@@ -86,6 +86,15 @@ public class RegisterCache extends BaseCache {
         return Long.valueOf(rowId);
     }
 
+    /**
+     * 获取 注册表(群组) 注册表id单对单id映射集合
+     *
+     * @return {@link Map}<{@link String}, {@link String}>
+     */
+    public Map<String, String> getGroupRowIdOtoRegisterIdMap() {
+        return super.entries(RegisterRedisKeyEnum.REGISTER_GROUP_REGISTER_ID_OTO_ROW_ID_MAP);
+    }
+
 
     /**
      * 设置 rowId to 名称 映射
@@ -102,7 +111,7 @@ public class RegisterCache extends BaseCache {
      * @param id id
      * @return {@link String}
      */
-    public String getRegisterNameByRowId(Long id) {
+    public String getRegisterUserNameByRowId(Long id) {
         return super.hget(RegisterRedisKeyEnum.REGISTER_ROW_ID_OTO_NAME_MAP, String.valueOf(id));
     }
 
@@ -128,8 +137,8 @@ public class RegisterCache extends BaseCache {
      *
      * @param valueMap 值映射集合
      */
-    public void setRegisterIdOtoNameMap(Map<Long, String> valueMap) {
-        super.hset(RegisterRedisKeyEnum.REGISTER_ID_OTO_NAME_MAP, Convert.toStrMap(valueMap));
+    public void setRegisterUserIdOtoNameMap(Map<Long, String> valueMap) {
+        super.hset(RegisterRedisKeyEnum.REGISTER_USER_ID_OTO_NAME_MAP, Convert.toStrMap(valueMap));
     }
 
     /**
@@ -138,8 +147,8 @@ public class RegisterCache extends BaseCache {
      * @param id id
      * @return {@link String}
      */
-    public String getRegisterNameById(Long id) {
-        return super.hget(RegisterRedisKeyEnum.REGISTER_ID_OTO_NAME_MAP, String.valueOf(id));
+    public String getRegisterUserNameById(Long id) {
+        return super.hget(RegisterRedisKeyEnum.REGISTER_USER_ID_OTO_NAME_MAP, String.valueOf(id));
     }
 
     /**
@@ -147,15 +156,50 @@ public class RegisterCache extends BaseCache {
      *
      * @return {@link Map}<{@link String}, {@link String}>
      */
-    public Map<String, String> getAllRegisterIdOtoNameMap() {
-        Map<String, String> entries = super.entries(RegisterRedisKeyEnum.REGISTER_ID_OTO_NAME_MAP);
+    public Map<String, String> getRegisterUserIdOtoNameMap() {
+        Map<String, String> entries = super.entries(RegisterRedisKeyEnum.REGISTER_USER_ID_OTO_NAME_MAP);
         return entries;
     }
 
     /**
      * 删除 注册表用户id oto 名称 集合
      */
-    public void removeRegisterIdOtoNameMap() {
-        super.remove(RegisterRedisKeyEnum.REGISTER_ID_OTO_NAME_MAP);
+    public void removeRegisterUserIdOtoNameMap() {
+        super.remove(RegisterRedisKeyEnum.REGISTER_USER_ID_OTO_NAME_MAP);
+    }
+
+    /**
+     * 设置注册表用户id单对单名称映射集合
+     *
+     * @param valueMap 值映射集合
+     */
+    public void setRegisterGroupIdOtoNameMap(Map<Long, String> valueMap) {
+        super.hset(RegisterRedisKeyEnum.REGISTER_GROUP_ID_OTO_NAME_MAP, Convert.toStrMap(valueMap));
+    }
+
+    /**
+     * 获取 注册表用户id oto 名称 集合
+     *
+     * @return {@link Map}<{@link String}, {@link String}>
+     */
+    public Map<String, String> getRegisterGroupIdOtoNameMap() {
+        return super.entries(RegisterRedisKeyEnum.REGISTER_GROUP_ID_OTO_NAME_MAP);
+    }
+
+    /**
+     * 获取 注册表群组id 获取 名称
+     *
+     * @param id id
+     * @return {@link String}
+     */
+    public String getRegisterGroupNameById(Long id) {
+        return super.hget(RegisterRedisKeyEnum.REGISTER_GROUP_ID_OTO_NAME_MAP, String.valueOf(id));
+    }
+
+    /**
+     * 删除 注册表用户id oto 名称 集合
+     */
+    public void removeRegisterGroupIdOtoNameMap() {
+        super.remove(RegisterRedisKeyEnum.REGISTER_GROUP_ID_OTO_NAME_MAP);
     }
 }

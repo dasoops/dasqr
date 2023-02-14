@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
- * @Title: GlobalExceptionHandler
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.GlobalExceptionHandler
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 全局异常处理程序
+ * @title: GlobalExceptionHandler
+ * @classPath com.dasoops.dasserver.plugin.webmanager.GlobalExceptionHandler
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 全局异常处理程序
  */
 @Slf4j
 @ControllerAdvice

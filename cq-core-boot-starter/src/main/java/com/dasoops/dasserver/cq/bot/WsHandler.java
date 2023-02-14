@@ -25,12 +25,12 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 
 /**
- * @Title: websocketHandler
- * @ClassPath com.dasoops.dasserver.cq.websocket.websocketHandler
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: websocket处理程序
+ * @title: websocketHandler
+ * @classPath com.dasoops.dasserver.cq.websocket.websocketHandler
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description websocket处理程序
  * @see WebSocketHandler
  */
 @Slf4j

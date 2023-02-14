@@ -14,12 +14,12 @@ import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import java.util.List;
 
 /**
- * @Title: ReplyService
- * @ClassPath com.dasoops.dasserver.plugin.loaj.service.ReplyService
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/11
- * @Version 1.0.0
- * @Description: 针对表【tb_plugin_loaj_reply】的数据库操作Service
+ * @title: ReplyService
+ * @classPath com.dasoops.dasserver.plugin.loaj.service.ReplyService
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/11
+ * @version 1.0.0
+ * @description 针对表【tb_plugin_loaj_reply】的数据库操作Service
  * @see IService
  */
 public interface ReplyService {

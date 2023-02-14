@@ -4,12 +4,12 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Data;
 
 /**
- * @Title: CqFile
- * @ClassPath com.dasoops.dasserver.cq.entity.entity.CqFile
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: cq文件
+ * @title: CqFile
+ * @classPath com.dasoops.dasserver.cq.entity.entity.CqFile
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description cq文件
  */
 @Data
 public class CqFile {

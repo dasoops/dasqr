@@ -10,12 +10,12 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @Title: SortPluginParam
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.SortPluginParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/12
- * @Version 1.0.0
- * @Description: 排序插件param
+ * @title: SortPluginParam
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.SortPluginParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/12
+ * @version 1.0.0
+ * @description 排序插件param
  * @see BaseFastBuildParam
  */
 @EqualsAndHashCode(callSuper = true)

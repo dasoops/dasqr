@@ -7,12 +7,12 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @Title: ApiListData
- * @ClassPath com.dasoops.dasserver.cq.entity.retdata.ApiListData
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: api集合数据
+ * @title: ApiListData
+ * @classPath com.dasoops.dasserver.cq.entity.retdata.ApiListData
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description api集合数据
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

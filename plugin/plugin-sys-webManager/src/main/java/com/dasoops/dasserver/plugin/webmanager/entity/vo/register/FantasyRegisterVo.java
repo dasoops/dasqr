@@ -1,23 +1,22 @@
-package com.dasoops.dasserver.plugin.image.entity.dto;
+package com.dasoops.dasserver.plugin.webmanager.entity.vo.register;
 
-import com.dasoops.common.entity.dto.base.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
- * @Title: FantasyUserDto
- * @ClassPath com.dasoops.dasserver.plugin.image.entity.dto.FantasyUserDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 联想用户dto
+ * @title: FantasyUserDto
+ * @classPath com.dasoops.dasserver.plugin.image.entity.dto.FantasyUserDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 联想用户dto
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "联想用户dto", description = "联想用户dto")
-public class FantastyUserDto extends BaseDto {
+public class FantasyRegisterVo implements Serializable {
 
     /**
      * 用户注册id

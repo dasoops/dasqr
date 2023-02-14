@@ -14,12 +14,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @Title: PluginServiceImpl
- * @ClassPath com.dasoops.dasserver.cq.service.impl.PluginServiceImpl
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/31
- * @Version 1.0.0
- * @Description: 针对表【tb_core_plugin(插件表,储存插件注册信息,权限,描述,启用状态等)】的数据库操作Service实现
+ * @title: PluginServiceImpl
+ * @classPath com.dasoops.dasserver.cq.service.impl.PluginServiceImpl
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/31
+ * @version 1.0.0
+ * @description 针对表【tb_core_plugin(插件表,储存插件注册信息,权限,描述,启用状态等)】的数据库操作Service实现
  * @see ServiceImpl
  * @see PluginService
  */

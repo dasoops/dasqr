@@ -7,12 +7,12 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @Title: SetuParam
- * @ClassPath com.dasoops.dasserver.plugin.shell.entity.param.SetuParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/22
- * @Version 1.0.0
- * @Description: setuparam
+ * @title: SetuParam
+ * @classPath com.dasoops.dasserver.plugin.shell.entity.param.SetuParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/22
+ * @version 1.0.0
+ * @description setuparam
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

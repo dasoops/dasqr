@@ -3,12 +3,12 @@ package com.dasoops.dasserver.plugin.webmanager.entity.dto
 import com.alibaba.excel.annotation.ExcelProperty
 
 /**
- * @Title: ExportRegisterMtmDto
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportRegisterMtmDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/02/01
- * @Version 1.0.0
- * @Description: 导出注册对象多对多dto
+ * @title: ExportRegisterMtmDto
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportRegisterMtmDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/02/01
+ * @version 1.0.0
+ * @description 导出注册对象多对多dto
  * @see [ExportRegisterMtmDto]
  */
 data class ExportRegisterMtmDto(

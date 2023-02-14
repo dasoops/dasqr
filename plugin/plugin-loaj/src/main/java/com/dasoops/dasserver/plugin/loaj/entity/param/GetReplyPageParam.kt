@@ -6,12 +6,12 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
 /**
- * @Title: GetReplyPageParam
- * @ClassPath com.dasoops.dasserver.plugin.loaj.entity.param.GetReplyPageParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/30
- * @Version 1.0.0
- * @Description: 获取回复页面param
+ * @title: GetReplyPageParam
+ * @classPath com.dasoops.dasserver.plugin.loaj.entity.param.GetReplyPageParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/30
+ * @version 1.0.0
+ * @description 获取回复页面param
  * @see [GetReplyPageParam]
  */
 @ApiModel(value = "获取回复页面param", description = "获取回复页面param")

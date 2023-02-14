@@ -4,12 +4,12 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Data;
 
 /**
- * @Title: FriendData
- * @ClassPath com.dasoops.dasserver.cq.entity.retdata.FriendData
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: 朋友数据
+ * @title: FriendData
+ * @classPath com.dasoops.dasserver.cq.entity.retdata.FriendData
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description 朋友数据
  */
 @Data
 public class FriendData {

@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: UrlDto
- * @ClassPath com.dasoops.dasserver.plugin.shell.entity.dto.UrlDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/22
- * @Version 1.0.0
- * @Description: urldto
+ * @title: UrlDto
+ * @classPath com.dasoops.dasserver.plugin.shell.entity.dto.UrlDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/22
+ * @version 1.0.0
+ * @description urldto
  */
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor

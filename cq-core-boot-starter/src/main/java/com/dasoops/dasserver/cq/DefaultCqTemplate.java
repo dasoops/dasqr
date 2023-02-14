@@ -21,12 +21,12 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 
 /**
- * @Title: CqTemplate
- * @ClassPath com.dasoops.dasserver.cq.CqTemplate
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/20
- * @Version 1.0.0
- * @Description: cq对外暴露模板类, 提供cq消息发送
+ * @title: CqTemplate
+ * @classPath com.dasoops.dasserver.cq.CqTemplate
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/20
+ * @version 1.0.0
+ * @description cq对外暴露模板类, 提供cq消息发送
  */
 public class DefaultCqTemplate implements CqTemplate {
 

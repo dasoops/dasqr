@@ -13,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: RepeatReadPlugin
- * @ClassPath com.dasoops.dasserver.plugin.loaj.plugin.RepeatReadPlugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/19
- * @Version 1.0.0
- * @Description: 复读插件
+ * @title: RepeatReadPlugin
+ * @classPath com.dasoops.dasserver.plugin.loaj.plugin.RepeatReadPlugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/19
+ * @version 1.0.0
+ * @description 复读插件
  */
 @RequiredArgsConstructor
 @Component

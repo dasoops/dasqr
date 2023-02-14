@@ -19,12 +19,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: AddRelayPlugin
- * @ClassPath com.dasoops.dasserver.plugin.loaj.plugin.AddRelayPlugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/11
- * @Version 1.0.0
- * @Description: 添加回复插件
+ * @title: AddRelayPlugin
+ * @classPath com.dasoops.dasserver.plugin.loaj.plugin.AddRelayPlugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/11
+ * @version 1.0.0
+ * @description 添加回复插件
  */
 @Slf4j
 @Component

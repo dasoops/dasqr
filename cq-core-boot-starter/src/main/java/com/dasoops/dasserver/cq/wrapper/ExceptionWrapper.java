@@ -3,12 +3,12 @@ package com.dasoops.dasserver.cq.wrapper;
 import com.dasoops.dasserver.cq.CqTemplate;
 
 /**
- * @Title: ExceptionHandlerReinforced
- * @ClassPath com.dasoops.common.exception.handler.ExceptionHandlerReinforced
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/08
- * @Version 1.0.0
- * @Description: 异常处理程序增强
+ * @title: ExceptionHandlerReinforced
+ * @classPath com.dasoops.common.exception.handler.ExceptionHandlerReinforced
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/08
+ * @version 1.0.0
+ * @description 异常处理程序增强
  */
 public interface ExceptionWrapper {
 

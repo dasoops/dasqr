@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: SetuConfigHashKeyEnum
- * @ClassPath com.dasoops.dasserver.plugin.setu.entity.enums.SetuConfigHashKeyEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/22
- * @Version 1.0.0
- * @Description: setuConfigHasKeyEnum
+ * @title: SetuConfigHashKeyEnum
+ * @classPath com.dasoops.dasserver.plugin.setu.entity.enums.SetuConfigHashKeyEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/22
+ * @version 1.0.0
+ * @description setuConfigHasKeyEnum
  * @see Enum
  * @see IRedisHashKeyEnum
  */

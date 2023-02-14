@@ -7,12 +7,12 @@ import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
 
 /**
- * @Title: Assert
- * @ClassPath com.dasoops.core.util.Assert
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/01
- * @Version 1.0.0
- * @Description: cq 断言工具类
+ * @title: Assert
+ * @classPath com.dasoops.core.util.Assert
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/01
+ * @version 1.0.0
+ * @description cq 断言工具类
  */
 public class CqMessageAssert extends Assert {
 

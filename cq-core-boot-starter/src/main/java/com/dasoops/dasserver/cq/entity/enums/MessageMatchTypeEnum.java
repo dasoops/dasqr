@@ -1,12 +1,12 @@
 package com.dasoops.dasserver.cq.entity.enums;
 
 /**
- * @Title: MatchTypeEnum
- * @ClassPath com.dasoops.dasserver.cq.entity.enums.MatchTypeEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/20
- * @Version 1.0.0
- * @Description: 匹配类型枚举
+ * @title: MatchTypeEnum
+ * @classPath com.dasoops.dasserver.cq.entity.enums.MatchTypeEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/20
+ * @version 1.0.0
+ * @description 匹配类型枚举
  * @see Enum
  */
 public enum MessageMatchTypeEnum {

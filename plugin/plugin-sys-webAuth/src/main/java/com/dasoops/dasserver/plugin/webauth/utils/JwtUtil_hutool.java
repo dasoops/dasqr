@@ -21,12 +21,12 @@
 //import java.util.Optional;
 //
 ///**
-// * @Title: JwtUtil
-// * @ClassPath cn.qiaoml.utils.auth.JwtUtil
-// * @Author DasoopsNicole@Gmail.com
-// * @Date 2022/11/28
-// * @Version 1.0.0
-// * @Description: jwt工具类
+// * @title: JwtUtil
+// * @classPath cn.qiaoml.utils.auth.JwtUtil
+// * @author DasoopsNicole@Gmail.com
+// * @date 2022/11/28
+// * @version 1.0.0
+// * @description jwt工具类
 // */
 //@Slf4j
 //@Component

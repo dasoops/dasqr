@@ -11,12 +11,12 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @Title: GetPluginPageParam
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/12
- * @Version 1.0.0
- * @Description: 获取插件分页信息param
+ * @title: GetPluginPageParam
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/12
+ * @version 1.0.0
+ * @description 获取插件分页信息param
  * @see BasePageParam
  */
 @Data

@@ -9,12 +9,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @Title: CqCodeUtil
- * @ClassPath com.dasoops.dasserver.cq.utils.CqCodeUtil
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: cq编号跑龙套
+ * @title: CqCodeUtil
+ * @classPath com.dasoops.dasserver.cq.utils.CqCodeUtil
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description cq编号跑龙套
  */
 public class CqCodeUtil {
 

@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: CqColumn
- * @ClassPath com.dasoops.dasserver.cq.entity.enums.CqColumn
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/05
- * @Version 1.0.0
- * @Description: cq消息字段
+ * @title: CqColumn
+ * @classPath com.dasoops.dasserver.cq.entity.enums.CqColumn
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/05
+ * @version 1.0.0
+ * @description cq消息字段
  * @see Enum
  */
 @Getter

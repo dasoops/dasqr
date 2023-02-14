@@ -5,12 +5,12 @@ import lombok.Data
 import lombok.EqualsAndHashCode
 
 /**
- * @Title: ExportPluginDto
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/12
- * @Version 1.0.0
- * @Description: 导出插件dto
+ * @title: ExportPluginDto
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/12
+ * @version 1.0.0
+ * @description 导出插件dto
  * @see BaseExportDto
  */
 @EqualsAndHashCode(callSuper = true)

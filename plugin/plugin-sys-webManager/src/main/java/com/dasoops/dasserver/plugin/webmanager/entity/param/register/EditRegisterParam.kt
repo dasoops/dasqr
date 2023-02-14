@@ -6,12 +6,12 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
 /**
- * @Title: EditRegisterParam
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.register.EditRegisterParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/02/01
- * @Version 1.0.0
- * @Description: 编辑注册对象param
+ * @title: EditRegisterParam
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.register.EditRegisterParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/02/01
+ * @version 1.0.0
+ * @description 编辑注册对象param
  * @see [EditRegisterParam]
  */
 @ApiModel(value = "编辑注册对象param", description = "编辑注册对象param")
@@ -27,6 +27,6 @@ data class EditRegisterParam(
      * 可使用插件RowId集合
      */
     @ApiModelProperty(value = "可使用插件RowId集合", example = "[0,1]", required = true)
-    var passPluginList: List<Long>? = ArrayList()
+    var passPluginList: List<Long>? = null
 
 ) : BaseEditParam<RegisterDo>()

@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: QuietBootEnum
- * @ClassPath com.dasoops.dasserver.plugin.reboot.entity.enums.QuietBootEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/13
- * @Version 1.0.0
- * @Description: 静默启动枚举
+ * @title: QuietBootEnum
+ * @classPath com.dasoops.dasserver.plugin.reboot.entity.enums.QuietBootEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/13
+ * @version 1.0.0
+ * @description 静默启动枚举
  * @see Enum
  * @see IDbColumnEnum
  */

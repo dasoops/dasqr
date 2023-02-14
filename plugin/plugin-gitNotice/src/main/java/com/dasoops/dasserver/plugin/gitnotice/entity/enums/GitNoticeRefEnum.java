@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: GitNoticeRefEnum
- * @ClassPath com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitNoticeRefEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/11
- * @Version 1.0.0
- * @Description: git通知分支枚举
+ * @title: GitNoticeRefEnum
+ * @classPath com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitNoticeRefEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/11
+ * @version 1.0.0
+ * @description git通知分支枚举
  * @see Enum
  * @see IDbColumnEnum
  */

@@ -8,12 +8,12 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 
 /**
- * @Title: ApiSender
- * @ClassPath com.dasoops.dasserver.cq.api.ApiSender
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: api发送对象 webSocket消息并不是同http协议一样一来一回,所以需要手动来根据标识符判断消息,获取消息返回值
+ * @title: ApiSender
+ * @classPath com.dasoops.dasserver.cq.api.ApiSender
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description api发送对象 webSocket消息并不是同http协议一样一来一回,所以需要手动来根据标识符判断消息,获取消息返回值
  */
 @Slf4j
 public class ApiSender {

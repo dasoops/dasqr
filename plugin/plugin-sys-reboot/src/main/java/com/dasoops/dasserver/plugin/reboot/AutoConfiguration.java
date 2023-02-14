@@ -3,12 +3,12 @@ package com.dasoops.dasserver.plugin.reboot;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * @Title: configuration
- * @ClassPath com.dasoops.dasserver.plugin.gitnotice.configuration
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/02
- * @Version 1.0.0
- * @Description: 自动配置
+ * @title: configuration
+ * @classPath com.dasoops.dasserver.plugin.gitnotice.configuration
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/02
+ * @version 1.0.0
+ * @description 自动配置
  */
 @ComponentScan("com.dasoops.dasserver.plugin.reboot")
 public class AutoConfiguration {

@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: PluginStatusEnum
- * @ClassPath com.dasoops.dasserver.cq.entity.enums.PluginStatusEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/16
- * @Version 1.0.0
- * @Description: 插件状态枚举
+ * @title: PluginStatusEnum
+ * @classPath com.dasoops.dasserver.cq.entity.enums.PluginStatusEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/16
+ * @version 1.0.0
+ * @description 插件状态枚举
  * @see Enum
  */
 @Getter

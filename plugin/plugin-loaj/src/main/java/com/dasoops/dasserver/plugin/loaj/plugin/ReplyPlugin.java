@@ -17,12 +17,12 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * @Title: rollPlugin
- * @ClassPath com.dasoops.dasserver.plugin.loaj.plugin.rollPlugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/04
- * @Version 1.0.0
- * @Description: 回复插件
+ * @title: rollPlugin
+ * @classPath com.dasoops.dasserver.plugin.loaj.plugin.rollPlugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/04
+ * @version 1.0.0
+ * @description 回复插件
  */
 @Component
 @Slf4j

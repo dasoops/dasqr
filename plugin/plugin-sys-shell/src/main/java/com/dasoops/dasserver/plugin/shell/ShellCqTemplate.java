@@ -13,12 +13,12 @@ import com.dasoops.dasserver.plugin.shell.entity.enums.ShellExceptionEnum;
 import org.springframework.web.socket.WebSocketSession;
 
 /**
- * @Title: ShellShamCqTemplate
- * @ClassPath com.dasoops.dasserver.plugin.shell.ShellShamCqTemplate
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/23
- * @Version 1.0.0
- * @Description: shellShamcqTemplate
+ * @title: ShellShamCqTemplate
+ * @classPath com.dasoops.dasserver.plugin.shell.ShellShamCqTemplate
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/23
+ * @version 1.0.0
+ * @description shellShamcqTemplate
  * @see CqTemplate
  */
 public class ShellCqTemplate implements CqTemplate {

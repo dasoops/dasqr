@@ -11,12 +11,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: InitTask
- * @ClassPath com.dasoops.dasserver.plugin.authwrapper.task.InitTask
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/27
- * @Version 1.0.0
- * @Description: 初始化任务
+ * @title: InitTask
+ * @classPath com.dasoops.dasserver.plugin.authwrapper.task.InitTask
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/27
+ * @version 1.0.0
+ * @description 初始化任务
  */
 @Component
 @RequiredArgsConstructor

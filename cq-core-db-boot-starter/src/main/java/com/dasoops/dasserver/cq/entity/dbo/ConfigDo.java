@@ -8,12 +8,12 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @Title: Config
- * @ClassPath com.dasoops.dasserver.cq.entity.po.Config
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/31
- * @Version 1.0.0
- * @Description: 配置表, 储存配置信息, 如:version,mutation等
+ * @title: Config
+ * @classPath com.dasoops.dasserver.cq.entity.po.Config
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/31
+ * @version 1.0.0
+ * @description 配置表, 储存配置信息, 如:version,mutation等
  * @see BaseDo
  * @see Serializable
  */

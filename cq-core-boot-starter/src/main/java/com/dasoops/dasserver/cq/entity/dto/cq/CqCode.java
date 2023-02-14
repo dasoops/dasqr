@@ -6,12 +6,12 @@ import lombok.Data;
 import java.util.Map;
 
 /**
- * @Title: CqCode
- * @ClassPath com.dasoops.dasserver.cq.entity.dto.cq.CqCode
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/07
- * @Version 1.0.0
- * @Description: cq码解析后对象
+ * @title: CqCode
+ * @classPath com.dasoops.dasserver.cq.entity.dto.cq.CqCode
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/07
+ * @version 1.0.0
+ * @description cq码解析后对象
  */
 @Data
 public class CqCode {

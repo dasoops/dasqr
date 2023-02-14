@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.core.mapping.MongoId
 
 
 /**
- * @Title: MessageDo
- * @ClassPath com.dasoops.dasserver.plugin.log.entity.dbo.MessageDo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/31
- * @Version 1.0.0
- * @Description: 消息对象
+ * @title: MessageDo
+ * @classPath com.dasoops.dasserver.plugin.log.entity.dbo.MessageDo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/31
+ * @version 1.0.0
+ * @description 消息对象
  * @see [MessageDo]
  */
 @Document("message")

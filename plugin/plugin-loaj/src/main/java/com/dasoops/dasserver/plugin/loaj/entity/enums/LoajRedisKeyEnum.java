@@ -7,12 +7,12 @@ import lombok.Getter;
 import static com.dasoops.common.entity.enums.base.BaseRedisKeyEnum.PLUGIN;
 
 /**
- * @Title: RedinKeyEnum
- * @ClassPath com.dasoops.dasserver.plugin.loaj.entity.enums.RedinKeyEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/04
- * @Version 1.0.0
- * @Description: redinKeyenum
+ * @title: RedinKeyEnum
+ * @classPath com.dasoops.dasserver.plugin.loaj.entity.enums.RedinKeyEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/04
+ * @version 1.0.0
+ * @description redinKeyenum
  */
 @AllArgsConstructor
 @Getter

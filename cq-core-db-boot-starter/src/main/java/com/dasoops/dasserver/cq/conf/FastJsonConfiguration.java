@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Title: FastJsonConfiguration
- * @ClassPath com.dasoops.dasserver.cq.conf.FastJsonConfiguration
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/01
- * @Version 1.0.0
- * @Description: fastJson配置
+ * @title: FastJsonConfiguration
+ * @classPath com.dasoops.dasserver.cq.conf.FastJsonConfiguration
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/01
+ * @version 1.0.0
+ * @description fastJson配置
  * @see WebMvcConfigurer
  */
 @Configuration

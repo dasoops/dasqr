@@ -8,12 +8,12 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @Title: MutationDo
- * @ClassPath com.dasoops.dasserver.plugin.starcraft2.entity.dbo.MutationDo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/20
- * @Version 1.0.0
- * @Description: sc2 突变
+ * @title: MutationDo
+ * @classPath com.dasoops.dasserver.plugin.starcraft2.entity.dbo.MutationDo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/20
+ * @version 1.0.0
+ * @description sc2 突变
  * @see BaseDo
  * @see Serializable
  */

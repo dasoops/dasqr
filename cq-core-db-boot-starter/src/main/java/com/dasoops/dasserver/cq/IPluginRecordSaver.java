@@ -3,12 +3,12 @@ package com.dasoops.dasserver.cq;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 
 /**
- * @Title: IPluginRecordSaver
- * @ClassPath com.dasoops.dasserver.cq.IPluginRecordSaver
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/26
- * @Version 1.0.0
- * @Description: pluginDo保存
+ * @title: IPluginRecordSaver
+ * @classPath com.dasoops.dasserver.cq.IPluginRecordSaver
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/26
+ * @version 1.0.0
+ * @description pluginDo保存
  */
 public interface IPluginRecordSaver {
 

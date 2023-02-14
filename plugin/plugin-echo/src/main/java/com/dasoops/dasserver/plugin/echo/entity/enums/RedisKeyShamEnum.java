@@ -4,12 +4,12 @@ import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import lombok.Getter;
 
 /**
- * @Title: EchoConfigRedisKeyShamEnum
- * @ClassPath com.dasoops.dasserver.plugin.cacheecho.entity.enums.EchoConfigRedisKeyShamEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/11
- * @Version 1.0.0
- * @Description: 打印缓存数据
+ * @title: EchoConfigRedisKeyShamEnum
+ * @classPath com.dasoops.dasserver.plugin.cacheecho.entity.enums.EchoConfigRedisKeyShamEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/11
+ * @version 1.0.0
+ * @description 打印缓存数据
  * @see IRedisKeyEnum
  */
 @Getter

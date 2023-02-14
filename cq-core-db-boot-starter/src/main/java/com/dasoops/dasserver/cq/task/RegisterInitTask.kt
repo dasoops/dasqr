@@ -15,7 +15,7 @@ class RegisterInitTask(private val registerService: RegisterService) : BaseTask(
     fun initOrUpdateAll(cqTemplate: CqTemplate?) {
         registerService.initOrUpdateRegisterRowIdOtoTypeMap2Cache()
         registerService.initOrUpdateRegisterTypeRegisterIdOtoId2Cache()
-        registerService.initOrUpdateRegisterRowIdOtoNameMapAndRegisterUserIdOtoNameMap2Cache(cqTemplate)
+        registerService.initOrUpdateRegisterRowIdOtoNameMapAndRegisterIdOtoNameMap2Cache(cqTemplate)
     }
 
 }

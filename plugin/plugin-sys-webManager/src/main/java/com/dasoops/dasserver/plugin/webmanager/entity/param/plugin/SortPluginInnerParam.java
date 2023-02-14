@@ -5,12 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @Title: SortPluginDto
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/14
- * @Version 1.0.0
- * @Description: 排序插件param
+ * @title: SortPluginDto
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/14
+ * @version 1.0.0
+ * @description 排序插件param
  * @see BaseDto
  */
 @Data

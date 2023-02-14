@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: SetuExceptionEnum
- * @ClassPath com.dasoops.dasserver.plugin.setu.entity.enums.SetuExceptionEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/22
- * @Version 1.0.0
- * @Description: setu异常枚举(107xx)
+ * @title: SetuExceptionEnum
+ * @classPath com.dasoops.dasserver.plugin.setu.entity.enums.SetuExceptionEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/22
+ * @version 1.0.0
+ * @description setu异常枚举(107xx)
  * @see Enum
  * @see IExceptionEnum
  */

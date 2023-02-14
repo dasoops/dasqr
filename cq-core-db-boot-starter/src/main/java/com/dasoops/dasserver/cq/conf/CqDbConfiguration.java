@@ -12,12 +12,12 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
- * @Title: CqAutoConfiguration
- * @ClassPath com.dasoops.dasserver.cq.boot.CqAutoConfiguration
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/20
- * @Version 1.0.0
- * @Description: cq配置类
+ * @title: CqAutoConfiguration
+ * @classPath com.dasoops.dasserver.cq.boot.CqAutoConfiguration
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/20
+ * @version 1.0.0
+ * @description cq配置类
  */
 @ComponentScan("com.dasoops.dasserver.cq")
 @MapperScan("com.dasoops.dasserver.cq.mapper")

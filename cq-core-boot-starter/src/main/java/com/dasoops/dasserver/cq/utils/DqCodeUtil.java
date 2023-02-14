@@ -11,12 +11,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * @Title: DqUtil
- * @ClassPath com.dasoops.dasserver.cq.utils.DqUtil
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/07
- * @Version 1.0.0
- * @Description: dq工具类
+ * @title: DqUtil
+ * @classPath com.dasoops.dasserver.cq.utils.DqUtil
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/07
+ * @version 1.0.0
+ * @description dq工具类
  */
 public class DqCodeUtil {
 

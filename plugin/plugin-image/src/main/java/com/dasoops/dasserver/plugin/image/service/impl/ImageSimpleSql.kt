@@ -6,12 +6,12 @@ import com.dasoops.dasserver.plugin.image.mapper.ImageMapper
 import org.springframework.stereotype.Service
 
 /**
- * @Title: ImageSimpleSql
- * @ClassPath com.dasoops.dasserver.plugin.image.service.impl.ImageSimpleSql
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/02/11
- * @Version 1.0.0
- * @Description: 图片简单sql
+ * @title: ImageSimpleSql
+ * @classPath com.dasoops.dasserver.plugin.image.service.impl.ImageSimpleSql
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/02/11
+ * @version 1.0.0
+ * @description 图片简单sql
  * @see [ImageSimpleSql]
  */
 

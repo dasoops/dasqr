@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: CqGroupMessageEvent
- * @ClassPath com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/31
- * @Version 1.0.0
- * @Description: 群消息
+ * @title: CqGroupMessageEvent
+ * @classPath com.dasoops.dasserver.cq.entity.event.message.CqGroupMessageEvent
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/31
+ * @version 1.0.0
+ * @description 群消息
  * @see CqMessageEvent
  */
 @EqualsAndHashCode(callSuper = true)

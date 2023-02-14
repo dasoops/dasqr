@@ -12,12 +12,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @Title: PluginCache
- * @ClassPath com.dasoops.dasserver.plugin.authwrapper.cache.PluginCache
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/27
- * @Version 1.0.0
- * @Description: 插件缓存
+ * @title: PluginCache
+ * @classPath com.dasoops.dasserver.plugin.authwrapper.cache.PluginCache
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/27
+ * @version 1.0.0
+ * @description 插件缓存
  * @see BaseCache
  */
 @Component

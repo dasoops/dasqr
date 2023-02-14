@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.annotation.TableName
 import com.dasoops.common.entity.dbo.base.BaseDo
 
 /**
- * @Title: Register
- * @ClassPath com.dasoops.dasserver.cq.entity.po.Register
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/31
- * @Version 1.0.0
- * @Description: 注册表, 储存用户注册信息, 初始权限, 群组注册信息
+ * @title: Register
+ * @classPath com.dasoops.dasserver.cq.entity.po.Register
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/31
+ * @version 1.0.0
+ * @description 注册表, 储存用户注册信息, 初始权限, 群组注册信息
  * @see BaseDo
  */
 @TableName(value = "tb_core_register")

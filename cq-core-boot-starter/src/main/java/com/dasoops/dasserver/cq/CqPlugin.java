@@ -10,12 +10,12 @@ import com.dasoops.dasserver.cq.entity.dto.cq.event.request.CqFriendRequestEvent
 import com.dasoops.dasserver.cq.entity.dto.cq.event.request.CqGroupRequestEvent;
 
 /**
- * @Title: CqPlugin
- * @ClassPath com.dasoops.dasserver.cqTemplate.CqPlugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/20
- * @Version 1.0.0
- * @Description: cqTemplate插件, 提供消息接收功能拓展
+ * @title: CqPlugin
+ * @classPath com.dasoops.dasserver.cqTemplate.CqPlugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/20
+ * @version 1.0.0
+ * @description cqTemplate插件, 提供消息接收功能拓展
  */
 public abstract class CqPlugin {
 

@@ -7,12 +7,12 @@ import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: RegisterMtmPluginUtil
- * @ClassPath com.dasoops.dasserver.cq.util.RegisterMtmPluginUtil
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/27
- * @Version 1.0.0
- * @Description: 注册用户 插件 多对多 工具类
+ * @title: RegisterMtmPluginUtil
+ * @classPath com.dasoops.dasserver.cq.util.RegisterMtmPluginUtil
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/27
+ * @version 1.0.0
+ * @description 注册用户 插件 多对多 工具类
  */
 @Component
 public class RegisterMtmPluginUtil {

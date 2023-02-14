@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: DeletePluginParam
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.DeletePluginParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/12
- * @Version 1.0.0
- * @Description: 删除插件param
+ * @title: DeletePluginParam
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.DeletePluginParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/12
+ * @version 1.0.0
+ * @description 删除插件param
  * @see BaseEditAndDeleteParam
  */
 @EqualsAndHashCode(callSuper = true)

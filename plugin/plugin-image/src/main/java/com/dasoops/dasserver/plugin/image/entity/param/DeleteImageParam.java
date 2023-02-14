@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: DeleteImageParam
- * @ClassPath com.dasoops.dasserver.plugin.image.entity.param.DeleteImageParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 删除图片param
+ * @title: DeleteImageParam
+ * @classPath com.dasoops.dasserver.plugin.image.entity.param.DeleteImageParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 删除图片param
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

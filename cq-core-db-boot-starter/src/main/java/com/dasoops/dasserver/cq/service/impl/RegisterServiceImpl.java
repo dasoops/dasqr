@@ -28,12 +28,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @Title: RegisterServiceImpl
- * @ClassPath com.dasoops.dasserver.cq.service.impl.RegisterServiceImpl
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/31
- * @Version 1.0.0
- * @Description: 针对表【tb_core_register(注册表,储存用户注册信息,初始权限,群组注册信息)】的数据库操作Service实现
+ * @title: RegisterServiceImpl
+ * @classPath com.dasoops.dasserver.cq.service.impl.RegisterServiceImpl
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/31
+ * @version 1.0.0
+ * @description 针对表【tb_core_register(注册表,储存用户注册信息,初始权限,群组注册信息)】的数据库操作Service实现
  * @see ServiceImpl
  * @see RegisterService
  */
@@ -172,34 +172,40 @@ public class RegisterServiceImpl implements RegisterService {
 
 
     @Override
-    public void initOrUpdateRegisterRowIdOtoNameMapAndRegisterUserIdOtoNameMap2Cache(CqTemplate cqTemplate) {
+    public void initOrUpdateRegisterRowIdOtoNameMapAndRegisterIdOtoNameMap2Cache(CqTemplate cqTemplate) {
         log.info("初始化或更新 注册表主键id 单对单 名称,注册表用户id 单对单 名称 to缓存");
-        Map<Long, String> registerIdOtoNameMap = new HashMap<>(16);
+        Map<Long, String> registerUserIdOtoNameMap = new HashMap<>(16);
         Map<Long, String> registerRowIdOtoNameMap = new HashMap<>(16);
+        Map<Long, String> registerGroupIdOtoNameMap = new HashMap<>(16);
 
         //好友
         List<FriendData> friendDataList = cqTemplate.getFriendList().getData();
         friendDataList.forEach(friendData -> {
             registerRowIdOtoNameMap.put(registerCache.getUserRowIdByRegisterId(friendData.getUserId()), friendData.getNickname());
-            registerIdOtoNameMap.put(friendData.getUserId(), friendData.getNickname());
+            registerUserIdOtoNameMap.put(friendData.getUserId(), friendData.getNickname());
         });
-
 
         //群组
         List<GroupData> groupDataList = cqTemplate.getGroupList().getData();
         groupDataList.stream()
-                .mapToLong(GroupData::getGroupId)
+                .mapToLong(groupData -> {
+                    registerGroupIdOtoNameMap.put(groupData.getGroupId(), groupData.getGroupName());
+                    return groupData.getGroupId();
+                })
                 .mapToObj(groupId -> cqTemplate.getGroupMemberList(groupId).getData())
                 .forEach(userInfoDataList -> userInfoDataList.forEach(userInfoData -> {
                     registerRowIdOtoNameMap.put(registerCache.getUserRowIdByRegisterId(userInfoData.getUserId()), userInfoData.getNickname());
-                    registerIdOtoNameMap.put(userInfoData.getUserId(), userInfoData.getNickname());
+                    registerUserIdOtoNameMap.put(userInfoData.getUserId(), userInfoData.getNickname());
                 }));
 
         registerCache.removeRegisterRowIdOtoNameMap();
-        registerCache.removeRegisterIdOtoNameMap();
+        registerCache.removeRegisterUserIdOtoNameMap();
+        registerCache.removeRegisterGroupIdOtoNameMap();
         registerCache.setRegisterRowIdOtoNameMap(registerRowIdOtoNameMap);
-        registerCache.setRegisterIdOtoNameMap(registerIdOtoNameMap);
+        registerCache.setRegisterUserIdOtoNameMap(registerUserIdOtoNameMap);
+        registerCache.setRegisterGroupIdOtoNameMap(registerGroupIdOtoNameMap);
     }
+
 }
 
 

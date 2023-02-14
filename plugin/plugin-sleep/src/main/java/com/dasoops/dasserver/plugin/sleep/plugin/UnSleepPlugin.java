@@ -11,12 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: SleepPlugin
- * @ClassPath com.dasoops.dasserver.plugin.sleep.plugin.SleepPlugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/10
- * @Version 1.0.0
- * @Description: 解除静默插件插件
+ * @title: SleepPlugin
+ * @classPath com.dasoops.dasserver.plugin.sleep.plugin.SleepPlugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/10
+ * @version 1.0.0
+ * @description 解除静默插件插件
  * @see CqPlugin
  */
 @Component

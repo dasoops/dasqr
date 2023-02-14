@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 
 /**
- * @Title: AuthWrapperPluginService
- * @ClassPath com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperPluginService
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/01
- * @Version 1.0.0
- * @Description: 身份验证条件构造器插件服务
+ * @title: AuthWrapperPluginService
+ * @classPath com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperPluginService
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/01
+ * @version 1.0.0
+ * @description 身份验证条件构造器插件服务
  * @see IService
  */
 public interface AuthWrapperPluginService extends IService<PluginDo> {

@@ -5,12 +5,12 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
 /**
- * @Title: LoginParam
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.register.LoginParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/02/01
- * @Version 1.0.0
- * @Description: 登录param
+ * @title: LoginParam
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.register.LoginParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/02/01
+ * @version 1.0.0
+ * @description 登录param
  * @see [LoginParam]
  */
 @ApiModel(value = "登录param", description = "登录param")

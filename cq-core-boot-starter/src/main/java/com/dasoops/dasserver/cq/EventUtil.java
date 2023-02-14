@@ -10,12 +10,12 @@ import com.dasoops.dasserver.cq.entity.enums.PostTypeEnum;
 import com.dasoops.dasserver.cq.utils.entity.EventInfo;
 
 /**
- * @Title: EventUtil
- * @ClassPath com.dasoops.dasq.core.common.util.EventUtil
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/09
- * @Version 1.0.0
- * @Description: 消息工具
+ * @title: EventUtil
+ * @classPath com.dasoops.dasq.core.common.util.EventUtil
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/09
+ * @version 1.0.0
+ * @description 消息工具
  */
 public final class EventUtil {
 

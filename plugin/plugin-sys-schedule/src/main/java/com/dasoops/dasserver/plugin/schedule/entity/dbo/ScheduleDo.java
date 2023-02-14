@@ -9,12 +9,12 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @Title: ScheduleDo
- * @ClassPath com.dasoops.dasserver.plugin.schedule.entity.dbo.ScheduleDo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/20
- * @Version 1.0.0
- * @Description: plugin-sys-schedule 任务调度插件记录表
+ * @title: ScheduleDo
+ * @classPath com.dasoops.dasserver.plugin.schedule.entity.dbo.ScheduleDo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/20
+ * @version 1.0.0
+ * @description plugin-sys-schedule 任务调度插件记录表
  * @see BaseDo
  * @see Serializable
  */

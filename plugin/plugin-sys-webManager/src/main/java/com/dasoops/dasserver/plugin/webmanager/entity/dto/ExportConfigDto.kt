@@ -6,12 +6,12 @@ import lombok.Data
 import lombok.EqualsAndHashCode
 
 /**
- * @Title: ExportConfigDto
- * @ClassPath com.dasoops.dasserver.webManager.entity.dto.ExportConfigDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/30
- * @Version 1.0.0
- * @Description: 出口配置dto
+ * @title: ExportConfigDto
+ * @classPath com.dasoops.dasserver.webManager.entity.dto.ExportConfigDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/30
+ * @version 1.0.0
+ * @description 出口配置dto
  * @see BaseDto
  */
 @EqualsAndHashCode(callSuper = true)

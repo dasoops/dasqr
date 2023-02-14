@@ -12,12 +12,12 @@ import java.io.InputStream;
 import java.util.Optional;
 
 /**
- * @Title: MinioUtil
- * @ClassPath com.dasoops.minio.util.MinioUtil
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/08
- * @Version 1.0.0
- * @Description: minio对外暴露工具类
+ * @title: MinioUtil
+ * @classPath com.dasoops.minio.util.MinioUtil
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/08
+ * @version 1.0.0
+ * @description minio对外暴露工具类
  */
 @Slf4j
 public class MinioTemplate {

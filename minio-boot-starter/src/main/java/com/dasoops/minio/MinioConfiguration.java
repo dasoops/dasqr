@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * @Title: MinioConfiguration
- * @ClassPath com.dasoops.minio.configucation.MinioConfiguration
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/08
- * @Version 1.0.0
- * @Description: minio配置类
+ * @title: MinioConfiguration
+ * @classPath com.dasoops.minio.configucation.MinioConfiguration
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/08
+ * @version 1.0.0
+ * @description minio配置类
  */
 @Slf4j
 @EnableConfigurationProperties({MinioProperties.class})

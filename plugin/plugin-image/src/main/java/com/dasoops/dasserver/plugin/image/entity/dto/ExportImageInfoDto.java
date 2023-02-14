@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: ExportImageInfoDto
- * @ClassPath com.dasoops.dasserver.plugin.image.entity.dto.ExportImageInfoDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 导出图片信息dto
+ * @title: ExportImageInfoDto
+ * @classPath com.dasoops.dasserver.plugin.image.entity.dto.ExportImageInfoDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 导出图片信息dto
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

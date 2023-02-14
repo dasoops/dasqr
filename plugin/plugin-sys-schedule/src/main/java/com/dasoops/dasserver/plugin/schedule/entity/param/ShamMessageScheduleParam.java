@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: ShamMessageScheduleParam
- * @ClassPath com.dasoops.dasserver.plugin.schedule.entity.param.ShamMessageScheduleParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/20
- * @Version 1.0.0
- * @Description: 虚假消息定时任务param
+ * @title: ShamMessageScheduleParam
+ * @classPath com.dasoops.dasserver.plugin.schedule.entity.param.ShamMessageScheduleParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/20
+ * @version 1.0.0
+ * @description 虚假消息定时任务param
  * @see BaseParam
  */
 @EqualsAndHashCode(callSuper = true)

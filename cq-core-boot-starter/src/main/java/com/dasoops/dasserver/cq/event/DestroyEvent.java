@@ -6,12 +6,12 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: DestroyEvent
- * @ClassPath com.dasoops.dasq.core.common.event.DestroyEvent
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/12
- * @Version 1.0.0
- * @Description: 破坏事件
+ * @title: DestroyEvent
+ * @classPath com.dasoops.dasq.core.common.event.DestroyEvent
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/12
+ * @version 1.0.0
+ * @description 破坏事件
  * @see DisposableBean
  */
 @Component

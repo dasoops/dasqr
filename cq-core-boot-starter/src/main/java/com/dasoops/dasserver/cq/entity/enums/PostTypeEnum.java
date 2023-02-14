@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: PostTypeEnum
- * @ClassPath com.dasoops.dasserver.cq.entity.enums.PostTypeEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/05
- * @Version 1.0.0
- * @Description: 请求类型枚举
+ * @title: PostTypeEnum
+ * @classPath com.dasoops.dasserver.cq.entity.enums.PostTypeEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/05
+ * @version 1.0.0
+ * @description 请求类型枚举
  */
 @Getter
 @AllArgsConstructor

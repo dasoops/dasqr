@@ -12,12 +12,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * @Title: ExecTemplate
- * @ClassPath com.dasoops.dasserver.plugin.exec.ExecTemplate
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/18
- * @Version 1.0.0
- * @Description: 执行Template
+ * @title: ExecTemplate
+ * @classPath com.dasoops.dasserver.plugin.exec.ExecTemplate
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/18
+ * @version 1.0.0
+ * @description 执行Template
  */
 @Slf4j
 @RequiredArgsConstructor

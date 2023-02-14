@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Title: CqProperties
- * @ClassPath com.dasoops.dasserver.cq.conf.properties.CqProperties
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/02
- * @Version 1.0.0
- * @Description: cq属性
+ * @title: CqProperties
+ * @classPath com.dasoops.dasserver.cq.conf.properties.CqProperties
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/02
+ * @version 1.0.0
+ * @description cq属性
  */
 @ConfigurationProperties(prefix = "dasq.cq.core")
 @Getter

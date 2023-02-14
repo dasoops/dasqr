@@ -3,12 +3,12 @@ package com.dasoops.dasserver.cq;
 import java.util.*;
 
 /**
- * @Title: WsConnection
- * @ClassPath com.dasoops.dasserver.cq.websocket.WsConnection
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: ws连接
+ * @title: WsConnection
+ * @classPath com.dasoops.dasserver.cq.websocket.WsConnection
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description ws连接
  */
 public class CqGlobal {
     /**

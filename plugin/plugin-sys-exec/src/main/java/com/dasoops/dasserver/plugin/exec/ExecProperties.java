@@ -6,12 +6,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.Map;
 
 /**
- * @Title: ExecProperties
- * @ClassPath com.dasoops.dasserver.plugin.exec.ExecProperties
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/18
- * @Version 1.0.0
- * @Description: execProperties
+ * @title: ExecProperties
+ * @classPath com.dasoops.dasserver.plugin.exec.ExecProperties
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/18
+ * @version 1.0.0
+ * @description execProperties
  */
 @ConfigurationProperties(prefix = "dasq.plugin.exec")
 @Data

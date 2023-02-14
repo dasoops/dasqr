@@ -13,12 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: TemplatePlugin
- * @ClassPath com.dasoops.dasserver.template.plugin.TemplatePlugin.TemplatePlugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/18
- * @Version 1.0.0
- * @Description: 执行插件
+ * @title: TemplatePlugin
+ * @classPath com.dasoops.dasserver.template.plugin.TemplatePlugin.TemplatePlugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/18
+ * @version 1.0.0
+ * @description 执行插件
  * @see CqPlugin
  */
 @Component

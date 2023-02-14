@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
- * @Title: InitTask
- * @ClassPath com.dasoops.dasserver.plugin.loaj.task.InitTask
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/11
- * @Version 1.0.0
- * @Description: 初始化任务
+ * @title: InitTask
+ * @classPath com.dasoops.dasserver.plugin.loaj.task.InitTask
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/11
+ * @version 1.0.0
+ * @description 初始化任务
  */
 @Slf4j
 @Component

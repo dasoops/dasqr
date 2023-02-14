@@ -5,12 +5,12 @@ import lombok.NonNull;
 import java.util.concurrent.ThreadFactory;
 
 /**
- * @Title: NamedThreadFactory
- * @ClassPath com.dasoops.dasserver.cq.threadfactory.NamedThreadFactory
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/01
- * @Version 1.0.0
- * @Description: 命名线程工厂
+ * @title: NamedThreadFactory
+ * @classPath com.dasoops.dasserver.cq.threadfactory.NamedThreadFactory
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/01
+ * @version 1.0.0
+ * @description 命名线程工厂
  * @see ThreadFactory
  */
 public class NamedThreadFactory implements ThreadFactory {

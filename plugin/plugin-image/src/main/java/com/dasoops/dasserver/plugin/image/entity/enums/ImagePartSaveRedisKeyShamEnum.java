@@ -7,12 +7,12 @@ import static com.dasoops.common.entity.enums.base.BaseRedisKeyEnum.PLUGIN;
 
 
 /**
- * @Title: ImageRedisKeyEnum
- * @ClassPath com.dasoops.dasserver.plugin.image.entity.enums.ImageRedisKeyEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/09
- * @Version 1.0.0
- * @Description: 图片RedisKey枚举
+ * @title: ImageRedisKeyEnum
+ * @classPath com.dasoops.dasserver.plugin.image.entity.enums.ImageRedisKeyEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/09
+ * @version 1.0.0
+ * @description 图片RedisKey枚举
  * @see Enum
  * @see IRedisKeyEnum
  */
@@ -38,7 +38,7 @@ public class ImagePartSaveRedisKeyShamEnum implements IRedisKeyEnum {
     }
 
     private static String getBasePath() {
-        return PLUGIN + "image:";
+        return PLUGIN + "image:partSave:";
     }
 
 }

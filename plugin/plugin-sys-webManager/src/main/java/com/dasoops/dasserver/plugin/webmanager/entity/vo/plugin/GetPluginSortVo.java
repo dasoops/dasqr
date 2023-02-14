@@ -9,12 +9,12 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @Title: GetPluginSortVo
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginSortVo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/12
- * @Version 1.0.0
- * @Description: 获取插件排序vo
+ * @title: GetPluginSortVo
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginSortVo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/12
+ * @version 1.0.0
+ * @description 获取插件排序vo
  * @see BaseVo
  */
 @Data

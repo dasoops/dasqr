@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Title: RegisterService
- * @ClassPath com.dasoops.dasserver.cq.service.RegisterService
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/31
- * @Version 1.0.0
- * @Description: 针对表【tb_core_register(注册表,储存用户注册信息,初始权限,群组注册信息)】的数据库操作Service
+ * @title: RegisterService
+ * @classPath com.dasoops.dasserver.cq.service.RegisterService
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/31
+ * @version 1.0.0
+ * @description 针对表【tb_core_register(注册表,储存用户注册信息,初始权限,群组注册信息)】的数据库操作Service
  * @see IService
  */
 public interface RegisterService {
@@ -55,7 +55,7 @@ public interface RegisterService {
      *
      * @param cqTemplate cqTemplate
      */
-    void initOrUpdateRegisterRowIdOtoNameMapAndRegisterUserIdOtoNameMap2Cache(CqTemplate cqTemplate);
+    void initOrUpdateRegisterRowIdOtoNameMapAndRegisterIdOtoNameMap2Cache(CqTemplate cqTemplate);
 
 
     /**

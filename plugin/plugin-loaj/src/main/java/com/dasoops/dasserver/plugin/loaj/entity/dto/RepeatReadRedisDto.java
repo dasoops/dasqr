@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: RepeatReadDto
- * @ClassPath com.dasoops.dasserver.plugin.loaj.entity.dto.RepeatReadDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/19
- * @Version 1.0.0
- * @Description: 复读RedisDto
+ * @title: RepeatReadDto
+ * @classPath com.dasoops.dasserver.plugin.loaj.entity.dto.RepeatReadDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/19
+ * @version 1.0.0
+ * @description 复读RedisDto
  * @see BaseDto
  */
 @EqualsAndHashCode(callSuper = true)

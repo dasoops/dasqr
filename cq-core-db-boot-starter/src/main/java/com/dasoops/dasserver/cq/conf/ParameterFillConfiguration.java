@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Date;
 
 /**
- * @Title: ParameterFillConfiguration
- * @ClassPath com.dasoops.dasq.core.common.conf.ParameterFillConfiguration
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/10
- * @Version 1.0.0
- * @Description: 参数自动填充
+ * @title: ParameterFillConfiguration
+ * @classPath com.dasoops.dasq.core.common.conf.ParameterFillConfiguration
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/10
+ * @version 1.0.0
+ * @description 参数自动填充
  * @see MetaObjectHandler
  */
 @Configuration

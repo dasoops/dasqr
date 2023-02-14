@@ -6,12 +6,12 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @Title: BaseApiData
- * @ClassPath com.dasoops.dasserver.cq.entity.dto.cq.retdata.BaseApiData
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/23
- * @Version 1.0.0
- * @Description: 基础api数据
+ * @title: BaseApiData
+ * @classPath com.dasoops.dasserver.cq.entity.dto.cq.retdata.BaseApiData
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/23
+ * @version 1.0.0
+ * @description 基础api数据
  */
 @Data
 public class BaseApiData implements Serializable {

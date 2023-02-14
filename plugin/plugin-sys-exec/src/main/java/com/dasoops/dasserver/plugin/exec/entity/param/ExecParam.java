@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: ExecParam
- * @ClassPath com.dasoops.dasserver.plugin.exec.entity.param.ExecParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/18
- * @Version 1.0.0
- * @Description: 执行param
+ * @title: ExecParam
+ * @classPath com.dasoops.dasserver.plugin.exec.entity.param.ExecParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/18
+ * @version 1.0.0
+ * @description 执行param
  * @see BaseParam
  */
 @EqualsAndHashCode(callSuper = true)

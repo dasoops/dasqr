@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: PluginStatusDto
- * @ClassPath com.dasoops.dasserver.cq.entity.dto.PluginStatusDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/16
- * @Version 1.0.0
- * @Description: 插件状态dto
+ * @title: PluginStatusDto
+ * @classPath com.dasoops.dasserver.cq.entity.dto.PluginStatusDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/16
+ * @version 1.0.0
+ * @description 插件状态dto
  * @see BaseDto
  */
 @EqualsAndHashCode(callSuper = true)

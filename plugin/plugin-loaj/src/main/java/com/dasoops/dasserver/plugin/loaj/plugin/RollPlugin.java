@@ -25,12 +25,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @Title: rollPlugin
- * @ClassPath com.dasoops.dasserver.plugin.loaj.plugin.rollPlugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/04
- * @Version 1.0.0
- * @Description: roll点插件
+ * @title: rollPlugin
+ * @classPath com.dasoops.dasserver.plugin.loaj.plugin.rollPlugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/04
+ * @version 1.0.0
+ * @description roll点插件
  */
 @Component
 @Slf4j

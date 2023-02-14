@@ -10,12 +10,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: AddPluginParam
- * @ClassPath com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/09
- * @Version 1.0.0
- * @Description: 添加插件param
+ * @title: AddPluginParam
+ * @classPath com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/09
+ * @version 1.0.0
+ * @description 添加插件param
  * @see MessageParam
  */
 @Data

@@ -8,12 +8,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: ShellMessage
- * @ClassPath com.dasoops.dasserver.plugin.shell.param.ShellMessage
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/25
- * @Version 1.0.0
- * @Description: shell消息
+ * @title: ShellMessage
+ * @classPath com.dasoops.dasserver.plugin.shell.param.ShellMessage
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/25
+ * @version 1.0.0
+ * @description shell消息
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

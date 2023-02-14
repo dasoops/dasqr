@@ -21,12 +21,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @Title: ScheduleTask
- * @ClassPath com.dasoops.dasserver.plugin.schedule.task.ScheduleTask
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/20
- * @Version 1.0.0
- * @Description: 安排任务
+ * @title: ScheduleTask
+ * @classPath com.dasoops.dasserver.plugin.schedule.task.ScheduleTask
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/20
+ * @version 1.0.0
+ * @description 安排任务
  */
 @Component
 @RequiredArgsConstructor

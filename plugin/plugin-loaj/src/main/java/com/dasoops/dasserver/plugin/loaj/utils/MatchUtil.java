@@ -7,12 +7,12 @@ import com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisValueDto;
 import com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyMatchTypeEnum;
 
 /**
- * @Title: MatchUtil
- * @ClassPath com.dasoops.dasserver.plugin.loaj.utils.MatchUtil
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/09
- * @Version 1.0.0
- * @Description: 匹配工具
+ * @title: MatchUtil
+ * @classPath com.dasoops.dasserver.plugin.loaj.utils.MatchUtil
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/09
+ * @version 1.0.0
+ * @description 匹配工具
  */
 public class MatchUtil {
 

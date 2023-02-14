@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: MessageParamResloveExceptionEnum
- * @ClassPath com.dasoops.dasserver.cq.entity.enums.MessageParamResloveExceptionEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/07
- * @Version 1.0.0
- * @Description: 消息param解决异常枚举(102xx)
+ * @title: MessageParamResloveExceptionEnum
+ * @classPath com.dasoops.dasserver.cq.entity.enums.MessageParamResloveExceptionEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/07
+ * @version 1.0.0
+ * @description 消息param解决异常枚举(102xx)
  * @see Enum
  */
 @AllArgsConstructor

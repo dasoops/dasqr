@@ -7,12 +7,12 @@ import lombok.Getter;
 import static com.dasoops.common.entity.enums.base.BaseRedisKeyEnum.REGISTER;
 
 /**
- * @Title: RegisterRedisKeyEnum
- * @ClassPath com.dasoops.dasserver.cq.entity.enums.RegisterRedisKeyEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 注册表redisKey枚举
+ * @title: RegisterRedisKeyEnum
+ * @classPath com.dasoops.dasserver.cq.entity.enums.RegisterRedisKeyEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 注册表redisKey枚举
  * @see Enum
  * @see IRedisKeyEnum
  */
@@ -39,7 +39,11 @@ public enum RegisterRedisKeyEnum implements IRedisKeyEnum {
     /**
      * 注册表用户id 单对单 名称映射集合
      */
-    REGISTER_ID_OTO_NAME_MAP(getBasePath() + "id_oto_name");
+    REGISTER_USER_ID_OTO_NAME_MAP(getBasePath() + "user_id_oto_name"),
+    /**
+     * 注册表群组id 单对单 名字映射集合
+     */
+    REGISTER_GROUP_ID_OTO_NAME_MAP(getBasePath() + "group_id_oto_name");
 
     private static String getBasePath() {
         return REGISTER.getKey();

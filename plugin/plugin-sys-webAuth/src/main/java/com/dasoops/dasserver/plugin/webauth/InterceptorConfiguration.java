@@ -8,9 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * @author qml
  * @version 1.0.0
- * @ClassName MyMvcConfig.java
- * @Description MyMvcConfig
- * @createTime 2020年02月21日 20:54:00
+ * @className MyMvcConfig.java
+ * @description MyMvcConfig
+ * @date 2020年02月21日 20:54:00
  */
 @Configuration
 public class InterceptorConfiguration implements WebMvcConfigurer {

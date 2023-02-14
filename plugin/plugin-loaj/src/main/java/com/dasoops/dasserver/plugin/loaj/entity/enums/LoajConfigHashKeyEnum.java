@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: ConfigEnum
- * @ClassPath com.dasoops.dasserver.cq.entity.enums.ConfigEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/01
- * @Version 1.0.0
- * @Description: 配置枚举
+ * @title: ConfigEnum
+ * @classPath com.dasoops.dasserver.cq.entity.enums.ConfigEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/01
+ * @version 1.0.0
+ * @description 配置枚举
  * @see Enum
  */
 @Getter

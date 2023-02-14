@@ -7,12 +7,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * @Title: LogQueue
- * @ClassPath com.dasoops.dasserver.plugin.shell.log.LogQueue
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/25
- * @Version 1.0.0
- * @Description: 日志队列
+ * @title: LogQueue
+ * @classPath com.dasoops.dasserver.plugin.shell.log.LogQueue
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/25
+ * @version 1.0.0
+ * @description 日志队列
  * @see LinkedList
  */
 public class LogQueue {
@@ -38,20 +38,20 @@ public class LogQueue {
     }
 
     /**
-     * @Description: 消息入队
+     * @description 消息入队
      * @Return: boolean
-     * @Author: leijun
-     * @Date: 2019/11/26
+     * @author: leijun
+     * @date: 2019/11/26
      **/
     public void push(LogDto log) {
         this.blockingQueue.add(log);
     }
 
     /**
-     * @Description: 消息出队
+     * @description 消息出队
      * @Return: com.unismc.springbootudcap.powersecurity.entity.LoggerMessage
-     * @Author: leijun
-     * @Date: 2019/11/26
+     * @author: leijun
+     * @date: 2019/11/26
      **/
     public LogDto poll() {
         LogDto result = null;

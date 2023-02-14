@@ -8,18 +8,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: GetFantastyKeywordParam
- * @ClassPath com.dasoops.dasserver.plugin.image.entity.param.GetFantastyKeywordParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 获取联想关键词param
+ * @title: GetFantasyKeywordParam
+ * @classPath com.dasoops.dasserver.plugin.image.entity.param.GetFantasyKeywordParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 获取联想关键词param
  * @see BaseFastBuildParam
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "获取联想关键词param", description = "获取联想关键词param")
-public class GetFantastyKeywordParam extends BaseParam {
+public class GetFantasyKeywordParam extends BaseParam {
 
     /**
      * 关键词

@@ -7,8 +7,7 @@ import com.dasoops.common.entity.result.SimpleResult;
 import com.dasoops.common.util.ExcelUtil;
 import com.dasoops.dasserver.plugin.image.entity.dto.ExportImageInfoDto;
 import com.dasoops.dasserver.plugin.image.entity.param.*;
-import com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyKeywordVo;
-import com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyUserVo;
+import com.dasoops.dasserver.plugin.image.entity.vo.GetFantasyKeywordVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.GetImageVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.UploadImageVo;
 import com.dasoops.dasserver.plugin.image.service.ImageService;
@@ -23,12 +22,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * @Title: ImageController
- * @ClassPath com.dasoops.dasserver.plugin.image.controller.ImageController
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 图片Controller
+ * @title: ImageController
+ * @classPath com.dasoops.dasserver.plugin.image.controller.ImageController
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 图片Controller
  */
 @RestController
 @RequestMapping("image")
@@ -49,18 +48,11 @@ public class ImageController {
         return PageResult.success(imageDoPage, GetImageVo.class);
     }
 
-    @GetMapping("getFantastyKeyword")
+    @GetMapping("getFantasyKeyword")
     @ApiOperation(value = "获取联想关键词", notes = "获取联想关键词")
-    public Result<GetFantastyKeywordVo> getFantastyKeyword(GetFantastyKeywordParam param) {
-        GetFantastyKeywordVo vo = imageService.getFantasyKeyword4Cache(param);
+    public Result<GetFantasyKeywordVo> getFantasyKeyword(GetFantasyKeywordParam param) {
+        GetFantasyKeywordVo vo = imageService.getFantasyKeyword4Cache(param);
         return Result.success(vo);
-    }
-
-    @GetMapping("getFantastyUser")
-    @ApiOperation(value = "获取联想用户", notes = "获取联想用户")
-    public Result<GetFantastyUserVo> getFantasyUser(GetFantastyUserParam param) {
-        GetFantastyUserVo getFantastyUserVo = imageService.getFantasyUser(param);
-        return Result.success(getFantastyUserVo);
     }
 
     @PostMapping("editImageInfo")

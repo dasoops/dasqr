@@ -8,12 +8,12 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @Title: SetuDto
- * @ClassPath com.dasoops.dasserver.plugin.shell.entity.dto.SetuDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/22
- * @Version 1.0.0
- * @Description: setudto
+ * @title: SetuDto
+ * @classPath com.dasoops.dasserver.plugin.shell.entity.dto.SetuDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/22
+ * @version 1.0.0
+ * @description setudto
  */
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor

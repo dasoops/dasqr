@@ -4,12 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @Title: Application
- * @ClassPath com.dasoops.core.Application
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: 应用程序
+ * @title: Application
+ * @classPath com.dasoops.core.Application
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description 应用程序
  */
 @SpringBootApplication
 public class DasServerApplication {

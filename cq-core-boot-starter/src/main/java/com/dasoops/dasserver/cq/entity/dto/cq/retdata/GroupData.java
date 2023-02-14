@@ -4,12 +4,12 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Data;
 
 /**
- * @Title: GroupData
- * @ClassPath com.dasoops.dasserver.cq.entity.retdata.GroupData
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: 组数据
+ * @title: GroupData
+ * @classPath com.dasoops.dasserver.cq.entity.retdata.GroupData
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description 组数据
  */
 @Data
 public class GroupData {

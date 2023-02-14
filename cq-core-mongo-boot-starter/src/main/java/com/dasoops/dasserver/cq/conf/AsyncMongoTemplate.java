@@ -6,12 +6,12 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: AsyncMongoTemplate
- * @ClassPath com.dasoops.dasserver.cq.conf.AsyncMongoTemplate
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/04
- * @Version 1.0.0
- * @Description: 异步mongoTemplate
+ * @title: AsyncMongoTemplate
+ * @classPath com.dasoops.dasserver.cq.conf.AsyncMongoTemplate
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/04
+ * @version 1.0.0
+ * @description 异步mongoTemplate
  */
 @Component
 @RequiredArgsConstructor

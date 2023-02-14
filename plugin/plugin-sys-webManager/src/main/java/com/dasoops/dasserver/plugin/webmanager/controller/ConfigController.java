@@ -23,12 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * @Title: ConfigController
- * @ClassPath com.dasoops.dasserver.sys.user.controller.ConfigController
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/28
- * @Version 1.0.0
- * @Description: 配置 控制器
+ * @title: ConfigController
+ * @classPath com.dasoops.dasserver.sys.user.controller.ConfigController
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/28
+ * @version 1.0.0
+ * @description 配置 控制器
  */
 @RestController
 @RequestMapping("config")

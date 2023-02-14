@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Title: ImageCache
- * @ClassPath com.dasoops.dasserver.plugin.image.cache.ImageCache
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/01
- * @Version 1.0.0
- * @Description: 图像缓存
+ * @title: ImageCache
+ * @classPath com.dasoops.dasserver.plugin.image.cache.ImageCache
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/01
+ * @version 1.0.0
+ * @description 图像缓存
  * @see BaseCache
  */
 @Component

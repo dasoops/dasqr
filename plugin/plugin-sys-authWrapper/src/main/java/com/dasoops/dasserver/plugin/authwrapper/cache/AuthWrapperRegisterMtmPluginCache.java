@@ -2,10 +2,12 @@ package com.dasoops.dasserver.plugin.authwrapper.cache;
 
 import com.dasoops.common.cache.BaseCache;
 import com.dasoops.common.entity.enums.ExceptionEnum;
+import com.dasoops.common.entity.enums.base.PrefixRedisKeyShamEnum;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.common.util.Convert;
 import com.dasoops.dasserver.cq.entity.enums.RegisterMtmPluginIsPassEnum;
 import com.dasoops.dasserver.plugin.authwrapper.entity.enums.AuthRedisKeyAuthListShamEnum;
+import com.dasoops.dasserver.plugin.authwrapper.utils.AuthUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -14,12 +16,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @Title: RegisterMtmPluginCache
- * @ClassPath com.dasoops.dasserver.plugin.authwrapper.cache.RegisterMtmPluginCache
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/27
- * @Version 1.0.0
- * @Description: 注册mtm插件缓存
+ * @author DasoopsNicole@Gmail.com
+ * @version 1.0.0
+ * @title: RegisterMtmPluginCache
+ * @classPath com.dasoops.dasserver.plugin.authwrapper.cache.RegisterMtmPluginCache
+ * @date 2022/12/27
+ * @description 注册mtm插件缓存
  */
 @Component
 @Slf4j
@@ -47,13 +49,26 @@ public class AuthWrapperRegisterMtmPluginCache extends BaseCache {
         return Integer.valueOf(isPass).equals(RegisterMtmPluginIsPassEnum.TRUE.getDbValue());
     }
 
-    public Map<Long, Boolean> getAuthList(Long registerId) {
-        AuthRedisKeyAuthListShamEnum redisKeyEnum = new AuthRedisKeyAuthListShamEnum(registerId);
+    public Map<Long, Boolean> getAuthMap(Long registerRowId) {
+        AuthRedisKeyAuthListShamEnum redisKeyEnum = new AuthRedisKeyAuthListShamEnum(registerRowId);
         Map<String, String> entries = super.entries(redisKeyEnum);
         //判断是否为TRUE
-        return entries.entrySet().stream().collect(Collectors.toMap(
+        return convertAuthMap(entries);
+    }
+
+    private Map<Long, Boolean> convertAuthMap(Map<String, String> authMap) {
+        return authMap.entrySet().stream().collect(Collectors.toMap(
                 entry -> Long.valueOf(entry.getKey()),
                 entry -> Integer.valueOf(entry.getValue()).equals(RegisterMtmPluginIsPassEnum.TRUE.getDbValue())
+        ));
+    }
+
+    public Map<Long, Map<Long, Boolean>> getAuthMap() {
+        var entries4Prefix = super.entries4Prefix(new PrefixRedisKeyShamEnum(AuthRedisKeyAuthListShamEnum.getBasePath()));
+        //判断是否为TRUE
+        return entries4Prefix.entrySet().stream().collect(Collectors.toMap(
+                entry -> AuthUtil.resloveRowId(entry.getKey()),
+                entry -> convertAuthMap(entry.getValue())
         ));
     }
 }

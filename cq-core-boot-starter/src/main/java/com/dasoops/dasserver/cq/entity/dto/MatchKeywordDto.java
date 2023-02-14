@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: MatchKeywordDto
- * @ClassPath com.dasoops.dasserver.cq.entity.dto.MatchKeywordDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/20
- * @Version 1.0.0
- * @Description: 匹配关键字dto
+ * @title: MatchKeywordDto
+ * @classPath com.dasoops.dasserver.cq.entity.dto.MatchKeywordDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/20
+ * @version 1.0.0
+ * @description 匹配关键字dto
  * @see BaseDto
  */
 @EqualsAndHashCode(callSuper = true)

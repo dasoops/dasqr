@@ -6,12 +6,12 @@ import org.springframework.context.ApplicationContext;
 import java.util.Map;
 
 /**
- * @Title: CqPluginLoadReslover
- * @ClassPath com.dasoops.dasserver.cq.bot.CqPluginLoadReslover
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/10
- * @Version 1.0.0
- * @Description: 插件加载解析器
+ * @title: CqPluginLoadReslover
+ * @classPath com.dasoops.dasserver.cq.bot.CqPluginLoadReslover
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/10
+ * @version 1.0.0
+ * @description 插件加载解析器
  */
 public interface CqPluginLoadReslover {
     /**

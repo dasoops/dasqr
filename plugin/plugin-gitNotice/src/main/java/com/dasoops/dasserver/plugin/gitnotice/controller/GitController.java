@@ -24,12 +24,12 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @Title: GitController
- * @ClassPath com.dasoops.dasserver.plugin.gitnotice.controller.GitController
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/03
- * @Version 1.0.0
- * @Description: git控制器
+ * @title: GitController
+ * @classPath com.dasoops.dasserver.plugin.gitnotice.controller.GitController
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/03
+ * @version 1.0.0
+ * @description git控制器
  */
 @RestController
 @RequestMapping("/git")

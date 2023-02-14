@@ -26,12 +26,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @Title: SetuPlugin
- * @ClassPath com.dasoops.dasserver.plugin.shell.plugin.SetuPlugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/22
- * @Version 1.0.0
- * @Description: setu插件
+ * @title: SetuPlugin
+ * @classPath com.dasoops.dasserver.plugin.shell.plugin.SetuPlugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/22
+ * @version 1.0.0
+ * @description setu插件
  * @see CqPlugin
  */
 @Component

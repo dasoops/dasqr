@@ -36,7 +36,7 @@ class RecallPlugin(
             return "没有丢人记录捏"
         }
         val messageDo: MessageDo = messageDoList[0]
-        val registerName = registerCache.getRegisterNameById(messageDo.userId)
+        val registerName = registerCache.getRegisterUserNameById(messageDo.userId)
 
         return """
             |$registerName(${DateUtil.date(messageDo.time!! * 1000)}):

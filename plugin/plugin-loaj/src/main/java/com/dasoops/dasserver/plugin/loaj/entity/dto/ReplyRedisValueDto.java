@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: ReplyRedisDataDto
- * @ClassPath com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisDataDto
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/09
- * @Version 1.0.0
- * @Description: 回复redis缓存数据
+ * @title: ReplyRedisDataDto
+ * @classPath com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisDataDto
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/09
+ * @version 1.0.0
+ * @description 回复redis缓存数据
  * @see BaseDto
  */
 @EqualsAndHashCode(callSuper = true)

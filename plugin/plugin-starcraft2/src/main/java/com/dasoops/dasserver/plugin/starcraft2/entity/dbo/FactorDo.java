@@ -8,12 +8,12 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @Title: FactorDo
- * @ClassPath com.dasoops.dasserver.plugin.starcraft2.entity.dbo.FactorDo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/20
- * @Version 1.0.0
- * @Description: sc2 因子
+ * @title: FactorDo
+ * @classPath com.dasoops.dasserver.plugin.starcraft2.entity.dbo.FactorDo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/20
+ * @version 1.0.0
+ * @description sc2 因子
  * @see BaseDo
  * @see Serializable
  */

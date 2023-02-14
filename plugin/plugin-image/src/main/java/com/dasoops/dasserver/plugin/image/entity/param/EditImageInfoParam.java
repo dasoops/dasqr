@@ -8,12 +8,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: EditImageParam
- * @ClassPath com.dasoops.dasserver.plugin.image.entity.param.EditImageParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 编辑图片参数
+ * @title: EditImageParam
+ * @classPath com.dasoops.dasserver.plugin.image.entity.param.EditImageParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 编辑图片参数
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

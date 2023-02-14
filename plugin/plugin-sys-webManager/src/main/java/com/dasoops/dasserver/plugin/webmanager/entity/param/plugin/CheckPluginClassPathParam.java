@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: CheckPluginClassPathParam
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.CheckPluginClassPathParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/14
- * @Version 1.0.0
- * @Description: 检查插件类路径param
+ * @title: CheckPluginClassPathParam
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.CheckPluginClassPathParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/14
+ * @version 1.0.0
+ * @description 检查插件类路径param
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

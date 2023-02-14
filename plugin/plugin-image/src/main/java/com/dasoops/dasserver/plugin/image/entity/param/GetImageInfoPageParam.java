@@ -8,12 +8,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: GetImageParam
- * @ClassPath com.dasoops.dasserver.plugin.image.entity.param.GetImageParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 获取分页图像信息参数
+ * @title: GetImageParam
+ * @classPath com.dasoops.dasserver.plugin.image.entity.param.GetImageParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 获取分页图像信息参数
  * @see BaseEasyTimePageParam
  */
 @Data

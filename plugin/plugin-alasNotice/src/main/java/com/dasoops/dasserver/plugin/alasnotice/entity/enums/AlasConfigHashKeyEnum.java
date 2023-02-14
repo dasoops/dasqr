@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: AlasConfigHashKeyEnum
- * @ClassPath com.dasoops.dasserver.plugin.template.entity.enums.AlasConfigHashKeyEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/11
- * @Version 1.0.0
- * @Description: alas配置hashKey枚举
+ * @title: AlasConfigHashKeyEnum
+ * @classPath com.dasoops.dasserver.plugin.template.entity.enums.AlasConfigHashKeyEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/11
+ * @version 1.0.0
+ * @description alas配置hashKey枚举
  * @see Enum
  * @see IRedisHashKeyEnum
  */

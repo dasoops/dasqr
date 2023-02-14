@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: MinioExceptionEnum
- * @ClassPath com.dasoops.minio.MinioExceptionEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/22
- * @Version 1.0.0
- * @Description: minio异常枚举
+ * @title: MinioExceptionEnum
+ * @classPath com.dasoops.minio.MinioExceptionEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/22
+ * @version 1.0.0
+ * @description minio异常枚举
  * @see Enum
  * @see IExceptionEnum
  */

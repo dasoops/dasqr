@@ -22,7 +22,7 @@ import com.dasoops.dasserver.cq.simplesql.PluginSimpleSql;
 import com.dasoops.dasserver.cq.simplesql.RegisterSimpleSql;
 import com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperPluginService;
 import com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam;
-import com.dasoops.dasserver.plugin.webmanager.entity.WebManagerRouteRegistry;
+import com.dasoops.dasserver.plugin.webmanager.WebManagerRouteRegistry;
 import com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.CheckPluginRepeatEnum;
 import com.dasoops.dasserver.plugin.webmanager.entity.enums.GetPluginSortColumnEnum;
@@ -45,12 +45,12 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @Title: PluginServiceImpl
- * @ClassPath com.dasoops.dasserver.cq.service.impl.PluginServiceImpl
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/31
- * @Version 1.0.0
- * @Description: 针对表【tb_core_plugin(插件表,储存插件注册信息,权限,描述,启用状态等)】的数据库操作Service实现
+ * @title: PluginServiceImpl
+ * @classPath com.dasoops.dasserver.cq.service.impl.PluginServiceImpl
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/31
+ * @version 1.0.0
+ * @description 针对表【tb_core_plugin(插件表,储存插件注册信息,权限,描述,启用状态等)】的数据库操作Service实现
  * @see ServiceImpl
  * @see PluginService
  */

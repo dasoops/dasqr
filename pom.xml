@@ -53,8 +53,7 @@
         <cq.version>1.0.0</cq.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <lombok.version>1.18.24</lombok.version>
-        <fastjson2.version>2.0.15</fastjson2.version>
-        <fastjson2-extension.version>2.0.15</fastjson2-extension.version>
+        <fastjson2.version>2.0.23</fastjson2.version>
         <hutool.version>5.8.8</hutool.version>
         <!--        <log4j.version>1.2.17</log4j.version>-->
         <tencentSdk.version>3.1.625</tencentSdk.version>
@@ -278,8 +277,14 @@
 
             <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
-                <artifactId>fastjson2-extension</artifactId>
-                <version>${fastjson2-extension.version}</version>
+                <artifactId>fastjson2-kotlin</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2-extension-spring5</artifactId>
+                <version>${fastjson2.version}</version>
             </dependency>
 
             <dependency>
@@ -389,6 +394,24 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
+                <configuration>
+                    <compilerPlugins>
+                        <plugin>lombok</plugin>
+                    </compilerPlugins>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-lombok</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                        <version>1.18.20</version>
+                        <scope>compile</scope>
+                    </dependency>
+                </dependencies>
                 <executions>
                     <execution>
                         <id>compile</id>

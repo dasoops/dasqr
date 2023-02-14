@@ -12,12 +12,12 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Title: RollCache
- * @ClassPath com.dasoops.dasserver.plugin.loaj.cache.RollCache
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/08
- * @Version 1.0.0
- * @Description: roll点缓存
+ * @title: RollCache
+ * @classPath com.dasoops.dasserver.plugin.loaj.cache.RollCache
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/08
+ * @version 1.0.0
+ * @description roll点缓存
  * @see BaseCache
  */
 @Component

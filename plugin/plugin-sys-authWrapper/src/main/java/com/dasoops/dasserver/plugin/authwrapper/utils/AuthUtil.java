@@ -1,5 +1,7 @@
 package com.dasoops.dasserver.plugin.authwrapper.utils;
 
+import cn.hutool.core.util.StrUtil;
+import com.dasoops.common.entity.enums.base.BaseRedisKeyEnum;
 import com.dasoops.common.util.ClassNameUtil;
 import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.util.RegisterMtmPluginUtil;
@@ -10,12 +12,12 @@ import com.dasoops.dasserver.plugin.authwrapper.cache.AuthWrapperRegisterMtmPlug
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: AuthUtil
- * @ClassPath com.dasoops.dasserver.plugin.authwrapper.utils.AuthUtil
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/27
- * @Version 1.0.0
- * @Description: 身份验证工具
+ * @author DasoopsNicole@Gmail.com
+ * @version 1.0.0
+ * @title: AuthUtil
+ * @classPath com.dasoops.dasserver.plugin.authwrapper.utils.AuthUtil
+ * @date 2022/12/27
+ * @description 身份验证工具
  * @see RegisterMtmPluginUtil
  */
 @Component
@@ -55,4 +57,7 @@ public class AuthUtil {
         return authWrapperRegisterMtmPluginCache.getPluginIsPassByRegisterRowIdAndPluginId(userRowId, pluginId);
     }
 
+    public static Long resloveRowId(String key) {
+        return Long.valueOf(StrUtil.removePrefix(key, BaseRedisKeyEnum.AUTH.getKey()));
+    }
 }

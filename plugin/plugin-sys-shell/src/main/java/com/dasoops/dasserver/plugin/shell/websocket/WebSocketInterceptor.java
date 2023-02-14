@@ -18,12 +18,12 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * @Title: WebSocketInterceptor
- * @ClassPath com.dasoops.dasserver.plugin.shell.websocket.WebSocketInterceptor
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/25
- * @Version 1.0.0
- * @Description: webSocket协议
+ * @title: WebSocketInterceptor
+ * @classPath com.dasoops.dasserver.plugin.shell.websocket.WebSocketInterceptor
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/25
+ * @version 1.0.0
+ * @description webSocket协议
  * 发起请求携带请求头 Sec-WebSocket-Protocol
  * 返回数据必须也包含改请求头 且数据要求一致
  * @see HandshakeInterceptor

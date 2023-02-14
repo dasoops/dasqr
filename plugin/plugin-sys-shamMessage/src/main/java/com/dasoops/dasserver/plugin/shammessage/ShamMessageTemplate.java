@@ -10,12 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: ShamMessageTemplate
- * @ClassPath com.dasoops.dasserver.plugin.shammessage.ShamMessageTemplate
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/18
- * @Version 1.0.0
- * @Description: 虚假信息Template
+ * @title: ShamMessageTemplate
+ * @classPath com.dasoops.dasserver.plugin.shammessage.ShamMessageTemplate
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/18
+ * @version 1.0.0
+ * @description 虚假信息Template
  */
 @Component
 @Slf4j

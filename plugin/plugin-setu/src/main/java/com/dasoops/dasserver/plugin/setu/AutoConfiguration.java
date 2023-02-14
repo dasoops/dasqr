@@ -21,12 +21,12 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @Title: AutoConfiguration
- * @ClassPath com.dasoops.dasserver.plugin.setu.AutoConfiguration
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/22
- * @Version 1.0.0
- * @Description: 自动配置
+ * @title: AutoConfiguration
+ * @classPath com.dasoops.dasserver.plugin.setu.AutoConfiguration
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/22
+ * @version 1.0.0
+ * @description 自动配置
  */
 @Configuration
 @ComponentScan("com.dasoops.dasserver.plugin.setu")

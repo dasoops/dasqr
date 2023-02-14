@@ -6,12 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @Title: LogSender
- * @ClassPath com.dasoops.dasserver.plugin.shell.log.LogSender
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/25
- * @Version 1.0.0
- * @Description: 日志发送方
+ * @title: LogSender
+ * @classPath com.dasoops.dasserver.plugin.shell.log.LogSender
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/25
+ * @version 1.0.0
+ * @description 日志发送方
  * @see Thread
  */
 @RequiredArgsConstructor

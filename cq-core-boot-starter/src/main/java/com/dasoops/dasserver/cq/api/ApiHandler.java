@@ -14,12 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Title: ApiHeader
- * @ClassPath com.dasoops.dasserver.cq.bot.ApiHeader
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: api处理类
+ * @title: ApiHeader
+ * @classPath com.dasoops.dasserver.cq.bot.ApiHeader
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description api处理类
  */
 @Slf4j
 public class ApiHandler {

@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: AlasNoticeTypeEnum
- * @ClassPath com.dasoops.dasserver.plugin.template.entity.enums.AlasNoticeTypeEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/11
- * @Version 1.0.0
- * @Description: alas通知类型枚举类型
+ * @title: AlasNoticeTypeEnum
+ * @classPath com.dasoops.dasserver.plugin.template.entity.enums.AlasNoticeTypeEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/11
+ * @version 1.0.0
+ * @description alas通知类型枚举类型
  */
 @AllArgsConstructor
 @Getter

@@ -33,12 +33,12 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import static com.dasoops.dasserver.plugin.shell.entity.enums.ShellRedisHashKeyEnum.SHELL_CONFIG;
 
 /**
- * @Title: shellWebSocketHandler
- * @ClassPath com.dasoops.dasserver.plugin.shell.websocket.shellWebSocketHandler
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/23
- * @Version 1.0.0
- * @Description: shellWebSocket处理程序
+ * @title: shellWebSocketHandler
+ * @classPath com.dasoops.dasserver.plugin.shell.websocket.shellWebSocketHandler
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/23
+ * @version 1.0.0
+ * @description shellWebSocket处理程序
  * client -> shamMessageTemplate -> ShellShamCqTemplate -> ShellTemplate -> client
  * @see TextWebSocketHandler
  */

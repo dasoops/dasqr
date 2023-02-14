@@ -6,12 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: ShellRedisHashKeyEnum
- * @ClassPath com.dasoops.dasserver.plugin.shell.entity.enums.ShellRedisHashKeyEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/23
- * @Version 1.0.0
- * @Description: rhke快速生成
+ * @title: ShellRedisHashKeyEnum
+ * @classPath com.dasoops.dasserver.plugin.shell.entity.enums.ShellRedisHashKeyEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/23
+ * @version 1.0.0
+ * @description rhke快速生成
  * @see Enum
  * @see IRedisHashKeyEnum
  */

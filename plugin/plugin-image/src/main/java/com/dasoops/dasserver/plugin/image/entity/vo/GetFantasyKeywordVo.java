@@ -9,18 +9,18 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @Title: GetFantastyKeywordVo
- * @ClassPath com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyKeywordVo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 获取联想关键词vo
+ * @title: GetFantasyKeywordVo
+ * @classPath com.dasoops.dasserver.plugin.image.entity.vo.GetFantasyKeywordVo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 获取联想关键词vo
  * @see BaseVo
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "获取联想关键词vo", description = "获取联想关键词vo")
-public class GetFantastyKeywordVo extends BaseVo {
+public class GetFantasyKeywordVo extends BaseVo {
 
     /**
      * 联想关键词集合

@@ -6,12 +6,12 @@ import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
 /**
- * @Title: GetRegisterParam
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.param.register.GetRegisterParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/02/01
- * @Version 1.0.0
- * @Description: 获取注册对象param
+ * @title: GetRegisterParam
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.register.GetRegisterParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/02/01
+ * @version 1.0.0
+ * @description 获取注册对象param
  * @see [GetRegisterParam]
  */
 @ApiModel(value = "获取注册对象param", description = "获取注册对象param")
@@ -25,12 +25,12 @@ data class GetRegisterParam(
     /**
      * user关键字
      */
-    @ApiModelProperty(value = "user关键字", notes = "user关键字", example = "776465218", required = false)
-    var userKeyword: String? = null,
+    @ApiModelProperty(value = "user关键字", notes = "user关键字", example = "_776465218", required = false)
+    var keyword: String? = null,
 
     /**
      * 类型
      */
-    @ApiModelProperty(value = "类型(0:user;1:group)", notes = "类型", example = "0", required = false)
+    @ApiModelProperty(value = "类型(0:user;1:group)", notes = "类型", example = "0", required = true)
     var type: Int? = null
 ) : BasePageParam<RegisterDo>()

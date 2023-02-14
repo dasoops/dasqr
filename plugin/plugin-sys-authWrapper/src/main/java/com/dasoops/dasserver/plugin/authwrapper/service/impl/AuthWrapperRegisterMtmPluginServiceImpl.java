@@ -24,12 +24,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @Title: RegisterMtmPluginAuthWrapperImpl
- * @ClassPath com.dasoops.dasserver.plugin.authwrapper.service.impl.RegisterMtmPluginAuthWrapperImpl
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 注册mtm插件身份验证条件构造器impl
+ * @title: RegisterMtmPluginAuthWrapperImpl
+ * @classPath com.dasoops.dasserver.plugin.authwrapper.service.impl.RegisterMtmPluginAuthWrapperImpl
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 注册mtm插件身份验证条件构造器impl
  * @see AuthWrapperRegisterMtmPluginService
  */
 @Service

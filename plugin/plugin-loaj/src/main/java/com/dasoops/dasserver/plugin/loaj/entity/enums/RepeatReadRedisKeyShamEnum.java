@@ -5,12 +5,12 @@ import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import lombok.Data;
 
 /**
- * @Title: RepeatReadRedisKeyShamEnum
- * @ClassPath com.dasoops.dasserver.plugin.loaj.entity.enums.RepeatReadRedisKeyShamEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/19
- * @Version 1.0.0
- * @Description: 复读redisKeySham枚举
+ * @title: RepeatReadRedisKeyShamEnum
+ * @classPath com.dasoops.dasserver.plugin.loaj.entity.enums.RepeatReadRedisKeyShamEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/19
+ * @version 1.0.0
+ * @description 复读redisKeySham枚举
  */
 @Data
 public class RepeatReadRedisKeyShamEnum implements IRedisKeyEnum {

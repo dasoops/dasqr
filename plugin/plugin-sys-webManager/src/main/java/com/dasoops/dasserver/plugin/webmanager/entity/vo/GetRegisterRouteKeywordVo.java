@@ -8,12 +8,12 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @Title: GetLoadPluginVo
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.vo.GetLoadPluginVo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/24
- * @Version 1.0.0
- * @Description: 获取注册路由关键词集合
+ * @title: GetLoadPluginVo
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.vo.GetLoadPluginVo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/24
+ * @version 1.0.0
+ * @description 获取注册路由关键词集合
  * @see BaseVo
  */
 @Data

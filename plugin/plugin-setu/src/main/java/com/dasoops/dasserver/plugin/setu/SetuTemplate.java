@@ -22,12 +22,12 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @Title: SetuTemplate
- * @ClassPath com.dasoops.dasserver.plugin.setu.SetuTemplate
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/22
- * @Version 1.0.0
- * @Description: setu模板
+ * @title: SetuTemplate
+ * @classPath com.dasoops.dasserver.plugin.setu.SetuTemplate
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/22
+ * @version 1.0.0
+ * @description setu模板
  */
 @Slf4j
 @Component

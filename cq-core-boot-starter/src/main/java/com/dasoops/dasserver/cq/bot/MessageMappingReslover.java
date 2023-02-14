@@ -26,12 +26,12 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @Title: MessageParamReslover
- * @ClassPath com.dasoops.dasserver.cq.bot.MessageParamReslover
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/08
- * @Version 1.0.0
- * @Description: 消息映射解析器
+ * @title: MessageParamReslover
+ * @classPath com.dasoops.dasserver.cq.bot.MessageParamReslover
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/08
+ * @version 1.0.0
+ * @description 消息映射解析器
  */
 public class MessageMappingReslover {
 

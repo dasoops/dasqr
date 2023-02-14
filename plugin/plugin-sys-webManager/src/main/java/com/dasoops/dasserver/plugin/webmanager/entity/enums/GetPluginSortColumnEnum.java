@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: GetPluginOrderColumnEnum
- * @ClassPath com.dasoops.dasserver.plugin.webmanager.entity.enums.GetPluginOrderColumnEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/12
- * @Version 1.0.0
- * @Description: 获取插件分页信息按字段排序枚举
+ * @title: GetPluginOrderColumnEnum
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.enums.GetPluginOrderColumnEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/12
+ * @version 1.0.0
+ * @description 获取插件分页信息按字段排序枚举
  */
 @AllArgsConstructor
 @Getter

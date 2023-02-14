@@ -7,12 +7,12 @@ import com.dasoops.dasserver.cq.entity.enums.RegisterTypeEnum;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: RegisterUtil
- * @ClassPath com.dasoops.dasserver.cq.util.RegisterUtil
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/27
- * @Version 1.0.0
- * @Description: 注册工具类
+ * @title: RegisterUtil
+ * @classPath com.dasoops.dasserver.cq.util.RegisterUtil
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/27
+ * @version 1.0.0
+ * @description 注册工具类
  */
 @Component
 public class RegisterUtil {

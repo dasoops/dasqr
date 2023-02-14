@@ -1,6 +1,6 @@
 package com.dasoops.dasserver.plugin.loaj;
 
-import com.dasoops.dasserver.plugin.webmanager.entity.WebManagerRouteRegistry;
+import com.dasoops.dasserver.plugin.webmanager.WebManagerRouteRegistry;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,12 +9,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.annotation.PostConstruct;
 
 /**
- * @Title: AutoConfiguration
- * @ClassPath com.dasoops.dasserver.plugin.loaj.AutoConfiguration
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/04
- * @Version 1.0.0
- * @Description: 自动配置
+ * @title: AutoConfiguration
+ * @classPath com.dasoops.dasserver.plugin.loaj.AutoConfiguration
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/04
+ * @version 1.0.0
+ * @description 自动配置
  */
 @ComponentScan("com.dasoops.dasserver.plugin.loaj")
 @MapperScan("com.dasoops.dasserver.plugin.loaj.mapper")

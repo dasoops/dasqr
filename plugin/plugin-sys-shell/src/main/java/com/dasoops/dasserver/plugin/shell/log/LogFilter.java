@@ -6,12 +6,12 @@ import ch.qos.logback.core.spi.FilterReply;
 import com.dasoops.dasserver.plugin.shell.entity.vo.LogDto;
 
 /**
- * @Title: logFilter
- * @ClassPath com.dasoops.dasserver.plugin.shell.logFilter
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/25
- * @Version 1.0.0
- * @Description: 日志过滤器
+ * @title: logFilter
+ * @classPath com.dasoops.dasserver.plugin.shell.logFilter
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/25
+ * @version 1.0.0
+ * @description 日志过滤器
  * @see Filter
  */
 public class LogFilter extends Filter<ILoggingEvent> {

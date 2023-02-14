@@ -1,12 +1,12 @@
 package com.dasoops.dasserver.cq.wrapper;
 
 /**
- * @Title: EventWrapper
- * @ClassPath com.dasoops.dasserver.cq.bot.EventWrapper
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/15
- * @Version 1.0.0
- * @Description: 事件增强
+ * @title: EventWrapper
+ * @classPath com.dasoops.dasserver.cq.bot.EventWrapper
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/15
+ * @version 1.0.0
+ * @description 事件增强
  */
 public interface AuthWrapper {
 

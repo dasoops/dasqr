@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: gitNoticeTypeEnum
- * @ClassPath com.dasoops.dasserver.plugin.gitnotice.entity.enums.gitNoticeTypeEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/03
- * @Version 1.0.0
- * @Description: git消息上报类型
+ * @title: gitNoticeTypeEnum
+ * @classPath com.dasoops.dasserver.plugin.gitnotice.entity.enums.gitNoticeTypeEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/03
+ * @version 1.0.0
+ * @description git消息上报类型
  * @see Enum
  */
 @Getter

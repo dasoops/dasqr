@@ -1,14 +1,15 @@
 package com.dasoops.dasserver.plugin.webmanager.controller
 
+import com.dasoops.common.entity.result.Result
 import com.dasoops.common.entity.result.PageResult
 import com.dasoops.common.entity.result.SimpleResult
 import com.dasoops.common.util.ExcelUtil
 import com.dasoops.common.util.entity.ExportInfo
 import com.dasoops.dasserver.plugin.webmanager.entity.param.register.EditRegisterParam
+import com.dasoops.dasserver.plugin.webmanager.entity.param.register.GetFantasyRegisterParam
 import com.dasoops.dasserver.plugin.webmanager.entity.param.register.GetRegisterParam
 import com.dasoops.dasserver.plugin.webmanager.entity.param.register.LoginParam
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.register.GetRegisterVo
-import com.dasoops.dasserver.plugin.webmanager.entity.vo.register.LoginVo
+import com.dasoops.dasserver.plugin.webmanager.entity.vo.register.*
 import com.dasoops.dasserver.plugin.webmanager.service.RegisterWebService
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.annotations.Api
@@ -18,12 +19,12 @@ import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
 /**
- * @Title: userController
- * @ClassPath com.dasoops.imageManagerServer.user.userController
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/26
- * @Version 1.0.0
- * @Description: 注册对象控制器
+ * @title: userController
+ * @classPath com.dasoops.imageManagerServer.user.userController
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/26
+ * @version 1.0.0
+ * @description 注册对象控制器
  */
 @RestController
 @RequestMapping("register")
@@ -40,9 +41,16 @@ class RegisterController(
         return Result.success(registerWebService.login(loginParam))
     }
 
+    @GetMapping("getFantasyUser")
+    @ApiOperation(value = "获取联想用户", notes = "获取联想用户")
+    fun getFantasyUser(param: GetFantasyRegisterParam): Result<GetFantasyUserVo> {
+        val getFantasyUserVo: GetFantasyUserVo = registerWebService.getFantasyRegister(param)
+        return Result.success(getFantasyUserVo)
+    }
+
     @PostMapping("getRegister")
     @ApiOperation(value = "获取注册对象信息", notes = "获取注册对象信息")
-    fun getRegister(@RequestBody param: GetRegisterParam): PageResult<GetRegisterVo> {
+    fun getRegister(@RequestBody param: GetRegisterParam): PageResult<out GetRegisterVo> {
         val registerPage = registerWebService.getRegisterPage(param)
         return PageResult.success(registerPage)
     }

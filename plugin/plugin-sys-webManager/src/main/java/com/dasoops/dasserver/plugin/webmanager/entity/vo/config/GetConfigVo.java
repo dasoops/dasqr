@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: GetConfigVo
- * @ClassPath com.dasoops.dasserver.sys.user.entity.vo.GetConfigVo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/28
- * @Version 1.0.0
- * @Description: 获取配置vo
+ * @title: GetConfigVo
+ * @classPath com.dasoops.dasserver.sys.user.entity.vo.GetConfigVo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/28
+ * @version 1.0.0
+ * @description 获取配置vo
  * @see BaseVo
  */
 @EqualsAndHashCode(callSuper = true)

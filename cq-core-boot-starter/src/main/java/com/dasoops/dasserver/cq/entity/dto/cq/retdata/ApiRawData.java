@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: ApiRawData
- * @ClassPath com.dasoops.dasserver.cq.entity.retdata.ApiRawData
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: api原始数据
+ * @title: ApiRawData
+ * @classPath com.dasoops.dasserver.cq.entity.retdata.ApiRawData
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description api原始数据
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

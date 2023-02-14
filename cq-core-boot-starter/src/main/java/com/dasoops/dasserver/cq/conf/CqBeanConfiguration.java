@@ -24,12 +24,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Title: CqBeanConfiguration
- * @ClassPath com.dasoops.dasserver.cq.boot.CqBeanConfiguration
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: cq bean配置
+ * @title: CqBeanConfiguration
+ * @classPath com.dasoops.dasserver.cq.boot.CqBeanConfiguration
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description cq bean配置
  */
 @Configuration
 public class CqBeanConfiguration {

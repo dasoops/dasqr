@@ -5,12 +5,12 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @Title: MinioProperties
- * @ClassPath com.dasoops.minio.MinioProperties
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/08
- * @Version 1.0.0
- * @Description: minio配置项
+ * @title: MinioProperties
+ * @classPath com.dasoops.minio.MinioProperties
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/08
+ * @version 1.0.0
+ * @description minio配置项
  */
 @Getter
 @Setter

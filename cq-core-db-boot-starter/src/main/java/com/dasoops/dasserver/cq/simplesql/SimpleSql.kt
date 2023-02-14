@@ -12,12 +12,12 @@ import com.dasoops.dasserver.cq.mapper.RegisterMtmPluginMapper
 import org.springframework.stereotype.Service
 
 /**
- * @Title: SimpleSql
- * @ClassPath com.dasoops.dasserver.cq.simplesql
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/02/10
- * @Version 1.0.0
- * @Description: 注册简单sql
+ * @title: SimpleSql
+ * @classPath com.dasoops.dasserver.cq.simplesql
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/02/10
+ * @version 1.0.0
+ * @description 注册简单sql
  * @see [ServiceImpl]
  */
 

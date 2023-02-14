@@ -5,12 +5,12 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @Title: EventProperties
- * @ClassPath com.dasoops.dasserver.cq.conf.properties.EventProperties
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: 事件参数
+ * @title: EventProperties
+ * @classPath com.dasoops.dasserver.cq.conf.properties.EventProperties
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description 事件参数
  */
 @ConfigurationProperties(prefix = "dasq.cq.core.event")
 @Getter

@@ -4,12 +4,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: CqGroupCardNoticeEvent
- * @ClassPath com.dasoops.dasserver.cq.entity.event.notice.CqGroupCardNoticeEvent
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/18
- * @Version 1.0.0
- * @Description: cq群名片提醒事件
+ * @title: CqGroupCardNoticeEvent
+ * @classPath com.dasoops.dasserver.cq.entity.event.notice.CqGroupCardNoticeEvent
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/18
+ * @version 1.0.0
+ * @description cq群名片提醒事件
  * @see CqNoticeEvent
  */
 @EqualsAndHashCode(callSuper = true)

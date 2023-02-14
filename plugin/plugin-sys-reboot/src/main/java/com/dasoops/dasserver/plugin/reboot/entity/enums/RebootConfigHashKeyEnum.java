@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: RebootConfigHashKeyEnum
- * @ClassPath com.dasoops.dasserver.plugin.reboot.entity.enums.RebootConfigHashKeyEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/13
- * @Version 1.0.0
- * @Description: 重新启动配置hashKeyenum
+ * @title: RebootConfigHashKeyEnum
+ * @classPath com.dasoops.dasserver.plugin.reboot.entity.enums.RebootConfigHashKeyEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/13
+ * @version 1.0.0
+ * @description 重新启动配置hashKeyenum
  * @see Enum
  * @see IRedisHashKeyEnum
  */

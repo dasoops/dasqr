@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: SetuSizeEnum
- * @ClassPath com.dasoops.dasserver.plugin.setu.entity.enums.SetuSizeEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/22
- * @Version 1.0.0
- * @Description: setu大小枚举
+ * @title: SetuSizeEnum
+ * @classPath com.dasoops.dasserver.plugin.setu.entity.enums.SetuSizeEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/22
+ * @version 1.0.0
+ * @description setu大小枚举
  */
 @AllArgsConstructor
 @Getter

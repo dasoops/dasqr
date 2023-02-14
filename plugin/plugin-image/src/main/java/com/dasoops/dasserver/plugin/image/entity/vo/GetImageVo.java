@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: GetImageVo
- * @ClassPath com.dasoops.dasserver.plugin.image.entity.vo.GetImageVo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 获取图片vo
+ * @title: GetImageVo
+ * @classPath com.dasoops.dasserver.plugin.image.entity.vo.GetImageVo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 获取图片vo
  * @see BaseVo
  */
 @Data

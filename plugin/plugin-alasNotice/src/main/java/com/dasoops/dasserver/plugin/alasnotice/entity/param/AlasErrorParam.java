@@ -11,12 +11,12 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @Title: AlasErrorParam
- * @ClassPath com.dasoops.dasserver.plugin.template.entity.param.AlasErrorParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/11
- * @Version 1.0.0
- * @Description: alasError推送 param
+ * @title: AlasErrorParam
+ * @classPath com.dasoops.dasserver.plugin.template.entity.param.AlasErrorParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/11
+ * @version 1.0.0
+ * @description alasError推送 param
  * @see BaseFastBuildParam
  */
 @EqualsAndHashCode(callSuper = true)

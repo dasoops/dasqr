@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @Title: MessageParam
- * @ClassPath com.dasoops.dasserver.cq.entity.event.message.MessageParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/07
- * @Version 1.0.0
- * @Description: 消息param
+ * @title: MessageParam
+ * @classPath com.dasoops.dasserver.cq.entity.event.message.MessageParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/07
+ * @version 1.0.0
+ * @description 消息param
  * @see BaseFastBuildParam
  */
 @Data

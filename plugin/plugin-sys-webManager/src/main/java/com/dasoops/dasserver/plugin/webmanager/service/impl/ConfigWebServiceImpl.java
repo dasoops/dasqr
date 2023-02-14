@@ -27,12 +27,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @Title: ConfigServiceImpl
- * @ClassPath com.dasoops.dasserver.cq.service.impl.ConfigServiceImpl
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/31
- * @Version 1.0.0
- * @Description: 针对表【tb_core_config(配置表,储存配置信息,如:version,mutation等)】的数据库操作Service实现
+ * @title: ConfigServiceImpl
+ * @classPath com.dasoops.dasserver.cq.service.impl.ConfigServiceImpl
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/31
+ * @version 1.0.0
+ * @description 针对表【tb_core_config(配置表,储存配置信息,如:version,mutation等)】的数据库操作Service实现
  * @see ServiceImpl
  * @see ConfigService
  */

@@ -5,8 +5,7 @@ import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
 import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo;
 import com.dasoops.dasserver.plugin.image.entity.dto.ExportImageInfoDto;
 import com.dasoops.dasserver.plugin.image.entity.param.*;
-import com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyKeywordVo;
-import com.dasoops.dasserver.plugin.image.entity.vo.GetFantastyUserVo;
+import com.dasoops.dasserver.plugin.image.entity.vo.GetFantasyKeywordVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.GetImageVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.UploadImageVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
@@ -99,9 +98,9 @@ public interface ImageService {
      * 获取联想关键字 forCache
      *
      * @param param param
-     * @return {@link GetFantastyKeywordVo}
+     * @return {@link GetFantasyKeywordVo}
      */
-    GetFantastyKeywordVo getFantasyKeyword4Cache(GetFantastyKeywordParam param);
+    GetFantasyKeywordVo getFantasyKeyword4Cache(GetFantasyKeywordParam param);
 
     /**
      * 获取联想关键字 forCache
@@ -110,14 +109,6 @@ public interface ImageService {
      * @return {@link List}<{@link String}>
      */
     List<String> getFantasyKeyword4Cache(String keyword);
-
-    /**
-     * 获取联想用户
-     *
-     * @param param param
-     * @return {@link GetFantastyUserVo}
-     */
-    GetFantastyUserVo getFantasyUser(GetFantastyUserParam param);
 
     /**
      * 编辑图片信息

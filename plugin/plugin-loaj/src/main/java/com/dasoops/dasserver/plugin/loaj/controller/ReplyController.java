@@ -23,12 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * @Title: ReplyController
- * @ClassPath com.dasoops.dasserver.sys.user.controller.ReplyController
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/28
- * @Version 1.0.0
- * @Description: 回复 控制器
+ * @title: ReplyController
+ * @classPath com.dasoops.dasserver.sys.user.controller.ReplyController
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/28
+ * @version 1.0.0
+ * @description 回复 控制器
  */
 @RestController
 @RequestMapping("reply")

@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: RebootParam
- * @ClassPath com.dasoops.dasserver.plugin.reboot.entity.param.RebootParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/17
- * @Version 1.0.0
- * @Description: 重新启动param
+ * @title: RebootParam
+ * @classPath com.dasoops.dasserver.plugin.reboot.entity.param.RebootParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/17
+ * @version 1.0.0
+ * @description 重新启动param
  * @see BaseParam
  */
 @EqualsAndHashCode(callSuper = true)

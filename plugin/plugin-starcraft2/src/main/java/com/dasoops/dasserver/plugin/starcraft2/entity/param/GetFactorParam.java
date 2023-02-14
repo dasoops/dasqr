@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: GetFactorParam
- * @ClassPath com.dasoops.dasserver.plugin.starcraft2.entity.param.GetFactorParam
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/20
- * @Version 1.0.0
- * @Description: 获取因子param
+ * @title: GetFactorParam
+ * @classPath com.dasoops.dasserver.plugin.starcraft2.entity.param.GetFactorParam
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/20
+ * @version 1.0.0
+ * @description 获取因子param
  * @see BaseParam
  */
 @EqualsAndHashCode(callSuper = true)

@@ -13,12 +13,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @Title: DbCqPlugin
- * @ClassPath com.dasoops.dasserver.cq.DbCqPlugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/26
- * @Version 1.0.0
- * @Description: Db增强cq插件
+ * @title: DbCqPlugin
+ * @classPath com.dasoops.dasserver.cq.DbCqPlugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/26
+ * @version 1.0.0
+ * @description Db增强cq插件
  * @see DefaultCqTemplate
  */
 public class DbRecordCqPlugin extends CqPlugin implements IPluginRecordSaver {

@@ -8,12 +8,12 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @Title: GitProperties
- * @ClassPath com.dasoops.dasq.core.git.entity.GitProperties
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/13
- * @Version 1.0.0
- * @Description: gitPush数据传输对象
+ * @title: GitProperties
+ * @classPath com.dasoops.dasq.core.git.entity.GitProperties
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/13
+ * @version 1.0.0
+ * @description gitPush数据传输对象
  */
 @Data
 @ApiModel(value = "PushNoticeDto",description = "gitee 上报dto")

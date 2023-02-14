@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: CQGroupBanNoticeEvent
- * @ClassPath com.dasoops.dasserver.cq.entity.event.notice.CQGroupBanNoticeEvent
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: 群禁言
+ * @title: CQGroupBanNoticeEvent
+ * @classPath com.dasoops.dasserver.cq.entity.event.notice.CQGroupBanNoticeEvent
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description 群禁言
  * @see CqNoticeEvent
  */
 @EqualsAndHashCode(callSuper = true)

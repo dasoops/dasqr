@@ -13,12 +13,12 @@ import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 
 /**
- * @Title: InitTask
- * @ClassPath com.dasoops.dasserver.cq.task.InitTask
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/31
- * @Version 1.0.0
- * @Description: 初始化任务
+ * @title: InitTask
+ * @classPath com.dasoops.dasserver.cq.task.InitTask
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/31
+ * @version 1.0.0
+ * @description 初始化任务
  */
 @Component
 @RequiredArgsConstructor

@@ -9,12 +9,12 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @Title: RegisterMtmPluginPo
- * @ClassPath com.dasoops.dasserver.cq.entity.po.RegisterMtmPluginPo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/01
- * @Version 1.0.0
- * @Description: tb_core_register_mtm_plugin
+ * @title RegisterMtmPluginPo
+ * @classPath com.dasoops.dasserver.cq.entity.po.RegisterMtmPluginPo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/01
+ * @version 1.0.0
+ * @description tb_core_register_mtm_plugin
  * @see BaseDo
  * @see Serializable
  */
@@ -37,7 +37,4 @@ public class RegisterMtmPluginDo extends BaseDo implements Serializable {
      * 是否放行(0:否,拦截;1:是,放行)
      */
     private Integer isPass;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

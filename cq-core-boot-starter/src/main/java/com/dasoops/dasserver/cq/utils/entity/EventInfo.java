@@ -7,12 +7,12 @@ import com.dasoops.dasserver.cq.entity.enums.PostTypeEnum;
 import lombok.Data;
 
 /**
- * @Title: MessageInfo
- * @ClassPath com.dasoops.dasserver.cq.utils.entity.MessageInfo
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/01
- * @Version 1.0.0
- * @Description: 消息详情
+ * @title: MessageInfo
+ * @classPath com.dasoops.dasserver.cq.utils.entity.MessageInfo
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/01
+ * @version 1.0.0
+ * @description 消息详情
  */
 @Data
 public class EventInfo {

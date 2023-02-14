@@ -23,12 +23,12 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Title: TemplatePlugin
- * @ClassPath com.dasoops.dasserver.plugin.image.plugin.TemplatePlugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/07
- * @Version 1.0.0
- * @Description: 图片插件
+ * @title: TemplatePlugin
+ * @classPath com.dasoops.dasserver.plugin.image.plugin.TemplatePlugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/07
+ * @version 1.0.0
+ * @description 图片插件
  * @see CqPlugin
  */
 @Component

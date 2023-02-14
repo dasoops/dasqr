@@ -6,12 +6,12 @@ import com.dasoops.dasserver.cq.api.ApiHandler;
 import org.springframework.web.socket.WebSocketSession;
 
 /**
- * @Title: CqTemplateFactor
- * @ClassPath com.dasoops.dasserver.cq.bot.CqTemplateFactor
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: cq工厂
+ * @title: CqTemplateFactor
+ * @classPath com.dasoops.dasserver.cq.bot.CqTemplateFactor
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description cq工厂
  */
 public class CqFactory {
     private final ApiHandler apiHandler;

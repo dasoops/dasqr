@@ -9,12 +9,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Title: Result
- * @ClassPath com.dasoops.dasserver.cq.entity.result.Result
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/09
- * @Version 1.0.0
- * @Description: 结果
+ * @title: Result
+ * @classPath com.dasoops.dasserver.cq.entity.result.Result
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/09
+ * @version 1.0.0
+ * @description 结果
  */
 public class PluginResult {
 

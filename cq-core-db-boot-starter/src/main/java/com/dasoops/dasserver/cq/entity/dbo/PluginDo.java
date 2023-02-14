@@ -9,12 +9,12 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @Title: Plugin
- * @ClassPath com.dasoops.dasserver.cq.entity.po.Plugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/31
- * @Version 1.0.0
- * @Description: 插件表, 储存插件注册信息, 权限, 描述, 启用状态等
+ * @title: Plugin
+ * @classPath com.dasoops.dasserver.cq.entity.po.Plugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/31
+ * @version 1.0.0
+ * @description 插件表, 储存插件注册信息, 权限, 描述, 启用状态等
  * @see BaseDo
  * @see Serializable
  */

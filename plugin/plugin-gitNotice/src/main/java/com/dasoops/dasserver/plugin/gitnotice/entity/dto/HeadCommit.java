@@ -7,12 +7,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Title: HeadCommit
- * @ClassPath com.dasoops.dasq.core.git.entity.HeadCommit
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/13
- * @Version 1.0.0
- * @Description: 头承诺
+ * @title: HeadCommit
+ * @classPath com.dasoops.dasq.core.git.entity.HeadCommit
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/13
+ * @version 1.0.0
+ * @description 头承诺
  */
 @Data
 public class HeadCommit {

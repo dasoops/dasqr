@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: ShellExceptionEnum
- * @ClassPath com.dasoops.dasserver.plugin.shell.entity.enums.ShellExceptionEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/23
- * @Version 1.0.0
- * @Description: shell异常枚举(108xx)
+ * @title: ShellExceptionEnum
+ * @classPath com.dasoops.dasserver.plugin.shell.entity.enums.ShellExceptionEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/23
+ * @version 1.0.0
+ * @description shell异常枚举(108xx)
  * @see Enum
  * @see IExceptionEnum
  */

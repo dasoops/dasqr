@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Title: CqCodeTypeEnum
- * @ClassPath com.dasoops.dasserver.cq.entity.enums.CqCodeTypeEnum
- * @Author DasoopsNicole@Gmail.com
- * @Date 2023/01/19
- * @Version 1.0.0
- * @Description: cq码类型枚举
+ * @title: CqCodeTypeEnum
+ * @classPath com.dasoops.dasserver.cq.entity.enums.CqCodeTypeEnum
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/01/19
+ * @version 1.0.0
+ * @description cq码类型枚举
  * @see Enum
  */
 @AllArgsConstructor

@@ -19,12 +19,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @Title: ExceptionWrapperPlugin
- * @ClassPath com.dasoops.dasserver.plugin.exceptionwrapper.ExceptionWrapperPlugin
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/10
- * @Version 1.0.0
- * @Description: 获取异常插件
+ * @title: ExceptionWrapperPlugin
+ * @classPath com.dasoops.dasserver.plugin.exceptionwrapper.ExceptionWrapperPlugin
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/10
+ * @version 1.0.0
+ * @description 获取异常插件
  */
 @Slf4j
 @Component

@@ -4,12 +4,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Title: CQFriendAddNoticeEvent
- * @ClassPath com.dasoops.dasserver.cq.entity.event.notice.CQFriendAddNoticeEvent
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: 好友添加
+ * @title: CQFriendAddNoticeEvent
+ * @classPath com.dasoops.dasserver.cq.entity.event.notice.CQFriendAddNoticeEvent
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description 好友添加
  * @see CqNoticeEvent
  */
 @EqualsAndHashCode(callSuper = true)

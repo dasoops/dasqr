@@ -20,12 +20,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 /**
- * @Title: AuthInterceptor
- * @ClassPath com.dasoops.dasserver.cq.interceptor.AuthInterceptor
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/12/29
- * @Version 1.0.0
- * @Description: 身份验证拦截器
+ * @title: AuthInterceptor
+ * @classPath com.dasoops.dasserver.cq.interceptor.AuthInterceptor
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/12/29
+ * @version 1.0.0
+ * @description 身份验证拦截器
  * @see HandlerInterceptor
  */
 @Slf4j

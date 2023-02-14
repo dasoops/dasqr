@@ -5,12 +5,12 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @Title: CqProperties
- * @ClassPath com.dasoops.dasserver.cq.boot.CqProperties
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/10/21
- * @Version 1.0.0
- * @Description: cq参数
+ * @title: CqProperties
+ * @classPath com.dasoops.dasserver.cq.boot.CqProperties
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/10/21
+ * @version 1.0.0
+ * @description cq参数
  */
 @ConfigurationProperties(prefix = "dasq.cq.core.ws")
 @Getter

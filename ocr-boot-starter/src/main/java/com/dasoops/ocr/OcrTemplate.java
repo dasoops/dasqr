@@ -13,12 +13,12 @@ import com.tencentcloudapi.ocr.v20181119.models.TextDetection;
 import java.util.Arrays;
 
 /**
- * @Title: OcrService
- * @ClassPath com.dasoops.ocr.OcrService
- * @Author DasoopsNicole@Gmail.com
- * @Date 2022/11/08
- * @Version 1.0.0
- * @Description: ocr工具类
+ * @title: OcrService
+ * @classPath com.dasoops.ocr.OcrService
+ * @author DasoopsNicole@Gmail.com
+ * @date 2022/11/08
+ * @version 1.0.0
+ * @description ocr工具类
  */
 public class OcrTemplate {
 
