@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 /**
- * @title: CustomExceptionWrapper
+ * @title CustomExceptionWrapper
  * @classPath com.dasoops.dasserver.plugin.exceptionwrapper.CustomExceptionWrapper
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/04

@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @title: CqProperties
+ * @title CqProperties
  * @classPath com.dasoops.dasserver.cq.boot.CqProperties
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

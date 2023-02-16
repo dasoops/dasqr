@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 
 /**
- * @title: InitTask
+ * @title InitTask
  * @classPath com.dasoops.dasserver.cq.task.InitTask
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/31

@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Map;
 
 /**
- * @title: CqCode
+ * @title CqCode
  * @classPath com.dasoops.dasserver.cq.entity.dto.cq.CqCode
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/07

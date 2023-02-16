@@ -8,7 +8,7 @@ import com.dasoops.dasserver.plugin.starcraft2.mapper.MutationMapper
 import org.springframework.stereotype.Service
 
 /**
- * @title: FactorSimpleSql
+ * @title FactorSimpleSql
  * @classPath com.dasoops.dasserver.plugin.starcraft2.service.impl.FactorSimpleSql
  * @author DasoopsNicole@Gmail.com
  * @date 2023/02/11
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service
 open class FactorSimpleSql : ServiceImpl<FactorMapper, FactorDo>()
 
 /**
- * @title: MutationSimpleSql
+ * @title MutationSimpleSql
  * @classPath com.dasoops.dasserver.plugin.starcraft2.service.impl.MutationSimpleSql
  * @author DasoopsNicole@Gmail.com
  * @date 2023/02/11

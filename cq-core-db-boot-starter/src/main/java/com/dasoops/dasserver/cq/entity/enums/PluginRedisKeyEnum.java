@@ -7,7 +7,7 @@ import lombok.Getter;
 import static com.dasoops.common.entity.enums.base.BaseRedisKeyEnum.SYS_PLUGIN;
 
 /**
- * @title: PluginRedisKeyEnum
+ * @title PluginRedisKeyEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.PluginRedisKeyEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/27

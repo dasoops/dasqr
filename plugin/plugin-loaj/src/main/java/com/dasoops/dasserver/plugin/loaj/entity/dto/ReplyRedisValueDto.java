@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: ReplyRedisDataDto
+ * @title ReplyRedisDataDto
  * @classPath com.dasoops.dasserver.plugin.loaj.entity.dto.ReplyRedisDataDto
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/09

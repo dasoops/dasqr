@@ -1,13 +1,14 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin;
 
 import com.dasoops.common.entity.vo.base.BaseVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: GetPluginVo
+ * @title GetPluginVo
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginVo
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/12
@@ -17,6 +18,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Api("Plugin")
 @ApiModel(value = "获取插件vo", description = "获取插件vo")
 public class GetPluginVo extends BaseVo {
 

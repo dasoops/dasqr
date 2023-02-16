@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @title: GitController
+ * @title GitController
  * @classPath com.dasoops.dasserver.plugin.gitnotice.controller.GitController
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/03
@@ -32,7 +32,7 @@ import java.util.Objects;
  * @description git控制器
  */
 @RestController
-@RequestMapping("/git")
+@RequestMapping("git")
 @Api(tags = "PLUGIN - GIT_NOTICE")
 @ApiSupport(author = "DasoopsNicole@gmail.com")
 public class GitController {
@@ -45,7 +45,7 @@ public class GitController {
         this.configService = configService;
     }
 
-    @PostMapping("/push")
+    @PostMapping("push")
     @ApiOperation(value = "gitPush 消息上报", notes = "gitPush 消息上报")
     public void pushNotice(@RequestBody PushNoticeDto pushNoticeDto) {
         //是否需要提醒

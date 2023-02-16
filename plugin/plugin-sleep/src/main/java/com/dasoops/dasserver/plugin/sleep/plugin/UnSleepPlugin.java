@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: SleepPlugin
+ * @title SleepPlugin
  * @classPath com.dasoops.dasserver.plugin.sleep.plugin.SleepPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/10

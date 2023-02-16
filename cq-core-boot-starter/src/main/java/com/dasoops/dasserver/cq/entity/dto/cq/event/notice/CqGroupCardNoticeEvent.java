@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: CqGroupCardNoticeEvent
+ * @title CqGroupCardNoticeEvent
  * @classPath com.dasoops.dasserver.cq.entity.event.notice.CqGroupCardNoticeEvent
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/18

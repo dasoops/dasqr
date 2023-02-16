@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Data;
 
 /**
- * @title: Owner
+ * @title Owner
  * @classPath com.dasoops.dasq.core.git.entity.Owner
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/13

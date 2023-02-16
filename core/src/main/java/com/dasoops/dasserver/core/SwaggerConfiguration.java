@@ -10,7 +10,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 /**
- * @title: SwaggerConfiguration
+ * @title SwaggerConfiguration
  * @classPath com.dasoops.dasserver.core.SwaggerConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/30

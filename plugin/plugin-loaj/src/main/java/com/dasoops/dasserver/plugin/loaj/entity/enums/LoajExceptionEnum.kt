@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.loaj.entity.enums
 import com.dasoops.common.entity.enums.base.IExceptionEnum
 
 /**
- * @title: LoajExceptionEnum
+ * @title LoajExceptionEnum
  * @classPath com.dasoops.dasserver.plugin.loaj.entity.enums.LoajExceptionEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/30

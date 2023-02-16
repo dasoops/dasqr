@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.authwrapper.service;
 
 /**
- * @title: RegisterMtmPluginAuthWrapper
+ * @title RegisterMtmPluginAuthWrapper
  * @classPath com.dasoops.dasserver.plugin.authwrapper.service.RegisterMtmPluginAuthWrapper
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/31

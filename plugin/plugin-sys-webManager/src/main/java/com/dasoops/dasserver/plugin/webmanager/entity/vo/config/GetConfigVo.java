@@ -1,21 +1,25 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.vo.config;
 
 import com.dasoops.common.entity.vo.base.BaseVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: GetConfigVo
- * @classPath com.dasoops.dasserver.sys.user.entity.vo.GetConfigVo
  * @author DasoopsNicole@Gmail.com
- * @date 2022/12/28
  * @version 1.0.0
+ * @title GetConfigVo
+ * @classPath com.dasoops.dasserver.sys.user.entity.vo.GetConfigVo
+ * @date 2022/12/28
  * @description 获取配置vo
  * @see BaseVo
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@ApiModel
+@Api("Config")
 public class GetConfigVo extends BaseVo {
 
 

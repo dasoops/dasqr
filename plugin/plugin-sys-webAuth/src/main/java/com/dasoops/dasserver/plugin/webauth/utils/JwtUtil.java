@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * @title: JwtUtil
+ * @title JwtUtil
  * @classPath cn.qiaoml.utils.auth.JwtUtil
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/28

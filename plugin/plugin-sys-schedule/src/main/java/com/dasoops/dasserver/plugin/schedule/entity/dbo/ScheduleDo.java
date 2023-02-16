@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @title: ScheduleDo
+ * @title ScheduleDo
  * @classPath com.dasoops.dasserver.plugin.schedule.entity.dbo.ScheduleDo
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

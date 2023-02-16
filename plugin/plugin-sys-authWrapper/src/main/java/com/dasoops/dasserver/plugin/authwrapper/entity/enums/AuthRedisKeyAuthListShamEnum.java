@@ -6,7 +6,7 @@ import lombok.Getter;
 import static com.dasoops.common.entity.enums.base.BaseRedisKeyEnum.AUTH;
 
 /**
- * @title: AuthRedisKeyShamEnum
+ * @title AuthRedisKeyShamEnum
  * @classPath com.dasoops.dasserver.plugin.authwrapper.entity.enums.AuthRedisKeyShamEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/27

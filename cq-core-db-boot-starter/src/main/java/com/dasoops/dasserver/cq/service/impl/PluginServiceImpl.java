@@ -29,7 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @title: PluginServiceImpl
+ * @title PluginServiceImpl
  * @classPath com.dasoops.dasserver.cq.service.impl.PluginServiceImpl
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

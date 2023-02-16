@@ -2,13 +2,14 @@ package com.dasoops.dasserver.plugin.webmanager.entity.param.config;
 
 import com.dasoops.common.entity.param.base.BaseEditAndDeleteParam;
 import com.dasoops.common.entity.param.base.BaseFastBuildParam;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: EditConfigParam
+ * @title EditConfigParam
  * @classPath com.dasoops.dasserver.webManager.entity.param.EditConfigParam
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/30
@@ -18,6 +19,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Api("Config")
 @ApiModel(value = "编辑配置参数", description = "编辑配置参数")
 public class EditConfigParam extends BaseEditAndDeleteParam {
 

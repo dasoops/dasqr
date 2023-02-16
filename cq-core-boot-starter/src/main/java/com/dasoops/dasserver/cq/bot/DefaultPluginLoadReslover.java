@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @title: DefaultPluginLoadReslover
+ * @title DefaultPluginLoadReslover
  * @classPath com.dasoops.dasserver.cq.bot.DefaultPluginLoadReslover
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/10

@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * @title: rollPlugin
+ * @title rollPlugin
  * @classPath com.dasoops.dasserver.plugin.loaj.plugin.rollPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/04

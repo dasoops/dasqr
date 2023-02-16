@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @title: CqCodeUtil
+ * @title CqCodeUtil
  * @classPath com.dasoops.dasserver.cq.utils.CqCodeUtil
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

@@ -4,7 +4,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
- * @title: configuration
+ * @title configuration
  * @classPath com.dasoops.dasserver.plugin.gitnotice.configuration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/02

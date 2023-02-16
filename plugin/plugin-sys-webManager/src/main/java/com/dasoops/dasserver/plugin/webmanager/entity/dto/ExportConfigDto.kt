@@ -6,7 +6,7 @@ import lombok.Data
 import lombok.EqualsAndHashCode
 
 /**
- * @title: ExportConfigDto
+ * @title ExportConfigDto
  * @classPath com.dasoops.dasserver.webManager.entity.dto.ExportConfigDto
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/30

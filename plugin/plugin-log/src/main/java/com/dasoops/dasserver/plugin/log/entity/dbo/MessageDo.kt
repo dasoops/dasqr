@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId
 
 
 /**
- * @title: MessageDo
+ * @title MessageDo
  * @classPath com.dasoops.dasserver.plugin.log.entity.dbo.MessageDo
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/31

@@ -3,10 +3,10 @@ package com.dasoops.dasserver.plugin.shell.log;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.filter.Filter;
 import ch.qos.logback.core.spi.FilterReply;
-import com.dasoops.dasserver.plugin.shell.entity.vo.LogDto;
+import com.dasoops.dasserver.plugin.shell.entity.dto.LogDto;
 
 /**
- * @title: logFilter
+ * @title logFilter
  * @classPath com.dasoops.dasserver.plugin.shell.logFilter
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/25

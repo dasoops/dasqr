@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 
 
 /**
- * @title: MessageParamReslove
+ * @title MessageParamReslove
  * @classPath com.dasoops.dasserver.cq.entity.annocation.MessageParamReslove
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/07

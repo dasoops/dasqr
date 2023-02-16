@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author DasoopsNicole@Gmail.com
  * @version 1.0.0
- * @title: AuthUtil
+ * @title AuthUtil
  * @classPath com.dasoops.dasserver.plugin.authwrapper.utils.AuthUtil
  * @date 2022/12/27
  * @description 身份验证工具

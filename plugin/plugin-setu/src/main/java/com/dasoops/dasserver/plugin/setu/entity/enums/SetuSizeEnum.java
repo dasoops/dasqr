@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: SetuSizeEnum
+ * @title SetuSizeEnum
  * @classPath com.dasoops.dasserver.plugin.setu.entity.enums.SetuSizeEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/22

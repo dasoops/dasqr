@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @title: CqProperties
+ * @title CqProperties
  * @classPath com.dasoops.dasserver.cq.conf.properties.CqProperties
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/02

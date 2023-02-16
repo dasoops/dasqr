@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.plugin.webauth.entity.dto
 
 /**
- * @title: AuthUserDto
+ * @title AuthUserDto
  * @classPath com.dasoops.dasserver.plugin.webauth.entity.dto.AuthUserDto
  * @author DasoopsNicole@Gmail.com
  * @date 2023/02/01

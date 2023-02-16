@@ -4,7 +4,7 @@ import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import lombok.Getter;
 
 /**
- * @title: EchoConfigRedisKeyShamEnum
+ * @title EchoConfigRedisKeyShamEnum
  * @classPath com.dasoops.dasserver.plugin.cacheecho.entity.enums.EchoConfigRedisKeyShamEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/11

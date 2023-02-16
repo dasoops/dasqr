@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @title: FastJsonConfiguration
+ * @title FastJsonConfiguration
  * @classPath com.dasoops.dasserver.cq.conf.FastJsonConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/01

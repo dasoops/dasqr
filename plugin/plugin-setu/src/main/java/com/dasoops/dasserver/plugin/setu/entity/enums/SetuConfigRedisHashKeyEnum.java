@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: SetuConfigHashKeyEnum
+ * @title SetuConfigHashKeyEnum
  * @classPath com.dasoops.dasserver.plugin.setu.entity.enums.SetuConfigHashKeyEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/22

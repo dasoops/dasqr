@@ -1,20 +1,25 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.param.plugin;
 
 import com.dasoops.common.entity.param.base.BaseEditAndDeleteParam;
+import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: DeletePluginParam
- * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.DeletePluginParam
  * @author DasoopsNicole@Gmail.com
- * @date 2023/01/12
  * @version 1.0.0
+ * @title DeletePluginParam
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.DeletePluginParam
+ * @date 2023/01/12
  * @description 删除插件param
  * @see BaseEditAndDeleteParam
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class DeletePluginParam extends BaseEditAndDeleteParam {
+@EqualsAndHashCode(callSuper = true)
+@Api("Plugin")
+@ApiModel(value = "删除插件param", description = "删除插件param")
+public class DeletePluginParam extends BaseEditAndDeleteParam<PluginDo> {
 
 }

@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.Map;
 
 /**
- * @title: ExecProperties
+ * @title ExecProperties
  * @classPath com.dasoops.dasserver.plugin.exec.ExecProperties
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/18

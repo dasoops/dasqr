@@ -1,13 +1,14 @@
 package com.dasoops.dasserver.plugin.image.entity.vo;
 
 import com.dasoops.common.entity.vo.base.BaseVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: UploadImageVo
+ * @title UploadImageVo
  * @classPath com.dasoops.dasserver.plugin.image.entity.vo.UploadImageVo
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/02
@@ -17,6 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "上传图片vo", description = "上传图片vo")
+@Api("Image")
 public class UploadImageVo extends BaseVo {
 
     /**

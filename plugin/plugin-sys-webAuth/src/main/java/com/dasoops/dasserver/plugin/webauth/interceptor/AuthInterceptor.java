@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 /**
- * @title: AuthInterceptor
+ * @title AuthInterceptor
  * @classPath com.dasoops.dasserver.cq.interceptor.AuthInterceptor
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/29

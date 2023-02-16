@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: WsWrapperImpl
+ * @title WsWrapperImpl
  * @classPath com.dasoops.dasserver.plugin.wswrapper.WsWrapperImpl
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/15

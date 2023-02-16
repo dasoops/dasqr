@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.entity.enums;
 
 /**
- * @title: MessageResloveEnum
+ * @title MessageResloveEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.MessageResloveEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/07

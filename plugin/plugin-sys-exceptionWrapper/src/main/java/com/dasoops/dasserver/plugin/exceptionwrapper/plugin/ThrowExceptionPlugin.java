@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: ThrowExceptionPlugin
+ * @title ThrowExceptionPlugin
  * @classPath com.dasoops.dasserver.plugin.exceptionwrapper.plugin.ThrowExceptionPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/10

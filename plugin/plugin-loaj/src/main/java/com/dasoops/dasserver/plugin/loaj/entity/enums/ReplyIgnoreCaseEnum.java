@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: ReplyMatchTypeEnum
+ * @title ReplyMatchTypeEnum
  * @classPath com.dasoops.dasserver.plugin.loaj.entity.enums.ReplyMatchTypeEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/09

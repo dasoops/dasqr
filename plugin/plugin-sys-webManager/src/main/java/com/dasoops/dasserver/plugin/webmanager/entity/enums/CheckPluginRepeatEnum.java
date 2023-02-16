@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: GetPluginCheckRepeatEnum
+ * @title GetPluginCheckRepeatEnum
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.enums.GetPluginCheckRepeatEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/17

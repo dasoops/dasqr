@@ -5,7 +5,7 @@ import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import lombok.Getter;
 
 /**
- * @title: SleepRedisKeyEnum
+ * @title SleepRedisKeyEnum
  * @classPath com.dasoops.dasserver.plugin.sleep.SleepRedisKeyEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/10

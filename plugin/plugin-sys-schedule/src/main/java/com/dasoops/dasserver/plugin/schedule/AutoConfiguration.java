@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import javax.annotation.PostConstruct;
 
 /**
- * @title: AutoConfiguration
+ * @title AutoConfiguration
  * @classPath com.dasoops.dasserver.plugin.schedule.AutoConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @title: RegisterMtmPluginAuthWrapperImpl
+ * @title RegisterMtmPluginAuthWrapperImpl
  * @classPath com.dasoops.dasserver.plugin.authwrapper.service.impl.RegisterMtmPluginAuthWrapperImpl
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/31

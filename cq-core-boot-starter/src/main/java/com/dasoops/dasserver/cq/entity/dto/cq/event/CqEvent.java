@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Data;
 
 /**
- * @title: CqEvent
+ * @title CqEvent
  * @classPath com.dasoops.dasserver.cq.entity.event.CqEvent
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

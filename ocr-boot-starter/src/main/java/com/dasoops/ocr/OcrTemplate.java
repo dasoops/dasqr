@@ -13,7 +13,7 @@ import com.tencentcloudapi.ocr.v20181119.models.TextDetection;
 import java.util.Arrays;
 
 /**
- * @title: OcrService
+ * @title OcrService
  * @classPath com.dasoops.ocr.OcrService
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/08

@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.gitnotice.entity.dto;
 import lombok.Data;
 
 /**
- * @title: Enterprise
+ * @title Enterprise
  * @classPath com.dasoops.dasq.core.git.entity.Enterprise
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/13

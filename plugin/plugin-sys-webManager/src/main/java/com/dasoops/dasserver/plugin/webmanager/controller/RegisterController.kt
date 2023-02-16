@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
 /**
- * @title: userController
+ * @title userController
  * @classPath com.dasoops.imageManagerServer.user.userController
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/26

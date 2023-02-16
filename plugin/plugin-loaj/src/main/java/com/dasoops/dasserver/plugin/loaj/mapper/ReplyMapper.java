@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dasoops.dasserver.plugin.loaj.entity.dbo.ReplyDo;
 
 /**
- * @title: ReplyMapper
+ * @title ReplyMapper
  * @classPath com.dasoops.dasserver.plugin.loaj.mapper.ReplyMapper
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/11

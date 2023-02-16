@@ -3,7 +3,7 @@ package com.dasoops.dasserver.cq.entity.annocation;
 import java.lang.annotation.*;
 
 /**
- * @title: ParamOrder
+ * @title ParamOrder
  * @classPath com.dasoops.dasserver.cq.entity.annocation.ParamOrder
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/07

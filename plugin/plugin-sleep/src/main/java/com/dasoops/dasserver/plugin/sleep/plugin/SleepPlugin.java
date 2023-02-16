@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @title: SleepPlugin
+ * @title SleepPlugin
  * @classPath com.dasoops.dasserver.plugin.sleep.plugin.SleepPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/10

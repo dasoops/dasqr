@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * @title: PluginMapper
+ * @title PluginMapper
  * @classPath com.dasoops.dasserver.cq.mapper.PluginMapper
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

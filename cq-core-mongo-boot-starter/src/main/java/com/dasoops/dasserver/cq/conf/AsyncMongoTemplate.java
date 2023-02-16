@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: AsyncMongoTemplate
+ * @title AsyncMongoTemplate
  * @classPath com.dasoops.dasserver.cq.conf.AsyncMongoTemplate
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/04

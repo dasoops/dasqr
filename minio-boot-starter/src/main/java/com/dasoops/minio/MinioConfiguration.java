@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * @title: MinioConfiguration
+ * @title MinioConfiguration
  * @classPath com.dasoops.minio.configucation.MinioConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/08

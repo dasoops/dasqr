@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: AddPluginPlugin
+ * @title AddPluginPlugin
  * @classPath com.dasoops.dasserver.plugin.pluginwrapper.plugin.AddPluginPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/11

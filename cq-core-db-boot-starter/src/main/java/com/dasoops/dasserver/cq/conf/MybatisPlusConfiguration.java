@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @title: MybatisPlusConfiguration
+ * @title MybatisPlusConfiguration
  * @classPath com.dasoops.dasq.conf.MybatisPlusConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/07

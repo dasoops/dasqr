@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: ImageExceptionEnum
+ * @title ImageExceptionEnum
  * @classPath com.dasoops.dasserver.plugin.image.entity.enums.ImageExceptionEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/01

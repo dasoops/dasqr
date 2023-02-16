@@ -3,6 +3,7 @@ package com.dasoops.dasserver.plugin.alasnotice.entity.param;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.common.entity.param.base.BaseParam;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @title: AlasErrorParam
+ * @title AlasErrorParam
  * @classPath com.dasoops.dasserver.plugin.template.entity.param.AlasErrorParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/11
@@ -21,6 +22,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Api("Alas")
 @ApiModel(value = "alasError推送param", description = "alasError推送param")
 public class AlasErrorParam extends BaseParam {
 

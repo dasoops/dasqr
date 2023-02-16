@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: StarCraftPlugin
+ * @title StarCraftPlugin
  * @classPath com.dasoops.dasserver.plugin.starcraft2.plugin.StarCraftPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

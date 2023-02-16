@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: CqPrivateMessageEvent
+ * @title CqPrivateMessageEvent
  * @classPath com.dasoops.dasserver.cq.entity.event.message.CqPrivateMessageEvent
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/01

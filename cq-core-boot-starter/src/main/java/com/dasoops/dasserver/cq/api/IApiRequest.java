@@ -4,7 +4,7 @@ package com.dasoops.dasserver.cq.api;
 import com.alibaba.fastjson2.JSONObject;
 
 /**
- * @title: IApiRequest
+ * @title IApiRequest
  * @classPath com.dasoops.dasserver.cq.api.IApiRequest
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/03

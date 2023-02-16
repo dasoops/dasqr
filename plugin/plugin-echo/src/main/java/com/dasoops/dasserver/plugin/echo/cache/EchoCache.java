@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 /**
- * @title: ConfigCache
+ * @title ConfigCache
  * @classPath com.dasoops.dasserver.cq.cache.ConfigCache
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/03

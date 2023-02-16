@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @title: EventProperties
+ * @title EventProperties
  * @classPath com.dasoops.dasserver.cq.conf.properties.EventProperties
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

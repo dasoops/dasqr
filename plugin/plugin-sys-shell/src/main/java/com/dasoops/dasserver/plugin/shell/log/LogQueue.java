@@ -1,13 +1,13 @@
 package com.dasoops.dasserver.plugin.shell.log;
 
-import com.dasoops.dasserver.plugin.shell.entity.vo.LogDto;
+import com.dasoops.dasserver.plugin.shell.entity.dto.LogDto;
 
 import java.util.LinkedList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * @title: LogQueue
+ * @title LogQueue
  * @classPath com.dasoops.dasserver.plugin.shell.log.LogQueue
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/25

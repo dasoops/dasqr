@@ -67,6 +67,11 @@
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-codeGenerate</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-setu</artifactId>
         </dependency>
 

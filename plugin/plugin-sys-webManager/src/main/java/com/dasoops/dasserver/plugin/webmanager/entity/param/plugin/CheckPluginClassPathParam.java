@@ -1,13 +1,14 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.param.plugin;
 
 import com.dasoops.common.entity.param.base.BaseParam;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: CheckPluginClassPathParam
+ * @title CheckPluginClassPathParam
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.CheckPluginClassPathParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/14
@@ -16,6 +17,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Api("Plugin")
 @ApiModel(value = "检查插件类路径param", description = "检查插件类路径param")
 public class CheckPluginClassPathParam extends BaseParam {
 

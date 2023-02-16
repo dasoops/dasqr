@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URL;
 
 /**
- * @title: ClassLoaderController
+ * @title ClassLoaderController
  * @classPath com.dasoops.dasserver.plugin.pluginloader.controller.ClassLoaderController
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/06

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: AlasExceptionEnum
+ * @title AlasExceptionEnum
  * @classPath com.dasoops.dasserver.plugin.alasNotice.entity.enums.AlasExceptionEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/14

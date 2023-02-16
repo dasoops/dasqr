@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 import java.util.Map;
 
 /**
- * @title: CqPluginLoadReslover
+ * @title CqPluginLoadReslover
  * @classPath com.dasoops.dasserver.cq.bot.CqPluginLoadReslover
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/10

@@ -11,7 +11,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 /**
- * @title: CqConfiguration
+ * @title CqConfiguration
  * @classPath com.dasoops.dasserver.cq.conf.CqConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/03

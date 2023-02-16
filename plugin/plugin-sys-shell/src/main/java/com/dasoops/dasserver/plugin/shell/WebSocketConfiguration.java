@@ -12,7 +12,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 /**
- * @title: WebSocketConfiguration
+ * @title WebSocketConfiguration
  * @classPath com.dasoops.dasserver.plugin.shell.WebSocketConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/23

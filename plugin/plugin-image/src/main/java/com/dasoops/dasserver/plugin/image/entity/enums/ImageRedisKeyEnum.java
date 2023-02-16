@@ -8,7 +8,7 @@ import static com.dasoops.common.entity.enums.base.BaseRedisKeyEnum.PLUGIN;
 
 
 /**
- * @title: ImageRedisKeyEnum
+ * @title ImageRedisKeyEnum
  * @classPath com.dasoops.dasserver.plugin.image.entity.enums.ImageRedisKeyEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/09

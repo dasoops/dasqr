@@ -6,7 +6,7 @@ import com.dasoops.dasserver.plugin.loaj.mapper.ReplyMapper
 import org.springframework.stereotype.Service
 
 /**
- * @title: ReplySimpleSql
+ * @title ReplySimpleSql
  * @classPath com.dasoops.dasserver.plugin.loaj.service.impl.ReplySimpleSql
  * @author DasoopsNicole@Gmail.com
  * @date 2023/02/11

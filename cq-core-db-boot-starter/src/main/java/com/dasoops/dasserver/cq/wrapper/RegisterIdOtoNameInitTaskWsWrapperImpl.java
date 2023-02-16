@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: RegisterNameInitWsWrapper
+ * @title RegisterNameInitWsWrapper
  * @classPath com.dasoops.dasserver.plugin.webmanager.task.RegisterNameInitWsWrapper
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/31

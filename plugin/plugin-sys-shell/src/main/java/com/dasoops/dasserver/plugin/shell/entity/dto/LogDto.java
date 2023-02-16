@@ -1,4 +1,4 @@
-package com.dasoops.dasserver.plugin.shell.entity.vo;
+package com.dasoops.dasserver.plugin.shell.entity.dto;
 
 import com.dasoops.common.entity.dto.base.BaseDto;
 import com.dasoops.common.entity.vo.base.BaseVo;
@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: LogVo
+ * @title LogVo
  * @classPath com.dasoops.dasserver.plugin.shell.entity.vo.LogVo
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/25

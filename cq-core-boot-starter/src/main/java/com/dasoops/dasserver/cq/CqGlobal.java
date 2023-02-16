@@ -3,7 +3,7 @@ package com.dasoops.dasserver.cq;
 import java.util.*;
 
 /**
- * @title: WsConnection
+ * @title WsConnection
  * @classPath com.dasoops.dasserver.cq.websocket.WsConnection
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

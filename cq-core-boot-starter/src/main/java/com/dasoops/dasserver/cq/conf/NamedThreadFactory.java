@@ -5,7 +5,7 @@ import lombok.NonNull;
 import java.util.concurrent.ThreadFactory;
 
 /**
- * @title: NamedThreadFactory
+ * @title NamedThreadFactory
  * @classPath com.dasoops.dasserver.cq.threadfactory.NamedThreadFactory
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/01

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @title: CacheEchoPlugin
+ * @title CacheEchoPlugin
  * @classPath com.dasoops.dasserver.plugin.cacheecho.plugin.EchoPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/116

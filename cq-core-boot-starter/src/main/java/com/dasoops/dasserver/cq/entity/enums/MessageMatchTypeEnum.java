@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.entity.enums;
 
 /**
- * @title: MatchTypeEnum
+ * @title MatchTypeEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.MatchTypeEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

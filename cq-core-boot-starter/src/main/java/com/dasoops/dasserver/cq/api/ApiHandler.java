@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @title: ApiHeader
+ * @title ApiHeader
  * @classPath com.dasoops.dasserver.cq.bot.ApiHeader
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

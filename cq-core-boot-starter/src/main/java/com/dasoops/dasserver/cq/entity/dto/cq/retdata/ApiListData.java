@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @title: ApiListData
+ * @title ApiListData
  * @classPath com.dasoops.dasserver.cq.entity.retdata.ApiListData
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

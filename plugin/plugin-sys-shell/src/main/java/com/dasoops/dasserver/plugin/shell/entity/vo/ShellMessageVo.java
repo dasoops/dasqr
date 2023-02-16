@@ -1,14 +1,14 @@
-package com.dasoops.dasserver.plugin.shell.param;
+package com.dasoops.dasserver.plugin.shell.entity.vo;
 
 import com.alibaba.fastjson2.JSON;
 import com.dasoops.common.entity.param.SimpleParam;
-import com.dasoops.dasserver.plugin.shell.entity.vo.LogDto;
-import com.dasoops.dasserver.plugin.shell.enums.ShellSendMessageTypeEnum;
+import com.dasoops.dasserver.plugin.shell.entity.dto.LogDto;
+import com.dasoops.dasserver.plugin.shell.entity.enums.ShellSendMessageTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: ShellMessage
+ * @title ShellMessage
  * @classPath com.dasoops.dasserver.plugin.shell.param.ShellMessage
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/25

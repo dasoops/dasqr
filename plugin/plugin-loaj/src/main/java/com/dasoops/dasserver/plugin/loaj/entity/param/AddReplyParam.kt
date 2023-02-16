@@ -3,11 +3,12 @@ package com.dasoops.dasserver.plugin.loaj.entity.param
 import com.dasoops.common.entity.param.base.BaseAddParam
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam
 import com.dasoops.dasserver.plugin.loaj.entity.dbo.ReplyDo
+import io.swagger.annotations.Api
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
 /**
- * @title: AddReplyParam
+ * @title AddReplyParam
  * @classPath com.dasoops.dasserver.plugin.loaj.entity.param.AddReplyParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/30
@@ -16,6 +17,7 @@ import io.swagger.annotations.ApiModelProperty
  * @see [AddReplyParam]
  */
 @ApiModel(value = "添加回复param", description = "添加回复param")
+@Api("Reply")
 class AddReplyParam : BaseAddParam<ReplyDo>() {
     /**
      * 触发关键词

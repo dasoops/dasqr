@@ -6,7 +6,7 @@ import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import lombok.Getter;
 
 /**
- * @title: RollRecordRedisKeyShamEnum
+ * @title RollRecordRedisKeyShamEnum
  * @classPath com.dasoops.dasserver.plugin.loaj.entity.enums.RollRecordRedisKeyShamEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/08

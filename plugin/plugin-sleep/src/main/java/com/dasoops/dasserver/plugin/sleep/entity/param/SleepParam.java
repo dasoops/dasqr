@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: SleepParam
+ * @title SleepParam
  * @classPath com.dasoops.dasserver.plugin.sleep.entity.param.SleepParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/10

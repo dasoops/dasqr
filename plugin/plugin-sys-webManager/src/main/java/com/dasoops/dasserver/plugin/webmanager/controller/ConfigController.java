@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * @title: ConfigController
+ * @title ConfigController
  * @classPath com.dasoops.dasserver.sys.user.controller.ConfigController
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/28

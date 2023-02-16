@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @title: AutoConfiguration
+ * @title AutoConfiguration
  * @classPath com.dasoops.dasserver.plugin.starcraft2.AutoConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

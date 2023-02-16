@@ -2,13 +2,14 @@ package com.dasoops.dasserver.plugin.image.entity.param;
 
 import com.dasoops.common.entity.param.base.BaseEditParam;
 import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: EditImageParam
+ * @title EditImageParam
  * @classPath com.dasoops.dasserver.plugin.image.entity.param.EditImageParam
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/31
@@ -18,6 +19,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "编辑图片参数", description = "编辑图片参数")
+@Api("Image")
 public class EditImageInfoParam extends BaseEditParam<ImageDo> {
 
 

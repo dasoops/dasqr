@@ -5,7 +5,7 @@ import lombok.Data
 import lombok.EqualsAndHashCode
 
 /**
- * @title: ExportPluginDto
+ * @title ExportPluginDto
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportPluginDto
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/12

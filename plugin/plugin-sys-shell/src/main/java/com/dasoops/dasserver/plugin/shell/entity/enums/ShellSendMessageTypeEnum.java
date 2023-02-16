@@ -1,7 +1,7 @@
-package com.dasoops.dasserver.plugin.shell.enums;
+package com.dasoops.dasserver.plugin.shell.entity.enums;
 
 /**
- * @title: ShellSendMessageTypeEnum
+ * @title ShellSendMessageTypeEnum
  * @classPath com.dasoops.dasserver.plugin.shell.enums.ShellSendMessageTypeEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/25

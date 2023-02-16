@@ -1,13 +1,15 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin;
 
+import com.dasoops.common.entity.vo.base.BaseInnerVo;
 import com.dasoops.common.entity.vo.base.BaseVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: PluginSortVo
+ * @title PluginSortVo
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.vo.PluginSortVo
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/12
@@ -15,10 +17,11 @@ import lombok.EqualsAndHashCode;
  * @description 插件排序vo
  * @see BaseVo
  */
-@Data
 @EqualsAndHashCode(callSuper = true)
+@Data
+@Api("Plugin")
 @ApiModel(value = "插件排序vo", description = "插件排序vo")
-public class PluginSortInnerVo extends BaseVo {
+public class PluginSortInnerVo extends BaseInnerVo {
 
     /**
      * 主键id

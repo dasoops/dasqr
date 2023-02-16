@@ -14,7 +14,7 @@ import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
 import java.util.List;
 
 /**
- * @title: ConfigService
+ * @title ConfigService
  * @classPath com.dasoops.dasserver.cq.service.ConfigService
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: ShellRedisHashKeyEnum
+ * @title ShellRedisHashKeyEnum
  * @classPath com.dasoops.dasserver.plugin.shell.entity.enums.ShellRedisHashKeyEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/23

@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @title: GitProperties
+ * @title GitProperties
  * @classPath com.dasoops.dasq.core.git.entity.GitProperties
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/13

@@ -4,7 +4,7 @@ import com.dasoops.dasserver.cq.entity.dto.cq.event.CqEvent;
 import lombok.Getter;
 
 /**
- * @title: PassObj
+ * @title PassObj
  * @classPath com.dasoops.dasserver.cq.PassObj
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

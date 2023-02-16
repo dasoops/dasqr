@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: ExecParam
+ * @title ExecParam
  * @classPath com.dasoops.dasserver.plugin.exec.entity.param.ExecParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/18

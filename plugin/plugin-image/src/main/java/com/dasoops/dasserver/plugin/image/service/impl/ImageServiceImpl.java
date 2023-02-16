@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @title: ImagePoServiceImpl
+ * @title ImagePoServiceImpl
  * @classPath com.dasoops.dasserver.plugin.image.service.impl.ImagePoServiceImpl
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/07

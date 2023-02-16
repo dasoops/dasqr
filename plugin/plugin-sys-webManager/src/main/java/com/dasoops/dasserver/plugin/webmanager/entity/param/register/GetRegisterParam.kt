@@ -2,11 +2,12 @@ package com.dasoops.dasserver.plugin.webmanager.entity.param.register
 
 import com.dasoops.common.entity.param.base.BasePageParam
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo
+import io.swagger.annotations.Api
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
 /**
- * @title: GetRegisterParam
+ * @title GetRegisterParam
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.register.GetRegisterParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/02/01
@@ -14,6 +15,7 @@ import io.swagger.annotations.ApiModelProperty
  * @description 获取注册对象param
  * @see [GetRegisterParam]
  */
+@Api("Register")
 @ApiModel(value = "获取注册对象param", description = "获取注册对象param")
 data class GetRegisterParam(
     /**

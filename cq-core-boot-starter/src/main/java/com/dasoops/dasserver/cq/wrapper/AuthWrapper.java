@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.wrapper;
 
 /**
- * @title: EventWrapper
+ * @title EventWrapper
  * @classPath com.dasoops.dasserver.cq.bot.EventWrapper
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/15

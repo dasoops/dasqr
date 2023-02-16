@@ -3,12 +3,14 @@ package com.dasoops.dasserver.plugin.webmanager.entity.param.plugin;
 import com.dasoops.common.entity.param.base.BaseEditParam;
 import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: EditPluginParam
+ * @title EditPluginParam
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.plugin.EditPluginParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/12
@@ -18,6 +20,8 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Api("Plugin")
+@ApiModel(value = "编辑插件param", description = "编辑插件param")
 public class EditPluginParam extends BaseEditParam<PluginDo>{
 
     /**

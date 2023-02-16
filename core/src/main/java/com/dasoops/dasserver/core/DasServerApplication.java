@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @title: Application
+ * @title Application
  * @classPath com.dasoops.core.Application
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

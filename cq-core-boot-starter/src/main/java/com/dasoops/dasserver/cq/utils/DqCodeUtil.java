@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * @title: DqUtil
+ * @title DqUtil
  * @classPath com.dasoops.dasserver.cq.utils.DqUtil
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/07

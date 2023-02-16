@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
- * @title: AutoConfiguration
+ * @title AutoConfiguration
  * @classPath com.dasoops.dasserver.cq.conf.AutoConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/04

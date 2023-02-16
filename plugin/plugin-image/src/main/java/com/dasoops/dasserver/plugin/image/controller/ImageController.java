@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * @title: ImageController
+ * @title ImageController
  * @classPath com.dasoops.dasserver.plugin.image.controller.ImageController
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/31

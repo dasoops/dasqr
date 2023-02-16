@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: AddRelayPlugin
+ * @title AddRelayPlugin
  * @classPath com.dasoops.dasserver.plugin.loaj.plugin.AddRelayPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/11

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @title: ConfigServiceImpl
+ * @title ConfigServiceImpl
  * @classPath com.dasoops.dasserver.cq.service.impl.ConfigServiceImpl
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

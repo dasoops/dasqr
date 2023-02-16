@@ -2,8 +2,21 @@ package com.dasoops.dasserver.plugin.loaj.entity.vo
 
 import com.baomidou.mybatisplus.annotation.TableField
 import com.dasoops.common.entity.vo.base.BaseVo
+import io.swagger.annotations.Api
+import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
+/**
+ * @Title: GetReplyVo
+ * @ClassPath com.dasoops.dasserver.plugin.loaj.entity.vo.GetReplyVo
+ * @Author DasoopsNicole@Gmail.com
+ * @Date 2023/02/16
+ * @Version 1.0.0
+ * @Description: 获取回复vo
+ * @see [GetReplyVo]
+ */
+@Api("Reply")
+@ApiModel(description = "获取回复vo")
 class GetReplyVo : BaseVo() {
 
     /**

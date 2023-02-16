@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @title: AutoConfiguration
+ * @title AutoConfiguration
  * @classPath com.dasoops.dasserver.plugin.setu.AutoConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/22

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: ApiEnum
+ * @title ApiEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.ApiEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

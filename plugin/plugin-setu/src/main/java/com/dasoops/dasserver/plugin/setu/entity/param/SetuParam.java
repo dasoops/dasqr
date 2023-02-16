@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @title: SetuParam
+ * @title SetuParam
  * @classPath com.dasoops.dasserver.plugin.shell.entity.param.SetuParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/22

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: AuthRedisKeyEnum
+ * @title AuthRedisKeyEnum
  * @classPath com.dasoops.dasserver.plugin.webauth.entity.enums.AuthRedisKeyEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/15

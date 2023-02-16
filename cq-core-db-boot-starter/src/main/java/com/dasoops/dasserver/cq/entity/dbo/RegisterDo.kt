@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName
 import com.dasoops.common.entity.dbo.base.BaseDo
 
 /**
- * @title: Register
+ * @title Register
  * @classPath com.dasoops.dasserver.cq.entity.po.Register
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

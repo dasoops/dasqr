@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @title: SetuDto
+ * @title SetuDto
  * @classPath com.dasoops.dasserver.plugin.shell.entity.dto.SetuDto
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/22

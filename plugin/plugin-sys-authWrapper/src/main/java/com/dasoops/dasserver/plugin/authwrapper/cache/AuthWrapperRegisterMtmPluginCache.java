@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * @author DasoopsNicole@Gmail.com
  * @version 1.0.0
- * @title: RegisterMtmPluginCache
+ * @title RegisterMtmPluginCache
  * @classPath com.dasoops.dasserver.plugin.authwrapper.cache.RegisterMtmPluginCache
  * @date 2022/12/27
  * @description 注册mtm插件缓存

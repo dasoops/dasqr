@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Date;
 
 /**
- * @title: ParameterFillConfiguration
+ * @title ParameterFillConfiguration
  * @classPath com.dasoops.dasq.core.common.conf.ParameterFillConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/10

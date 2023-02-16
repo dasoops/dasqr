@@ -5,7 +5,7 @@ import com.dasoops.common.entity.enums.base.IRedisKeyEnum;
 import lombok.Data;
 
 /**
- * @title: RepeatReadRedisKeyShamEnum
+ * @title RepeatReadRedisKeyShamEnum
  * @classPath com.dasoops.dasserver.plugin.loaj.entity.enums.RepeatReadRedisKeyShamEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/19

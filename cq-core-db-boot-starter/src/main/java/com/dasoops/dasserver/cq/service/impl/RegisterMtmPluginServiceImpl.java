@@ -5,7 +5,7 @@ import com.dasoops.dasserver.cq.service.RegisterMtmPluginService;
 import org.springframework.stereotype.Service;
 
 /**
- * @title: RegisterMtmPluginServiceImpl
+ * @title RegisterMtmPluginServiceImpl
  * @classPath com.dasoops.dasserver.cq.service.impl.RegisterMtmPluginServiceImpl
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/01

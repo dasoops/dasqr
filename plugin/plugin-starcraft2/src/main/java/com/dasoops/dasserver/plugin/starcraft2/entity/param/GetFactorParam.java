@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: GetFactorParam
+ * @title GetFactorParam
  * @classPath com.dasoops.dasserver.plugin.starcraft2.entity.param.GetFactorParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

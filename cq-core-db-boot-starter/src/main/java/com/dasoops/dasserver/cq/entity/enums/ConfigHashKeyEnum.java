@@ -4,7 +4,7 @@ import com.dasoops.common.entity.enums.base.IRedisHashKeyEnum;
 import lombok.Getter;
 
 /**
- * @title: ConfigEnum
+ * @title ConfigEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.ConfigEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/01

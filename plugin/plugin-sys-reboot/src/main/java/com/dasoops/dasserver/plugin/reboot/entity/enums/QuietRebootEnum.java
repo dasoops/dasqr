@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: QuietRebootEnum
+ * @title QuietRebootEnum
  * @classPath com.dasoops.dasserver.plugin.reboot.entity.enums.QuietRebootEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/13

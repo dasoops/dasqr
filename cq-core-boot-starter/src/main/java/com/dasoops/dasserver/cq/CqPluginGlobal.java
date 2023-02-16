@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @title: CqPluginGlobal
+ * @title CqPluginGlobal
  * @classPath com.dasoops.dasserver.cq.CqPluginGlobal
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/06

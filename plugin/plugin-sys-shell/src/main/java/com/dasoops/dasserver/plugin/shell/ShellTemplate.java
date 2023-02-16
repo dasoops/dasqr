@@ -3,8 +3,8 @@ package com.dasoops.dasserver.plugin.shell;
 import com.alibaba.fastjson2.JSON;
 import com.dasoops.common.exception.LogicException;
 import com.dasoops.dasserver.plugin.shell.entity.enums.ShellExceptionEnum;
-import com.dasoops.dasserver.plugin.shell.entity.vo.LogDto;
-import com.dasoops.dasserver.plugin.shell.param.ShellMessageVo;
+import com.dasoops.dasserver.plugin.shell.entity.dto.LogDto;
+import com.dasoops.dasserver.plugin.shell.entity.vo.ShellMessageVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;
@@ -13,7 +13,7 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 
 /**
- * @title: ShellTemplate
+ * @title ShellTemplate
  * @classPath com.dasoops.dasserver.plugin.shell.ShellTemplate
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/23

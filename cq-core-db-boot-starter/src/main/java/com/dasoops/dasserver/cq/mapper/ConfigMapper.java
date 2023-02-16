@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dasoops.dasserver.cq.entity.dbo.ConfigDo;
 
 /**
- * @title: ConfigMapper
+ * @title ConfigMapper
  * @classPath com.dasoops.dasserver.cq.mapper.ConfigMapper
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

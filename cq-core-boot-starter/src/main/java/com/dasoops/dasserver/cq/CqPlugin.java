@@ -10,7 +10,7 @@ import com.dasoops.dasserver.cq.entity.dto.cq.event.request.CqFriendRequestEvent
 import com.dasoops.dasserver.cq.entity.dto.cq.event.request.CqGroupRequestEvent;
 
 /**
- * @title: CqPlugin
+ * @title CqPlugin
  * @classPath com.dasoops.dasserver.cqTemplate.CqPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/20

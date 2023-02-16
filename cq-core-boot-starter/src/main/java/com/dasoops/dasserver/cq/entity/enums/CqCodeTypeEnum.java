@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: CqCodeTypeEnum
+ * @title CqCodeTypeEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.CqCodeTypeEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/19

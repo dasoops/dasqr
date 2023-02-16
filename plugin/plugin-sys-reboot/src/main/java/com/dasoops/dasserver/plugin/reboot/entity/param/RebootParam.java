@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: RebootParam
+ * @title RebootParam
  * @classPath com.dasoops.dasserver.plugin.reboot.entity.param.RebootParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/17

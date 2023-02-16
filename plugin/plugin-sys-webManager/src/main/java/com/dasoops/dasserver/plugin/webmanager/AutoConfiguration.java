@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * @title: Configuration
+ * @title Configuration
  * @classPath com.dasoops.dasserver.webManager.Configuration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/28

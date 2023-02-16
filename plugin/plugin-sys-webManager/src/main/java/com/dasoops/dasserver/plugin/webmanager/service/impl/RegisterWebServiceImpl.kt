@@ -46,7 +46,7 @@ import java.util.stream.Collectors
 private const val FANTASY_USER_MAX_RETURN_COUNT = 5
 
 /**
- * @title: RegisterServiceImpl
+ * @title RegisterServiceImpl
  * @classPath com.dasoops.dasserver.cq.service.impl.RegisterServiceImpl
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

@@ -12,7 +12,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
- * @title: CqAutoConfiguration
+ * @title CqAutoConfiguration
  * @classPath com.dasoops.dasserver.cq.boot.CqAutoConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/20

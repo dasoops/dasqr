@@ -10,7 +10,7 @@ import com.dasoops.dasserver.cq.entity.enums.PostTypeEnum;
 import com.dasoops.dasserver.cq.utils.entity.EventInfo;
 
 /**
- * @title: EventUtil
+ * @title EventUtil
  * @classPath com.dasoops.dasq.core.common.util.EventUtil
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/09

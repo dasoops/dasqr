@@ -1,20 +1,27 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.param.plugin;
 
 import com.dasoops.common.entity.dto.base.BaseDto;
+import com.dasoops.common.entity.param.base.BaseInnerParam;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
- * @title: SortPluginDto
- * @classPath com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginDto
  * @author DasoopsNicole@Gmail.com
- * @date 2023/01/14
  * @version 1.0.0
+ * @title SortPluginDto
+ * @classPath com.dasoops.dasserver.plugin.webmanager.entity.dto.SortPluginDto
+ * @date 2023/01/14
  * @description 排序插件param
  * @see BaseDto
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class SortPluginInnerParam {
+@Api("Plugin")
+@ApiModel(description = "排序插件param")
+public class SortPluginInnerParam extends BaseInnerParam {
 
     /**
      * rowId

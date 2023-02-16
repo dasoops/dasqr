@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * @title: Author
+ * @title Author
  * @classPath com.dasoops.dasq.core.git.entity.Author
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/13

@@ -12,7 +12,7 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 
 /**
- * @title: CqTemplate
+ * @title CqTemplate
  * @classPath com.dasoops.dasserver.cq.CqTemplate
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/20

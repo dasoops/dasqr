@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: ConfigExceptionEnum
+ * @title ConfigExceptionEnum
  * @classPath com.dasoops.dasserver.webManager.entity.enums.ConfigExceptionEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/30

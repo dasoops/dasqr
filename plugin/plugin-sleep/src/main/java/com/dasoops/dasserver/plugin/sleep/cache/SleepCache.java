@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @title: SleepCache
+ * @title SleepCache
  * @classPath com.dasoops.dasserver.plugin.sleep.cache.SleepCache
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/10

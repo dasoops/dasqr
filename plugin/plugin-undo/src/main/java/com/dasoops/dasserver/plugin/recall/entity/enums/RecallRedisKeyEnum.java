@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: RecallRedisKeyEnum
+ * @title RecallRedisKeyEnum
  * @classPath com.dasoops.dasserver.plugin.recall.entity.enums.RecallRedisKeyEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/31

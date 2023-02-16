@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @title: ImagePo
+ * @title ImagePo
  * @classPath com.dasoops.dasserver.plugin.image.entity.po.ImagePo
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/07

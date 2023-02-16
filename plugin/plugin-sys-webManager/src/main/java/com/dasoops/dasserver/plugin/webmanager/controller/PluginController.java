@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * @title: PluginController
+ * @title PluginController
  * @classPath com.dasoops.dasserver.plugin.webmanager.controller.PluginController
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/12

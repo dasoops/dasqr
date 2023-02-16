@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: StartNoticeWsWrapper
+ * @title StartNoticeWsWrapper
  * @classPath com.dasoops.dasserver.plugin.reboot.wrapper.StartNoticeWsWrapper
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/10

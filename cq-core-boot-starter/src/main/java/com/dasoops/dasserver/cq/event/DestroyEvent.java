@@ -6,7 +6,7 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: DestroyEvent
+ * @title DestroyEvent
  * @classPath com.dasoops.dasq.core.common.event.DestroyEvent
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/12

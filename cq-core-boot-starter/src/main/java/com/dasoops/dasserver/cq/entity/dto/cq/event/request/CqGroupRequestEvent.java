@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: CqGroupRequestEvent
+ * @title CqGroupRequestEvent
  * @classPath com.dasoops.dasserver.cq.entity.event.request.CqGroupRequestEvent
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

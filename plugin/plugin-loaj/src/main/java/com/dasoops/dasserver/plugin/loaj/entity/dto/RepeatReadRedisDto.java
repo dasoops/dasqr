@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: RepeatReadDto
+ * @title RepeatReadDto
  * @classPath com.dasoops.dasserver.plugin.loaj.entity.dto.RepeatReadDto
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/19

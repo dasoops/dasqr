@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @title: SchedulingConfiguration
+ * @title SchedulingConfiguration
  * @classPath com.dasoops.dasserver.plugin.schedule.SchedulingConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

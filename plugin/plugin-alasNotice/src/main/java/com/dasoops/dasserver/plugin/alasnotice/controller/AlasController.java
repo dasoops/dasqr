@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @title: AlasController
+ * @title AlasController
  * @classPath com.dasoops.dasserver.plugin.template.controller.AlasController
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/11

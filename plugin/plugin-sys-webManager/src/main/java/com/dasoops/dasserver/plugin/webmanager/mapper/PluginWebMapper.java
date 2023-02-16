@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 
 /**
- * @title: PluginMapper
+ * @title PluginMapper
  * @classPath com.dasoops.dasserver.cq.mapper.PluginMapper
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

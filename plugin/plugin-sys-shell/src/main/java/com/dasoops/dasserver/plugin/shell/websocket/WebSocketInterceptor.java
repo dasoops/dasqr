@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * @title: WebSocketInterceptor
+ * @title WebSocketInterceptor
  * @classPath com.dasoops.dasserver.plugin.shell.websocket.WebSocketInterceptor
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/25

@@ -7,7 +7,7 @@ import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.exception.CqLogicException;
 
 /**
- * @title: Assert
+ * @title Assert
  * @classPath com.dasoops.core.util.Assert
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/01

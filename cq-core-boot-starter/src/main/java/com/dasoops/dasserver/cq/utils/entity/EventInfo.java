@@ -7,7 +7,7 @@ import com.dasoops.dasserver.cq.entity.enums.PostTypeEnum;
 import lombok.Data;
 
 /**
- * @title: MessageInfo
+ * @title MessageInfo
  * @classPath com.dasoops.dasserver.cq.utils.entity.MessageInfo
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/01

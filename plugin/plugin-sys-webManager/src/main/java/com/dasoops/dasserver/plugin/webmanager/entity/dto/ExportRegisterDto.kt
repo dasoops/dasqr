@@ -3,7 +3,7 @@ package com.dasoops.dasserver.plugin.webmanager.entity.dto
 import com.alibaba.excel.annotation.ExcelProperty
 
 /**
- * @title: ExportRegisterDto
+ * @title ExportRegisterDto
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.dto.ExportRegisterDto
  * @author DasoopsNicole@Gmail.com
  * @date 2023/02/01

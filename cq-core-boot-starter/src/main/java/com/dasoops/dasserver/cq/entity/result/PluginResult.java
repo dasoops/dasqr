@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @title: Result
+ * @title Result
  * @classPath com.dasoops.dasserver.cq.entity.result.Result
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/09

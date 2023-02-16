@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import java.util.Date;
 
 /**
- * @title: ExceptionPo
+ * @title ExceptionPo
  * @classPath com.dasoops.dasserver.plugin.exceptionwrapper.ExceptionPo
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/03

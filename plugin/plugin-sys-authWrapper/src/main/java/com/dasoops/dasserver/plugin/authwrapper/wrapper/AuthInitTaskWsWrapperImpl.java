@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: AuthInitTaskWsWrapperImpl
+ * @title AuthInitTaskWsWrapperImpl
  * @classPath com.dasoops.dasserver.plugin.authwrapper.wrapper.AuthInitTaskWsWrapperImpl
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/28

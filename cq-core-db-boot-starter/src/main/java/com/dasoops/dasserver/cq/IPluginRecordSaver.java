@@ -3,7 +3,7 @@ package com.dasoops.dasserver.cq;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 
 /**
- * @title: IPluginRecordSaver
+ * @title IPluginRecordSaver
  * @classPath com.dasoops.dasserver.cq.IPluginRecordSaver
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/26

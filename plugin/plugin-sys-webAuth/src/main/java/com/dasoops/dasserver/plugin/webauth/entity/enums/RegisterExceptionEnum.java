@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: LoginExceptionEnum
+ * @title LoginExceptionEnum
  * @classPath com.dasoops.imageManagerServer.user.enums.LoginExceptionEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/26

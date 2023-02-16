@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: ApiData
+ * @title ApiData
  * @classPath com.dasoops.dasserver.cq.entity.retdata.ApiData
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

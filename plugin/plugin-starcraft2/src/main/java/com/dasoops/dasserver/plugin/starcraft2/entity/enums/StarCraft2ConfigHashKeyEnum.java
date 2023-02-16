@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: StarCraft2ConfigHashKeyEnum
+ * @title StarCraft2ConfigHashKeyEnum
  * @classPath com.dasoops.dasserver.plugin.starcraft2.entity.enums.StarCraft2ConfigHashKeyEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

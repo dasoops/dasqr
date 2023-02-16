@@ -5,7 +5,7 @@ import com.dasoops.common.exception.AbstractBaseCustomException;
 import com.dasoops.common.exception.LogicException;
 
 /**
- * @title: CqLogicException
+ * @title CqLogicException
  * @classPath com.dasoops.dasserver.cq.exception.CqLogicException
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/31

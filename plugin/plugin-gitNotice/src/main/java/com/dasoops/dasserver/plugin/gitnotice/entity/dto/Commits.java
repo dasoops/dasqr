@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @title: Commits
+ * @title Commits
  * @classPath com.dasoops.dasq.core.git.entity.Commits
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/13

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: ExecExceptionEnum
+ * @title ExecExceptionEnum
  * @classPath com.dasoops.dasserver.plugin.exec.entity.enums.ExecExceptionEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/18

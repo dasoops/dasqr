@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: GetPluginOrderColumnEnum
+ * @title GetPluginOrderColumnEnum
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.enums.GetPluginOrderColumnEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/12

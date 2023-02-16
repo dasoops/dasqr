@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Data;
 
 /**
- * @title: CsrfTokenData
+ * @title CsrfTokenData
  * @classPath com.dasoops.dasserver.cq.entity.retdata.CsrfTokenData
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

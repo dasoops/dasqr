@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: CqExceptionEnum
+ * @title CqExceptionEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/27

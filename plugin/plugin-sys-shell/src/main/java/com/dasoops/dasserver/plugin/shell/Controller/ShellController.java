@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @title: ShellController
+ * @title ShellController
  * @classPath com.dasoops.dasserver.plugin.shell.Controller.ShellController
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/24

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: GetMutationParam
+ * @title GetMutationParam
  * @classPath com.dasoops.dasserver.plugin.starcraft2.entity.param.GetMutationParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

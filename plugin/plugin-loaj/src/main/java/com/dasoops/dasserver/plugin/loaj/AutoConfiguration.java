@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.annotation.PostConstruct;
 
 /**
- * @title: AutoConfiguration
+ * @title AutoConfiguration
  * @classPath com.dasoops.dasserver.plugin.loaj.AutoConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/04

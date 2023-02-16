@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: BaseExportDto
+ * @title BaseExportDto
  * @classPath com.dasoops.dasserver.cq.entity.dto.BaseExportDto
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/12

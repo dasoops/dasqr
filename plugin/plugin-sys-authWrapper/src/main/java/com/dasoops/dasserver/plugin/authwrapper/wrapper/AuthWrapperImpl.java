@@ -5,7 +5,7 @@ import com.dasoops.dasserver.plugin.authwrapper.utils.AuthUtil;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: AuthWrapperImpl
+ * @title AuthWrapperImpl
  * @classPath com.dasoops.dasserver.plugin.authwrapper.entity.wrapper.AuthWrapperImpl
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/15

@@ -8,7 +8,7 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 
 /**
- * @title: ApiSender
+ * @title ApiSender
  * @classPath com.dasoops.dasserver.cq.api.ApiSender
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

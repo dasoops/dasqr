@@ -6,7 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @title: BaseApiData
+ * @title BaseApiData
  * @classPath com.dasoops.dasserver.cq.entity.dto.cq.retdata.BaseApiData
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/23

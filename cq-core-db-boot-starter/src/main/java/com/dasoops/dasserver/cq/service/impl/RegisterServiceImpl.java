@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @title: RegisterServiceImpl
+ * @title RegisterServiceImpl
  * @classPath com.dasoops.dasserver.cq.service.impl.RegisterServiceImpl
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

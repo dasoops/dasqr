@@ -1,12 +1,12 @@
 package com.dasoops.dasserver.plugin.shell.log;
 
 import com.dasoops.dasserver.plugin.shell.ShellTemplate;
-import com.dasoops.dasserver.plugin.shell.entity.vo.LogDto;
+import com.dasoops.dasserver.plugin.shell.entity.dto.LogDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @title: LogSender
+ * @title LogSender
  * @classPath com.dasoops.dasserver.plugin.shell.log.LogSender
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/25

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: PluginStatusEnum
+ * @title PluginStatusEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.PluginStatusEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/16

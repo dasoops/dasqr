@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: ExportImageInfoDto
+ * @title ExportImageInfoDto
  * @classPath com.dasoops.dasserver.plugin.image.entity.dto.ExportImageInfoDto
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/31

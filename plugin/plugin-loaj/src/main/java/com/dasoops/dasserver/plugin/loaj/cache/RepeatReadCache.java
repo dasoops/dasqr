@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: RepeatReadCache
+ * @title RepeatReadCache
  * @classPath com.dasoops.dasserver.plugin.loaj.cache.RepeatReadCache
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/19

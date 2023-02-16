@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: ImageCanEditEnum
+ * @title ImageCanEditEnum
  * @classPath com.dasoops.dasserver.plugin.image.entity.enums.ImageCanEditEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/02

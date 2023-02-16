@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @title: Plugin
+ * @title Plugin
  * @classPath com.dasoops.dasserver.cq.entity.po.Plugin
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

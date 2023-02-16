@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 
 /**
- * @title: AuthWrapperPluginService
+ * @title AuthWrapperPluginService
  * @classPath com.dasoops.dasserver.plugin.authwrapper.service.AuthWrapperPluginService
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/01

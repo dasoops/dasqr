@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @title: FactorDo
+ * @title FactorDo
  * @classPath com.dasoops.dasserver.plugin.starcraft2.entity.dbo.FactorDo
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

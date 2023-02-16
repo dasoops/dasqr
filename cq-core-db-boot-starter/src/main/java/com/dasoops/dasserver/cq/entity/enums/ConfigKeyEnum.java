@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: ConfigKeyEnum
+ * @title ConfigKeyEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.ConfigKeyEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/03

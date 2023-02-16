@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: ServerModeEnum
+ * @title ServerModeEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.ServerModeEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/17

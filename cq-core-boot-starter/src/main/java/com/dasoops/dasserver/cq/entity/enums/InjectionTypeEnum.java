@@ -1,7 +1,7 @@
 package com.dasoops.dasserver.cq.entity.enums;
 
 /**
- * @title: InjectionTypeEnum
+ * @title InjectionTypeEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.InjectionTypeEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/08

@@ -3,7 +3,7 @@ package com.dasoops.dasserver.cq.wrapper;
 import com.dasoops.dasserver.cq.CqTemplate;
 
 /**
- * @title: ExceptionHandlerReinforced
+ * @title ExceptionHandlerReinforced
  * @classPath com.dasoops.common.exception.handler.ExceptionHandlerReinforced
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/08

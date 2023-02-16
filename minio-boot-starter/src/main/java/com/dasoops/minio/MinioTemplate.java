@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.util.Optional;
 
 /**
- * @title: MinioUtil
+ * @title MinioUtil
  * @classPath com.dasoops.minio.util.MinioUtil
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/08

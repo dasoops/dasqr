@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: MinioExceptionEnum
+ * @title MinioExceptionEnum
  * @classPath com.dasoops.minio.MinioExceptionEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/22

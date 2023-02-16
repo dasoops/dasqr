@@ -7,7 +7,7 @@ import com.dasoops.dasserver.cq.entity.enums.ConfigHashKeyEnum;
 import java.util.Optional;
 
 /**
- * @title: ConfigService
+ * @title ConfigService
  * @classPath com.dasoops.dasserver.cq.service.ConfigService
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

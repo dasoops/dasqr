@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.PostConstruct;
 
 /**
- * @title: AutoConfiguration
+ * @title AutoConfiguration
  * @classPath com.dasoops.dasserver.plugin.shell.AutoConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/23

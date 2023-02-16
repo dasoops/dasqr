@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.Filter;
 
 /**
- * @title: CORSFilter
+ * @title CORSFilter
  * @classPath cn.qiaoml.config.CORSFilter
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/28

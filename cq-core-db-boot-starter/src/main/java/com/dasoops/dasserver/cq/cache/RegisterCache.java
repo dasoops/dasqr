@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * @title: RegisterCache
+ * @title RegisterCache
  * @classPath com.dasoops.dasserver.cq.cache.RegisterCache
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/03

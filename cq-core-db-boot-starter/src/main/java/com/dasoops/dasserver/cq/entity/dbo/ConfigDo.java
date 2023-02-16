@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @title: Config
+ * @title Config
  * @classPath com.dasoops.dasserver.cq.entity.po.Config
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

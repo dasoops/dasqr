@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @title: StarCraftPlugin
+ * @title StarCraftPlugin
  * @classPath com.dasoops.dasserver.plugin.starcraft2.plugin.StarCraftPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

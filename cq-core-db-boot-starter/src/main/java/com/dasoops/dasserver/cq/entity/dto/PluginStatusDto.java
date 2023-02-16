@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: PluginStatusDto
+ * @title PluginStatusDto
  * @classPath com.dasoops.dasserver.cq.entity.dto.PluginStatusDto
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/16

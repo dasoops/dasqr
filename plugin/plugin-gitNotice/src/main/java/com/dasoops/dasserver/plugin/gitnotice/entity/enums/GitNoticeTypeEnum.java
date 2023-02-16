@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: gitNoticeTypeEnum
+ * @title gitNoticeTypeEnum
  * @classPath com.dasoops.dasserver.plugin.gitnotice.entity.enums.gitNoticeTypeEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/03

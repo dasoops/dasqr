@@ -26,7 +26,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @title: MessageParamReslover
+ * @title MessageParamReslover
  * @classPath com.dasoops.dasserver.cq.bot.MessageParamReslover
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/08

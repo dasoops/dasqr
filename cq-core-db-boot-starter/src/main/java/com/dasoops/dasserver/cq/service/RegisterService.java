@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @title: RegisterService
+ * @title RegisterService
  * @classPath com.dasoops.dasserver.cq.service.RegisterService
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

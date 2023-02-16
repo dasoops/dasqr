@@ -3,6 +3,7 @@ package com.dasoops.dasserver.plugin.webmanager.entity.param.plugin;
 import com.dasoops.common.entity.param.SortParam;
 import com.dasoops.common.entity.param.base.BasePageParam;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @title: GetPluginPageParam
+ * @title GetPluginPageParam
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.param.GetPluginPageParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/12
@@ -21,6 +22,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Api("Plugin")
 @ApiModel(value = "获取插件分页信息param", description = "获取插件分页信息param")
 public class GetPluginPageSortParam extends BasePageParam<PluginDo> {
 

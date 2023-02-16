@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @title: plugin
+ * @title plugin
  * @classPath com.dasoops.dasserver.core.plugin
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/01

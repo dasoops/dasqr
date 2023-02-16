@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @title: DbCqPlugin
+ * @title DbCqPlugin
  * @classPath com.dasoops.dasserver.cq.DbCqPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/26

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @title: PluginService
+ * @title PluginService
  * @classPath com.dasoops.dasserver.cq.service.PluginService
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

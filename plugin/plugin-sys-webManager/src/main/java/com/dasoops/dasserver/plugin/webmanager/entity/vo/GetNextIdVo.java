@@ -1,13 +1,14 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.vo;
 
 import com.dasoops.common.entity.vo.base.BaseVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: GetNextIdVo
+ * @title GetNextIdVo
  * @classPath com.dasoops.dasserver.webManager.entity.vo.GetNextIdVo
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/30
@@ -17,6 +18,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Api("Global")
 @ApiModel(value = "获取下一个主键id", description = "获取下一个主键id")
 public class GetNextIdVo extends BaseVo {
 

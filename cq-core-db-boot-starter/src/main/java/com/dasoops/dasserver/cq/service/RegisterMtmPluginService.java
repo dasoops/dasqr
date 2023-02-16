@@ -3,7 +3,7 @@ package com.dasoops.dasserver.cq.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * @title: RegisterMtmPluginService
+ * @title RegisterMtmPluginService
  * @classPath com.dasoops.dasserver.cq.service.RegisterMtmPluginService
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/01

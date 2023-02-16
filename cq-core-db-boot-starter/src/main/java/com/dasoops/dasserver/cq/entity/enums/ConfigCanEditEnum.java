@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: ConfigCanEditEnum
+ * @title ConfigCanEditEnum
  * @classPath com.dasoops.dasserver.cq.entity.enums.ConfigCanEditEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/30

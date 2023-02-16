@@ -2,23 +2,25 @@ package com.dasoops.dasserver.plugin.image.entity.param;
 
 import com.dasoops.common.entity.param.base.BaseTimePageParam;
 import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: GetImageParam
- * @classPath com.dasoops.dasserver.plugin.image.entity.param.GetImageParam
  * @author DasoopsNicole@Gmail.com
- * @date 2022/12/31
  * @version 1.0.0
- * @description 获取分页图像信息参数
- * @see BaseEasyTimePageParam
+ * @title GetImageInfoPageParam
+ * @classPath com.dasoops.dasserver.plugin.image.entity.param.GetImageInfoPageParam
+ * @date 2023/02/16
+ * @description 获取分页图像信息Param
+ * @see BaseTimePageParam
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "获取分页图像信息", description = "获取分页图像信息")
+@ApiModel(value = "获取分页图像信息Param", description = "获取分页图像信息Param")
+@Api("Image")
 public class GetImageInfoPageParam extends BaseTimePageParam<ImageDo> {
 
     /**

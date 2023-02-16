@@ -4,7 +4,7 @@ import com.dasoops.dasserver.plugin.shell.entity.enums.ShellRunMessageTypeEnum;
 import lombok.Data;
 
 /**
- * @title: ShellConfig
+ * @title ShellConfig
  * @classPath com.dasoops.dasserver.plugin.shell.ShellConfig
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/23

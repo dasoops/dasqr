@@ -2,9 +2,11 @@ package com.dasoops.dasserver.plugin.webmanager.entity.vo.register
 
 import com.dasoops.common.entity.vo.base.BasePageVo
 import com.dasoops.common.entity.vo.base.BaseVo
+import io.swagger.annotations.Api
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
+@Api("Register")
 @ApiModel(value = "获取用户vo", description = "获取用户vo")
 open class GetRegisterVo(
     /**

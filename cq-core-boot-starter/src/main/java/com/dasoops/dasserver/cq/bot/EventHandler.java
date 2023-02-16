@@ -26,7 +26,7 @@ import java.util.List;
 
 
 /**
- * @title: EventHandler
+ * @title EventHandler
  * @classPath com.dasoops.dasserver.cq.bot.EventHandler
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

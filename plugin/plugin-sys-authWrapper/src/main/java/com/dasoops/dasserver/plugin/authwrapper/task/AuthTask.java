@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: InitTask
+ * @title InitTask
  * @classPath com.dasoops.dasserver.plugin.authwrapper.task.InitTask
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/27

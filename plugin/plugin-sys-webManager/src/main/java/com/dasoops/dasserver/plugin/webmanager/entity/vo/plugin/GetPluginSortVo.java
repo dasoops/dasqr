@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin;
 
 import com.dasoops.common.entity.vo.base.BaseVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @title: GetPluginSortVo
+ * @title GetPluginSortVo
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginSortVo
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/12
@@ -19,6 +20,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Api("Plugin")
 @ApiModel(value = "获取插件排序vo", description = "获取插件排序vo")
 public class GetPluginSortVo extends BaseVo {
 

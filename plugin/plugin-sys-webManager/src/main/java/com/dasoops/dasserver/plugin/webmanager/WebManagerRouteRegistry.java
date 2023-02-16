@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @title: WebManagerRouteRegister
+ * @title WebManagerRouteRegister
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.WebManagerRouteRegister
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/24

@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @title: MessageLogPlugin
+ * @title MessageLogPlugin
  * @classPath com.dasoops.dasserver.plugin.log.plugin.MessageLogPlugin
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/03

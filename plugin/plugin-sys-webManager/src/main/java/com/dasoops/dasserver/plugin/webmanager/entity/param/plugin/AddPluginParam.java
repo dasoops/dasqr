@@ -4,13 +4,14 @@ import com.dasoops.common.entity.param.base.BaseAddParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: AddPluginParam
+ * @title AddPluginParam
  * @classPath com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/09
@@ -20,6 +21,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Api("Plugin")
 @ApiModel(value = "添加插件param", description = "添加插件param")
 public class AddPluginParam extends BaseAddParam<PluginDo> {
 

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterMtmPluginDo;
 
 /**
- * @title: RegisterMtmPluginMapper
+ * @title RegisterMtmPluginMapper
  * @classPath com.dasoops.dasserver.cq.mapper.RegisterMtmPluginMapper
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/01

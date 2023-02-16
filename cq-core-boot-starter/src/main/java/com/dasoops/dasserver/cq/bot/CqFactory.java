@@ -6,7 +6,7 @@ import com.dasoops.dasserver.cq.api.ApiHandler;
 import org.springframework.web.socket.WebSocketSession;
 
 /**
- * @title: CqTemplateFactor
+ * @title CqTemplateFactor
  * @classPath com.dasoops.dasserver.cq.bot.CqTemplateFactor
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21

@@ -1,11 +1,12 @@
 package com.dasoops.dasserver.plugin.schedule.entity.param;
 
 import com.dasoops.common.entity.param.base.BaseParam;
+import io.swagger.annotations.Api;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @title: ShamMessageScheduleParam
+ * @title ShamMessageScheduleParam
  * @classPath com.dasoops.dasserver.plugin.schedule.entity.param.ShamMessageScheduleParam
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20

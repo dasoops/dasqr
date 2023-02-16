@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @title: WrapperGlobal
+ * @title WrapperGlobal
  * @classPath com.dasoops.dasserver.cq.WrapperGlobal
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/06

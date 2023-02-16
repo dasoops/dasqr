@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @title: GitConfigHashKeyEnum
+ * @title GitConfigHashKeyEnum
  * @classPath com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitConfigHashKeyEnum
  * @author DasoopsNicole@Gmail.com
  * @date 2023/01/11

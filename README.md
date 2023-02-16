@@ -23,6 +23,7 @@
 - array - arr
 - minimum - min
 - maximum - max
+- annotation - anno
 
 #### 错误码:
 

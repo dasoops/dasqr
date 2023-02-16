@@ -13,7 +13,7 @@ import com.dasoops.dasserver.plugin.webmanager.entity.vo.register.GetRegisterVo
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.register.LoginVo
 
 /**
- * @title: RegisterService
+ * @title RegisterService
  * @classPath com.dasoops.dasserver.cq.service.RegisterService
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

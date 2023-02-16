@@ -1,6 +1,7 @@
 package com.dasoops.dasserver.plugin.webmanager.entity.vo.register;
 
 import com.dasoops.common.entity.vo.base.BaseVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- * @title: GetFantasyUserVo
+ * @title GetFantasyUserVo
  * @classPath com.dasoops.dasserver.plugin.webmanager.entity.vo.register.GetFantasyUserVo
  * @author DasoopsNicole@Gmail.com
  * @date 2022/12/31
@@ -17,6 +18,7 @@ import java.util.List;
  * @description 获取联想用户vo
  */
 @Data
+@Api("Register")
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "获取联想用户vo", description = "获取联想用户vo")
 public class GetFantasyUserVo extends BaseVo {

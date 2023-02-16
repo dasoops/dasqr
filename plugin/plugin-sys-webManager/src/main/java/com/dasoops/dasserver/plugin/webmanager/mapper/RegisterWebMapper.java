@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dasoops.dasserver.cq.entity.dbo.RegisterDo;
 
 /**
- * @title: RegisterMapper
+ * @title RegisterMapper
  * @classPath com.dasoops.dasserver.cq.mapper.RegisterMapper
  * @author DasoopsNicole@Gmail.com
  * @date 2022/10/31

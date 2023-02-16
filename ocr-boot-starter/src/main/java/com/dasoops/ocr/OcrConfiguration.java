@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @title: OcrConfiguration
+ * @title OcrConfiguration
  * @classPath com.dasoops.ocr.OcrConfiguration
  * @author DasoopsNicole@Gmail.com
  * @date 2022/11/08
