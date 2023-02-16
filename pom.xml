@@ -32,7 +32,7 @@
         <module>plugin/plugin-starcraft2</module>
         <module>plugin/plugin-setu</module>
         <module>plugin/plugin-sys-shell</module>
-        <module>plugin/plugin-codeGenerate</module>
+        <module>plugin/plugin-codeGenerator</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -137,7 +137,7 @@
 
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
-                <artifactId>plugin-codeGenerate</artifactId>
+                <artifactId>plugin-codeGenerator</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 
