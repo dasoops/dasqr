@@ -32,7 +32,7 @@ public class GetFantasyRegisterParam extends BaseParam {
     /**
      * 类型
      */
-    @ApiModelProperty(value = "类型", example = "0:用户;1:群组", required = true)
+    @ApiModelProperty(value = "类型", example = "0", required = true)
     private Integer type;
 
 }

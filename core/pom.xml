@@ -43,10 +43,15 @@
         </dependency>
 
         <dependency>
+            <groupId>com.dasoops</groupId>
+            <artifactId>code-generator-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>RELEASE</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
 
         <!--native加载插件-->
@@ -63,11 +68,6 @@
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-starcraft2</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>plugin-codeGenerator</artifactId>
         </dependency>
 
         <dependency>

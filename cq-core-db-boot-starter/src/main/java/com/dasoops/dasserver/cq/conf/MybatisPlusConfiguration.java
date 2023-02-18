@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * @author DasoopsNicole@Gmail.com
+ * @version 1.0.0
  * @title MybatisPlusConfiguration
  * @classPath com.dasoops.dasq.conf.MybatisPlusConfiguration
- * @author DasoopsNicole@Gmail.com
  * @date 2022/10/07
- * @version 1.0.0
  * @description mybatis plus 自动填充,分页插件配置
  * @see MetaObjectHandler
  */

@@ -32,8 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 
-### DasServer ###
+### Das ###
 *.yaml
+*.yml
 *.bak
 logback.xml
 logs

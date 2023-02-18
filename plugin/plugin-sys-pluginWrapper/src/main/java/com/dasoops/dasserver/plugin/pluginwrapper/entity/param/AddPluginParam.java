@@ -1,27 +1,30 @@
 package com.dasoops.dasserver.plugin.pluginwrapper.entity.param;
 
+import com.dasoops.common.entity.param.base.BaseAddParam;
 import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;
 import com.dasoops.dasserver.cq.entity.dbo.PluginDo;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
+ * @author DasoopsNicole@Gmail.com
+ * @version 1.0.0
  * @title AddPluginParam
  * @classPath com.dasoops.dasserver.plugin.pluginwrapper.entity.param.AddPluginParam
- * @author DasoopsNicole@Gmail.com
  * @date 2023/01/09
- * @version 1.0.0
  * @description 添加插件param
  * @see MessageParam
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Api("Plugin")
 @ApiModel(value = "添加插件param", description = "添加插件param")
-public class AddPluginParam extends BaseFastBuildParam<PluginDo> {
+public class AddPluginParam extends BaseAddParam<PluginDo> {
 
     /**
      * 关键字

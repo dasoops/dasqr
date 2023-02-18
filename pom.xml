@@ -32,12 +32,11 @@
         <module>plugin/plugin-starcraft2</module>
         <module>plugin/plugin-setu</module>
         <module>plugin/plugin-sys-shell</module>
-        <module>plugin/plugin-codeGenerator</module>
     </modules>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.4</version>
+        <groupId>com.dasoops</groupId>
+        <artifactId>maven-parent</artifactId>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dasoops.dasserver</groupId>
@@ -47,67 +46,19 @@
     <packaging>pom</packaging>
     <description>dasServer parent</description>
     <properties>
-        <kotlin.version>1.8.0</kotlin.version>
-        <java.version>17</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
         <cq.version>1.0.0</cq.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <lombok.version>1.18.24</lombok.version>
-        <fastjson2.version>2.0.23</fastjson2.version>
-        <hutool.version>5.8.8</hutool.version>
-        <!--        <log4j.version>1.2.17</log4j.version>-->
-        <tencentSdk.version>3.1.625</tencentSdk.version>
-        <knife4j.version>4.0.0</knife4j.version>
-        <easyExcel.version>3.1.4</easyExcel.version>
-        <okio.version>2.8.0</okio.version>
-        <commons-compress.version>1.21</commons-compress.version>
-        <jwt.version>4.2.1</jwt.version>
-        <minio.version>8.4.5</minio.version>
-        <common-boot-starter.version>1.0.15</common-boot-starter.version>
     </properties>
 
 
     <dependencyManagement>
 
         <dependencies>
-            <!-- spring系列 -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-
             <!-- 自定义组件 -->
-
-            <dependency>
-                <groupId>com.dasoops.dasserver</groupId>
-                <artifactId>cq-core-boot-starter</artifactId>
-                <version>${cq.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.dasoops.dasserver</groupId>
-                <artifactId>cq-core-db-boot-starter</artifactId>
-                <version>${cq.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>cq-core-mongo-boot-starter</artifactId>
                 <version>${cq.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.dasoops.dasserver</groupId>
-                <artifactId>plugin-core</artifactId>
-                <version>${cq.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.dasoops</groupId>
-                <artifactId>common-boot-starter</artifactId>
-                <version>${common-boot-starter.version}</version>
             </dependency>
 
             <dependency>
@@ -125,19 +76,31 @@
             <!-- DasServer plugin -->
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>cq-core-boot-starter</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>cq-core-db-boot-starter</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>plugin-gitNotice</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
-                <artifactId>plugin-undo</artifactId>
+                <artifactId>plugin-core</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
-                <artifactId>plugin-codeGenerator</artifactId>
+                <artifactId>plugin-undo</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 
@@ -267,94 +230,6 @@
                 <version>${cq.version}</version>
             </dependency>
 
-            <!-- 通用组件 -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-                <scope>provided</scope>
-                <optional>true</optional>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba.fastjson2</groupId>
-                <artifactId>fastjson2</artifactId>
-                <version>${fastjson2.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba.fastjson2</groupId>
-                <artifactId>fastjson2-kotlin</artifactId>
-                <version>${fastjson2.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba.fastjson2</groupId>
-                <artifactId>fastjson2-extension-spring5</artifactId>
-                <version>${fastjson2.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-
-            <!--            <dependency>-->
-            <!--                <groupId>log4j</groupId>-->
-            <!--                <artifactId>log4j</artifactId>-->
-            <!--                <version>${log4j.version}</version>-->
-            <!--            </dependency>-->
-
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
-            </dependency>
-
-            <!-- other -->
-            <dependency>
-                <groupId>com.tencentcloudapi</groupId>
-                <artifactId>tencentcloud-sdk-java-ocr</artifactId>
-                <version>${tencentSdk.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>easyexcel</artifactId>
-                <version>${easyExcel.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.minio</groupId>
-                <artifactId>minio</artifactId>
-                <version>${minio.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.squareup.okio</groupId>
-                <artifactId>okio</artifactId>
-                <version>${okio.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-compress</artifactId>
-                <version>${commons-compress.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.auth0</groupId>
-                <artifactId>java-jwt</artifactId>
-                <version>${jwt.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib</artifactId>
-                <version>${kotlin.version}</version>
-            </dependency>
-
         </dependencies>
 
     </dependencyManagement>
@@ -385,16 +260,14 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
-            <version>${kotlin.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
-            <version>${kotlin.version}</version>
         </dependency>
-
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -479,23 +352,5 @@
             </plugin>
         </plugins>
     </build>
-    <!--    <build>-->
-    <!--        <plugins>-->
-    <!--            <plugin>-->
-    <!--                <groupId>org.springframework.boot</groupId>-->
-    <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-    <!--                <configuration>-->
-    <!--                    <mainClass>com.dasoops.dasserver.core.DasServerApplication</mainClass>-->
-    <!--                </configuration>-->
-    <!--                <executions>-->
-    <!--                    <execution>-->
-    <!--                        <goals>-->
-    <!--                            <goal>repackage</goal>-->
-    <!--                        </goals>-->
-    <!--                    </execution>-->
-    <!--                </executions>-->
-    <!--            </plugin>-->
-    <!--        </plugins>-->
-    <!--    </build>-->
 
 </project>
