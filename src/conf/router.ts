@@ -1,7 +1,6 @@
 import {createRouter, createWebHashHistory, RouteRecordRaw, useRouter} from 'vue-router'
 import {getRegisterRouteKeywordList} from "@/request/pluginRequest";
-import {getBaseUrl, setBaseUrl} from "@/conf/application";
-import {initConfiguration} from "@/request/initRequest";
+import {getBaseUrl} from "@/conf/application";
 
 const routes: Array<RouteRecordRaw> = [
     {

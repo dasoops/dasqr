@@ -115,7 +115,7 @@ import {SelectOption} from "@/components/select/entity";
 import {ReplyTableShowDto} from "@/entity/dto/replyDto";
 import {ElMessageBox, FormInstance, FormRules} from "element-plus";
 import DasDialog from "@/components/dialog/index.vue";
-import {DeleteParam} from "@/entity/param/baseParam";
+import {DeleteParam} from "@/entity/param/BaseParam";
 import {simpleExport} from "@/util/DownloadUtil";
 import DasPager from "@/components/pager/index.vue";
 
@@ -268,8 +268,8 @@ const toAdd = async function () {
     reply = '';
   }
 }
-const handleAdd = function () {
-  addDataMap.param ? addReply(addDataMap.param).then(() => addDataMap.show = false) : undefined;
+const handleAdd = async function () {
+  addDataMap.param ? await addReply(addDataMap.param).then(() => addDataMap.show = false) : undefined;
   loadData();
 }
 

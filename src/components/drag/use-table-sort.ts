@@ -2,7 +2,7 @@
  * 表格数据自定义排序通用方法
  */
 import {GetPluginPageSortParam} from "@/entity/param/pluginParam";
-import {SortParam} from "@/entity/param/baseParam";
+import {SortParam} from "@/entity/param/BaseParam";
 
 export default function () {
     /**

@@ -1,4 +1,4 @@
-import {RegisterParam} from "@/entity/param/registerParam";
+import {GetFantastyUserParam, RegisterParam} from "@/entity/param/registerParam";
 import {getInstance} from "@/conf/axiosClient";
 
 const axiosClient = getInstance("register");
@@ -16,4 +16,17 @@ export const login = function (param: RegisterParam) {
         method: "POST",
         data: param
     });
+}
+
+/**
+ * 获取联想用户
+ * @param {string} param.keyword 关键词
+ * @returns
+ */
+export const getFantasyUser = function (param: GetFantastyUserParam) {
+    return axiosClient({
+        url: "/getFantastyUser",
+        method: "GET",
+        data: param
+    })
 }

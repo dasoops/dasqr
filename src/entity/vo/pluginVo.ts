@@ -1,7 +1,7 @@
 /**
  * 获取插件vo
  */
-import {BaseVo} from "@/entity/vo/baseVo";
+import {BaseVo} from "@/entity/vo/BaseVo";
 
 export interface GetPluginVo extends BaseVo {
     name: string;

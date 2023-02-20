@@ -1,4 +1,4 @@
-import {BaseDeleteAndEditParam, BaseParam, PageParam, SortParam} from "@/entity/param/baseParam";
+import {BaseDeleteAndEditParam, BaseParam, PageParam, SortParam} from "@/entity/param/BaseParam";
 
 /**
  * 获取插件排序分页信息param

@@ -8,9 +8,9 @@ import {
     GetPluginPageSortParam,
     SortPluginParam
 } from "@/entity/param/pluginParam";
-import {DeleteParam} from "@/entity/param/baseParam";
+import {DeleteParam} from "@/entity/param/BaseParam";
 import {GetRegisterRouteKeywordVo, GetPluginSortVo, GetPluginVo} from "@/entity/vo/pluginVo";
-import {GetNextRowIdVo} from "@/entity/vo/baseVo";
+import {GetNextRowIdVo} from "@/entity/vo/BaseVo";
 
 const axiosClient = getInstance('plugin');
 

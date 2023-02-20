@@ -1,8 +1,18 @@
+import {BaseDeleteAndEditParam, BaseParam, PageParam} from "@/entity/param/BaseParam";
+
+/**
+ * @Title: CodeGenerateServiceImpl
+ * @ClassPath com.dasoops.dasserver.plugin.code.generate.ts.service.impl.CodeGenerateServiceImpl
+ * @Author DasoopsNicole@Gmail.com
+ * @Date 2023/02/15
+ * @Version 1.0.0
+ * @Description: 编号生成服务impl
+ * @see [CodeGenerateServiceImpl]
+ */
+
 /**
  * 编辑图片信息Param
  */
-import {BaseDeleteAndEditParam, BaseParam, PageParam} from "@/entity/param/baseParam";
-
 export interface EditImageInfoParam extends BaseDeleteAndEditParam {
     fileName: string;
     keyword: string;
@@ -27,13 +37,6 @@ export interface DeleteImageParam extends BaseParam {
  * 获取联想关键词Param
  */
 export interface GetFantasyKeywordParam extends BaseParam {
-    keyword: string;
-}
-
-/**
- * 获取联想用户Param
- */
-export interface GetFantastyUserParam extends BaseParam {
     keyword: string;
 }
 

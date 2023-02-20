@@ -1,4 +1,4 @@
-import {BaseVo} from "@/entity/vo/baseVo";
+import {BaseVo} from "@/entity/vo/BaseVo";
 
 /**
  * 获取回复vo

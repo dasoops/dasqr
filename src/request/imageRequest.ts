@@ -1,7 +1,7 @@
 import {
     AddImageParam,
     DeleteImageParam,
-    EditImageInfoParam, GetFantastyUserParam,
+    EditImageInfoParam,
     GetFantasyKeywordParam,
     GetImageInfoPageParam
 } from "@/entity/param/imageParam";
@@ -87,19 +87,6 @@ export const exportAllImageInfo = function () {
 export const getFantastyKeyword = function (param: GetFantasyKeywordParam) {
     return axiosClient({
         url: "/getFantastyKeyword",
-        method: "GET",
-        data: param
-    })
-}
-
-/**
- * 获取联想用户
- * @param {string} param.keyword 关键词
- * @returns
- */
-export const getFantasyUser = function (param: GetFantastyUserParam) {
-    return axiosClient({
-        url: "/getFantastyUser",
         method: "GET",
         data: param
     })

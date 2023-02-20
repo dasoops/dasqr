@@ -288,7 +288,7 @@ import {
   getPluginPage, getPluginSort, sortPlugin
 } from "@/request/pluginRequest";
 import {simpleExport} from "@/util/DownloadUtil";
-import {DeleteParam} from "@/entity/param/baseParam";
+import {DeleteParam} from "@/entity/param/BaseParam";
 import {PluginShowDto} from "@/entity/dto/PluginDto";
 import UseTableSort from "@/components/drag/use-table-sort";
 import DasDrag from "@/components/drag/index.vue";

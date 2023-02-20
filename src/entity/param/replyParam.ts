@@ -1,4 +1,4 @@
-import {BaseEditParam, BaseParam, PageParam} from "@/entity/param/baseParam";
+import {BaseEditParam, BaseParam, PageParam} from "@/entity/param/BaseParam";
 
 /**
  * 添加回复param

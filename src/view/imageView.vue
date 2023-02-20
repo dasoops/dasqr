@@ -222,7 +222,6 @@ import {ElMessage, ElMessageBox} from "element-plus";
 import {
   AddImageParam, DeleteImageParam,
   EditImageInfoParam, FantastyUserRes,
-  GetFantastyUserParam,
   GetImageInfoPageParam,
   ImageData, UploadImageRes
 } from "@/entity/param/imageParam";
@@ -231,7 +230,6 @@ import {
   deleteImage,
   editImageInfo,
   exportAllImageInfo,
-  getFantasyUser,
   getImageInfoPage, getNextImageId,
   uploadImageMethod,
   uploadImageUrl
@@ -240,6 +238,8 @@ import {UploadRawFile} from "element-plus/lib/components";
 import {AxiosHeaders} from "axios";
 import {Result} from "@/entity/result/BaseResult";
 import { simpleExport } from "@/util/DownloadUtil";
+import {GetFantastyUserParam} from "@/entity/param/registerParam";
+import {getFantasyUser} from "@/request/registerRequest";
 
 export default defineComponent({
   setup() {

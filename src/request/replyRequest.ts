@@ -1,8 +1,8 @@
 import {getInstance} from "@/conf/axiosClient";
 import {PageResult, Result, SimpleResult} from "@/entity/result/BaseResult";
 import {AddReplyParam, EditReplyParam, GetReplyPageParam} from "@/entity/param/replyParam";
-import {DeleteParam} from "@/entity/param/baseParam";
-import {GetNextRowIdVo} from "@/entity/vo/baseVo";
+import {DeleteParam} from "@/entity/param/BaseParam";
+import {GetNextRowIdVo} from "@/entity/vo/BaseVo";
 import {GetReplyPageVo} from "@/entity/vo/replyVo";
 import {AxiosResponse} from "axios/index";
 

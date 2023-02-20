@@ -1,3 +1,5 @@
+import {BaseParam} from "@/entity/param/BaseParam";
+
 export interface FormData {
     username: string,
     password: string,
@@ -8,6 +10,13 @@ export class LoginData {
         username: "",
         password: "",
     }
+}
+
+/**
+ * 获取联想用户Param
+ */
+export interface GetFantastyUserParam extends BaseParam {
+    keyword: string;
 }
 
 /**
