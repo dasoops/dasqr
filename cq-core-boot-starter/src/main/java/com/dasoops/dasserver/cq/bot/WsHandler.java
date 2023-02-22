@@ -25,11 +25,11 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * @author DasoopsNicole@Gmail.com
+ * @version 1.0.0
  * @title websocketHandler
  * @classPath com.dasoops.dasserver.cq.websocket.websocketHandler
- * @author DasoopsNicole@Gmail.com
  * @date 2022/10/21
- * @version 1.0.0
  * @description websocket处理程序
  * @see WebSocketHandler
  */
@@ -71,8 +71,7 @@ public class WsHandler extends TextWebSocketHandler {
 
                 List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
 
-                Assert.getInstance().ifNotNull(wsWrapperList, () -> wsWrapperList
-                        .forEach(wsWrapper -> wsWrapper.afterConnectionEstablishedWrapper(cqTemplate)));
+                Assert.ifNotNull(wsWrapperList, () -> wsWrapperList.forEach(wsWrapper -> wsWrapper.afterConnectionEstablishedWrapper(cqTemplate)));
 
                 //等待初始化完成
             } catch (Exception e) {
@@ -85,7 +84,7 @@ public class WsHandler extends TextWebSocketHandler {
     /**
      * cqHttp连接关闭
      *
-     * @param session     会话
+     * @param session 会话
      * @param closeStatus 关闭状态
      * @throws Exception 异常
      */
@@ -94,7 +93,7 @@ public class WsHandler extends TextWebSocketHandler {
         Long qid = getQid(session);
         log.info("{} close connection", qid);
         List<WsWrapper> wsWrapperList = WrapperGlobal.getWsWrapperList();
-        Assert.getInstance().ifNotNull(wsWrapperList, () -> wsWrapperList
+        Assert.ifNotNull(wsWrapperList, () -> wsWrapperList
                 .forEach(wsWrapper -> wsWrapper.afterConnectionClosedWrapper(CqGlobal.get(qid))));
 
         CqGlobal.remove(qid);
