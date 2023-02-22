@@ -34,23 +34,23 @@
 
 #### todo:
 
-`-: 未开始;√:已完成`
+`-: 未开始;√:已完成;o:进行中`
 
 1. ( √ ) 定时任务(plugin-sys-schedule)
 2. ( √ ) sc2下周突变(每周提醒入土了)
 3. ( √ ) webManager路由动态渲染
 4. ( √ ) plugin-setu实现
 5. ( √ ) plugin-sys-shell(暂未定实现方式,通过伪造CqTemplate?)
-6. ( - ) webManager register | reply | shell
+6. ( o ) webManager register | reply | shell
 7. ( - ) webManager register password
 8. ( - ) webManager token续签
 9. ( - ) plugin-style
 10. ( - ) help文档
 11. ( √ ) 看看丢人实现(撤回记录)
 12. ( - ) rss对接?(rssHub,plugin-rss)
-13. ( - ) json包改为jackSon
+13. ( o ) json包改为jackSon
 14. ( - ) pluginLoader
 15. ( - ) pluginStore
-16. ( - ) 后端扫包生成ts,request文件
+16. ( √ ) 后端扫包生成ts,request文件
 17. ( - ) 枚举扫描生成字典,缓存,前端使用字典替代硬编码
 18. ( - ) 群用户复读指数计算生成
