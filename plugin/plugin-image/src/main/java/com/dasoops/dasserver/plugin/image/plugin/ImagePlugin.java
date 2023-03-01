@@ -23,18 +23,17 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * @author DasoopsNicole@Gmail.com
+ * @version 1.0.0
  * @title TemplatePlugin
  * @classPath com.dasoops.dasserver.plugin.image.plugin.TemplatePlugin
- * @author DasoopsNicole@Gmail.com
  * @date 2022/11/07
- * @version 1.0.0
  * @description 图片插件
  * @see CqPlugin
  */
 @Component
 @Slf4j
 public class ImagePlugin extends CqPlugin {
-
 
 
     private final String FLAG = "flag";
@@ -62,7 +61,7 @@ public class ImagePlugin extends CqPlugin {
     /**
      * 处理消息
      *
-     * @param cqTemplate     cqTemplate
+     * @param cqTemplate cqTemplate
      * @param cqMessageEvent 事件
      * @return {@link PassObj}
      */

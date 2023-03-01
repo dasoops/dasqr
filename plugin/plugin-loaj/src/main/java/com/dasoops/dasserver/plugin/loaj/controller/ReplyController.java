@@ -13,7 +13,6 @@ import com.dasoops.dasserver.plugin.loaj.entity.param.GetReplyPageParam;
 import com.dasoops.dasserver.plugin.loaj.entity.vo.GetReplyVo;
 import com.dasoops.dasserver.plugin.loaj.service.ReplyService;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
-import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +32,6 @@ import java.util.List;
 @RestController
 @RequestMapping("reply")
 @Api(tags = "WM - reply")
-@ApiSupport(author = "DasoopsNicole@gmail.com")
 @RequiredArgsConstructor
 public class ReplyController {
 

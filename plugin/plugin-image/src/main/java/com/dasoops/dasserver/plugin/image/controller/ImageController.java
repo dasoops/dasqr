@@ -12,7 +12,6 @@ import com.dasoops.dasserver.plugin.image.entity.vo.GetImageVo;
 import com.dasoops.dasserver.plugin.image.entity.vo.UploadImageVo;
 import com.dasoops.dasserver.plugin.image.service.ImageService;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetNextIdVo;
-import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,6 @@ import java.util.List;
 @RestController
 @RequestMapping("image")
 @Api(tags = "PLUGIN - IMAGE")
-@ApiSupport(author = "DasoopsNicole@gmail.com")
 public class ImageController {
 
     private final ImageService imageService;

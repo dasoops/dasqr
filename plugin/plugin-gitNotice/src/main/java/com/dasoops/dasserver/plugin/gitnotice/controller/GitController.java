@@ -12,7 +12,6 @@ import com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitConfigHashKeyEnum;
 import com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitNoticeBotXSelfIdEnum;
 import com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitNoticeRefEnum;
 import com.dasoops.dasserver.plugin.gitnotice.entity.enums.GitNoticeTypeEnum;
-import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +33,6 @@ import java.util.Objects;
 @RestController
 @RequestMapping("git")
 @Api(tags = "PLUGIN - GIT_NOTICE")
-@ApiSupport(author = "DasoopsNicole@gmail.com")
 public class GitController {
 
     private final ConfigCache configCache;

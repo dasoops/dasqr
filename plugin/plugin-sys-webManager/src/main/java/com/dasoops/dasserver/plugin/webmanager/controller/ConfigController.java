@@ -13,7 +13,6 @@ import com.dasoops.dasserver.plugin.webmanager.entity.param.config.AddConfigPara
 import com.dasoops.dasserver.plugin.webmanager.entity.param.config.DeleteConfigParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.param.config.GetConfigPageParam;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.config.GetConfigVo;
-import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +32,6 @@ import java.util.List;
 @RestController
 @RequestMapping("config")
 @Api(tags = "WM - 配置")
-@ApiSupport(author = "DasoopsNicole@gmail.com")
 @RequiredArgsConstructor
 public class ConfigController {
 

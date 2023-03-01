@@ -4,7 +4,6 @@ import com.dasoops.common.entity.result.Result;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.plugin.shell.entity.enums.ShellRedisHashKeyEnum;
 import com.dasoops.dasserver.plugin.shell.entity.vo.GetWsUrlVo;
-import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("shell")
 @Api(tags = "plugin-sys-shell")
 @RequiredArgsConstructor
-@ApiSupport(author = "DasoopsNicole@gmail.com")
 public class ShellController {
 
     private final ConfigCache configCache;

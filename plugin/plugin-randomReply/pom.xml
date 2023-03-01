@@ -8,9 +8,9 @@
         <version>1.0.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>plugin-sleep</artifactId>
+    <artifactId>plugin-randomReply</artifactId>
     <version>1.0.0</version>
-    <description>dasServer plugin sleep</description>
+    <description>dasServer plugin</description>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
@@ -32,8 +32,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.dasoops</groupId>
-            <artifactId>common-boot-starter</artifactId>
+            <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-log</artifactId>
         </dependency>
     </dependencies>
 

@@ -20,6 +20,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
         <!--核心组件 -->
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
@@ -77,6 +83,11 @@
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>
+            <artifactId>plugin-randomReply</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dasoops.dasserver</groupId>
             <artifactId>plugin-sys-exec</artifactId>
         </dependency>
 
@@ -115,10 +126,10 @@
             <artifactId>plugin-sys-webAuth</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.dasoops.dasserver</groupId>
-            <artifactId>plugin-sys-pluginLoader</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.dasoops.dasserver</groupId>-->
+<!--            <artifactId>plugin-sys-pluginLoader</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.dasoops.dasserver</groupId>

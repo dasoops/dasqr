@@ -18,6 +18,7 @@
         <module>plugin/plugin-sleep</module>
         <module>plugin/plugin-style</module>
         <module>plugin/plugin-undo</module>
+        <module>plugin/plugin-randomReply</module>
         <module>plugin/plugin-sys-shamMessage</module>
         <module>plugin/plugin-sys-exec</module>
         <module>plugin/plugin-sys-authWrapper</module>
@@ -53,6 +54,12 @@
     <dependencyManagement>
 
         <dependencies>
+            <dependency>
+                <groupId>com.dasoops</groupId>
+                <artifactId>common-boot-starter</artifactId>
+                <version>1.0.15</version>
+            </dependency>
+
             <!-- 自定义组件 -->
 
             <dependency>
@@ -77,6 +84,12 @@
             <dependency>
                 <groupId>com.dasoops.dasserver</groupId>
                 <artifactId>cq-core-boot-starter</artifactId>
+                <version>${cq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dasoops.dasserver</groupId>
+                <artifactId>plugin-randomReply</artifactId>
                 <version>${cq.version}</version>
             </dependency>
 
@@ -230,6 +243,18 @@
                 <version>${cq.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2-extension-spring5</artifactId>
+                <version>2.0.24</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>2.0.24</version>
+            </dependency>
+
         </dependencies>
 
     </dependencyManagement>
@@ -265,6 +290,23 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2-extension-spring5</artifactId>
+            <version>2.0.24</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>2.0.24</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
     </dependencies>
 

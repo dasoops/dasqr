@@ -13,7 +13,6 @@ import com.dasoops.dasserver.plugin.webmanager.entity.vo.GetRegisterRouteKeyword
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginSortVo;
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.plugin.GetPluginVo;
 import com.dasoops.dasserver.plugin.webmanager.service.PluginWebService;
-import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +33,6 @@ import java.util.List;
 @RestController
 @RequestMapping("plugin")
 @Api(tags = "WM - 插件")
-@ApiSupport(author = "DasoopsNicole@gmail.com")
 @RequiredArgsConstructor
 public class PluginController {
 

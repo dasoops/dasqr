@@ -10,7 +10,6 @@ import com.dasoops.dasserver.plugin.alasnotice.entity.enums.AlasConfigHashKeyEnu
 import com.dasoops.dasserver.plugin.alasnotice.entity.enums.AlasExceptionEnum;
 import com.dasoops.dasserver.plugin.alasnotice.entity.enums.AlasNoticeTypeEnum;
 import com.dasoops.dasserver.plugin.alasnotice.entity.param.AlasErrorParam;
-import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +34,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Api(tags = "PLUGIN - ALAS_NOTICE")
-@ApiSupport(author = "DasoopsNicole@gmail.com")
 public class AlasController {
 
     private final ConfigCache configCache;

@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.sleep.entity.param;
 
+
 import com.dasoops.common.entity.dbo.base.BaseDo;
 import com.dasoops.common.entity.param.base.BaseFastBuildParam;
 import com.dasoops.dasserver.cq.entity.annocation.InjectionParam;

@@ -11,7 +11,6 @@ import com.dasoops.dasserver.plugin.webmanager.entity.param.register.GetRegister
 import com.dasoops.dasserver.plugin.webmanager.entity.param.register.LoginParam
 import com.dasoops.dasserver.plugin.webmanager.entity.vo.register.*
 import com.dasoops.dasserver.plugin.webmanager.service.RegisterWebService
-import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import lombok.RequiredArgsConstructor
@@ -29,7 +28,6 @@ import javax.servlet.http.HttpServletResponse
 @RestController
 @RequestMapping("register")
 @Api(tags = ["WM - 注册表"])
-@ApiSupport(author = "DasoopsNicole@gmail.com")
 @RequiredArgsConstructor
 class RegisterController(
     private val registerWebService: RegisterWebService,
