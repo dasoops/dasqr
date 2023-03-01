@@ -43,7 +43,6 @@ public class RandomReplyPlugin extends CqPlugin {
     private final RandomReplyCache randomReplyCache;
     private final ConfigCache configCache;
     private final MongoTemplate mongoTemplate;
-    private final RegisterCache registerCache;
 
     @Override
     public CqPlugin getRawPlugin() {
@@ -62,30 +61,6 @@ public class RandomReplyPlugin extends CqPlugin {
             return PassObj.block();
         }
         return PassObj.pass(event);
-    }
-
-    @MessageMapping(equal = "谁发的", type = MessageMappingTypeEnum.GROUP)
-    public String genInfo() {
-        log.debug("获取信息逻辑");
-        MessageDo lastInfo = randomReplyCache.getLastInfo();
-        String userName = registerCache.getRegisterUserNameById(lastInfo.getUserId());
-        Query nextQuery = Query.query(Criteria.where("time").gt(lastInfo.getTime())).with(Sort.by("_id").ascending()).limit(1);
-        MessageDo next = mongoTemplate.findOne(nextQuery, MessageDo.class);
-        Query lastQuery = Query.query(Criteria.where("time").lt(lastInfo.getTime())).with(Sort.by("_id").descending()).limit(1);
-        MessageDo last = mongoTemplate.findOne(lastQuery, MessageDo.class);
-        String lastUserName = registerCache.getRegisterUserNameById(last.getUserId());
-        String nextUserName = registerCache.getRegisterUserNameById(next.getUserId());
-
-        return StrUtil.format("""
-                        {}({}) in {}
-                        上一句是: {} -> {}
-                        下一句是: {} -> {}
-                        """,
-                userName, DateUtil.date(lastInfo.getTime() * 1000), lastInfo.getUserId(),
-                lastUserName, last.getMessage(),
-                nextUserName, next.getMessage()
-        );
-
     }
 
 }
