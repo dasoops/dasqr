@@ -51,7 +51,7 @@ public class GetRandomReplyInfoPlugin extends CqPlugin {
                         上一句是: {} -> {}
                         下一句是: {} -> {}
                         """,
-                userName, DateUtil.date(lastInfo.getTime() * 1000), lastInfo.getUserId(),
+                userName, lastInfo.getUserId(), DateUtil.date(lastInfo.getTime() * 1000),
                 lastUserName, last.getMessage(),
                 nextUserName, next.getMessage()
         );
