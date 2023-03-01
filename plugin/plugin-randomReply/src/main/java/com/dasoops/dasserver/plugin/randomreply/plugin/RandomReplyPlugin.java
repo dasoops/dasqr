@@ -46,6 +46,7 @@ public class RandomReplyPlugin extends CqPlugin {
 
     @MessageMapping(matchAll = true, type = MessageMappingTypeEnum.GROUP)
     public String randomReply() {
+        log.debug("随机回复逻辑");
         int randomInt = RandomUtil.randomInt(0, configCache.getIntegerConfig(RandomReplyConfigKey.RANDOM_FREQUENCY));
         if (randomInt == 1) {
             int count = (int) mongoTemplate.count(new Query(), MessageDo.class);
@@ -58,6 +59,7 @@ public class RandomReplyPlugin extends CqPlugin {
 
     @MessageMapping(equal = "谁发的", type = MessageMappingTypeEnum.GROUP)
     public String genInfo() {
+        log.debug("获取信息逻辑");
         MessageDo lastInfo = randomReplyCache.getLastInfo();
         String userName = registerCache.getRegisterUserNameById(lastInfo.getUserId());
         Query nextQuery = Query.query(Criteria.where("time").gt(lastInfo.getTime())).with(Sort.by("_id").ascending()).limit(1);
