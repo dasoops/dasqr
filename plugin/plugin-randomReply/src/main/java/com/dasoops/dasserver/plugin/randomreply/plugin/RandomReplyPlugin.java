@@ -3,12 +3,18 @@ package com.dasoops.dasserver.plugin.randomreply.plugin;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import com.dasoops.common.entity.param.SimpleParam;
 import com.dasoops.dasserver.cq.CqPlugin;
+import com.dasoops.dasserver.cq.CqTemplate;
+import com.dasoops.dasserver.cq.PassObj;
 import com.dasoops.dasserver.cq.cache.ConfigCache;
 import com.dasoops.dasserver.cq.cache.RegisterCache;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqGroupMessageEvent;
+import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqMessageEvent;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
 import com.dasoops.dasserver.cq.entity.enums.MessageMappingTypeEnum;
+import com.dasoops.dasserver.cq.entity.result.PluginResult;
 import com.dasoops.dasserver.plugin.log.entity.dbo.MessageDo;
 import com.mongodb.DBObject;
 import lombok.RequiredArgsConstructor;
@@ -44,17 +50,18 @@ public class RandomReplyPlugin extends CqPlugin {
         return this;
     }
 
-    @MessageMapping(matchAll = true, type = MessageMappingTypeEnum.GROUP)
-    public String randomReply() {
+    @Override
+    public PassObj onGroupMessage(CqTemplate cqTemplate, CqGroupMessageEvent event) {
         log.debug("随机回复逻辑");
         int randomInt = RandomUtil.randomInt(0, configCache.getIntegerConfig(RandomReplyConfigKey.RANDOM_FREQUENCY));
         if (randomInt == 1) {
             int count = (int) mongoTemplate.count(new Query(), MessageDo.class);
             MessageDo messageDo = mongoTemplate.findOne(new Query().skip(RandomUtil.randomInt(1, count - 1)), MessageDo.class);
             randomReplyCache.setLastInfo(messageDo);
-            return messageDo.getMessage();
+            cqTemplate.sendMsg(event, messageDo.getMessage());
+            return PassObj.block();
         }
-        return null;
+        return PassObj.pass(event);
     }
 
     @MessageMapping(equal = "谁发的", type = MessageMappingTypeEnum.GROUP)
@@ -70,11 +77,11 @@ public class RandomReplyPlugin extends CqPlugin {
         String nextUserName = registerCache.getRegisterUserNameById(next.getUserId());
 
         return StrUtil.format("""
-                        {} in {}
+                        {}({}) in {}
                         上一句是: {} -> {}
                         下一句是: {} -> {}
                         """,
-                userName, DateUtil.date(lastInfo.getTime() * 1000),
+                userName, DateUtil.date(lastInfo.getTime() * 1000), lastInfo.getUserId(),
                 lastUserName, last.getMessage(),
                 nextUserName, next.getMessage()
         );

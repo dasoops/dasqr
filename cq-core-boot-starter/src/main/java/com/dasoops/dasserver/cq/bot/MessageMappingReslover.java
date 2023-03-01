@@ -26,11 +26,11 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * @author DasoopsNicole@Gmail.com
+ * @version 1.0.0
  * @title MessageParamReslover
  * @classPath com.dasoops.dasserver.cq.bot.MessageParamReslover
- * @author DasoopsNicole@Gmail.com
  * @date 2023/01/08
- * @version 1.0.0
  * @description 消息映射解析器
  */
 public class MessageMappingReslover {
@@ -122,9 +122,9 @@ public class MessageMappingReslover {
     /**
      * 解析调用结果
      *
-     * @param cqTemplate   cq模板
+     * @param cqTemplate cq模板
      * @param messageEvent 消息事件
-     * @param result       结果
+     * @param result 结果
      * @return {@link PassObj}
      */
     @SuppressWarnings("unchecked")
@@ -152,16 +152,16 @@ public class MessageMappingReslover {
             }
             messageList.forEach(message -> cqTemplate.sendMsg(messageEvent, message));
         }
-        return null;
+        return PassObj.block();
     }
 
     /**
      * 检查是否需要解析
      *
-     * @param pluginMethod      插件方法
-     * @param messageEvent      消息事件
+     * @param pluginMethod 插件方法
+     * @param messageEvent 消息事件
      * @param defaultMethodName 默认方法名称
-     * @param eventTypeEnum     事件类型枚举
+     * @param eventTypeEnum 事件类型枚举
      * @return boolean
      */
     private static MatchKeywordDto checkNeedReslove(Method pluginMethod, CqMessageEvent messageEvent, String defaultMethodName, EventTypeEnum eventTypeEnum) {
@@ -316,9 +316,12 @@ public class MessageMappingReslover {
         //调用dq码工具类获取paramString
         List<String> paramStringList;
         switch (matchKeywordDto.getMatchType()) {
-            case PREFIX -> paramStringList = DqCodeUtil.getParamStr(message, matchKeywordDto.getResloveKeyword(), "", annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
-            case SUFFIX -> paramStringList = DqCodeUtil.getParamStr(message, "", matchKeywordDto.getMatchKeyword(), annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
-            case CONTAIN -> paramStringList = DqCodeUtil.getParamStr(message, "", "", annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
+            case PREFIX ->
+                    paramStringList = DqCodeUtil.getParamStr(message, matchKeywordDto.getResloveKeyword(), "", annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
+            case SUFFIX ->
+                    paramStringList = DqCodeUtil.getParamStr(message, "", matchKeywordDto.getMatchKeyword(), annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
+            case CONTAIN ->
+                    paramStringList = DqCodeUtil.getParamStr(message, "", "", annotation.separator(), annotation.ignoreDbc(), annotation.skipCq(), annotation.trim());
             default -> paramStringList = new ArrayList<>();
         }
         //开始调用set方法注入字段,考虑可选参数情况,取小的set,多的不赋值了
@@ -364,7 +367,7 @@ public class MessageMappingReslover {
     /**
      * 检查消息是否匹配
      *
-     * @param message    消息
+     * @param message 消息
      * @param annotation 注释
      * @return boolean
      */

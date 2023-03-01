@@ -9,11 +9,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * @author DasoopsNicole@Gmail.com
+ * @version 1.0.0
  * @title Result
  * @classPath com.dasoops.dasserver.cq.entity.result.Result
- * @author DasoopsNicole@Gmail.com
  * @date 2023/01/09
- * @version 1.0.0
  * @description 结果
  */
 public class PluginResult {
