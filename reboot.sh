@@ -12,6 +12,8 @@ cd /usr/local/gitRepo/dasServer
 git pull
 mvn clean install
 
+cd /usr/local/gitRepo/dasServer
+
 echo $pid
 str=$"\n"
 nohup mvn spring-boot:run -pl core >./logs/mvn.log 2>&1 &
