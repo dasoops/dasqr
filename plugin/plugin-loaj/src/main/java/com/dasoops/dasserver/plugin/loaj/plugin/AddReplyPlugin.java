@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.loaj.plugin;
 
+import com.dasoops.common.entity.enums.base.DbBooleanEnum;
 import com.dasoops.dasserver.cq.CqPlugin;
 import com.dasoops.dasserver.cq.entity.annocation.MessageMapping;
 import com.dasoops.dasserver.cq.entity.dto.cq.event.message.MessageParam;
@@ -19,11 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
+ * @author DasoopsNicole@Gmail.com
+ * @version 1.0.0
  * @title AddRelayPlugin
  * @classPath com.dasoops.dasserver.plugin.loaj.plugin.AddRelayPlugin
- * @author DasoopsNicole@Gmail.com
  * @date 2022/11/11
- * @version 1.0.0
  * @description 添加回复插件
  */
 @Slf4j
@@ -45,6 +46,7 @@ public class AddReplyPlugin extends CqPlugin {
         ReplyDo replyDo = new ReplyDo();
         replyDo.setKeyword(param.getKeyword());
         replyDo.setReply(param.getReply());
+        replyDo.setEnable(DbBooleanEnum.TRUE.getDbValue());
         replyDo.setIgnoreCase(ReplyIgnoreCaseEnum.TRUE.getDbValue());
         replyDo.setIgnoreDbc(ReplyIgnoreDbcEnum.TRUE.getDbValue());
         replyDo.setMatchType(ReplyMatchTypeEnum.ALL.getDbValue());

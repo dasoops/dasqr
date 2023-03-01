@@ -24,7 +24,7 @@
 - minimum - min
 - maximum - max
 - annotation - anno
-
+ 
 #### 错误码:
 
 - 65535 - 65535: 未预料的异常
@@ -43,7 +43,7 @@
 5. ( √ ) plugin-sys-shell(暂未定实现方式,通过伪造CqTemplate?)
 6. ( o ) webManager register | reply | shell
 7. ( - ) webManager register password
-8. ( - ) webManager token续签
+8. ( - ) webManager 双token续签
 9. ( - ) plugin-style
 10. ( - ) help文档
 11. ( √ ) 看看丢人实现(撤回记录)
