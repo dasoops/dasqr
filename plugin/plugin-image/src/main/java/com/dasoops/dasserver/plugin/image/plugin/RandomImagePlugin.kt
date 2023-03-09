@@ -7,7 +7,6 @@ import com.dasoops.dasserver.cq.utils.CqCodeUtil
 import com.dasoops.dasserver.plugin.image.entity.dbo.ImageDo
 import com.dasoops.dasserver.plugin.image.service.impl.ImageSimpleSql
 import com.dasoops.minio.MinioTemplate
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 /**
@@ -28,7 +27,7 @@ class RandomImagePlugin(
 
     @MessageMapping(equal = ["randomImage", "随机取图"], type = MessageMappingTypeEnum.GROUP)
     fun randomImage(): String {
-        val idList = simpleSql.lambdaQuery().select(ImageDo::rowId).list().map { it.rowId!! }.toList()
+        val idList = simpleSql.ktQuery().select(ImageDo::rowId).list().map { it.rowId!! }.toList()
         val imagePath = imageService.buildImagePath(simpleSql.getById(idList.random()).fileName)
         return CqCodeUtil.image(imagePath)
     }
