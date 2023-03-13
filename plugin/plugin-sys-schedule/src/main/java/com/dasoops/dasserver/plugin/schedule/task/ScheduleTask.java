@@ -1,5 +1,6 @@
 package com.dasoops.dasserver.plugin.schedule.task;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.dasoops.common.exception.LogicException;
@@ -13,6 +14,7 @@ import com.dasoops.dasserver.cq.entity.dto.cq.event.message.CqPrivateMessageEven
 import com.dasoops.dasserver.cq.entity.enums.CqExceptionEnum;
 import com.dasoops.dasserver.cq.entity.enums.EventTypeEnum;
 import com.dasoops.dasserver.cq.entity.enums.PostTypeEnum;
+import com.dasoops.dasserver.cq.utils.CqCodeUtil;
 import com.dasoops.dasserver.plugin.schedule.entity.param.ShamMessageScheduleParam;
 import com.dasoops.dasserver.plugin.shammessage.ShamMessageTemplate;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +23,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
+ * @author DasoopsNicole@Gmail.com
+ * @version 1.0.0
  * @title ScheduleTask
  * @classPath com.dasoops.dasserver.plugin.schedule.task.ScheduleTask
- * @author DasoopsNicole@Gmail.com
  * @date 2023/01/20
- * @version 1.0.0
  * @description 安排任务
  */
 @Component
@@ -51,7 +53,6 @@ public class ScheduleTask {
         if (param.getOnlyOnce()) {
             cqTemplateList = cqTemplateList.subList(0, 1);
         }
-
         String message = param.getMessage();
         Long groupId = param.getGroupId();
         Long userId = param.getUserId();
@@ -67,11 +68,17 @@ public class ScheduleTask {
             event.setMessageType(EventTypeEnum.MESSAGE_PRIVATE.getKey());
         }
         event.setPostType(PostTypeEnum.MESSAGE.getKey());
-        event.setMessage(message);
         event.setRawMessage(message);
         event.setUserId(userId);
 
         cqTemplateList.forEach(cqTemplate -> {
+            String finalMessage;
+            if (param.getMessage().startsWith("@")) {
+                finalMessage = CqCodeUtil.at(cqTemplate.getSelfId()) + StrUtil.removePrefix(message, "@");
+            } else {
+                finalMessage = message;
+            }
+            event.setMessage(finalMessage);
             event.setSelfId(cqTemplate.getSelfId());
             JSONObject eventJson = JSON.parseObject(JSON.toJSONString(event));
             EventUtil.set(eventJson);
