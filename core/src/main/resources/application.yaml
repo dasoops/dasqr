@@ -8,22 +8,12 @@ spring:
     password: password
   jpa:
     show-sql: true
+    open-in-view: true
   flyway:
     enabled: true
     locations: classpath:flyway
     sql-migration-prefix: v
-mirai:
-  bot:
-    qq: 3488521150
-    password: password
-    type: byQrCode
-    protocol: android_phone
-  file:
-    device-info-path: /temp/dasqr/device.json
-    cache-path: /temp/dasqr/mirai/cache
-    workingDir: /temp/dasqr/mirai/workingDir
-  log:
-    useLog4j2: true
+    table: core_flyway_schema
 logging:
   level:
     root: info
@@ -43,3 +33,20 @@ logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss
     console: "%clr(%-5level) %clr(%d{yy-MM-dd HH:mm:ss}){cyan} %clr([%-26thread]){cyan} %clr(%-20logger{0}){yellow} : %msg%n"
+mirai:
+  bot:
+    qq: 3488521150
+    password: password
+    type: byQrCode
+    protocol: android_phone
+  file:
+    device-info-path: device.json
+    cache-path: cache
+    workingDir: .
+  log:
+    useLog4j2: true
+dasqr:
+  exception:
+    exclude-class:
+    scan-path:
+      - com.dasoops.dasqr.core

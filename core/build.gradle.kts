@@ -1,14 +1,16 @@
 dependencies {
     //mirai
     api(platform("net.mamoe:mirai-bom:2.15.0-M1"))
-    api("net.mamoe:mirai-core-api")     // 编译代码使用
+    api("net.mamoe:mirai-core-api")
     runtimeOnly("net.mamoe:mirai-core") // 运行时使用
 
     //common
     api("cn.hutool:hutool-all:5.8.18")
     api("com.google.guava:guava:31.1-jre")
-    api("com.dasoops:common-core:4.0.3")
-    api("com.dasoops:common-core-spring:4.0.3")
+    api(platform("com.dasoops:common-bom:4.0.7"))
+    api("com.dasoops:common-core")
+    api("com.dasoops:common-core-spring")
+    api("com.dasoops:common-json-spring")
 
     //kt
     implementation("org.jetbrains.kotlin:kotlin-reflect")

@@ -8,7 +8,6 @@ plugins {
     kotlin("plugin.spring") version "1.8.20"
     kotlin("plugin.serialization") version "1.8.20"
 }
-
 allprojects {
     group = "com.dasoops.dasqr"
     version = "3.0.0"
@@ -33,8 +32,8 @@ allprojects {
 
 subprojects {
     apply {
-        plugin("org.springframework.boot")
         plugin("io.spring.dependency-management")
+        plugin("org.springframework.boot")
         plugin("org.graalvm.buildtools.native")
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlin.plugin.spring")
