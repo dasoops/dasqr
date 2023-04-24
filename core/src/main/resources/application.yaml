@@ -1,9 +1,9 @@
 spring:
   profiles:
-    active: prod
+    active: dev
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: 127.0.0.1
+    url: jdbc:postgresql://127.0.0.1:5432/dasqr
     username: postgres
     password: password
   jpa:
@@ -15,9 +15,15 @@ spring:
 mirai:
   bot:
     qq: 3488521150
+    password: password
     type: byQrCode
-    device-info-path: /temp/mirai/device.json
-    cache-path: /temp/mirai/cache
+    protocol: android_phone
+  file:
+    device-info-path: /temp/dasqr/device.json
+    cache-path: /temp/dasqr/mirai/cache
+    workingDir: /temp/dasqr/mirai/workingDir
+  log:
+    useLog4j2: true
 logging:
   level:
     root: info

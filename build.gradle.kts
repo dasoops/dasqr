@@ -6,6 +6,7 @@ plugins {
     id("org.graalvm.buildtools.native") version "0.9.20"
     kotlin("jvm") version "1.8.20"
     kotlin("plugin.spring") version "1.8.20"
+    kotlin("plugin.serialization") version "1.8.20"
 }
 
 allprojects {
@@ -37,6 +38,7 @@ subprojects {
         plugin("org.graalvm.buildtools.native")
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("org.jetbrains.kotlin.plugin.serialization")
     }
 }
 
