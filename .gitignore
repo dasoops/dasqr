@@ -40,9 +40,9 @@ out/
 **/device.json
 /cache
 gradle.properties
-application.yaml
-application.yml
-application.properties
+**/application-**.yaml
+**/application-**.yml
+**/application-**.properties
 logback.xml
 logs
 *.log

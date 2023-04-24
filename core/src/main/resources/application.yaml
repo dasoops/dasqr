@@ -1,0 +1,39 @@
+spring:
+  profiles:
+    active: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: 127.0.0.1
+    username: postgres
+    password: password
+  jpa:
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:flyway
+    sql-migration-prefix: v
+mirai:
+  bot:
+    qq: 3488521150
+    type: byQrCode
+    device-info-path: /temp/mirai/device.json
+    cache-path: /temp/mirai/cache
+logging:
+  level:
+    root: info
+    net.mamoe.mirai: info
+    com.dasoops.dasqr: info
+    com.dasoops.common: info
+    com.dasoops.common.cache: info
+  file:
+    path: /temp/dasqr/logs/dasqr.log
+  register-shutdown-hook: true
+  logback:
+    rollingpolicy:
+      max-file-size: 100MB
+      max-history: 60
+      total-size-cap: 8GB
+      clean-history-on-start: true
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss
+    console: "%clr(%-5level) %clr(%d{yy-MM-dd HH:mm:ss}){cyan} %clr([%-26thread]){cyan} %clr(%-20logger{0}){yellow} : %msg%n"
