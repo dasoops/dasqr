@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: 127.0.0.1
+    username: postgres
+    password: dasoops
+  jpa:
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:flyway
+    sql-migration-prefix: v
+mirai:
+  bot:
+    qq: 3488521150
+    password: xu1627026076
+    device-info-path: /temp/mirai/device.json
+    cache-path: /temp/mirai/cache
