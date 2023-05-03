@@ -2,6 +2,7 @@ package com.dasoops.dasqr.core.runner
 
 import com.dasoops.common.json.Json
 import com.dasoops.dasqr.core.IBot
+import com.dasoops.dasqr.core.PluginLoader
 import net.mamoe.mirai.utils.LoggerAdapters
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
@@ -33,5 +34,6 @@ class InitRunner : ApplicationRunner {
         log.info("init IBot")
 
         log.info("load dasqr-exception configuration: ${Json.toJsonStr(DasqrProperties.exception)}")
+        PluginLoader
     }
 }

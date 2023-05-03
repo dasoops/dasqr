@@ -38,12 +38,6 @@ object IBot : Bot by run({
     }.apply {
         launch {
             IBot.login()
-
-            Resources.scan(this::class.java.classLoader,"com.dasoops.dasqr").filter {
-                DasqrListenerHost::class.java.isAssignableFrom(it)
-            }.map {
-                IBot.eventChannel.registerListenerHost(it.kotlin.objectInstance as ListenerHost)
-            }
         }
     }
 })

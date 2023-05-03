@@ -45,13 +45,6 @@ tasks.named("compileKotlin") {
     inputs.files(tasks.named("processResources"))
 }
 tasks.named<BootJar>("bootJar") {
-    manifest {
-        attributes["Launcher-Agent-Class"] = "com.dasoops.dasqr.core.Agent"
-        attributes["Agent-Class"] = "com.dasoops.dasqr.core.Agent"
-        attributes["Premain-Class"] = "com.dasoops.dasqr.core.Agent"
-    }
-
-    from("build/classes/java/main")
     this.archiveFileName.set("dasqr.jar")
 }
 
