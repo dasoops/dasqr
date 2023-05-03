@@ -1,5 +1,6 @@
 package com.dasoops.dasqr.core.exception
 
+import cn.hutool.core.exceptions.ExceptionUtil
 import org.slf4j.LoggerFactory
 import kotlin.coroutines.CoroutineContext
 
@@ -12,6 +13,6 @@ object SimpleLogExceptionHandler : ExceptionHandler {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun handleException(context: CoroutineContext, exception: Throwable) {
-        log.error("coroutineContext handle exception: ", exception)
+        log.error("coroutine exception handler catch exception: ${ExceptionUtil.getRootCause(exception)}")
     }
 }

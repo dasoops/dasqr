@@ -32,7 +32,6 @@ class InitRunner : ApplicationRunner {
         IBot
         log.info("init IBot")
 
-
-        log.info("load dasqr-exception  configuration: ${Json.toJsonStr(DasqrProperties.exception)}")
+        log.info("load dasqr-exception configuration: ${Json.toJsonStr(DasqrProperties.exception)}")
     }
 }

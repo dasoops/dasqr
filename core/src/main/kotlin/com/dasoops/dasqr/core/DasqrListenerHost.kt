@@ -12,7 +12,7 @@ import kotlin.coroutines.CoroutineContext
  * @date 2023-04-24
  */
 @IgnoreResourcesScan
-abstract class ExceptionHandlerListenerHost : SimpleListenerHost() {
+abstract class DasqrListenerHost : SimpleListenerHost() {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun handleException(context: CoroutineContext, exception: Throwable) {

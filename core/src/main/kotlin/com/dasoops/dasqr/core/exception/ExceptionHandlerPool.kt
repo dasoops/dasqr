@@ -21,13 +21,13 @@ object ExceptionHandlerPool {
     init {
         val exceptionProperties = DasqrProperties.exception
         if (exceptionProperties.scanPathList != null) {
-            Resources.scan(*exceptionProperties.scanPathList.toTypedArray()).filter {
-                //是object
-                it.kotlin.objectInstance != null
-                        //不在排除类中
-                        && DasqrProperties.exception.excludeClass?.contains(it.javaClass.name) != true
+            Resources.scan(ExceptionHandler::class.java.classLoader, *exceptionProperties.scanPathList.toTypedArray()).filter {
+                !it.isAnonymousClass && !it.isInterface && !it.isMemberClass &&
+                        ExceptionHandler::class.java.isAssignableFrom(it) &&
+                        exceptionProperties.excludeClass?.contains(it.javaClass.name) != true
             }.forEach { clazz ->
                 handleSet.add(clazz.kotlin.objectInstance as ExceptionHandler)
+                log.debug("load exception handler: ${clazz.name}")
             }
         } else {
             log.error("exceptionHandler scan path list is null")
@@ -39,10 +39,17 @@ object ExceptionHandlerPool {
             it.handleException(context, exception)
         }
 
+    /**
+     * 注册异常处理器
+     * @param [exceptionHandler]
+     */
     fun register(exceptionHandler: ExceptionHandler) =
         handleSet.add(exceptionHandler)
 
-
+    /**
+     * 移除异常处理器
+     * @param [clazz]
+     */
     fun <T : ExceptionHandler> remove(clazz: Class<T>) =
         handleSet.removeIf { it.javaClass == clazz }
 

@@ -6,9 +6,6 @@ spring:
     url: jdbc:postgresql://127.0.0.1:5432/dasqr
     username: postgres
     password: password
-  jpa:
-    show-sql: true
-    open-in-view: true
   flyway:
     enabled: true
     locations: classpath:flyway

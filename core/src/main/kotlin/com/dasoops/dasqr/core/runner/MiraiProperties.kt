@@ -1,7 +1,6 @@
 package com.dasoops.dasqr.core.runner
 
 import cn.hutool.extra.spring.SpringUtil
-import kotlinx.serialization.Serializable
 import net.mamoe.mirai.utils.BotConfiguration
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.properties.ConfigurationProperties
@@ -12,7 +11,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-@Serializable
+
 object MiraiProperties {
     const val PREFIX = "mirai"
     val bot: BotProperties = SpringUtil.getBean(BotProperties::class.java)
@@ -26,7 +25,6 @@ object MiraiProperties {
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-@Serializable
 @ConfigurationProperties(prefix = "${MiraiProperties.PREFIX}.${LogProperties.PREFIX}")
 class LogProperties @ConstructorBinding constructor(
     /**
@@ -45,7 +43,6 @@ class LogProperties @ConstructorBinding constructor(
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-@Serializable
 @ConfigurationProperties(prefix = "${MiraiProperties.PREFIX}.${BotProperties.PREFIX}")
 class BotProperties @ConstructorBinding constructor(
     /**
@@ -82,7 +79,6 @@ class BotProperties @ConstructorBinding constructor(
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-@Serializable
 enum class MiraiLoginType {
     //扫码
     BY_QR_CODE,
@@ -97,7 +93,6 @@ enum class MiraiLoginType {
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-@Serializable
 @ConfigurationProperties(prefix = "${MiraiProperties.PREFIX}.${FileProperties.PREFIX}")
 class FileProperties @ConstructorBinding constructor(
     /**

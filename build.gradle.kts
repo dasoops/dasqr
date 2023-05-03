@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "3.0.5"
     id("io.spring.dependency-management") version "1.1.0"
-    id("org.graalvm.buildtools.native") version "0.9.20"
     kotlin("jvm") version "1.8.20"
     kotlin("plugin.spring") version "1.8.20"
     kotlin("plugin.serialization") version "1.8.20"
@@ -34,16 +33,15 @@ subprojects {
     apply {
         plugin("io.spring.dependency-management")
         plugin("org.springframework.boot")
-        plugin("org.graalvm.buildtools.native")
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlin.plugin.spring")
         plugin("org.jetbrains.kotlin.plugin.serialization")
     }
-}
 
-java.sourceCompatibility = JavaVersion.VERSION_17
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
+
+    java.sourceCompatibility = JavaVersion.VERSION_17
+    configurations {
+        compileOnly {
+            extendsFrom(configurations.annotationProcessor.get())
+        }
+    }}
