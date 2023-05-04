@@ -20,13 +20,14 @@ dependencies {
 
     //db
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.flywaydb:flyway-core:9.16.3")
 
     //spring
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-loader")
+
 
     //schedule task
     implementation("org.springframework.boot:spring-boot-starter-quartz")
@@ -46,6 +47,8 @@ tasks.named("compileKotlin") {
 }
 tasks.named<BootJar>("bootJar") {
     this.archiveFileName.set("dasqr.jar")
+    //--add-opens java.base/java.net=ALL-UNNAMED
+    manifest.attributes("Add-Opens" to "java.base/java.net")
 }
 
 tasks {

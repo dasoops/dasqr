@@ -4,6 +4,7 @@ import cn.hutool.extra.spring.SpringUtil
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.bind.ConstructorBinding
+import java.io.File
 
 /**
  * Dasqr配置项
@@ -13,6 +14,34 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding
 object DasqrProperties {
     const val PREFIX = "dasqr"
     val exception: ExceptionProperties = SpringUtil.getBean(ExceptionProperties::class.java)
+    val plugin: PluginProperties = SpringUtil.getBean(PluginProperties::class.java)
+}
+
+/**
+ * miraiLog配置项
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023-04-24
+ */
+@ConfigurationProperties(prefix = "${DasqrProperties.PREFIX}.${PluginProperties.PREFIX}")
+class PluginProperties//为空代表没输入,给默认值
+//排除没有默认值
+@ConstructorBinding constructor(
+    @Value("\${scan-path}")
+    pluginPath: String?,
+) {
+    /**
+     * 扫描路径
+     */
+    val path: String
+
+    init {
+        //为空代表没输入,给默认值
+        this@PluginProperties.path = pluginPath ?: (System.getProperty("user.dir") + File.separator + "plugin")
+    }
+
+    companion object {
+        const val PREFIX = "plugin"
+    }
 }
 
 /**

@@ -29,11 +29,14 @@ class InitRunner : ApplicationRunner {
         log.info("load mirai-bot  configuration: ${Json.toJsonStr(MiraiProperties.bot)}")
         log.info("load mirai-file configuration: ${Json.toJsonStr(MiraiProperties.file)}")
 
+        log.info("load dasqr-plugin configuration: ${Json.toJsonStr(DasqrProperties.plugin)}")
+        PluginLoader.load()
+
+
         //调用一下来初始化bot
         IBot
         log.info("init IBot")
 
         log.info("load dasqr-exception configuration: ${Json.toJsonStr(DasqrProperties.exception)}")
-        PluginLoader
     }
 }

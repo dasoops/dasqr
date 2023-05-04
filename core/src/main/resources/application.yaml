@@ -1,3 +1,4 @@
+
 spring:
   profiles:
     active: dev
@@ -47,3 +48,5 @@ dasqr:
     exclude-class:
     scan-path:
       - com.dasoops.dasqr.core
+  plugin:
+    path: ./plugin
