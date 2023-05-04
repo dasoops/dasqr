@@ -18,16 +18,15 @@ object ExceptionHandlerPool {
 
     private val log = LoggerFactory.getLogger(javaClass)
 
-    init {
+    fun load(){
         val exceptionProperties = DasqrProperties.exception
         if (exceptionProperties.scanPathList != null) {
             Resources.scan(ExceptionHandler::class.java.classLoader, *exceptionProperties.scanPathList.toTypedArray()).filter {
-                !it.isAnonymousClass && !it.isInterface && !it.isMemberClass &&
                         ExceptionHandler::class.java.isAssignableFrom(it) &&
                         exceptionProperties.excludeClass?.contains(it.javaClass.name) != true
             }.forEach { clazz ->
                 handleSet.add(clazz.kotlin.objectInstance as ExceptionHandler)
-                log.debug("load exception handler: ${clazz.name}")
+                log.info("load exception handler: ${clazz.name}")
             }
         } else {
             log.error("exceptionHandler scan path list is null")
@@ -52,5 +51,4 @@ object ExceptionHandlerPool {
      */
     fun <T : ExceptionHandler> remove(clazz: Class<T>) =
         handleSet.removeIf { it.javaClass == clazz }
-
 }

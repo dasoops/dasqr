@@ -28,15 +28,31 @@ class PluginProperties//为空代表没输入,给默认值
 @ConstructorBinding constructor(
     @Value("\${scan-path}")
     pluginPath: String?,
+    @Value("\${load}")
+    load: Boolean?,
+    @Value("\${scan-path}")
+    scanPath: List<String>?,
 ) {
     /**
      * 扫描路径
      */
     val path: String
 
+    /**
+     * 扫描路径
+     */
+    val load: Boolean
+
+    /**
+     * 扫描路径
+     */
+    val scanPathList: List<String>?
+
     init {
         //为空代表没输入,给默认值
         this@PluginProperties.path = pluginPath ?: (System.getProperty("user.dir") + File.separator + "plugin")
+        this@PluginProperties.load = load ?: true
+        this@PluginProperties.scanPathList = scanPath ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin").ifEmpty { null }
     }
 
     companion object {
@@ -54,7 +70,8 @@ class ExceptionProperties//为空代表没输入,给默认值
 //排除没有默认值
 @ConstructorBinding constructor(
     @Value("\${scan-path}")
-    scanPath: List<String>?, @Value("\${exclude-class}")
+    scanPath: List<String>?,
+    @Value("\${exclude-class}")
     excludeClass: List<String>?
 ) {
     /**
@@ -68,11 +85,7 @@ class ExceptionProperties//为空代表没输入,给默认值
     val excludeClass: List<String>?
 
     init {
-        this@ExceptionProperties.scanPathList = kotlin.run {
-            //为空代表没输入,给默认值
-            scanPath ?: return@run listOf("com.dasoops.dasqr.core")
-            scanPath.ifEmpty { null }
-        }
+        this@ExceptionProperties.scanPathList = scanPath ?: listOf("com.dasoops.dasqr.core").ifEmpty { null }
         this@ExceptionProperties.excludeClass = excludeClass?.ifEmpty { null }
     }
 

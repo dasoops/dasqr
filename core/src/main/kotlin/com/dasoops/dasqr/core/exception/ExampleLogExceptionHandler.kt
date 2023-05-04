@@ -9,7 +9,7 @@ import kotlin.coroutines.CoroutineContext
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-object SimpleLogExceptionHandler : ExceptionHandler {
+object ExampleLogExceptionHandler : ExceptionHandler {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun handleException(context: CoroutineContext, exception: Throwable) {

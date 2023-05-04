@@ -2,6 +2,7 @@ package com.dasoops.dasqr.core
 
 import net.mamoe.mirai.event.Event
 import net.mamoe.mirai.event.EventHandler
+import net.mamoe.mirai.event.events.MessageEvent
 import org.slf4j.LoggerFactory
 
 /**
@@ -14,6 +15,8 @@ object ExampleListenerHost : DasqrListenerHost() {
 
     @EventHandler
     fun throwException(event: Event) {
-        log.info("ExampleListenerHost")
+        if (event is MessageEvent) {
+            throw RuntimeException("test")
+        }
     }
 }

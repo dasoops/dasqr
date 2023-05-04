@@ -1,24 +1,25 @@
 package com.dasoops.dasqr.core
 
-import com.dasoops.common.db.BaseMybatisPlusConfiguration
+import com.dasoops.common.db.ktorm.BaseKtormConfiguration
 import kotlinx.coroutines.runBlocking
+import org.ktorm.database.Database
+import org.ktorm.support.postgresql.PostgreSqlDialect
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.context.annotation.Configuration
 import java.util.*
+import javax.sql.DataSource
 
-@SpringBootApplication(scanBasePackages = ["com.dasoops.dasqr.core"])
+@SpringBootApplication(scanBasePackages = ["com"])
 @ConfigurationPropertiesScan("com.dasoops.dasqr.core.runner")
 class CoreApplication {
-
     @Configuration
-    open class MybatisPlusConfiguration : BaseMybatisPlusConfiguration() {
+    class KtormConfiguration : BaseKtormConfiguration(PostgreSqlDialect()) {
         override fun getUserId(): Long {
-            return 1L
+            return 0L
         }
     }
-
 }
 
 fun main(args: Array<String>): Unit = runBlocking {

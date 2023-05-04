@@ -1,13 +1,11 @@
 package com.dasoops.dasqr.core
 
-import com.dasoops.common.core.util.resources.Resources
 import com.dasoops.dasqr.core.runner.MiraiLoginType
 import com.dasoops.dasqr.core.runner.MiraiProperties
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.BotFactory
 import net.mamoe.mirai.auth.BotAuthorization
-import net.mamoe.mirai.event.ListenerHost
 import net.mamoe.mirai.utils.BotConfiguration
 import net.mamoe.mirai.utils.StandardCharImageLoginSolver
 import java.io.File
@@ -38,6 +36,10 @@ object IBot : Bot by run({
     }.apply {
         launch {
             IBot.login()
+        }
+        PluginLoader.loadList.forEach {
+            this.eventChannel.registerListenerHost(it)
+            logger.info("register dasqrListenerHost: ${it::class.java.name}")
         }
     }
 })

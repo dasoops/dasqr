@@ -2,6 +2,7 @@ rootProject.name = "dasqr"
 
 include(
     ":core",
-    ":plugin-core",
     ":plugin-test",
+    ":plugin:plugin-core",
+    ":plugin:plugin-system-exception-log",
 )

@@ -13,21 +13,25 @@ dependencies {
     api("com.dasoops:common-core")
     api("com.dasoops:common-core-spring")
     api("com.dasoops:common-json-spring")
-    api("com.dasoops:common-db-mybatis-plus-spring")
-
-    //kt
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     //db
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.flywaydb:flyway-core:9.16.3")
+    //orm
+    //api("com.dasoops:common-db-mybatis-plus-spring")
+    api("com.dasoops:common-db-ktorm-spring")
+    api("org.ktorm:ktorm-support-postgresql:3.6.0")
+    api("org.springframework:spring-jdbc")
+
+    //kt
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+
 
     //spring
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-loader")
-
 
     //schedule task
     implementation("org.springframework.boot:spring-boot-starter-quartz")
@@ -47,7 +51,6 @@ tasks.named("compileKotlin") {
 }
 tasks.named<BootJar>("bootJar") {
     this.archiveFileName.set("dasqr.jar")
-    //--add-opens java.base/java.net=ALL-UNNAMED
     manifest.attributes("Add-Opens" to "java.base/java.net")
 }
 
@@ -56,6 +59,7 @@ tasks {
         dependsOn(bootJar)
         mainClass.set("-jar")
         args(bootJar.get().outputs.files.singleFile)
+        jvmArgs("-DSpring.profiles.active=master")
         val wk = project.file("launchTest")
         workingDir(wk)
         doFirst { wk.mkdir() }
