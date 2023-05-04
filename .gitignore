@@ -46,3 +46,4 @@ gradle.properties
 logback.xml
 logs
 *.log
+**/launchTest
