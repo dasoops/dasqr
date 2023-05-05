@@ -21,7 +21,7 @@ public class MyLauncher extends JarLauncher {
 
     @Override
     protected ClassLoader createClassLoader(URL[] urls) throws Exception {
-        File file = new File("./plugin");
+        File file = new File(System.getProperty("user.dir") + "/plugin");
         if (!file.isDirectory()) {
             return super.createClassLoader(urls);
         }
@@ -43,5 +43,9 @@ public class MyLauncher extends JarLauncher {
             }
         }).filter(Objects::nonNull).toList());
         return super.createClassLoader(urlList.toArray(urls));
+    }
+
+    public static void main(String[] args) throws Exception {
+        new MyLauncher().launch(args);
     }
 }

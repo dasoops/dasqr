@@ -50,8 +50,24 @@ tasks.named("compileKotlin") {
     inputs.files(tasks.named("processResources"))
 }
 tasks.named<BootJar>("bootJar") {
-    this.archiveFileName.set("dasqr.jar")
-    manifest.attributes("Add-Opens" to "java.base/java.net")
+    archiveFileName.set("dasqr.jar")
+    //manifest.attributes("main-class" to "com.dasoops.dasqr.core.CoreApplicationKt")
+    //
+    mainClass.set("com.dasoops.dasqr.core.CoreApplicationKt")
+
+    //反射替换Launcher
+    val supportField = BootJar::class.java.getDeclaredField("support")
+    supportField.isAccessible = true
+    val support = supportField.get(this)
+    val loadMainClassField = Class.forName("org.springframework.boot.gradle.tasks.bundling.BootArchiveSupport").getDeclaredField("loaderMainClass")
+    loadMainClassField.isAccessible = true
+    loadMainClassField.set(support, "com.dasoops.dasqr.core.MyLauncher")
+    //曲线救国,他排除我再添加回去
+    from(zipTree("spring-boot-loader-3.0.5.jar"))
+    exclude("META-INF/LICENSE.txt", "META-INF/NOTICE.txt")
+
+    //添加MyLauncher
+    from("build/classes/java/main")
 }
 
 tasks {
