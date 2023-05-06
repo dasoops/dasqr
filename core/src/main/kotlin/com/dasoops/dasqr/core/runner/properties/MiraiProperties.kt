@@ -1,4 +1,4 @@
-package com.dasoops.dasqr.core.runner
+package com.dasoops.dasqr.core.runner.properties
 
 import cn.hutool.extra.spring.SpringUtil
 import net.mamoe.mirai.utils.BotConfiguration

@@ -1,17 +1,8 @@
 package com.dasoops.dasqr.core
 
-import cn.hutool.core.io.FileUtil
-import cn.hutool.core.util.ClassUtil
-import cn.hutool.core.util.ReflectUtil
-import cn.hutool.extra.spring.SpringUtil
 import com.dasoops.common.core.util.resources.Resources
-import com.dasoops.dasqr.core.runner.DasqrProperties
+import com.dasoops.dasqr.core.runner.properties.DasqrProperties
 import org.slf4j.LoggerFactory
-import org.springframework.boot.loader.LaunchedURLClassLoader
-import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext
-import java.io.File
-import java.net.URL
-import java.net.URLClassLoader
 
 /**
  * 插件加载程序
@@ -25,20 +16,21 @@ object PluginLoader {
     val loadList = mutableSetOf<DasqrListenerHost>()
 
     fun load() {
-        loadJar()
+        //loadJar()
         loadPlugin()
     }
 
+    @Deprecated("使用MyLauncher方案")
     fun loadJar() {
         //hutool还真是...什么都有...
         /*JarClassLoader.loadJar(
             this::class.java.classLoader as LaunchedURLClassLoader,
             File(DasqrProperties.plugin.path)
         )*/
-        if (!DasqrProperties.plugin.load) {
+        /*if (!DasqrProperties.plugin.load) {
             log.warn("unload plugin jar, if not in development please check your configuration yaml")
             return
-        }
+        }*/
 
         ////打个日志,不用hutool包装的
         //val addUrl = ClassUtil.getDeclaredMethod(URLClassLoader::class.java, "addURL", URL::class.java)

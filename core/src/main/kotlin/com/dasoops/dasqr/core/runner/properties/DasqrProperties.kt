@@ -1,4 +1,4 @@
-package com.dasoops.dasqr.core.runner
+package com.dasoops.dasqr.core.runner.properties
 
 import cn.hutool.extra.spring.SpringUtil
 import org.springframework.beans.factory.annotation.Value
@@ -27,21 +27,8 @@ class PluginProperties//为空代表没输入,给默认值
 //排除没有默认值
 @ConstructorBinding constructor(
     @Value("\${scan-path}")
-    pluginPath: String?,
-    @Value("\${load}")
-    load: Boolean?,
-    @Value("\${scan-path}")
     scanPath: List<String>?,
 ) {
-    /**
-     * 扫描路径
-     */
-    val path: String
-
-    /**
-     * 扫描路径
-     */
-    val load: Boolean
 
     /**
      * 扫描路径
@@ -49,9 +36,6 @@ class PluginProperties//为空代表没输入,给默认值
     val scanPathList: List<String>?
 
     init {
-        //为空代表没输入,给默认值
-        this@PluginProperties.path = pluginPath ?: (System.getProperty("user.dir") + File.separator + "plugin")
-        this@PluginProperties.load = load ?: true
         this@PluginProperties.scanPathList = scanPath ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin").ifEmpty { null }
     }
 

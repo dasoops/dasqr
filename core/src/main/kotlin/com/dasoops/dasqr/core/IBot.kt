@@ -1,7 +1,7 @@
 package com.dasoops.dasqr.core
 
-import com.dasoops.dasqr.core.runner.MiraiLoginType
-import com.dasoops.dasqr.core.runner.MiraiProperties
+import com.dasoops.dasqr.core.runner.properties.MiraiLoginType
+import com.dasoops.dasqr.core.runner.properties.MiraiProperties
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.BotFactory

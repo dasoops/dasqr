@@ -4,6 +4,8 @@ import com.dasoops.common.json.Json
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.PluginLoader
 import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
+import com.dasoops.dasqr.core.runner.properties.DasqrProperties
+import com.dasoops.dasqr.core.runner.properties.MiraiProperties
 import net.mamoe.mirai.utils.LoggerAdapters
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments

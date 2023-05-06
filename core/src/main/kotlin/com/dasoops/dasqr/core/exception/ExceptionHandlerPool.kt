@@ -1,7 +1,7 @@
 package com.dasoops.dasqr.core.exception
 
 import com.dasoops.common.core.util.resources.Resources
-import com.dasoops.dasqr.core.runner.DasqrProperties
+import com.dasoops.dasqr.core.runner.properties.DasqrProperties
 import org.slf4j.LoggerFactory
 import kotlin.coroutines.CoroutineContext
 

@@ -51,8 +51,6 @@ tasks.named("compileKotlin") {
 }
 tasks.named<BootJar>("bootJar") {
     archiveFileName.set("dasqr.jar")
-    //manifest.attributes("main-class" to "com.dasoops.dasqr.core.CoreApplicationKt")
-    //
     mainClass.set("com.dasoops.dasqr.core.CoreApplicationKt")
 
     //反射替换Launcher
