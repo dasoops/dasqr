@@ -1,4 +1,4 @@
-package com.dasoops.dasqr.plugin.log.exception
+package com.dasoops.dasqr.plugin.config
 
 import com.dasoops.common.db.ktorm.BaseDao
 import org.ktorm.dsl.eq
@@ -20,7 +20,7 @@ class ConfigDao : BaseDao<Config, Configs>(Configs) {
             this.value = "aoe"
         })
         this.findOne {
-            it.keyword eq "aoe"
+            Configs.keyword eq "aoe"
         }
     }
 

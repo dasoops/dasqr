@@ -1,4 +1,4 @@
-package com.dasoops.dasqr.plugin.log.exception
+package com.dasoops.dasqr.plugin.config
 
 import com.dasoops.common.core.IExceptionEnum
 import com.dasoops.common.core.exception.ProjectExceptionEntity

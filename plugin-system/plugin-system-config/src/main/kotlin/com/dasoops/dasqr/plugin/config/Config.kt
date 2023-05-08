@@ -1,4 +1,4 @@
-package com.dasoops.dasqr.plugin.log.exception
+package com.dasoops.dasqr.plugin.config
 
 import com.dasoops.common.db.ktorm.DasEntity
 import com.dasoops.common.db.ktorm.DasTable
