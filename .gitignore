@@ -47,3 +47,4 @@ logback.xml
 logs
 *.log
 **/launchTest
+config.json

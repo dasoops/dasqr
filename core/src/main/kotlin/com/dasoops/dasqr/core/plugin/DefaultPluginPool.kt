@@ -21,7 +21,7 @@ object DefaultPluginPool : PluginPool {
 
 
     override fun init(pluginConfig: PluginProperties) {
-        val scanPathList = pluginConfig.scanPathList
+        val scanPathList = pluginConfig.scanPath
         Resources.scan(*scanPathList.toTypedArray()).filter {
             DasqrListenerHost::class.java.isAssignableFrom(it)
         }.forEach {

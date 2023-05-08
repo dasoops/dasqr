@@ -45,12 +45,12 @@ class InitRunner : ApplicationRunner {
 
         //加载插件
         log.debug("scan plugin")
-        val pluginPool = Finder.get<PluginPool>(config.dasqr.plugin.scanPathList)
+        val pluginPool = Finder.get<PluginPool>(config.dasqr.plugin.scanPath)
         pluginPool.init(config.dasqr.plugin)
 
         //加载异常处理
         log.debug("scan exception")
-        val exceptionHandler = Finder.get<ExceptionHandlerPool>(config.dasqr.plugin.scanPathList)
+        val exceptionHandler = Finder.get<ExceptionHandlerPool>(config.dasqr.plugin.scanPath)
         exceptionHandler.init(config.dasqr.exception)
     }
 }

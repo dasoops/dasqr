@@ -21,7 +21,7 @@ object DefaultExceptionHandlerPool : ExceptionHandlerPool {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun init(config: ExceptionProperties) {
-        Resources.scan(ExceptionHandler::class.java.classLoader, *config.scanPathList.toTypedArray()).filter {
+        Resources.scan(ExceptionHandler::class.java.classLoader, *config.scanPath.toTypedArray()).filter {
             ExceptionHandler::class.java.isAssignableFrom(it) &&
                     config.excludeClass?.contains(it.javaClass.name) != true
         }.forEach { clazz ->

@@ -1,16 +1,14 @@
 package com.dasoops.dasqr.core.config
 
-import cn.hutool.extra.spring.SpringUtil
-
 /**
  * Dasqr配置项
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-class DasqrProperties {
-    val exception: ExceptionProperties = SpringUtil.getBean(ExceptionProperties::class.java)
-    val plugin: PluginProperties = SpringUtil.getBean(PluginProperties::class.java)
-}
+class DasqrProperties(
+    val exception: ExceptionProperties,
+    val plugin: PluginProperties,
+)
 
 /**
  * miraiLog配置项
@@ -24,10 +22,10 @@ class PluginProperties(
     /**
      * 扫描路径
      */
-    val scanPathList: List<String>
+    val scanPath: List<String>
 
     init {
-        this@PluginProperties.scanPathList = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin")
+        this@PluginProperties.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin")
     }
 }
 
@@ -43,7 +41,7 @@ class ExceptionProperties(
     /**
      * 扫描路径
      */
-    val scanPathList: List<String>
+    val scanPath: List<String>
 
     /**
      * 排除类
@@ -51,7 +49,7 @@ class ExceptionProperties(
     val excludeClass: List<String>?
 
     init {
-        this@ExceptionProperties.scanPathList = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core")
+        this@ExceptionProperties.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core")
         this@ExceptionProperties.excludeClass = excludeClass?.ifEmpty { null }
     }
 }

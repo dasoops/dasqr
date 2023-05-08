@@ -1,10 +1,8 @@
 package com.dasoops.dasqr.core.config
 
-import cn.hutool.extra.spring.SpringUtil
+import com.dasoops.dasqr.core.runner.InitException
+import com.dasoops.dasqr.core.runner.InitExceptionEntity
 import net.mamoe.mirai.utils.BotConfiguration
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.context.properties.bind.ConstructorBinding
 
 /**
  * miraiBot配置项
@@ -12,11 +10,11 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding
  * @date 2023-04-24
  */
 
-class MiraiProperties {
-    val bot: BotProperties = SpringUtil.getBean(BotProperties::class.java)
-    val file: FileProperties = SpringUtil.getBean(FileProperties::class.java)
-    val log: LogProperties = SpringUtil.getBean(LogProperties::class.java)
-}
+class MiraiProperties(
+    val bot: BotProperties,
+    val file: FileProperties,
+    val log: LogProperties,
+)
 
 /**
  * miraiLog配置项
@@ -28,11 +26,7 @@ class LogProperties(
      * 是否使用log4j2接管mirai日志系统
      */
     val useLog4j2: Boolean
-) {
-    companion object {
-        const val PREFIX = "log"
-    }
-}
+)
 
 /**
  * miraiBot配置项
@@ -40,26 +34,56 @@ class LogProperties(
  * @date 2023-04-24
  */
 class BotProperties(
+    qq: Long,
+    password: String,
+    type: String,
+    protocol: String,
+) {
+
     /**
      * qq号
      */
-    val qq: Long,
+    val qq: Long
 
     /**
      * 密码
      */
-    val password: String,
+    val password: String
 
     /**
      * 类型
      */
-    val type: MiraiLoginType,
+    val type: MiraiLoginType
 
     /**
      * 协议
      */
-    val protocol: BotConfiguration.MiraiProtocol,
-)
+    val protocol: BotConfiguration.MiraiProtocol
+
+    init {
+        this.qq = qq
+        this.password = password
+        this.type = when (type) {
+            "password" -> MiraiLoginType.PASSWORD
+            "byQrCode" -> MiraiLoginType.BY_QR_CODE
+            else -> throw InitExceptionEntity(
+                InitException.UNDEFINED_LOGIN_TYPE,
+                "${InitException.UNDEFINED_LOGIN_TYPE.message} -> $protocol"
+            )
+        }
+        this.protocol = when (protocol) {
+            "android_phone" -> BotConfiguration.MiraiProtocol.ANDROID_PHONE
+            "android_pad" -> BotConfiguration.MiraiProtocol.ANDROID_PAD
+            "android_watch" -> BotConfiguration.MiraiProtocol.ANDROID_WATCH
+            "ipad" -> BotConfiguration.MiraiProtocol.IPAD
+            "macos" -> BotConfiguration.MiraiProtocol.MACOS
+            else -> throw InitExceptionEntity(
+                InitException.UNDEFINED_PROTOCOL,
+                "${InitException.UNDEFINED_PROTOCOL.message} -> $protocol"
+            )
+        }
+    }
+}
 
 /**
  * mirai登录类型

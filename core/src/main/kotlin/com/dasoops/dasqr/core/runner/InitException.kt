@@ -14,6 +14,8 @@ enum class InitException(override val message: String) : IExceptionEnum {
     MUST_OBJECT_INSTANCE("类必须为kotlin object对象"),
     FIND_MULTI_CLASS("扫描到多个加载类"),
     NO_FIND_CLASS("未找到加载类"),
+    UNDEFINED_LOGIN_TYPE("未定义的登录类型"),
+    UNDEFINED_PROTOCOL("未定义的mirai协议"),
 
     ;
 
