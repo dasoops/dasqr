@@ -1,7 +1,6 @@
 package com.dasoops.dasqr.core.config
 
 import cn.hutool.core.io.FileUtil
-import cn.hutool.setting.yaml.YamlUtil
 import com.dasoops.common.core.util.resources.IgnoreResourcesScan
 import com.dasoops.common.json.Json
 import com.dasoops.dasqr.core.DefaultImpl
@@ -17,7 +16,7 @@ object DefaultConfig : Config {
     override lateinit var dasqr: DasqrProperties
 
     override fun init() {
-        val loadByPath = YamlUtil.loadByPath(System.getProperty("user.dir") + "/config.yaml", ConfigImpl::class.java)
+        val loadByPath = Json.parse(FileUtil.file(System.getProperty("user.dir") + "/config.json").readText(), ConfigImpl::class.java)
         mirai = loadByPath.mirai
         dasqr = loadByPath.dasqr
     }
