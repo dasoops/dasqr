@@ -1,7 +1,8 @@
 package com.dasoops.dasqr.core
 
-import com.dasoops.dasqr.core.runner.properties.MiraiLoginType
-import com.dasoops.dasqr.core.runner.properties.MiraiProperties
+import com.dasoops.dasqr.core.config.Config
+import com.dasoops.dasqr.core.config.MiraiLoginType
+import com.dasoops.dasqr.core.config.MiraiProperties
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.BotFactory
@@ -16,10 +17,10 @@ import java.io.File
  * @date 2023-04-24
  */
 object IBot : Bot by run({
-    val botProperties = MiraiProperties.bot
+    val botProperties = Config.INSTANCE.mirai.bot
     //bot配置项
     val botConfiguration = BotConfiguration {
-        val fileProperties = MiraiProperties.file
+        val fileProperties = Config.INSTANCE.mirai.file
         protocol = botProperties.protocol
         cacheDir = File(fileProperties.cachePath)
         workingDir = File(fileProperties.workingDir)
@@ -36,10 +37,6 @@ object IBot : Bot by run({
     }.apply {
         launch {
             IBot.login()
-        }
-        PluginLoader.loadList.forEach {
-            this.eventChannel.registerListenerHost(it)
-            logger.info("register dasqrListenerHost: ${it::class.java.name}")
         }
     }
 })

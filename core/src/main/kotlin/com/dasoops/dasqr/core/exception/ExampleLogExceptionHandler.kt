@@ -1,8 +1,8 @@
 package com.dasoops.dasqr.core.exception
 
 import cn.hutool.core.exceptions.ExceptionUtil
+import com.dasoops.dasqr.core.config.ExceptionProperties
 import org.slf4j.LoggerFactory
-import kotlin.coroutines.CoroutineContext
 
 /**
  * 简单打个日志的异常处理程序
@@ -12,7 +12,7 @@ import kotlin.coroutines.CoroutineContext
 object ExampleLogExceptionHandler : ExceptionHandler {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    override fun handleException(context: CoroutineContext, exception: Throwable) {
+    override fun handle(exception: Throwable) {
         log.error("coroutine exception handler catch exception: ${ExceptionUtil.getRootCause(exception)}")
     }
 }

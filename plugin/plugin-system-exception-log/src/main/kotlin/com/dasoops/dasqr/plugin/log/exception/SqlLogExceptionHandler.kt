@@ -13,9 +13,8 @@ import kotlin.coroutines.CoroutineContext
 object SqlLogExceptionHandler : ExceptionHandler {
     val dao: ExceptionLogDao = SpringUtil.getBean(ExceptionLogDao::class.java)
 
-    override fun handleException(context: CoroutineContext, exception: Throwable) {
+    override fun handle(exception: Throwable) {
         val rootCause = ExceptionUtil.getRootCause(exception)
-
         dao.add(
             ExceptionLog {
                 stackInfo = exception.stackTraceToString()

@@ -46,11 +46,11 @@ mirai:
 dasqr:
   exception:
     exclude-class:
+      - com.dasoops.dasqr.core.templateExcludeClass
     scan-path:
       - com.dasoops.dasqr.core
   plugin:
     path: ./plugin
-    load: true
     scan-path:
       - com.dasoops.dasqr.core
       - com.dasoops.dasqr.plugin

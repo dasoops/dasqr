@@ -1,11 +1,11 @@
 package com.dasoops.dasqr.core.runner
 
 import com.dasoops.common.json.Json
+import com.dasoops.dasqr.core.Finder
 import com.dasoops.dasqr.core.IBot
-import com.dasoops.dasqr.core.PluginLoader
+import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
-import com.dasoops.dasqr.core.runner.properties.DasqrProperties
-import com.dasoops.dasqr.core.runner.properties.MiraiProperties
+import com.dasoops.dasqr.core.plugin.PluginPool
 import net.mamoe.mirai.utils.LoggerAdapters
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
@@ -22,25 +22,35 @@ class InitRunner : ApplicationRunner {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun run(args: ApplicationArguments) {
-        log.info("load mirai-log configuration: ${Json.toJsonStr(MiraiProperties.log)}")
-        if (MiraiProperties.log.useLog4j2) {
+        //初始化配置项
+        val config = Finder.get<Config>(listOf("com.dasoops.dasqr"))
+        config.init()
+        Config.INSTANCE = config
+        log.info(
+            """
+            load config for : ${System.getProperty("user.dir")}/config.yaml
+            ${Json.toJsonStr(config)}
+        """.trimIndent()
+        )
+
+        //初始化日志
+        if (config.mirai.log.useLog4j2) {
             LoggerAdapters.useLog4j2()
             log.info("useLog4j2")
         }
 
-        log.info("load mirai-bot  configuration: ${Json.toJsonStr(MiraiProperties.bot)}")
-        log.info("load mirai-file configuration: ${Json.toJsonStr(MiraiProperties.file)}")
-
-        //加载插件
-        log.info("load dasqr-plugin configuration: ${Json.toJsonStr(DasqrProperties.plugin)}")
-        PluginLoader.load()
-
-        //加载异常处理
-        log.info("load dasqr-exception configuration: ${Json.toJsonStr(DasqrProperties.exception)}")
-        ExceptionHandlerPool.load()
-
         //加载bot
         IBot
         log.info("init IBot")
+
+        //加载插件
+        log.debug("scan plugin")
+        val pluginPool = Finder.get<PluginPool>(config.dasqr.plugin.scanPathList)
+        pluginPool.init(config.dasqr.plugin)
+
+        //加载异常处理
+        log.debug("scan exception")
+        val exceptionHandler = Finder.get<ExceptionHandlerPool>(config.dasqr.plugin.scanPathList)
+        exceptionHandler.init(config.dasqr.exception)
     }
 }

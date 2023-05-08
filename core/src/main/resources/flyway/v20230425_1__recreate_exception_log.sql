@@ -26,3 +26,5 @@ COMMENT ON COLUMN "core_exception_log"."create_time" IS '创建时间';
 COMMENT ON COLUMN "core_exception_log"."create_user" IS '创建用户';
 COMMENT ON COLUMN "core_exception_log"."update_time" IS '更新时间';
 COMMENT ON COLUMN "core_exception_log"."update_user" IS '更新用户';
+
+COMMIT;

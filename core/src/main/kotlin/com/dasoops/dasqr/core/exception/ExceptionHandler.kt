@@ -1,7 +1,6 @@
 package com.dasoops.dasqr.core.exception
 
 import com.dasoops.common.core.util.resources.IgnoreResourcesScan
-import kotlin.coroutines.CoroutineContext
 
 /**
  * 自定义异常处理程序
@@ -15,5 +14,5 @@ interface ExceptionHandler {
      * @param [context] 协程上下文
      * @param [exception] 异常
      */
-    fun handleException(context: CoroutineContext, exception: Throwable)
+    fun handle(exception: Throwable)
 }

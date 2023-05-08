@@ -1,7 +1,7 @@
 package com.dasoops.dasqr.core
 
-import net.mamoe.mirai.event.Event
 import net.mamoe.mirai.event.EventHandler
+import net.mamoe.mirai.event.EventPriority
 import net.mamoe.mirai.event.events.MessageEvent
 import org.slf4j.LoggerFactory
 
@@ -13,10 +13,8 @@ import org.slf4j.LoggerFactory
 object ExampleListenerHost : DasqrListenerHost() {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @EventHandler
-    fun throwException(event: Event) {
-        if (event is MessageEvent) {
-            throw RuntimeException("test")
-        }
+    @EventHandler(EventPriority.HIGHEST)
+    fun log(event: MessageEvent) {
+        log.info("onMessage: " + event.message.toString())
     }
 }
