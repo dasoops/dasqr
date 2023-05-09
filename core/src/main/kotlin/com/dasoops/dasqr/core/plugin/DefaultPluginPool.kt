@@ -26,6 +26,7 @@ object DefaultPluginPool : PluginPool {
             DasqrListenerHost::class.java.isAssignableFrom(it)
         }.forEach {
             IBot.eventChannel.registerListenerHost(it.kotlin.objectInstance as DasqrListenerHost)
+            log.info("load listener host: ${it.name}")
         }
     }
 }

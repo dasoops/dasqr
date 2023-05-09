@@ -1,6 +1,7 @@
 package com.dasoops.dasqr.core.runner
 
 import com.dasoops.common.json.Json
+import com.dasoops.common.json.toJsonStr
 import com.dasoops.dasqr.core.Finder
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.config.Config
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Component
+import java.io.File
 
 /**
  * 初始化
@@ -23,15 +25,10 @@ class InitRunner : ApplicationRunner {
 
     override fun run(args: ApplicationArguments) {
         //初始化配置项
+        log.info("init config")
         val config = Finder.get<Config>(listOf("com.dasoops.dasqr"))
         config.init()
         Config.INSTANCE = config
-        log.info(
-            """
-            load config for : ${System.getProperty("user.dir")}/config.yaml
-            ${Json.toJsonStr(config)}
-        """.trimIndent()
-        )
 
         //初始化日志
         if (config.mirai.log.useLog4j2) {
@@ -40,8 +37,8 @@ class InitRunner : ApplicationRunner {
         }
 
         //加载bot
-        IBot
         log.info("init IBot")
+        IBot
 
         //加载插件
         log.debug("scan plugin")

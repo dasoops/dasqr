@@ -9,24 +9,23 @@ dependencies {
     //common
     api("cn.hutool:hutool-all:5.8.18")
     api("com.google.guava:guava:31.1-jre")
-    api(platform(("com.dasoops:common-bom:4.0.15")))
+    api(platform(("com.dasoops:common-bom:4.0.22")))
     api("com.dasoops:common-core")
     api("com.dasoops:common-core-spring")
     api("com.dasoops:common-json-spring")
 
     //db
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    //implementation("org.springframework.boot:spring-boot-starter-data-redis")
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.flywaydb:flyway-core:9.16.3")
     //orm
     //api("com.dasoops:common-db-mybatis-plus-spring")
     api("com.dasoops:common-db-ktorm-spring")
-    api("org.ktorm:ktorm-support-postgresql:3.6.0")
+    //api("org.ktorm:ktorm-support-postgresql:3.6.0")
     api("org.springframework:spring-jdbc")
 
     //kt
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-
 
     //spring
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

@@ -19,6 +19,7 @@ logging:
     com.dasoops.dasqr: info
     com.dasoops.common: info
     com.dasoops.common.cache: info
+    ktorm-log: trace
   file:
     path: /temp/dasqr/logs/dasqr.log
   register-shutdown-hook: true
