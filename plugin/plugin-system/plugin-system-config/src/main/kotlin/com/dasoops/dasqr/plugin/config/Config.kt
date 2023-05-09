@@ -17,17 +17,17 @@ object Configs : DasTable<Config>("plugin_system_config") {
 
 interface Config : DasEntity<Config> {
     /**
-     * 堆栈信息
+     * 关键词
      */
     var keyword: String
 
     /**
-     * 顶层消息
+     * 配置信息
      */
     var value: String
 
     /**
-     * 异常类型
+     * 描述
      */
     var description: String
 

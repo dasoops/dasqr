@@ -1,7 +1,8 @@
 package com.dasoops.dasqr.core.exception
 
 import com.dasoops.common.core.util.resources.IgnoreResourcesScan
-import com.dasoops.dasqr.core.config.ExceptionProperties
+import com.dasoops.dasqr.core.config.Config
+import com.dasoops.dasqr.core.config.ExceptionConfig
 
 /**
  * 异常处理器池接口
@@ -20,5 +21,9 @@ interface ExceptionHandlerPool {
      * 初始化
      * @param [config] 配置
      */
-    fun init(config: ExceptionProperties)
+    fun init(config: ExceptionConfig)
+
+    companion object {
+        lateinit var INSTANCE: ExceptionHandlerPool
+    }
 }

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-30
  */
-object ExampleListenerHost : DasqrListenerHost() {
+open class ExampleListenerHost : DasqrListenerHost() {
     private val log = LoggerFactory.getLogger(javaClass)
 
     @EventHandler(EventPriority.HIGHEST)

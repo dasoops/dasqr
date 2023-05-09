@@ -5,9 +5,9 @@ package com.dasoops.dasqr.core.config
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-class DasqrProperties(
-    val exception: ExceptionProperties,
-    val plugin: PluginProperties,
+class DasqrConfig(
+    val exception: ExceptionConfig,
+    val plugin: PluginConfig,
 )
 
 /**
@@ -15,7 +15,7 @@ class DasqrProperties(
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-class PluginProperties(
+class PluginConfig(
     scanPath: List<String>?,
 ) {
 
@@ -25,7 +25,7 @@ class PluginProperties(
     val scanPath: List<String>
 
     init {
-        this@PluginProperties.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin")
+        this@PluginConfig.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin")
     }
 }
 
@@ -34,7 +34,7 @@ class PluginProperties(
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-class ExceptionProperties(
+class ExceptionConfig(
     scanPath: List<String>?,
     excludeClass: List<String>?
 ) {
@@ -49,7 +49,7 @@ class ExceptionProperties(
     val excludeClass: List<String>?
 
     init {
-        this@ExceptionProperties.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core")
-        this@ExceptionProperties.excludeClass = excludeClass?.ifEmpty { null }
+        this@ExceptionConfig.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core")
+        this@ExceptionConfig.excludeClass = excludeClass?.ifEmpty { null }
     }
 }

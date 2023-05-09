@@ -10,10 +10,10 @@ import net.mamoe.mirai.utils.BotConfiguration
  * @date 2023-04-24
  */
 
-class MiraiProperties(
-    val bot: BotProperties,
-    val file: FileProperties,
-    val log: LogProperties,
+class MiraiConfig(
+    val bot: BotConfig,
+    val file: FileConfig,
+    val log: LogConfig,
 )
 
 /**
@@ -21,7 +21,7 @@ class MiraiProperties(
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-class LogProperties(
+class LogConfig(
     /**
      * 是否使用log4j2接管mirai日志系统
      */
@@ -33,7 +33,7 @@ class LogProperties(
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-class BotProperties(
+class BotConfig(
     qq: Long,
     password: String,
     type: String,
@@ -104,7 +104,7 @@ enum class MiraiLoginType {
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-class FileProperties(
+class FileConfig(
     /**
      * 设备信息文件
      */

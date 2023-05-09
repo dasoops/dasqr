@@ -1,7 +1,5 @@
 package com.dasoops.dasqr.core.runner
 
-import com.dasoops.common.json.Json
-import com.dasoops.common.json.toJsonStr
 import com.dasoops.dasqr.core.Finder
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.config.Config
@@ -12,7 +10,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Component
-import java.io.File
 
 /**
  * 初始化
@@ -44,10 +41,12 @@ class InitRunner : ApplicationRunner {
         log.debug("scan plugin")
         val pluginPool = Finder.get<PluginPool>(config.dasqr.plugin.scanPath)
         pluginPool.init(config.dasqr.plugin)
+        PluginPool.INSTANCE = pluginPool
 
         //加载异常处理
         log.debug("scan exception")
-        val exceptionHandler = Finder.get<ExceptionHandlerPool>(config.dasqr.plugin.scanPath)
-        exceptionHandler.init(config.dasqr.exception)
+        val exceptionHandlerPool = Finder.get<ExceptionHandlerPool>(config.dasqr.plugin.scanPath)
+        exceptionHandlerPool.init(config.dasqr.exception)
+        ExceptionHandlerPool.INSTANCE = exceptionHandlerPool
     }
 }

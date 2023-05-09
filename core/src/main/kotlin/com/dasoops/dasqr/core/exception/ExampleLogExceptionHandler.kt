@@ -1,7 +1,6 @@
 package com.dasoops.dasqr.core.exception
 
 import cn.hutool.core.exceptions.ExceptionUtil
-import com.dasoops.dasqr.core.config.ExceptionProperties
 import org.slf4j.LoggerFactory
 
 /**

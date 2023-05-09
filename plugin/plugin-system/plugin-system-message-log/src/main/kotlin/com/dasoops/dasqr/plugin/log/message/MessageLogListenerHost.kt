@@ -8,7 +8,7 @@ import net.mamoe.mirai.event.events.MessageEvent
 import net.mamoe.mirai.message.data.internalId
 import org.slf4j.LoggerFactory
 
-object MessageLogListenerHost : DasqrListenerHost() {
+open class MessageLogListenerHost : DasqrListenerHost() {
     private val log = LoggerFactory.getLogger(javaClass)
     private val messageLogDao = MessageLogDao.INSTANCE
 

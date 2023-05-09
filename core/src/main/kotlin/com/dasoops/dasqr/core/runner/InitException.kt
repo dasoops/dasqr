@@ -16,6 +16,7 @@ enum class InitException(override val message: String) : IExceptionEnum {
     NO_FIND_CLASS("未找到加载类"),
     UNDEFINED_LOGIN_TYPE("未定义的登录类型"),
     UNDEFINED_PROTOCOL("未定义的mirai协议"),
+    UNCREATE_LISTENER_HOST_INSTANCE("无法创建listenerHost实例"),
 
     ;
 

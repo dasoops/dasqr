@@ -3,7 +3,7 @@ package com.dasoops.dasqr.core.exception
 import com.dasoops.common.core.util.resources.Resources
 import com.dasoops.dasqr.core.DefaultImpl
 import com.dasoops.dasqr.core.IBot
-import com.dasoops.dasqr.core.config.ExceptionProperties
+import com.dasoops.dasqr.core.config.ExceptionConfig
 import org.slf4j.LoggerFactory
 
 /**
@@ -20,7 +20,7 @@ object DefaultExceptionHandlerPool : ExceptionHandlerPool {
 
     private val log = LoggerFactory.getLogger(javaClass)
 
-    override fun init(config: ExceptionProperties) {
+    override fun init(config: ExceptionConfig) {
         Resources.scan(ExceptionHandler::class.java.classLoader, *config.scanPath.toTypedArray()).filter {
             ExceptionHandler::class.java.isAssignableFrom(it) &&
                     config.excludeClass?.contains(it.javaClass.name) != true

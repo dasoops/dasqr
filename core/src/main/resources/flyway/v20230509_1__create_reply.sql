@@ -10,7 +10,7 @@ CREATE TABLE "plguin_reply"
     "must_at"       BOOLEAN  NOT NULL,
     "enable"        BOOLEAN  NOT NULL,
     "reply_message" VARCHAR  NOT NULL,
-    "is_delete"     SMALLINT NOT NULL,
+    "is_delete"     BOOLEAN NOT NULL,
     "create_time"   TIMESTAMP WITH TIME ZONE NOT NULL,
     "create_user"   BIGINT   NOT NULL,
     "update_time"   TIMESTAMP WITH TIME ZONE NOT NULL,
