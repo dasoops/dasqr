@@ -48,3 +48,4 @@ logs
 *.log
 **/launchTest
 config.json
+config.gradle

@@ -6,11 +6,10 @@ import cn.hutool.core.util.RandomUtil
 import com.dasoops.common.core.util.resources.Resources
 import com.dasoops.dasqr.core.DasqrListenerHost
 import com.dasoops.dasqr.core.IBot
-import com.dasoops.dasqr.core.config.PluginProperties
+import com.dasoops.dasqr.core.config.PluginConfig
 import com.dasoops.dasqr.core.plugin.PluginPool
 import org.slf4j.LoggerFactory
 import java.lang.reflect.Method
-import cn.hutool.aop.aspects.Aspect as Aspect
 
 /**
  * 身份验证插件池
@@ -22,7 +21,7 @@ object AuthPluginPool : PluginPool {
 
     val loadList = mutableSetOf<DasqrListenerHost>()
 
-    override fun init(pluginConfig: PluginProperties) {
+    override fun init(pluginConfig: PluginConfig) {
         val scanPathList = pluginConfig.scanPath
         Resources.scan(*scanPathList.toTypedArray()).filter {
             DasqrListenerHost::class.java.isAssignableFrom(it)
