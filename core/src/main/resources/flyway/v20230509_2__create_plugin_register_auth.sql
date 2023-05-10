@@ -2,6 +2,9 @@
 BEGIN;
 
 -- auto-generated definition
+DROP TABLE IF EXISTS "plugin_system_plugin";
+DROP TABLE IF EXISTS "plugin_system_register";
+DROP TABLE IF EXISTS "plugin_system_auth";
 CREATE TABLE "plugin_system_plugin"
 (
     "row_id"              BIGSERIAL PRIMARY KEY,

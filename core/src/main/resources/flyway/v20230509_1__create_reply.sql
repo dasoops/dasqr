@@ -2,6 +2,7 @@
 BEGIN;
 
 -- auto-generated definition
+DROP TABLE IF EXISTS "plguin_reply";
 CREATE TABLE "plguin_reply"
 (
     "row_id" BIGSERIAL PRIMARY KEY,
