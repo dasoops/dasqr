@@ -1,4 +1,4 @@
-package com.dasoops.dasqr.plugin.log.message
+package com.dasoops.dasqr.plugin.reply
 
 import com.dasoops.common.db.ktorm.BaseDao
 import org.springframework.stereotype.Component

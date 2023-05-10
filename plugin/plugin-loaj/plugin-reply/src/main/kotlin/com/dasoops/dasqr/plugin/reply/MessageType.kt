@@ -1,4 +1,4 @@
-package com.dasoops.dasqr.plugin.log.message
+package com.dasoops.dasqr.plugin.reply
 
 import com.dasoops.common.core.entity.dataenum.DataEnum
 
