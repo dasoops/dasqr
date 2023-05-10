@@ -13,7 +13,7 @@ open class MessageLogListenerHost : DasqrListenerHost() {
     private val messageLogDao = MessageLogDao.INSTANCE
 
     @EventHandler(EventPriority.HIGHEST)
-    fun handle(event: MessageEvent) {
+    open fun handle(event: MessageEvent) {
         messageLogDao.add(MessageLog {
             messageType = MessageType.getOrNull(event) ?: return
             senderId = event.sender.id

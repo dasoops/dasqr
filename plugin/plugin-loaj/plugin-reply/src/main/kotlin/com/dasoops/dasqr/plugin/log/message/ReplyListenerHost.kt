@@ -11,7 +11,7 @@ open class ReplyListenerHost : DasqrListenerHost() {
     private val messageLogDao = ReplyDao.INSTANCE
 
     @EventHandler(EventPriority.LOW)
-    suspend fun handle(event: GroupMessageEvent) {
+    open suspend fun handle(event: GroupMessageEvent) {
 
     }
 }

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Component
+import kotlin.system.exitProcess
 
 /**
  * 初始化
@@ -21,35 +22,40 @@ class InitRunner : ApplicationRunner {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun run(args: ApplicationArguments) {
-        //初始化配置项
-        log.info("init config")
-        val config = Finder.get<Config>(listOf("com.dasoops.dasqr"))
-        config.init()
-        Config.INSTANCE = config
-        log.info("use config: ${config.javaClass.name}")
+        try {
+            //初始化配置项
+            log.info("init config")
+            val config = Finder.get<Config>(listOf("com.dasoops.dasqr"))
+            config.init()
+            Config.INSTANCE = config
+            log.info("use config: ${config.javaClass.name}")
 
-        //初始化日志
-        if (config.mirai.log.useLog4j2) {
-            LoggerAdapters.useLog4j2()
-            log.info("useLog4j2")
+            //初始化日志
+            if (config.mirai.log.useLog4j2) {
+                LoggerAdapters.useLog4j2()
+                log.info("useLog4j2")
+            }
+
+            //加载bot
+            log.info("init IBot")
+            IBot
+
+            //加载插件
+            log.info("init pluginPool")
+            val pluginPool = Finder.get<PluginPool>(config.dasqr.plugin.scanPath)
+            log.info("use pluginPool: ${pluginPool.javaClass.name}")
+            pluginPool.init(config.dasqr.plugin)
+            PluginPool.INSTANCE = pluginPool
+
+            //加载异常处理
+            log.debug("init exceptionHandlerPool")
+            val exceptionHandlerPool = Finder.get<ExceptionHandlerPool>(config.dasqr.plugin.scanPath)
+            log.info("use exceptionHandlerPool: ${exceptionHandlerPool.javaClass.name}")
+            exceptionHandlerPool.init(config.dasqr.exception)
+            ExceptionHandlerPool.INSTANCE = exceptionHandlerPool
+        } catch (e: Throwable) {
+            log.error("initRunner throw Exception: ", e)
+            exitProcess(0)
         }
-
-        //加载bot
-        log.info("init IBot")
-        IBot
-
-        //加载插件
-        log.info("init pluginPool")
-        val pluginPool = Finder.get<PluginPool>(config.dasqr.plugin.scanPath)
-        log.info("use pluginPool: ${pluginPool.javaClass.name}")
-        pluginPool.init(config.dasqr.plugin)
-        PluginPool.INSTANCE = pluginPool
-
-        //加载异常处理
-        log.debug("init exceptionHandlerPool")
-        val exceptionHandlerPool = Finder.get<ExceptionHandlerPool>(config.dasqr.plugin.scanPath)
-        log.info("use exceptionHandlerPool: ${exceptionHandlerPool.javaClass.name}")
-        exceptionHandlerPool.init(config.dasqr.exception)
-        ExceptionHandlerPool.INSTANCE = exceptionHandlerPool
     }
 }

@@ -30,5 +30,5 @@ data class AuthConfig(
     /**
      * 跳过单例对象的身份验证
      */
-    var skipObjectInstance: Boolean = false
+    var skipRegisterError: Boolean = false
 )

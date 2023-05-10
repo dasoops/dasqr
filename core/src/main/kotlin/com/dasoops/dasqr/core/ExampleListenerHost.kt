@@ -14,7 +14,7 @@ open class ExampleListenerHost : DasqrListenerHost() {
     private val log = LoggerFactory.getLogger(javaClass)
 
     @EventHandler(EventPriority.HIGHEST)
-    fun log(event: MessageEvent) {
+    open fun log(event: MessageEvent) {
         log.info("onMessage: " + event.message.toString())
     }
 }
