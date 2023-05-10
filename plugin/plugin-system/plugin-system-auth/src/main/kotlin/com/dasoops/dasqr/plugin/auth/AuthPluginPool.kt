@@ -125,9 +125,10 @@ object AuthPluginPool : PluginPool {
             jobOfListenerHost = null
             coroutineContext
         }
+        host.javaClass.declaredMethods
         for (method in ClassUtils.getUserClass(host).declaredMethods) {
-            method.getAnnotation(EventHandler::class.java)?.let { it ->
-
+            method.getAnnotation(EventHandler::class.java)?.let {
+                val runMethod = ReflectUtil.getMethodByName(host.javaClass, method.name)
                 val listener = Class.forName("net.mamoe.mirai.internal.event.JvmMethodListenersInternalKt")
                     .getDeclaredMethod(
                         "registerEventHandler",
@@ -137,14 +138,14 @@ object AuthPluginPool : PluginPool {
                         EventHandler::class.java,
                         CoroutineContext::class.java
                     )
-                    .invoke(method, method, host, this, it, coroutineContext0) as Listener<*>
+                    .invoke(runMethod, runMethod, host, this, it, coroutineContext0) as Listener<*>
 
 //                val listener = Method::class.declaredMemberExtensionFunctions.find { func ->
 //                    func.name == "registerEventHandler"
 //                }?.call(host, this, it, coroutineContext0) as Listener<Event>
 
-//                val listener = method.registerListenerHost0(host, this, it, coroutineContext0)
-                // For [SimpleListenerHost.cancelAll]
+//                val listener = method.registerListenerHost(host, this, it, coroutineContext0)
+                //For [SimpleListenerHost.cancelAll]
                 jobOfListenerHost?.invokeOnCompletion { exception ->
                     listener.cancel(
                         when (exception) {

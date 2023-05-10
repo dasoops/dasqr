@@ -30,7 +30,7 @@ COMMENT ON COLUMN "plugin_system_config"."update_user" IS '更新用户';
 ALTER TABLE "plugin_system_config"
     OWNER TO "postgres";
 
-INSERT INTO plugin_system_config (row_id, keyword, value, description, is_delete, create_time, create_user, update_time, update_user) VALUES (1, 'mirai', '{"bot":{"qq":3488521150,"password":"xu1627026076","type":"password","protocol":"android_phone"},"file":{"deviceInfoPath":"device.json","cachePath":"mirai/cache","workingDir":"/temp/dasqr/"},"log":{"useLog4j2":true}}', 'mirai配置', false, '2023-05-08 19:26:31.143000 +00:00', 0, '2023-05-08 19:26:32.973000 +00:00', 0);
+INSERT INTO plugin_system_config (row_id, keyword, value, description, is_delete, create_time, create_user, update_time, update_user) VALUES (1, 'mirai', '{"bot":{"qq":,"password":"","type":"password","protocol":"android_phone"},"file":{"deviceInfoPath":"device.json","cachePath":"mirai/cache","workingDir":"/temp/dasqr/"},"log":{"useLog4j2":true}}', 'mirai配置', false, '2023-05-08 19:26:31.143000 +00:00', 0, '2023-05-08 19:26:32.973000 +00:00', 0);
 INSERT INTO plugin_system_config (row_id, keyword, value, description, is_delete, create_time, create_user, update_time, update_user) VALUES (2, 'dasqr', '{"exception":{"excludeClass":[],"scanPath":["com.dasoops.dasqr.core","com.dasoops.dasqr.plugin"]},"plugin":{"scanPath":["com.dasoops.dasqr.core","com.dasoops.dasqr.plugin"]}}', 'dasqr配置', false, '2023-05-08 19:27:15.942000 +00:00', 0, '2023-05-08 19:27:17.558000 +00:00', 0);
 
 COMMIT;
