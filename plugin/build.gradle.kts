@@ -1,5 +1,5 @@
 dependencies {
-    api(project(":plugin-core"))
+    api(project(":plugin:plugin-core"))
 }
 
 subprojects {
@@ -9,5 +9,14 @@ subprojects {
         manifest.attributes["Plugin-Version"] = "No Version"
         manifest.attributes["Plugin-Description"] = "No Description"
     }
+    tasks.withType<Jar> {
+        this.doLast {
+            val workingDir = rootProject.ext["dasqrWorkingDir"] as String
+            outputs.files.forEach {
+                it.copyTo(File("$workingDir/plugin/${it.name}"))
+            }
+        }
+    }
 }
+
 

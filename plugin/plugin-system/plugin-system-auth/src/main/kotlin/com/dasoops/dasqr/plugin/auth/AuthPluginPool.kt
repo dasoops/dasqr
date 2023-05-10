@@ -2,7 +2,6 @@ package com.dasoops.dasqr.plugin.auth
 
 import cn.hutool.aop.ProxyUtil
 import cn.hutool.aop.aspects.SimpleAspect
-import cn.hutool.core.util.RandomUtil
 import cn.hutool.core.util.ReflectUtil
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.core.util.resources.Resources
@@ -12,19 +11,8 @@ import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.PluginConfig
 import com.dasoops.dasqr.core.plugin.DefaultPluginPool
 import com.dasoops.dasqr.core.plugin.PluginPool
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Job
-import net.mamoe.mirai.event.EventChannel
-import net.mamoe.mirai.event.EventHandler
-import net.mamoe.mirai.event.ListenerHost
-import net.mamoe.mirai.event.SimpleListenerHost
-import net.mamoe.mirai.internal.event.registerEventHandler
 import org.slf4j.LoggerFactory
 import java.lang.reflect.Method
-import java.lang.reflect.Proxy
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
 /**
  * 身份验证插件池
@@ -42,7 +30,6 @@ object AuthPluginPool : PluginPool {
         Resources.scan(*scanPathList.toTypedArray()).filter {
             DasqrListenerHost::class.java.isAssignableFrom(it)
         }.forEach {
-//            IBot.eventChannel.registerListenerHost(it.kotlin.objectInstance as DasqrListenerHost)
             instanceFormClassOrNull(it as Class<DasqrListenerHost>)?.run {
                 IBot.eventChannel.registerListenerHost(proxy(this))
             }
@@ -50,12 +37,12 @@ object AuthPluginPool : PluginPool {
         }
     }
 
-
     private fun proxy(listenerHost: DasqrListenerHost): DasqrListenerHost {
+        //import cn.hutool.aop.ProxyUtil
+        //cglib动态代理
         return ProxyUtil.proxy(listenerHost, object : SimpleAspect() {
             override fun before(target: Any?, method: Method?, args: Array<out Any>?): Boolean {
-                //TODO()
-                return RandomUtil.randomBoolean()
+                TODO()
             }
         })
     }

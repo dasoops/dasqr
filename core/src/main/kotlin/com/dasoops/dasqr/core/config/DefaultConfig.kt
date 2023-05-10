@@ -31,6 +31,7 @@ object DefaultConfig : Config {
         )
         keywordToJsonConfigMap = loadByPath.mapValues { it.value.toJsonStr() }
 
+        //forceParse
         mirai = loadByPath.get("mirai", MiraiConfig::class.java)
         dasqr = loadByPath.get("dasqr", DasqrConfig::class.java)
     }

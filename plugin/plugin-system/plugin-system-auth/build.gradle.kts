@@ -1,5 +1,5 @@
 dependencies {
-    api(project(":plugin-core"))
+    api(project(":plugin:plugin-core"))
     api(project(":plugin:plugin-system:plugin-system-config"))
 }
 

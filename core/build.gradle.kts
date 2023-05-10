@@ -56,7 +56,8 @@ tasks.named<BootJar>("bootJar") {
     val supportField = BootJar::class.java.getDeclaredField("support")
     supportField.isAccessible = true
     val support = supportField.get(this)
-    val loadMainClassField = Class.forName("org.springframework.boot.gradle.tasks.bundling.BootArchiveSupport").getDeclaredField("loaderMainClass")
+    val loadMainClassField = Class.forName("org.springframework.boot.gradle.tasks.bundling.BootArchiveSupport")
+        .getDeclaredField("loaderMainClass")
     loadMainClassField.isAccessible = true
     loadMainClassField.set(support, "com.dasoops.dasqr.core.MyLauncher")
     //曲线救国,他排除我再添加回去
@@ -65,16 +66,18 @@ tasks.named<BootJar>("bootJar") {
 
     //添加MyLauncher
     from("build/classes/java/main")
+    val workingDir = rootProject.ext["dasqrWorkingDir"] as String
 }
 
 tasks {
     val launchTest by creating(JavaExec::class) {
+        bootJar.get().outputs.files.singleFile.copyTo(File("$workingDir/dasqr.jar"), true)
         dependsOn(bootJar)
         mainClass.set("-jar")
+
+        val workingDir = rootProject.ext["dasqrWorkingDir"] as String
         args(bootJar.get().outputs.files.singleFile)
         jvmArgs("-DSpring.profiles.active=master")
-        val wk = project.file("launchTest")
-        workingDir(wk)
-        doFirst { wk.mkdir() }
+        workingDir(workingDir)
     }
 }

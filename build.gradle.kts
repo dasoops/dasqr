@@ -28,6 +28,10 @@ allprojects {
         useJUnitPlatform()
     }
 }
+apply(from = (file("config.gradle")))
+if (rootProject.ext.get("dasqrWorkingDir") == null) {
+    rootProject.ext.set("dasqrWorkingDir","./launchTest")
+}
 
 subprojects {
     apply {
@@ -36,6 +40,7 @@ subprojects {
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlin.plugin.spring")
         plugin("org.jetbrains.kotlin.plugin.serialization")
+        file("config.gradle")
     }
 
 
@@ -44,4 +49,5 @@ subprojects {
         compileOnly {
             extendsFrom(configurations.annotationProcessor.get())
         }
-    }}
+    }
+}

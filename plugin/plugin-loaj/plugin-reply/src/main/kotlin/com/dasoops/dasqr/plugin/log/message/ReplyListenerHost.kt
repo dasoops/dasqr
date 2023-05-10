@@ -3,7 +3,7 @@ package com.dasoops.dasqr.plugin.log.message
 import com.dasoops.dasqr.core.DasqrListenerHost
 import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.EventPriority
-import net.mamoe.mirai.event.events.MessageEvent
+import net.mamoe.mirai.event.events.GroupMessageEvent
 import org.slf4j.LoggerFactory
 
 open class ReplyListenerHost : DasqrListenerHost() {
@@ -11,7 +11,7 @@ open class ReplyListenerHost : DasqrListenerHost() {
     private val messageLogDao = ReplyDao.INSTANCE
 
     @EventHandler(EventPriority.LOW)
-    fun handle(event: MessageEvent) {
-        println(event.message)
+    suspend fun handle(event: GroupMessageEvent) {
+
     }
 }

@@ -2,8 +2,8 @@ rootProject.name = "dasqr"
 
 include(
     ":core",
-    ":plugin-test",
-    ":plugin-core",
+    ":plugin:plugin-test",
+    ":plugin:plugin-core",
     ":plugin:plugin-system:plugin-system-exception-log",
     ":plugin:plugin-system:plugin-system-message-log",
     ":plugin:plugin-system:plugin-system-config",
