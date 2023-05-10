@@ -32,26 +32,3 @@ logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss
     console: "%clr(%-5level) %clr(%d{yy-MM-dd HH:mm:ss}){cyan} %clr([%-26thread]){cyan} %clr(%-20logger{0}){yellow} : %msg%n"
-mirai:
-  bot:
-    qq: 3488521150
-    password: password
-    type: byQrCode
-    protocol: android_phone
-  file:
-    device-info-path: device.json
-    cache-path: cache
-    workingDir: .
-  log:
-    useLog4j2: true
-dasqr:
-  exception:
-    exclude-class:
-      - com.dasoops.dasqr.core.templateExcludeClass
-    scan-path:
-      - com.dasoops.dasqr.core
-  plugin:
-    path: ./plugin
-    scan-path:
-      - com.dasoops.dasqr.core
-      - com.dasoops.dasqr.plugin
