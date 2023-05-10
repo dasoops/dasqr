@@ -11,8 +11,18 @@ import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.PluginConfig
 import com.dasoops.dasqr.core.plugin.DefaultPluginPool
 import com.dasoops.dasqr.core.plugin.PluginPool
+import com.dasoops.dasqr.plugin.auth.AuthPluginPool.registerListenerHost0
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Job
+import net.mamoe.mirai.event.*
 import org.slf4j.LoggerFactory
+import org.springframework.util.ClassUtils
 import java.lang.reflect.Method
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.reflect.full.declaredMemberExtensionFunctions
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 /**
  * 身份验证插件池
@@ -31,9 +41,9 @@ object AuthPluginPool : PluginPool {
             DasqrListenerHost::class.java.isAssignableFrom(it)
         }.forEach {
             instanceFormClassOrNull(it as Class<DasqrListenerHost>)?.run {
-                IBot.eventChannel.registerListenerHost(proxy(this))
+                IBot.eventChannel.registerListenerHost0(proxy(this))
             }
-            log.info("load listener host: ${it.name}")
+            log.info("load auth listener host: ${it.name}")
         }
     }
 
@@ -42,7 +52,15 @@ object AuthPluginPool : PluginPool {
         //cglib动态代理
         return ProxyUtil.proxy(listenerHost, object : SimpleAspect() {
             override fun before(target: Any?, method: Method?, args: Array<out Any>?): Boolean {
-                TODO()
+                return super.before(target, method, args)
+            }
+
+            override fun after(target: Any?, method: Method?, args: Array<out Any>?, returnVal: Any?): Boolean {
+                return super.after(target, method, args, returnVal)
+            }
+
+            override fun afterException(target: Any?, method: Method?, args: Array<out Any>?, e: Throwable?): Boolean {
+                return super.afterException(target, method, args, e)
             }
         })
     }
@@ -71,6 +89,72 @@ object AuthPluginPool : PluginPool {
             }
         } else {
             null
+        }
+    }
+
+    fun EventChannel<*>.registerListenerHost0(
+        host: ListenerHost,
+        coroutineContext: CoroutineContext = EmptyCoroutineContext,
+    ) {
+        val jobOfListenerHost: Job?
+        val coroutineContext0 = if (host is SimpleListenerHost) {
+            val listenerCoroutineContext = host.coroutineContext
+            val listenerJob = listenerCoroutineContext[Job]
+
+            val rsp = listenerCoroutineContext.minusKey(Job) +
+                    coroutineContext +
+                    (listenerCoroutineContext[CoroutineExceptionHandler] ?: EmptyCoroutineContext)
+
+            val registerCancelHook = when {
+                listenerJob === null -> false
+
+                // Registering cancellation hook is needless
+                // if [Job] of [EventChannel] is same as [Job] of [SimpleListenerHost]
+                (rsp[Job] ?: this.defaultCoroutineContext[Job]) === listenerJob -> false
+
+                else -> true
+            }
+
+            jobOfListenerHost = if (registerCancelHook) {
+                listenerCoroutineContext[Job]
+            } else {
+                null
+            }
+            rsp
+        } else {
+            jobOfListenerHost = null
+            coroutineContext
+        }
+        for (method in ClassUtils.getUserClass(host).declaredMethods) {
+            method.getAnnotation(EventHandler::class.java)?.let { it ->
+
+                val listener = Class.forName("net.mamoe.mirai.internal.event.JvmMethodListenersInternalKt")
+                    .getDeclaredMethod(
+                        "registerEventHandler",
+                        Method::class.java,
+                        Object::class.java,
+                        EventChannel::class.java,
+                        EventHandler::class.java,
+                        CoroutineContext::class.java
+                    )
+                    .invoke(method, method, host, this, it, coroutineContext0) as Listener<*>
+
+//                val listener = Method::class.declaredMemberExtensionFunctions.find { func ->
+//                    func.name == "registerEventHandler"
+//                }?.call(host, this, it, coroutineContext0) as Listener<Event>
+
+//                val listener = method.registerListenerHost0(host, this, it, coroutineContext0)
+                // For [SimpleListenerHost.cancelAll]
+                jobOfListenerHost?.invokeOnCompletion { exception ->
+                    listener.cancel(
+                        when (exception) {
+                            is CancellationException -> exception
+                            is Throwable -> CancellationException(null, exception)
+                            else -> null
+                        }
+                    )
+                }
+            }
         }
     }
 }

@@ -26,6 +26,7 @@ class InitRunner : ApplicationRunner {
         val config = Finder.get<Config>(listOf("com.dasoops.dasqr"))
         config.init()
         Config.INSTANCE = config
+        log.info("use config: ${config.javaClass.name}")
 
         //初始化日志
         if (config.mirai.log.useLog4j2) {
@@ -38,14 +39,16 @@ class InitRunner : ApplicationRunner {
         IBot
 
         //加载插件
-        log.debug("scan plugin")
+        log.info("init pluginPool")
         val pluginPool = Finder.get<PluginPool>(config.dasqr.plugin.scanPath)
+        log.info("use pluginPool: ${pluginPool.javaClass.name}")
         pluginPool.init(config.dasqr.plugin)
         PluginPool.INSTANCE = pluginPool
 
         //加载异常处理
-        log.debug("scan exception")
+        log.debug("init exceptionHandlerPool")
         val exceptionHandlerPool = Finder.get<ExceptionHandlerPool>(config.dasqr.plugin.scanPath)
+        log.info("use exceptionHandlerPool: ${exceptionHandlerPool.javaClass.name}")
         exceptionHandlerPool.init(config.dasqr.exception)
         ExceptionHandlerPool.INSTANCE = exceptionHandlerPool
     }

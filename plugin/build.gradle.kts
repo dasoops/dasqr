@@ -13,7 +13,7 @@ subprojects {
         this.doLast {
             val workingDir = rootProject.ext["dasqrWorkingDir"] as String
             outputs.files.forEach {
-                it.copyTo(File("$workingDir/plugin/${it.name}"))
+                it.copyTo(File("$workingDir/plugin/${it.name}"), true)
             }
         }
     }

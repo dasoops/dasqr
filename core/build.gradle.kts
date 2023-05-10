@@ -66,16 +66,17 @@ tasks.named<BootJar>("bootJar") {
 
     //添加MyLauncher
     from("build/classes/java/main")
-    val workingDir = rootProject.ext["dasqrWorkingDir"] as String
 }
 
 tasks {
     val launchTest by creating(JavaExec::class) {
-        bootJar.get().outputs.files.singleFile.copyTo(File("$workingDir/dasqr.jar"), true)
+        val workingDir = rootProject.ext["dasqrWorkingDir"] as String
+        doFirst {
+            bootJar.get().outputs.files.singleFile.copyTo(File("$workingDir/dasqr.jar"), true)
+        }
         dependsOn(bootJar)
         mainClass.set("-jar")
 
-        val workingDir = rootProject.ext["dasqrWorkingDir"] as String
         args(bootJar.get().outputs.files.singleFile)
         jvmArgs("-DSpring.profiles.active=master")
         workingDir(workingDir)
