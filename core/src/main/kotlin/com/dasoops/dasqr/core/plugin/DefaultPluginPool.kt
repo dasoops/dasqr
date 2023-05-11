@@ -42,7 +42,7 @@ object DefaultPluginPool : PluginPool {
             DasqrListenerHost::class.java.isAssignableFrom(it)
         }.forEach {
             if (DasqrSimpleListenerHost::class.java.isAssignableFrom(it)) {
-                IBot.eventChannel.registerListenerHost(instanceFormClass(it as Class<DasqrSimpleListenerHost>))
+                IBot.eventChannel.registerListenerHost0(instanceFormClass(it as Class<DasqrSimpleListenerHost>))
                 log.info("load simple listener host: ${it.name}")
             } else {
                 val dslListenerHost = instanceFormClass(it as Class<DslListenerHost>)
