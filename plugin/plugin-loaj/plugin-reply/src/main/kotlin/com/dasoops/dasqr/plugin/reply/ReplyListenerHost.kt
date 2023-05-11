@@ -7,6 +7,7 @@ import com.dasoops.dasqr.core.listener.DasqrSimpleListenerHost
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.events.GroupMessageEvent
+import java.lang.Compiler.command
 import kotlin.reflect.KClass
 
 object ReplyPublic {
