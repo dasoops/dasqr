@@ -1,6 +1,6 @@
 package com.dasoops.dasqr.plugin.log.message
 
-import com.dasoops.dasqr.core.DasqrListenerHost
+import com.dasoops.dasqr.core.listener.DasqrSimpleListenerHost
 import net.mamoe.mirai.contact.Member
 import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.EventPriority
@@ -8,7 +8,13 @@ import net.mamoe.mirai.event.events.MessageEvent
 import net.mamoe.mirai.message.data.internalId
 import org.slf4j.LoggerFactory
 
-open class MessageLogListenerHost : DasqrListenerHost() {
+/**
+ * 消息日志监听器主机
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/05/11
+ * @see [MessageLogListenerHost]
+ */
+open class MessageLogListenerHost : DasqrSimpleListenerHost() {
     private val log = LoggerFactory.getLogger(javaClass)
     private val messageLogDao = MessageLogDao.INSTANCE
 

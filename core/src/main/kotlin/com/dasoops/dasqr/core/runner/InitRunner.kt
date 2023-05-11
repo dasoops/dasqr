@@ -53,6 +53,10 @@ class InitRunner : ApplicationRunner {
             log.info("use exceptionHandlerPool: ${exceptionHandlerPool.javaClass.name}")
             exceptionHandlerPool.init(config.dasqr.exception)
             ExceptionHandlerPool.INSTANCE = exceptionHandlerPool
+            IBot.eventChannel.exceptionHandler {
+                exceptionHandlerPool.handle(it)
+            }
+
         } catch (e: Throwable) {
             log.error("initRunner throw Exception: ", e)
             exitProcess(0)

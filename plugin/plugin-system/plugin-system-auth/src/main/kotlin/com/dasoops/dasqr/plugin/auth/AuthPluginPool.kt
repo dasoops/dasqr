@@ -5,7 +5,7 @@ import cn.hutool.aop.aspects.SimpleAspect
 import cn.hutool.core.util.ReflectUtil
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.core.util.resources.Resources
-import com.dasoops.dasqr.core.DasqrListenerHost
+import com.dasoops.dasqr.core.listener.DasqrSimpleListenerHost
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.PluginConfig
@@ -34,20 +34,20 @@ object AuthPluginPool : PluginPool {
     override fun init(pluginConfig: PluginConfig) {
         val scanPathList = pluginConfig.scanPath
         Resources.scan(*scanPathList.toTypedArray()).filter {
-            DasqrListenerHost::class.java.isAssignableFrom(it)
+            DasqrSimpleListenerHost::class.java.isAssignableFrom(it)
         }.forEach {
-            instanceFormClassOrNull(it as Class<DasqrListenerHost>)?.run {
+            instanceFormClassOrNull(it as Class<DasqrSimpleListenerHost>)?.run {
                 register(this)
             }
             log.info("load auth listener host: ${it.name}")
         }
     }
 
-    fun register(listenerHost: DasqrListenerHost) {
+    fun register(listenerHost: DasqrSimpleListenerHost) {
         IBot.eventChannel.registerListenerHost0(proxy(listenerHost))
     }
 
-    fun proxy(listenerHost: DasqrListenerHost): DasqrListenerHost {
+    fun proxy(listenerHost: DasqrSimpleListenerHost): DasqrSimpleListenerHost {
         //import cn.hutool.aop.ProxyUtil
         //cglib动态代理
         return ProxyUtil.proxy(listenerHost, object : SimpleAspect() {
@@ -57,9 +57,9 @@ object AuthPluginPool : PluginPool {
         })
     }
 
-    fun instanceFormClassOrNull(clazz: Class<DasqrListenerHost>): DasqrListenerHost? {
+    fun instanceFormClassOrNull(clazz: Class<DasqrSimpleListenerHost>): DasqrSimpleListenerHost? {
         return if (clazz.kotlin.isOpen && !clazz.kotlin.isAbstract) {
-            ReflectUtil.getConstructor(clazz).newInstance() as DasqrListenerHost
+            ReflectUtil.getConstructor(clazz).newInstance() as DasqrSimpleListenerHost
         } else if (clazz.kotlin.objectInstance != null) {
             //跳过object实例
             if (Config.INSTANCE.auth.skipRegisterError) {

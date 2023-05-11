@@ -1,6 +1,6 @@
 -- auto-generated definition
 BEGIN;
 
-DROP TABLE IF EXISTS "plugin_config";
+DROP TABLE IF EXISTS "core_config";
 
 COMMIT;
