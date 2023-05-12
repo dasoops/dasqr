@@ -5,6 +5,7 @@ import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
 import com.dasoops.dasqr.core.plugin.PluginPool
+import kotlinx.coroutines.runBlocking
 import net.mamoe.mirai.utils.LoggerAdapters
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
@@ -21,7 +22,7 @@ import kotlin.system.exitProcess
 class InitRunner : ApplicationRunner {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    override fun run(args: ApplicationArguments) {
+    override fun run(args: ApplicationArguments): Unit = runBlocking {
         try {
             //初始化配置项
             log.info("init config")

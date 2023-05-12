@@ -3,8 +3,10 @@ package com.dasoops.dasqr.core.listener
 import com.dasoops.common.core.util.resources.IgnoreResourcesScan
 import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
 import net.mamoe.mirai.event.*
+import org.ktorm.dsl.eq
 import org.slf4j.LoggerFactory
 import kotlin.coroutines.CoroutineContext
+import kotlin.reflect.jvm.reflect
 
 @IgnoreResourcesScan
 sealed interface DasqrListenerHost
@@ -36,8 +38,13 @@ abstract class DasqrSimpleListenerHost : SimpleListenerHost(), DasqrListenerHost
  * @date 2023-04-24
  */
 @IgnoreResourcesScan
-abstract class DslListenerHost(val builder: ListenerHostDslBuilder.() -> Unit) : DasqrListenerHost {
-    fun initAndGetMetaList() = ListenerHostDslBuilder().apply(builder).metaDataList
+abstract class DslListenerHost(val builder: suspend ListenerHostDslBuilder.() -> Unit) : DasqrListenerHost {
+    suspend fun initAndGetMetaList() =
+        ListenerHostDslBuilder().run {
+            builder()
+            metaDataList
+        }
+
 }
 
 /**

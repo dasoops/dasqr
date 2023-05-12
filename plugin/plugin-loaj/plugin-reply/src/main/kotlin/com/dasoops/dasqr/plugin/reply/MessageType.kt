@@ -1,6 +1,7 @@
 package com.dasoops.dasqr.plugin.reply
 
 import com.dasoops.common.core.entity.dataenum.DataEnum
+import com.dasoops.dasqr.plugin.reply.Replys.keyword
 import net.mamoe.mirai.message.data.MessageChain
 
 /**
@@ -39,4 +40,16 @@ enum class MatchType(val match: (String, MessageChain) -> Boolean) : DataEnum {
     ;
 
     override val data = ordinal
+
+    companion object {
+        fun getOrNull(string: String): MatchType? {
+            return when (string) {
+                "prefix" -> PREFIX
+                "suffix" -> SUFFIX
+                "equals" -> EQUALS
+                "contain" -> CONTAIN
+                else -> null
+            }
+        }
+    }
 }

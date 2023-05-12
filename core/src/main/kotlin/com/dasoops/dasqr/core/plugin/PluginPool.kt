@@ -11,7 +11,7 @@ import com.dasoops.dasqr.core.config.PluginConfig
  */
 @IgnoreResourcesScan
 interface PluginPool {
-    fun init(pluginConfig: PluginConfig)
+    suspend fun init(pluginConfig: PluginConfig)
 
     companion object {
         lateinit var INSTANCE: PluginPool

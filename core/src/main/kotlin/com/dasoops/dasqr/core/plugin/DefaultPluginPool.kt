@@ -36,7 +36,7 @@ object DefaultPluginPool : PluginPool {
     val loadList = mutableSetOf<DasqrSimpleListenerHost>()
 
     @Suppress("UNCHECKED_CAST")
-    override fun init(pluginConfig: PluginConfig) {
+    override suspend fun init(pluginConfig: PluginConfig) {
         val scanPathList = pluginConfig.scanPath
         Resources.scan(*scanPathList.toTypedArray()).filter {
             DasqrListenerHost::class.java.isAssignableFrom(it)
@@ -48,11 +48,13 @@ object DefaultPluginPool : PluginPool {
                 val dslListenerHost = instanceFormClass(it as Class<DslListenerHost>)
                 dslListenerHost.initAndGetMetaList().forEach { metaData ->
                     when (metaData) {
-                        is GroupDslEventHandlerMetaData -> IBot.eventChannel.subscribeGroupMessages(
-                            concurrencyKind = metaData.concurrency,
-                            priority = metaData.priority,
-                            listeners = metaData.func
-                        )
+                        is GroupDslEventHandlerMetaData ->
+                            IBot.eventChannel.subscribeGroupMessages(
+                                concurrencyKind = metaData.concurrency,
+                                priority = metaData.priority,
+                                listeners = metaData.func
+                            )
+
 
                         is UserDslEventHandlerMetaData -> IBot.eventChannel.subscribeUserMessages(
                             concurrencyKind = metaData.concurrency,
