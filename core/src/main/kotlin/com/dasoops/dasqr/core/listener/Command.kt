@@ -129,10 +129,10 @@ class KeywordBuilder {
     }
 }
 
-@JvmOverloads
 fun ListenerHostDslBuilder.group(
     name: String,
     option: CommandKeywordBuilder.() -> Unit,
+    keywordList: List<String> = mutableListOf(name),
     match: Match = Match.PREFIX,
     priority: EventPriority = EventPriority.NORMAL,
     ignoreCancelled: Boolean = true,
@@ -146,16 +146,16 @@ fun ListenerHostDslBuilder.group(
             ignoreCancelled = ignoreCancelled,
             concurrency = concurrency,
             func = {
-                checkAndRun(match, name, option, func)
+                checkAndRun(match, keywordList, option, func)
             },
         )
     )
 }
 
-@JvmOverloads
 fun ListenerHostDslBuilder.user(
     name: String,
     match: Match = Match.PREFIX,
+    keywordList: Collection<String> = mutableSetOf(name),
     priority: EventPriority = EventPriority.NORMAL,
     ignoreCancelled: Boolean = true,
     concurrency: ConcurrencyKind = ConcurrencyKind.CONCURRENT,
@@ -169,7 +169,7 @@ fun ListenerHostDslBuilder.user(
             ignoreCancelled = ignoreCancelled,
             concurrency = concurrency,
             func = {
-                checkAndRun(match, name, option, func)
+                checkAndRun(match, keywordList, option, func)
             },
         )
     )
@@ -177,51 +177,59 @@ fun ListenerHostDslBuilder.user(
 
 private fun <T : MessageEvent> MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.checkAndRun(
     match: Match,
-    name: String,
+    keywordList: Collection<String>,
     option: CommandKeywordBuilder.() -> Unit,
     func: suspend Command.(event: T) -> Any?
 ) {
 
     //TODO(待优化)
     when (match) {
-        Match.PREFIX -> startsWith(name) {
-            val command = Command(
-                match = match,
-                keyword = name,
-                func = option,
-                message = this.message
-            )
-            func(command, this)
+        Match.PREFIX -> keywordList.forEach { keyword ->
+            startsWith(keyword) {
+                val command = Command(
+                    match = match,
+                    keyword = keyword,
+                    func = option,
+                    message = this.message
+                )
+                func(command, this)
+            }
         }
 
-        Match.SUFFIX -> endsWith(name) {
-            val command = Command(
-                match = match,
-                keyword = name,
-                func = option,
-                message = this.message
-            )
-            func(command, this)
+        Match.SUFFIX -> keywordList.forEach { keyword ->
+            endsWith(keyword) {
+                val command = Command(
+                    match = match,
+                    keyword = keyword,
+                    func = option,
+                    message = this.message
+                )
+                func(command, this)
+            }
         }
 
-        Match.EQUALS -> name {
-            val command = Command(
-                match = match,
-                keyword = name,
-                func = option,
-                message = this.message
-            )
-            func(command, this)
+        Match.EQUALS -> keywordList.forEach { keyword ->
+            keyword {
+                val command = Command(
+                    match = match,
+                    keyword = keyword,
+                    func = option,
+                    message = this.message
+                )
+                func(command, this)
+            }
         }
 
-        Match.CONTAIN -> contains(name) {
-            val command = Command(
-                match = match,
-                keyword = name,
-                func = option,
-                message = this.message
-            )
-            func(command, this)
+        Match.CONTAIN -> keywordList.forEach { keyword ->
+            contains(keyword) {
+                val command = Command(
+                    match = match,
+                    keyword = keyword,
+                    func = option,
+                    message = this.message
+                )
+                func(command, this)
+            }
         }
     }
 }

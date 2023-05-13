@@ -11,7 +11,9 @@ import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.message.data.At
 import net.mamoe.mirai.message.data.MessageChain
+import net.mamoe.mirai.message.data.MessageSource.Key.quote
 import net.mamoe.mirai.message.data.toMessageChain
+import org.ktorm.dsl.eq
 import kotlin.reflect.KClass
 
 object ReplyPublic {
@@ -25,6 +27,8 @@ object ReplyPublic {
         replyCache.getOrNullAndSet(this::class) {
             replyDao.findAll().filter { it.enable }.sortedBy { it.order }
         }!!
+
+    fun clear() = replyCache.clear()
 }
 
 
@@ -71,7 +75,7 @@ open class DslReplyListenerHost : DslListenerHost({
     /**
      * 添加reply
      */
-    group("addReply", {
+    group("addReply", keywordList = arrayListOf("addReply"), option = {
         "keyword" {
             order = 1
             desc = "关键词"
@@ -99,6 +103,36 @@ open class DslReplyListenerHost : DslListenerHost({
             mustAt = booleanOrDefault("mustAt", true)
             order = Int.MAX_VALUE
         })
-        return@tag "ok"
+        return@tag it.message.quote() + "ok"
+    }
+
+    group("enable/disable reply") {
+        startsWith("enableReply") quoteReply { keyword ->
+            val reply = ReplyDao.INSTANCE.findOne {
+                it.keyword eq keyword
+            } ?: return@quoteReply "没有这个回复捏"
+
+            if (reply.enable) {
+                return@quoteReply "这不本来就开的嘛"
+            }
+            ReplyDao.INSTANCE.update(Reply {
+                rowId = reply.rowId
+                enable = true
+            })
+
+            "ok"
+        }
+
+        startsWith("disableReply") quoteReply {
+            val reply = ReplyPublic.getReply().firstOrNull { reply -> reply.keyword == it }
+                ?: return@quoteReply "没有这个回复捏"
+
+            ReplyDao.INSTANCE.update(Reply {
+                rowId = reply.rowId
+                enable = false
+            })
+
+            "ok"
+        }
     }
 })
