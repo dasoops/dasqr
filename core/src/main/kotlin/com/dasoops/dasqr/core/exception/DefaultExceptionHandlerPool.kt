@@ -28,9 +28,6 @@ object DefaultExceptionHandlerPool : ExceptionHandlerPool {
             handleSet.add(clazz.kotlin.objectInstance as ExceptionHandler)
             log.info("load exception handler: ${clazz.name}")
         }
-        IBot.eventChannel.exceptionHandler {
-            this.handle(exception = it)
-        }
     }
 
     override fun handle(exception: Throwable) =

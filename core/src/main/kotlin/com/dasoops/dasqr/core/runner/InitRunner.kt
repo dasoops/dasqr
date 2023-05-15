@@ -6,6 +6,9 @@ import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
 import com.dasoops.dasqr.core.plugin.PluginPool
 import kotlinx.coroutines.runBlocking
+import net.mamoe.mirai.event.GlobalEventChannel
+import net.mamoe.mirai.event.subscribeAlways
+import net.mamoe.mirai.event.subscribeGroupMessages
 import net.mamoe.mirai.utils.LoggerAdapters
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
@@ -54,9 +57,6 @@ class InitRunner : ApplicationRunner {
             log.info("use exceptionHandlerPool: ${exceptionHandlerPool.javaClass.name}")
             exceptionHandlerPool.init(config.dasqr.exception)
             ExceptionHandlerPool.INSTANCE = exceptionHandlerPool
-            IBot.eventChannel.exceptionHandler {
-                exceptionHandlerPool.handle(it)
-            }
 
         } catch (e: Throwable) {
             log.error("initRunner throw Exception: ", e)

@@ -22,7 +22,7 @@ object OpenAiPublic {
             getOrNull<OpenAiConfig>("openAi")?.run {
                 return this
             }
-            addAndInit("auth", "openAi[plugin-openai]配置项", OpenAiConfig("no token").toJsonStr())
+            addAndInit("openAi", "openAi[plugin-openai]配置项", OpenAiConfig("no token").toJsonStr())
             log.warn("未加载到openAi配置项,已初始化配置,请填入openAi token后再使用")
             return getOrNull<OpenAiConfig>("openAi")!!
         }
@@ -37,13 +37,15 @@ object OpenAiPublic {
  */
 open class ReplyListenerHost : DslListenerHost({
     val log = LoggerFactory.getLogger(javaClass)
+    val config = Config.INSTANCE.openAi
 
     group("openAi") {
         startsWith("openAi") {
-            val config = Config.INSTANCE.openAi
             val client = OkHttpClient.Builder()
                 .run {
-                    proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress("127.0.0.1", 10809)))
+                    config.proxy?.run {
+                        proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress(hostName, port)))
+                    }
                     build()
                 }
 

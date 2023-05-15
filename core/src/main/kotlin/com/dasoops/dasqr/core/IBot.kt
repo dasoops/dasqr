@@ -2,10 +2,15 @@ package com.dasoops.dasqr.core
 
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.MiraiLoginType
+import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.BotFactory
 import net.mamoe.mirai.auth.BotAuthorization
+import net.mamoe.mirai.event.EventChannel
+import net.mamoe.mirai.event.GlobalEventChannel
+import net.mamoe.mirai.event.GlobalEventChannel.exceptionHandler
+import net.mamoe.mirai.event.events.BotEvent
 import net.mamoe.mirai.utils.BotConfiguration
 import net.mamoe.mirai.utils.StandardCharImageLoginSolver
 import java.io.File
@@ -44,4 +49,10 @@ object IBot : Bot by run({
             IBot.login()
         }
     }
-})
+}) {
+    override val eventChannel: EventChannel<BotEvent>
+        //重写一下加个异常处理
+        get() = GlobalEventChannel.filterIsInstance<BotEvent>()
+            .filter { it.bot === this.bot }
+            .exceptionHandler { ExceptionHandlerPool.INSTANCE.handle(it) }
+}
