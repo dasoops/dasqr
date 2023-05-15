@@ -11,10 +11,20 @@ import net.mamoe.mirai.utils.BotConfiguration
  */
 
 class MiraiConfig(
-    val bot: BotConfig,
-    val file: FileConfig,
-    val log: LogConfig,
-)
+    bot: BotConfig? = null,
+    file: FileConfig? = null,
+    log: LogConfig? = null,
+) {
+    val bot: BotConfig
+    val file: FileConfig
+    val log: LogConfig
+
+    init {
+        this.bot = bot ?: BotConfig()
+        this.file = file ?: FileConfig()
+        this.log = log ?: LogConfig()
+    }
+}
 
 /**
  * miraiLog配置项
@@ -22,11 +32,18 @@ class MiraiConfig(
  * @date 2023-04-24
  */
 class LogConfig(
+    useLog4j2: Boolean? = null
+) {
+
     /**
      * 是否使用log4j2接管mirai日志系统
      */
     val useLog4j2: Boolean
-)
+
+    init {
+        this.useLog4j2 = useLog4j2 ?: true
+    }
+}
 
 /**
  * miraiBot配置项
@@ -34,10 +51,10 @@ class LogConfig(
  * @date 2023-04-24
  */
 class BotConfig(
-    qq: Long,
-    password: String,
-    type: String,
-    protocol: String,
+    qq: Long? = null,
+    password: String? = null,
+    type: String? = null,
+    protocol: String? = null,
 ) {
 
     /**
@@ -61,10 +78,10 @@ class BotConfig(
     val protocol: BotConfiguration.MiraiProtocol
 
     init {
-        this.qq = qq
-        this.password = password
+        this.qq = qq ?: 0
+        this.password = password ?: "none"
         this.type = when (type) {
-            "password" -> MiraiLoginType.PASSWORD
+            null, "password" -> MiraiLoginType.PASSWORD
             "byQrCode" -> MiraiLoginType.BY_QR_CODE
             else -> throw InitExceptionEntity(
                 InitException.UNDEFINED_LOGIN_TYPE,
@@ -72,7 +89,7 @@ class BotConfig(
             )
         }
         this.protocol = when (protocol) {
-            "android_phone" -> BotConfiguration.MiraiProtocol.ANDROID_PHONE
+            null, "android_phone" -> BotConfiguration.MiraiProtocol.ANDROID_PHONE
             "android_pad" -> BotConfiguration.MiraiProtocol.ANDROID_PAD
             "android_watch" -> BotConfiguration.MiraiProtocol.ANDROID_WATCH
             "ipad" -> BotConfiguration.MiraiProtocol.IPAD
@@ -105,18 +122,29 @@ enum class MiraiLoginType {
  * @date 2023-04-24
  */
 class FileConfig(
+    deviceInfoPath: String? = null,
+    cachePath: String? = null,
+    workingDir: String? = null
+) {
+
     /**
      * 设备信息文件
      */
-    val deviceInfoPath: String,
+    val deviceInfoPath: String?
 
     /**
      * 缓存路径
      */
-    val cachePath: String,
+    val cachePath: String?
 
     /**
      * 工作目录
      */
-    val workingDir: String
-)
+    val workingDir: String?
+
+    init {
+        this.deviceInfoPath = deviceInfoPath
+        this.cachePath = cachePath
+        this.workingDir = workingDir
+    }
+}

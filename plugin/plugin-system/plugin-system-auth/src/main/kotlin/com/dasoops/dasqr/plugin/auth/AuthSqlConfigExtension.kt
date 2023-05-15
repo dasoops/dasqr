@@ -11,12 +11,7 @@ val Config.auth: AuthConfig
             return this
         }
         //初始化
-        ConfigDao.INSTANCE.add(com.dasoops.dasqr.plugin.config.Config {
-            keyword = "auth"
-            value = AuthConfig().toJsonStr()
-            description = "权限过滤插件[plugin-system-auth]配置项"
-        })
-        Config.INSTANCE.init()
+        addAndInit("auth","权限过滤插件[plugin-system-auth]配置项",AuthConfig().toJsonStr())
         return getOrNull<AuthConfig>("auth")!!
     }
 

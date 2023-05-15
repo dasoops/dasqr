@@ -31,7 +31,7 @@ object AuthPluginPool : PluginPool {
     private val log = LoggerFactory.getLogger(javaClass)
 
     @Suppress("UNCHECKED_CAST")
-    override fun init(pluginConfig: PluginConfig) {
+    override suspend fun init(pluginConfig: PluginConfig) {
         val scanPathList = pluginConfig.scanPath
         Resources.scan(*scanPathList.toTypedArray()).filter {
             DasqrSimpleListenerHost::class.java.isAssignableFrom(it)

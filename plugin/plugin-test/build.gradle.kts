@@ -5,4 +5,5 @@ dependencies {
     api(project(":plugin:plugin-system:plugin-system-config"))
 //    api(project(":plugin:plugin-system:plugin-system-auth"))
     api(project(":plugin:plugin-loaj:plugin-reply"))
+    api(project(":plugin:plugin-loaj:plugin-openai"))
 }

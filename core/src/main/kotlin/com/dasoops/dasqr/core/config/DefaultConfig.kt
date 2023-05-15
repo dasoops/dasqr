@@ -19,12 +19,12 @@ import java.io.File
 object DefaultConfig : Config {
 
     private val log = LoggerFactory.getLogger(javaClass)
-    override lateinit var mirai: MiraiConfig
-    override lateinit var dasqr: DasqrConfig
     override lateinit var keywordToJsonConfigMap: Map<String, String>
 
+    private val configFile = FileUtil.file(System.getProperty("user.dir") + "/config.json")
+
     override fun init() {
-        val configJson = FileUtil.file(System.getProperty("user.dir") + "/config.json").readText()
+        val configJson = configFile.readText()
         val loadByPath = Json.parse(configJson)
         log.info(
             """
@@ -33,9 +33,12 @@ object DefaultConfig : Config {
         """.trimMargin()
         )
         keywordToJsonConfigMap = loadByPath.mapValues { it.value.toJsonStr() }
+    }
 
-        //forceParse
-        mirai = keywordToJsonConfigMap["mirai"]!!.parse(MiraiConfig::class.java)
-        dasqr = keywordToJsonConfigMap["dasqr"]!!.parse(DasqrConfig::class.java)
+    override fun addAndInit(key: String, description: String, configStr: String) {
+        val configNode = Json.parse(configFile.readText())
+        configNode[key] = configStr
+        configFile.writeText(Json.toJsonStr(configNode))
+        init()
     }
 }

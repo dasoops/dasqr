@@ -93,12 +93,12 @@ open class DslReplyListenerHost : DslListenerHost({
             desc = "是否必须at"
         }
     }) tag@{
-        val matchTypeStr = MatchType.getOrNull(stringOrNull("matchType")!!)
+        val matchType = MatchType.getOrNull(stringOrNull("matchType")!!)
             ?: return@tag "matchType无法识别,可选值:[equals,contain,prefix,suffix]"
         ReplyDao.INSTANCE.add(Reply {
             keyword = string("keyword")
             replyMessage = string("reply")
-            matchType = matchTypeStr
+            this.matchType = matchType
             enable = true
             mustAt = booleanOrDefault("mustAt", true)
             order = Int.MAX_VALUE

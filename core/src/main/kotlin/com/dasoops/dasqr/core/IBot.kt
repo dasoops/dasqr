@@ -19,11 +19,17 @@ object IBot : Bot by run({
     val botProperties = Config.INSTANCE.mirai.bot
     //bot配置项
     val botConfiguration = BotConfiguration {
-        val fileProperties = Config.INSTANCE.mirai.file
+        val fileConfig = Config.INSTANCE.mirai.file
         protocol = botProperties.protocol
-        cacheDir = File(fileProperties.cachePath)
-        workingDir = File(fileProperties.workingDir)
-        fileBasedDeviceInfo(fileProperties.deviceInfoPath)
+        fileConfig.cachePath?.run {
+            cacheDir = File(fileConfig.cachePath)
+        }
+        fileConfig.workingDir?.run {
+            cacheDir = File(fileConfig.workingDir)
+        }
+        fileConfig.deviceInfoPath?.run {
+            fileBasedDeviceInfo(fileConfig.deviceInfoPath)
+        }
     }
 
     //bot登录配置

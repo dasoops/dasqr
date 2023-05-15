@@ -24,6 +24,9 @@ dependencies {
     //api("org.ktorm:ktorm-support-postgresql:3.6.0")
     api("org.springframework:spring-jdbc")
 
+    //okHttp
+    api("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
+
     //kt
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 

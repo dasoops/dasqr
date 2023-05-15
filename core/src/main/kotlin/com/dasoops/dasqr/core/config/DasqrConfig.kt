@@ -6,9 +6,17 @@ package com.dasoops.dasqr.core.config
  * @date 2023-04-24
  */
 class DasqrConfig(
-    val exception: ExceptionConfig,
-    val plugin: PluginConfig,
-)
+    exception: ExceptionConfig? = null,
+    plugin: PluginConfig? = null,
+) {
+    val exception: ExceptionConfig
+    val plugin: PluginConfig
+
+    init {
+        this.exception = exception ?: ExceptionConfig()
+        this.plugin = plugin ?: PluginConfig()
+    }
+}
 
 /**
  * miraiLog配置项
@@ -16,7 +24,7 @@ class DasqrConfig(
  * @date 2023-04-24
  */
 class PluginConfig(
-    scanPath: List<String>?,
+    scanPath: List<String>? = null,
 ) {
 
     /**
@@ -25,7 +33,7 @@ class PluginConfig(
     val scanPath: List<String>
 
     init {
-        this@PluginConfig.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin")
+        this.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin")
     }
 }
 
@@ -35,8 +43,8 @@ class PluginConfig(
  * @date 2023-04-24
  */
 class ExceptionConfig(
-    scanPath: List<String>?,
-    excludeClass: List<String>?
+    scanPath: List<String>? = null,
+    excludeClass: List<String>? = null
 ) {
     /**
      * 扫描路径
@@ -49,7 +57,7 @@ class ExceptionConfig(
     val excludeClass: List<String>?
 
     init {
-        this@ExceptionConfig.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core")
-        this@ExceptionConfig.excludeClass = excludeClass?.ifEmpty { null }
+        this.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core")
+        this.excludeClass = excludeClass?.ifEmpty { null }
     }
 }

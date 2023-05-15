@@ -10,4 +10,5 @@ include(
     ":plugin:plugin-system:plugin-system-auth",
     ":plugin:plugin-system:plugin-system-register",
     ":plugin:plugin-loaj:plugin-reply",
+    ":plugin:plugin-loaj:plugin-openai",
 )
