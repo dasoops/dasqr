@@ -41,4 +41,6 @@ interface ScheduleDo : DasEntity<ScheduleDo> {
     var description: String
     var paramJson: String?
     var enable: Boolean
+
+    companion object : DasEntity.Factory<ScheduleDo>()
 }

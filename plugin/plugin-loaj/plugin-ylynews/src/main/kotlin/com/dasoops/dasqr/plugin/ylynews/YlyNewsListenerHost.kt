@@ -1,20 +1,24 @@
 package com.dasoops.dasqr.plugin.ylynews
 
+import cn.hutool.cache.impl.LRUCache
 import cn.hutool.cache.impl.TimedCache
 import cn.hutool.http.HttpUtil
 import com.dasoops.common.core.util.getOrNullAndSet
 import com.dasoops.dasqr.core.listener.DslListenerHost
+import com.dasoops.dasqr.core.runner.Runner
 import com.dasoops.dasqr.plugin.config.Cache
+import com.dasoops.dasqr.plugin.schedule.*
 import org.jsoup.Jsoup
+import org.ktorm.dsl.eq
 import org.slf4j.LoggerFactory
 
 enum class News {
     ZHI_HU;
 }
 
-object NewsPublic {
+object NewsPublic : Runner, ScheduleTask {
     //10分钟缓存
-    val cache: TimedCache<News, String> = Cache.newTimedCache(this::class, 1000 * 60 * 10)
+    val cache: LRUCache<News, String> = Cache.newLRUCache(this::class, 10)
     private val log = LoggerFactory.getLogger(javaClass)
 
     fun getZhihuNews(): String {
@@ -37,8 +41,29 @@ object NewsPublic {
             """.trimMargin()
         }
     }
-}
 
+    override fun run(paramJson: String?) {
+        cache.clear()
+    }
+
+    override fun init() {
+        val isInit = ScheduleDao.INSTANCE.anyMatched {
+            it.`class` eq this::class.java.name
+        }
+        if (isInit) {
+            return
+        }
+
+        ScheduleDao.INSTANCE.add(ScheduleDo {
+            //每天
+            this.cron = "0 0 * * *"
+            this.`class` = this::class.java.name
+            this.description = "清除日报缓存"
+            this.enable = true
+        })
+        ScheduleRunner.init()
+    }
+}
 
 /**
  * 消息回复listenerHost
