@@ -9,13 +9,13 @@ import org.ktorm.schema.varchar
  * @author DasoopsNicole@Gmail.com
  * @date 2023-05-04
  */
-object Configs : DasTable<Config>("plugin_system_config") {
+object Configs : DasTable<ConfigDo>("plugin_system_config") {
     val keyword = varchar("keyword").bindTo { it.keyword }
     val value = varchar("value").bindTo { it.value }
     val description = varchar("description").bindTo { it.description }
 }
 
-interface Config : DasEntity<Config> {
+interface ConfigDo : DasEntity<ConfigDo> {
     /**
      * 关键词
      */
@@ -31,5 +31,5 @@ interface Config : DasEntity<Config> {
      */
     var description: String
 
-    companion object : DasEntity.Factory<Config>()
+    companion object : DasEntity.Factory<ConfigDo>()
 }

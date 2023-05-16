@@ -20,7 +20,7 @@ open class MessageLogListenerHost : DasqrSimpleListenerHost() {
 
     @EventHandler(EventPriority.HIGHEST)
     open fun handle(event: MessageEvent) {
-        messageLogDao.add(MessageLog {
+        messageLogDao.add(MessageLogDo {
             messageType = MessageType.getOrNull(event) ?: return
             senderId = event.sender.id
             if (event.sender is Member) {

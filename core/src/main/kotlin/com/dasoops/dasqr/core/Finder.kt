@@ -18,14 +18,28 @@ annotation class DefaultImpl
  * @date 2023-05-08
  */
 object Finder {
+
+    inline fun <reified T> getAll(basePath: Collection<String>, excludeClass: Collection<String>?): Collection<T> {
+        return Resources.scan(this::class.java.classLoader, *basePath.toTypedArray())
+            .filter {
+                T::class.java.isAssignableFrom(it)
+            }.filter {
+                excludeClass?.contains(it.name) == null
+            }.map {
+                getObjectInstacnce(it)
+            }
+    }
+
     /**
      * 查找实体类
      * @return [T]
      */
-    inline fun <reified T> getOrNull(basePath: List<String>): T? {
+    inline fun <reified T> getOrNull(basePath: Collection<String>, excludeClass: Collection<String>?): T? {
         val list = Resources.scan(this::class.java.classLoader, *basePath.toTypedArray())
             .filter {
                 T::class.java.isAssignableFrom(it)
+            }.filter {
+                excludeClass?.contains(it.name) == null
             }
 
         return if (list.size == 1) {
@@ -49,8 +63,8 @@ object Finder {
         }
     }
 
-    inline fun <reified T> get(basePath: List<String>): T {
-        return getOrNull<T>(basePath) ?: throw InitException.NO_FIND_CLASS.get()
+    inline fun <reified T> get(basePath: Collection<String>, excludeClass: Collection<String>?): T {
+        return getOrNull<T>(basePath, excludeClass) ?: throw InitException.NO_FIND_CLASS.get()
     }
 
     inline fun <reified T> getObjectInstacnce(clazz: Class<*>): T {
@@ -67,5 +81,9 @@ object Finder {
             |    - 在配置文件中的 exclude-class 字段中排除这个类
         """.trimMargin()
         )
+    }
+
+    inline fun <reified T> getObjectInstacnce(className: String): T {
+        return getObjectInstacnce(Class.forName(className, false, this::class.java.classLoader))
     }
 }

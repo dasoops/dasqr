@@ -37,7 +37,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-loader")
 
     //schedule task
-    implementation("org.springframework.boot:spring-boot-starter-quartz")
+//    implementation("org.springframework.boot:spring-boot-starter-quartz")
 
     //test
     testImplementation("org.springframework.boot:spring-boot-starter-test")

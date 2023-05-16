@@ -4,7 +4,7 @@ import com.dasoops.common.db.ktorm.BaseDao
 import org.springframework.stereotype.Component
 
 @Component
-class ExceptionLogDao : BaseDao<ExceptionLog, ExceptionLogs>(ExceptionLogs) {
+class ExceptionLogDao : BaseDao<ExceptionLogDo, ExceptionLogs>(ExceptionLogs) {
 
 
     init {

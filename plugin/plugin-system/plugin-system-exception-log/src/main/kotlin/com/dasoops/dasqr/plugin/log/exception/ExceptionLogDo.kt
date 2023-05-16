@@ -9,13 +9,13 @@ import org.ktorm.schema.varchar
  * @author DasoopsNicole@Gmail.com
  * @date 2023-05-04
  */
-object ExceptionLogs : DasTable<ExceptionLog>("core_exception_log") {
+object ExceptionLogs : DasTable<ExceptionLogDo>("core_exception_log") {
     val stackInfo = varchar("stack_info").bindTo { it.stackInfo }
     val topMessage = varchar("top_message").bindTo { it.topMessage }
     val exceptionType = varchar("exception_type").bindTo { it.exceptionType }
 }
 
-interface ExceptionLog : DasEntity<ExceptionLog> {
+interface ExceptionLogDo : DasEntity<ExceptionLogDo> {
     /**
      * 堆栈信息
      */
@@ -31,5 +31,5 @@ interface ExceptionLog : DasEntity<ExceptionLog> {
      */
     var exceptionType: String
 
-    companion object : DasEntity.Factory<ExceptionLog>()
+    companion object : DasEntity.Factory<ExceptionLogDo>()
 }

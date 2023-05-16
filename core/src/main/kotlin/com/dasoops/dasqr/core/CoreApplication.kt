@@ -2,6 +2,7 @@ package com.dasoops.dasqr.core
 
 import com.dasoops.common.db.ktorm.BaseKtormConfiguration
 import kotlinx.coroutines.runBlocking
+import org.quartz.impl.StdSchedulerFactory
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan

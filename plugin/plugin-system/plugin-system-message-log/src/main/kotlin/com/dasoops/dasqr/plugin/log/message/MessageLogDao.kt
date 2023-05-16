@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
  * @date 2023-05-08
  */
 @Component
-class MessageLogDao : BaseDao<MessageLog, MessageLogs>(MessageLogs) {
+class MessageLogDao : BaseDao<MessageLogDo, MessageLogs>(MessageLogs) {
 
 
     init {

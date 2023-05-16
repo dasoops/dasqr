@@ -1,20 +1,18 @@
 package com.dasoops.dasqr.plugin.log.message
 
-import com.dasoops.common.db.ktorm.BaseDao
 import com.dasoops.common.db.ktorm.DasEntity
 import com.dasoops.common.db.ktorm.DasTable
 import com.dasoops.common.db.ktorm.dataEnum
 import org.ktorm.schema.int
 import org.ktorm.schema.long
 import org.ktorm.schema.varchar
-import org.springframework.stereotype.Component
 
 /**
  * 异常日志
  * @author DasoopsNicole@Gmail.com
  * @date 2023-05-04
  */
-object MessageLogs : DasTable<MessageLog>("core_message_log") {
+object MessageLogs : DasTable<MessageLogDo>("core_message_log") {
     val senderId = long("sender_id").bindTo { it.senderId }
     val senderGroupId = long("sender_group_id").bindTo { it.senderGroupId }
     val senderName = varchar("sender_name").bindTo { it.senderName }
@@ -25,7 +23,7 @@ object MessageLogs : DasTable<MessageLog>("core_message_log") {
     val messageType = dataEnum<MessageType>("message_type").bindTo { it.messageType }
 }
 
-interface MessageLog : DasEntity<MessageLog> {
+interface MessageLogDo : DasEntity<MessageLogDo> {
     /**
      * 发送人QQ
      */
@@ -66,5 +64,5 @@ interface MessageLog : DasEntity<MessageLog> {
      */
     var messageType: MessageType
 
-    companion object : DasEntity.Factory<MessageLog>()
+    companion object : DasEntity.Factory<MessageLogDo>()
 }

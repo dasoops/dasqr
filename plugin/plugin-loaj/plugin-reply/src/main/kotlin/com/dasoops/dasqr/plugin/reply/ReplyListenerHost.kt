@@ -79,6 +79,7 @@ open class DslReplyListenerHost : DslListenerHost({
         "keyword" {
             order = 1
             desc = "关键词"
+            require = true
         }
         "reply" {
             order = 2
@@ -95,6 +96,14 @@ open class DslReplyListenerHost : DslListenerHost({
     }) tag@{
         val matchType = MatchType.getOrNull(stringOrNull("matchType")!!)
             ?: return@tag "matchType无法识别,可选值:[equals,contain,prefix,suffix]"
+
+        if (ReplyDao.INSTANCE.anyMatched { reply ->
+                reply.keyword eq string("keyword")
+                reply.matchType eq matchType
+            }) {
+            return@tag it.message.quote() + "已经有这个回复了呢"
+        }
+
         ReplyDao.INSTANCE.add(Reply {
             keyword = string("keyword")
             replyMessage = string("reply")
@@ -103,6 +112,7 @@ open class DslReplyListenerHost : DslListenerHost({
             mustAt = booleanOrDefault("mustAt", true)
             order = Int.MAX_VALUE
         })
+
         return@tag it.message.quote() + "ok"
     }
 
@@ -112,9 +122,8 @@ open class DslReplyListenerHost : DslListenerHost({
                 it.keyword eq keyword
             } ?: return@quoteReply "没有这个回复捏"
 
-            if (reply.enable) {
-                return@quoteReply "这不本来就开的嘛"
-            }
+            if (reply.enable) return@quoteReply "这不本来就开的嘛"
+
             ReplyDao.INSTANCE.update(Reply {
                 rowId = reply.rowId
                 enable = true

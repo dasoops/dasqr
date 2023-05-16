@@ -15,7 +15,7 @@ object SqlConfig : Config {
     private val log = LoggerFactory.getLogger(javaClass)
 
     //Map<keyword,config>
-    lateinit var keywordToConfigMap: Map<String, com.dasoops.dasqr.plugin.config.Config>
+    lateinit var keywordToConfigMap: Map<String, com.dasoops.dasqr.plugin.config.ConfigDo>
 
     val configDao = ConfigDao.INSTANCE
 
@@ -31,7 +31,7 @@ object SqlConfig : Config {
     }
 
     override fun addAndInit(key: String, description: String, configStr: String) {
-        ConfigDao.INSTANCE.add(Config {
+        ConfigDao.INSTANCE.add(ConfigDo {
             this.keyword = key
             this.value = configStr
             this.description = description

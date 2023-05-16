@@ -1,9 +1,7 @@
 package com.dasoops.dasqr.plugin.log.exception
 
 import cn.hutool.core.exceptions.ExceptionUtil
-import cn.hutool.extra.spring.SpringUtil
 import com.dasoops.dasqr.core.exception.ExceptionHandler
-import kotlin.coroutines.CoroutineContext
 
 /**
  * sql日志异常处理程序
@@ -16,7 +14,7 @@ object SqlLogExceptionHandler : ExceptionHandler {
     override fun handle(exception: Throwable) {
         val rootCause = ExceptionUtil.getRootCause(exception)
         dao.add(
-            ExceptionLog {
+            ExceptionLogDo {
                 stackInfo = exception.stackTraceToString()
                 topMessage = rootCause.message ?: "no message"
                 exceptionType = rootCause.javaClass.name
