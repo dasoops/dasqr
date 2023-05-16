@@ -27,11 +27,11 @@ class ScheduleDao : BaseDao<ScheduleDo, Schedules>(Schedules) {
     }
 }
 
-object Schedules : DasTable<ScheduleDo>("plugin-system-schedule") {
+object Schedules : DasTable<ScheduleDo>("plugin_system_schedule") {
     val cron = varchar("cron").bindTo { it.cron }
     val `class` = varchar("class").bindTo { it.`class` }
     val description = varchar("description").bindTo { it.description }
-    val paramJson = varchar("paramJson").bindTo { it.paramJson }
+    val paramJson = varchar("param_json").bindTo { it.paramJson }
     val enable = boolean("enable").bindTo { it.enable }
 }
 

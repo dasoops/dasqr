@@ -1,6 +1,5 @@
 dependencies {
     api(project(":plugin:plugin-core"))
-    api(project(":plugin:plugin-system:plugin-system-cache"))
 }
 
 tasks.named<Jar>("jar") {

@@ -9,14 +9,24 @@ import net.mamoe.mirai.event.MessageSubscribersBuilder
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.event.events.MessageEvent
 import net.mamoe.mirai.event.events.UserMessageEvent
-import net.mamoe.mirai.message.data.MessageChain
+import net.mamoe.mirai.message.data.MessageSource.Key.quote
+import net.mamoe.mirai.message.data.plus
 
+/**
+ * 匹配模式
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/05/16
+ * @see [Match]
+ */
 enum class Match {
-    PREFIX, SUFFIX, EQUALS, CONTAIN
+    PREFIX, SUFFIX, EQUALS, CONTAIN;
 }
 
 /**
  * 关键词
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/05/16
+ * @see [Keyword]
  */
 class Keyword(
     keyword: String,
@@ -41,14 +51,35 @@ class Keyword(
 
 }
 
+/**
+ * 指令
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/05/16
+ * @see [Command]
+ */
 class Command(
-    internal val match: Match,
+    val match: Match,
     val keyword: String,
-    val message: MessageChain,
-    func: CommandKeywordBuilder.() -> Unit
-) : Map<String, Any?> by mutableMapOf() {
-    private val keywordList = CommandKeywordBuilder().apply(func).keywordList
+    optionFunc: CommandKeywordBuilder.() -> Unit
+) {
+    private val keywordList = CommandKeywordBuilder().apply(optionFunc).keywordList
 
+    fun handle(string: String): CommandResult {
+        return CommandResult(this).apply {
+            println(string)
+        }
+    }
+}
+
+/**
+ * 指令处理结果
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/05/16
+ * @see [CommandResult]
+ */
+class CommandResult(
+    val command: Command
+) : Map<String, Any?> by mutableMapOf() {
     fun string(key: String): String {
         return stringOrNull(key)!!
     }
@@ -133,11 +164,12 @@ fun ListenerHostDslBuilder.group(
     name: String,
     option: CommandKeywordBuilder.() -> Unit,
     keywordList: List<String> = mutableListOf(name),
+    quote: Boolean = true,
     match: Match = Match.PREFIX,
     priority: EventPriority = EventPriority.NORMAL,
     ignoreCancelled: Boolean = true,
     concurrency: ConcurrencyKind = ConcurrencyKind.CONCURRENT,
-    func: suspend Command.(event: GroupMessageEvent) -> Any?
+    func: CommandResult.(event: GroupMessageEvent) -> Any?
 ) {
     metaDataList.add(
         GroupDslEventHandlerMetaData(
@@ -146,7 +178,9 @@ fun ListenerHostDslBuilder.group(
             ignoreCancelled = ignoreCancelled,
             concurrency = concurrency,
             func = {
-                checkAndRun(match, keywordList, option, func)
+                suspend {
+                    checkAndRun(match, keywordList, quote, option, func)
+                }
             },
         )
     )
@@ -156,11 +190,12 @@ fun ListenerHostDslBuilder.user(
     name: String,
     match: Match = Match.PREFIX,
     keywordList: Collection<String> = mutableSetOf(name),
+    quote: Boolean = true,
     priority: EventPriority = EventPriority.NORMAL,
     ignoreCancelled: Boolean = true,
     concurrency: ConcurrencyKind = ConcurrencyKind.CONCURRENT,
     option: CommandKeywordBuilder.() -> Unit,
-    func: suspend Command.(event: UserMessageEvent) -> Any?
+    func: CommandResult.(event: UserMessageEvent) -> Any?
 ) {
     metaDataList.add(
         UserDslEventHandlerMetaData(
@@ -168,67 +203,69 @@ fun ListenerHostDslBuilder.user(
             priority = priority,
             ignoreCancelled = ignoreCancelled,
             concurrency = concurrency,
-            func = {
-                checkAndRun(match, keywordList, option, func)
-            },
-        )
+        ) {
+            suspend {
+                checkAndRun(match, keywordList, quote, option, func)
+            }
+        }
     )
 }
 
-private fun <T : MessageEvent> MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.checkAndRun(
+private suspend fun <T : MessageEvent> MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.checkAndRun(
     match: Match,
     keywordList: Collection<String>,
+    quote: Boolean,
     option: CommandKeywordBuilder.() -> Unit,
-    func: suspend Command.(event: T) -> Any?
+    func: CommandResult.(event: T) -> Any?
 ) {
 
-    //TODO(待优化)
     when (match) {
-        Match.PREFIX -> keywordList.forEach { keyword ->
-            startsWith(keyword) {
-                val command = Command(
-                    match = match,
-                    keyword = keyword,
-                    func = option,
-                    message = this.message
-                )
-                func(command, this)
-            }
+        Match.PREFIX -> run(keywordList, match, quote, option, func) { keyword ->
+            startsWith(keyword)
         }
 
-        Match.SUFFIX -> keywordList.forEach { keyword ->
-            endsWith(keyword) {
-                val command = Command(
-                    match = match,
-                    keyword = keyword,
-                    func = option,
-                    message = this.message
-                )
-                func(command, this)
-            }
+        Match.SUFFIX -> run(keywordList, match, quote, option, func) { keyword ->
+            endsWith(keyword)
         }
 
-        Match.EQUALS -> keywordList.forEach { keyword ->
-            keyword {
-                val command = Command(
-                    match = match,
-                    keyword = keyword,
-                    func = option,
-                    message = this.message
-                )
-                func(command, this)
-            }
+        Match.EQUALS -> run(keywordList, match, quote, option, func) { keyword ->
+            case(keyword)
         }
 
-        Match.CONTAIN -> keywordList.forEach { keyword ->
-            contains(keyword) {
-                val command = Command(
+        Match.CONTAIN -> run(keywordList, match, quote, option, func) { keyword ->
+            contains(keyword)
+        }
+    }
+}
+
+private suspend fun <T : MessageEvent> MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.run(
+    keywordList: Collection<String>,
+    match: Match,
+    quote: Boolean,
+    option: CommandKeywordBuilder.() -> Unit,
+    func: suspend CommandResult.(event: T) -> Any?,
+    runFunc: suspend MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.(keyword: String) -> MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.ListeningFilter
+) {
+    keywordList.forEach { keyword ->
+        val filter = runFunc(this, keyword)
+
+        if (quote) {
+            filter quoteReply {
+                val commandResult = Command(
                     match = match,
                     keyword = keyword,
-                    func = option,
-                    message = this.message
-                )
-                func(command, this)
+                    optionFunc = option,
+                ).handle(it)
+                func(commandResult, this)
+            }
+        } else {
+            filter reply {
+                val commandResult = Command(
+                    match = match,
+                    keyword = keyword,
+                    optionFunc = option,
+                ).handle(it)
+                func(commandResult, this)
             }
         }
     }
