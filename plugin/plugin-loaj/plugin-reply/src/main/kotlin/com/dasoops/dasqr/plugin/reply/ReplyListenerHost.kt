@@ -1,12 +1,12 @@
 package com.dasoops.dasqr.plugin.reply
 
-import cn.hutool.cache.CacheUtil
 import cn.hutool.cache.impl.TimedCache
 import com.dasoops.common.core.util.getOrNullAndSet
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.listener.DasqrSimpleListenerHost
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.listener.group
+import com.dasoops.dasqr.plugin.config.Cache
 import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.message.data.At
@@ -19,7 +19,7 @@ import kotlin.reflect.KClass
 object ReplyPublic {
     //10分钟过期
     val replyCache: TimedCache<KClass<out ReplyPublic>, Collection<Reply>> =
-        CacheUtil.newTimedCache(1000 * 60 * 10)
+        Cache.newTimedCache(this::class, 1000 * 60 * 10)
 
     private val replyDao = ReplyDao.INSTANCE
 

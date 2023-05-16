@@ -81,7 +81,7 @@ class ListenerHostDslBuilder {
         priority: EventPriority = EventPriority.NORMAL,
         ignoreCancelled: Boolean = true,
         concurrency: ConcurrencyKind = ConcurrencyKind.CONCURRENT,
-        func: GroupMessageSubscribersBuilder.() -> Unit
+        func: GroupMessageSubscribersBuilder.(name: String) -> Unit
     ) {
         metaDataList.add(
             GroupDslEventHandlerMetaData(
@@ -89,7 +89,9 @@ class ListenerHostDslBuilder {
                 priority = priority,
                 ignoreCancelled = ignoreCancelled,
                 concurrency = concurrency,
-                func = func,
+                func = {
+                    func(name)
+                },
             )
         )
     }
@@ -99,7 +101,7 @@ class ListenerHostDslBuilder {
         priority: EventPriority = EventPriority.NORMAL,
         ignoreCancelled: Boolean = true,
         concurrency: ConcurrencyKind = ConcurrencyKind.CONCURRENT,
-        func: UserMessageSubscribersBuilder.() -> Unit
+        func: UserMessageSubscribersBuilder.(name: String) -> Unit
     ) {
         metaDataList.add(
             UserDslEventHandlerMetaData(
@@ -107,7 +109,9 @@ class ListenerHostDslBuilder {
                 priority = priority,
                 ignoreCancelled = ignoreCancelled,
                 concurrency = concurrency,
-                func = func,
+                func = {
+                    func(name)
+                },
             )
         )
     }

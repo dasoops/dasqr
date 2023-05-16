@@ -10,7 +10,7 @@ import com.dasoops.dasqr.core.config.Config
  */
 open class ConfigListenerHost : DslListenerHost({
     group("refreshConfig") {
-        startsWith("refresh config") quoteReply {
+        case("refresh config") quoteReply {
             Config.INSTANCE.init()
             "ok"
         }

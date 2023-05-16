@@ -6,9 +6,6 @@ import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
 import com.dasoops.dasqr.core.plugin.PluginPool
 import kotlinx.coroutines.runBlocking
-import net.mamoe.mirai.event.GlobalEventChannel
-import net.mamoe.mirai.event.subscribeAlways
-import net.mamoe.mirai.event.subscribeGroupMessages
 import net.mamoe.mirai.utils.LoggerAdapters
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
@@ -52,12 +49,11 @@ class InitRunner : ApplicationRunner {
             PluginPool.INSTANCE = pluginPool
 
             //加载异常处理
-            log.debug("init exceptionHandlerPool")
+            log.info("init exceptionHandlerPool")
             val exceptionHandlerPool = Finder.get<ExceptionHandlerPool>(config.dasqr.plugin.scanPath)
             log.info("use exceptionHandlerPool: ${exceptionHandlerPool.javaClass.name}")
             exceptionHandlerPool.init(config.dasqr.exception)
             ExceptionHandlerPool.INSTANCE = exceptionHandlerPool
-
         } catch (e: Throwable) {
             log.error("initRunner throw Exception: ", e)
             exitProcess(0)

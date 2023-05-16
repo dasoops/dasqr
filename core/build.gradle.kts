@@ -9,9 +9,9 @@ dependencies {
     //common
     api("cn.hutool:hutool-all:5.8.18")
     api("com.google.guava:guava:31.1-jre")
-    api(platform(("com.dasoops:common-bom:4.0.24")))
+    api(platform(("com.dasoops:common-bom:4.0.25")))
     api("com.dasoops:common-core")
-    api("com.dasoops:common-core-spring")
+//    api("com.dasoops:common-core-spring")
     api("com.dasoops:common-json-spring")
 
     //db

@@ -3,7 +3,6 @@ package com.dasoops.dasqr.plugin.auth
 import com.dasoops.common.json.toJsonStr
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.getOrNull
-import com.dasoops.dasqr.plugin.config.ConfigDao
 
 val Config.auth: AuthConfig
     get() {
