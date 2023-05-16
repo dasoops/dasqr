@@ -12,29 +12,29 @@ dependencies {
     api("com.google.guava:guava:31.1-jre")
     api(platform(("com.dasoops:common-bom:4.0.25")))
     api("com.dasoops:common-core")
-//    api("com.dasoops:common-core-spring")
     api("com.dasoops:common-json-spring")
 
     //db
-    //implementation("org.springframework.boot:spring-boot-starter-data-redis")
     runtimeOnly("org.postgresql:postgresql")
-    implementation("org.flywaydb:flyway-core:9.16.3")
+    api("org.flywaydb:flyway-core:9.16.3")
+
     //orm
-    //api("com.dasoops:common-db-mybatis-plus-spring")
     api("com.dasoops:common-db-ktorm-spring")
-    //api("org.ktorm:ktorm-support-postgresql:3.6.0")
     api("org.springframework:spring-jdbc")
+
+    //爬虫框架
+    api("org.jsoup:jsoup:1.15.3")
 
     //okHttp
     api("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
 
     //kt
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    api("org.jetbrains.kotlin:kotlin-reflect")
 
     //spring
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-loader")
+    api("org.springframework.boot:spring-boot-starter")
+    api("org.springframework.boot:spring-boot-loader")
 
     //schedule task
 //    implementation("org.springframework.boot:spring-boot-starter-quartz")

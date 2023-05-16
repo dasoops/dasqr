@@ -12,6 +12,7 @@ import net.mamoe.mirai.event.GlobalEventChannel
 import net.mamoe.mirai.event.GlobalEventChannel.exceptionHandler
 import net.mamoe.mirai.event.events.BotEvent
 import net.mamoe.mirai.utils.BotConfiguration
+import net.mamoe.mirai.utils.LoginSolver
 import net.mamoe.mirai.utils.StandardCharImageLoginSolver
 import java.io.File
 
@@ -27,19 +28,21 @@ object IBot : Bot by run({
         val fileConfig = Config.INSTANCE.mirai.file
         protocol = botProperties.protocol
         fileConfig.cachePath?.run {
-            cacheDir = File(fileConfig.cachePath)
+            cacheDir = File(this)
         }
         fileConfig.workingDir?.run {
-            cacheDir = File(fileConfig.workingDir)
+            cacheDir = File(this)
         }
         fileConfig.deviceInfoPath?.run {
-            fileBasedDeviceInfo(fileConfig.deviceInfoPath)
+            fileBasedDeviceInfo(this)
         }
     }
 
     //bot登录配置
     if (botProperties.type == MiraiLoginType.PASSWORD) {
-        BotFactory.newBot(botProperties.qq, botProperties.password, botConfiguration)
+        BotFactory.newBot(botProperties.qq, botProperties.password, botConfiguration.apply {
+            loginSolver = LoginSolver.Default
+        })
     } else {
         BotFactory.newBot(botProperties.qq, BotAuthorization.byQRCode(), botConfiguration.apply {
             loginSolver = StandardCharImageLoginSolver()

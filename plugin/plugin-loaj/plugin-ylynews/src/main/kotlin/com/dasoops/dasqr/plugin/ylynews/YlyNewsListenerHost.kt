@@ -6,8 +6,11 @@ import cn.hutool.http.HttpUtil
 import com.dasoops.common.core.util.getOrNullAndSet
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.runner.Runner
+import com.dasoops.dasqr.plugin.OkHttpRunner.NO_PROXY_INSTANCE
 import com.dasoops.dasqr.plugin.config.Cache
 import com.dasoops.dasqr.plugin.schedule.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.jsoup.Jsoup
 import org.ktorm.dsl.eq
 import org.slf4j.LoggerFactory
@@ -26,7 +29,11 @@ object NewsPublic : Runner, ScheduleTask {
         //前缀,网页中的路径不带前缀}
         val urlPrefix = "https://daily.zhihu.com";
         //发请求获取网页内容
-        val info = HttpUtil.get("https://daily.zhihu.com/#section_head")
+        val info = OkHttpClient.NO_PROXY_INSTANCE.newCall(
+            Request.Builder()
+                .url("https://daily.zhihu.com/#section_head")
+                .get().build()
+        ).execute().body!!.string()
         // 解析并获取标签为wrap的
         val parse = Jsoup.parse(info).getElementsByClass("wrap")
         // 创建返回消息
