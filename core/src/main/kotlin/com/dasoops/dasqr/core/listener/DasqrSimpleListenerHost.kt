@@ -19,6 +19,9 @@ sealed interface DasqrListenerHost
  */
 @IgnoreResourcesScan
 abstract class DasqrSimpleListenerHost : SimpleListenerHost(), DasqrListenerHost {
+    override fun handleException(context: CoroutineContext, exception: Throwable) {
+        ExceptionHandlerPool.INSTANCE.handle(exception)
+    }
 }
 
 /**
