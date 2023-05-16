@@ -62,36 +62,9 @@ open class ReplyListenerHost : DasqrSimpleListenerHost() {
             }
         }?.also {
             event.subject.sendMessage(it.replyMessage)
-           //event.intercept()
-        }
-    }
-
-    @EventHandler
-    open suspend fun DailyReportReply(event: GroupMessageEvent) {
-        if (event.message.get(1).toString().equals("日报")) {
-            event.subject.sendMessage(this.getReport())
             event.intercept()
         }
     }
-
-    fun getReport(): String { //       前缀,网页中的路径不带前缀
-        val urlPrefix: String = "https://daily.zhihu.com";
-        //发请求获取网页内容
-        val info = HttpUtil.get("https://daily.zhihu.com/#section_head")
-        // 解析并获取标签为wrap的
-        val parse = Jsoup.parse(info).getElementsByClass("wrap")
-        // 创建返回消息
-        var sb: StringBuffer = StringBuffer()
-        sb.append("来咯,这是今天的知乎日报，一共" + parse.size + "条消息\n")
-        for (element in parse) {
-            sb.append("第" + (parse + 1) + "条消息:")
-            sb.append(
-                element.text() + "链接是:" +
-                        urlPrefix + (element.selectFirst("a")?.attr("href") ?: String) + "\n"
-            )
-        }
-        return sb.toString(); }
-
 }
 
 /**

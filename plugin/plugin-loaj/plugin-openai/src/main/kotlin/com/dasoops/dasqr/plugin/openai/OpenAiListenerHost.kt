@@ -33,9 +33,9 @@ object OpenAiPublic {
  * 消息回复listenerHost
  * @author DasoopsNicole@Gmail.com
  * @date 2023/05/10
- * @see [ReplyListenerHost]
+ * @see [OpenAiListenerHost]
  */
-open class ReplyListenerHost : DslListenerHost({
+open class OpenAiListenerHost : DslListenerHost({
     val log = LoggerFactory.getLogger(javaClass)
     val config = Config.INSTANCE.openAi
 

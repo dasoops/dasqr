@@ -6,5 +6,6 @@ dependencies {
     api(project(":plugin:plugin-system:plugin-system-schedule"))
 //    api(project(":plugin:plugin-system:plugin-system-auth"))
     api(project(":plugin:plugin-loaj:plugin-reply"))
+    api(project(":plugin:plugin-loaj:plugin-ylynews"))
     api(project(":plugin:plugin-loaj:plugin-openai"))
 }
