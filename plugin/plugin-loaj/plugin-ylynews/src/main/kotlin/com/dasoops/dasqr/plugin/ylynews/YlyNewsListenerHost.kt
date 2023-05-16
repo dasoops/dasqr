@@ -48,16 +48,17 @@ object NewsPublic : Runner, ScheduleTask {
 
     override fun init() {
         val isInit = ScheduleDao.INSTANCE.anyMatched {
-            it.`class` eq this::class.java.name
+            it.`class` eq NewsPublic::class.java.name
         }
         if (isInit) {
             return
         }
 
+
         ScheduleDao.INSTANCE.add(ScheduleDo {
             //每天
             this.cron = "0 0 * * *"
-            this.`class` = this::class.java.name
+            this.`class` = NewsPublic::class.java.name
             this.description = "清除日报缓存"
             this.enable = true
         })

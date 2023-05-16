@@ -16,13 +16,10 @@ object ScheduleRunner : Runner {
     private val log = LoggerFactory.getLogger(javaClass)
     val scheduleList = mutableListOf<Schedule>()
 
-
     override fun init() {
-        //清除原有的任务
-        scheduleList.forEach {
-            CronUtil.remove(it.id)
-        }
-        scheduleList.clear()
+        //重新启动
+        CronUtil.restart()
+        CronUtil.setMatchSecond(true)
 
         //添加任务
         ScheduleDao.INSTANCE.findList {
@@ -42,6 +39,7 @@ object ScheduleRunner : Runner {
                 scheduleTask.run(it.paramJson)
             })
 
+            //留一份方便做拓展
             scheduleList.add(
                 Schedule(
                     task = scheduleTask,
@@ -50,8 +48,6 @@ object ScheduleRunner : Runner {
                 )
             )
         }
-
-        CronUtil.start()
     }
 }
 

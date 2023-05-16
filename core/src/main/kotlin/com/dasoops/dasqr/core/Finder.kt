@@ -3,6 +3,7 @@ package com.dasoops.dasqr.core
 import com.dasoops.common.core.util.resources.Resources
 import com.dasoops.dasqr.core.runner.InitException
 import com.dasoops.dasqr.core.runner.InitExceptionEntity
+import com.fasterxml.jackson.databind.util.ClassUtil
 import com.fasterxml.jackson.module.kotlin.isKotlinClass
 
 /**
@@ -76,7 +77,7 @@ object Finder {
         }
         throw InitExceptionEntity(
             InitException.MUST_OBJECT_INSTANCE, """
-            |${clazz.name}类必须为kotlin object对象
+            |${clazz.name}类必须为kotlin object/open class 对象
             |    - 使用 @IgnoreResources 使对象从扫描中排除
             |    - 在配置文件中的 exclude-class 字段中排除这个类
         """.trimMargin()
