@@ -1,6 +1,7 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 dependencies {
+    //TODO(依赖打包加载)
     //mirai
     api(platform("net.mamoe:mirai-bom:2.15.0-M1"))
     api("net.mamoe:mirai-core-api")

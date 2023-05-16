@@ -81,19 +81,19 @@ class BotConfig(
         this.qq = qq ?: 0
         this.password = password ?: "none"
         this.type = when (type) {
-            null, "password" -> MiraiLoginType.PASSWORD
-            "byQrCode" -> MiraiLoginType.BY_QR_CODE
+            null, "password","PASSWORD" -> MiraiLoginType.PASSWORD
+            "byQrCode","BY_QR_CODE" -> MiraiLoginType.BY_QR_CODE
             else -> throw InitExceptionEntity(
                 InitException.UNDEFINED_LOGIN_TYPE,
                 "${InitException.UNDEFINED_LOGIN_TYPE.message} -> $protocol"
             )
         }
         this.protocol = when (protocol) {
-            null, "android_phone" -> BotConfiguration.MiraiProtocol.ANDROID_PHONE
-            "android_pad" -> BotConfiguration.MiraiProtocol.ANDROID_PAD
-            "android_watch" -> BotConfiguration.MiraiProtocol.ANDROID_WATCH
-            "ipad" -> BotConfiguration.MiraiProtocol.IPAD
-            "macos" -> BotConfiguration.MiraiProtocol.MACOS
+            null, "android_phone", "ANDROID_PHONE" -> BotConfiguration.MiraiProtocol.ANDROID_PHONE
+            "android_pad", "ANDROID_PAD" -> BotConfiguration.MiraiProtocol.ANDROID_PAD
+            "android_watch", "ANDROID_WATCH" -> BotConfiguration.MiraiProtocol.ANDROID_WATCH
+            "ipad", "IPAD" -> BotConfiguration.MiraiProtocol.IPAD
+            "macos", "MACOS" -> BotConfiguration.MiraiProtocol.MACOS
             else -> throw InitExceptionEntity(
                 InitException.UNDEFINED_PROTOCOL,
                 "${InitException.UNDEFINED_PROTOCOL.message} -> $protocol"

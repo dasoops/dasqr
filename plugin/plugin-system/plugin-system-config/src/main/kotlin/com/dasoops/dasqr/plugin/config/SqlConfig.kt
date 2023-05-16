@@ -28,7 +28,6 @@ object SqlConfig : Config {
             |load config form : ${SpringUtil.getProperty("spring.datasource.url")} -> core_config
         """.trimMargin()
         )
-        checkAndLog()
     }
 
     override fun addAndInit(key: String, description: String, configStr: String) {
@@ -38,21 +37,5 @@ object SqlConfig : Config {
             this.description = description
         })
         init()
-    }
-
-    fun checkAndLog() {
-        keywordToConfigMap["mirai"]?.value?.also {
-            log.info("loading mirai configuration: $it".trimIndent())
-        } ?: throw ConfigPluginExceptionEntity(
-            ConfigPluginException.NO_RECORD,
-            "没有查询到配置记录 -> keyword = mirai"
-        )
-
-        keywordToConfigMap["dasqr"]?.value?.also {
-            log.info("loading dasqr configuration: $it".trimIndent())
-        } ?: throw ConfigPluginExceptionEntity(
-            ConfigPluginException.NO_RECORD,
-            "没有查询到配置记录 -> keyword = dasqr"
-        )
     }
 }
