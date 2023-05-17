@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.extraProperties
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 dependencies {
@@ -11,10 +10,10 @@ dependencies {
     //common
     api("cn.hutool:hutool-all:5.8.18")
     api("com.google.guava:guava:31.1-jre")
-    api(platform(("com.dasoops:common-bom:4.0.26")))
+    api(platform(("com.dasoops:common-bom:4.0.27")))
     api("com.dasoops:common-core")
     api("com.dasoops:common-json")
-    api("com.dasoops:common-ktorm")
+    api("com.dasoops:common-db-ktorm")
 
     //db
     runtimeOnly("org.postgresql:postgresql")
@@ -23,7 +22,6 @@ dependencies {
     //orm
     api("org.ktorm:ktorm-jackson:3.6.0")
     api("org.ktorm:ktorm-core:3.6.0")
-
 
     //爬虫框架
     api("org.jsoup:jsoup:1.15.3")

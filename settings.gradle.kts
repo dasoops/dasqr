@@ -12,6 +12,7 @@ include(
     ":plugin:plugin-system:plugin-system-schedule",
     ":plugin:plugin-system:plugin-system-register",
     ":plugin:plugin-system:plugin-system-http-client",
+    ":plugin:plugin-system:plugin-system-db-ktorm",
     ":plugin:plugin-loaj:plugin-reply",
     ":plugin:plugin-loaj:plugin-ylynews",
     ":plugin:plugin-loaj:plugin-openai",

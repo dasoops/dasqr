@@ -18,7 +18,7 @@ object SqlConfig : Config {
     lateinit var keywordToConfigMap: Map<String, ConfigDo>
 
     override fun init() {
-        keywordToConfigMap = configDao.findAll().associateBy { it.keyword }
+        keywordToConfigMap = ConfigDao.findAll().associateBy { it.keyword }
         keywordToJsonConfigMap = keywordToConfigMap.mapValues { it.value.value }
 
         log.info(
