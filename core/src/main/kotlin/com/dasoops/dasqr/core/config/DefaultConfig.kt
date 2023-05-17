@@ -1,13 +1,11 @@
 package com.dasoops.dasqr.core.config
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil
 import cn.hutool.core.io.FileUtil
 import com.dasoops.common.json.Json
 import com.dasoops.common.json.parse
 import com.dasoops.common.json.toJsonStr
 import com.dasoops.dasqr.core.DefaultImpl
 import org.slf4j.LoggerFactory
-import org.springframework.beans.BeanUtils
 import java.io.File
 
 /**

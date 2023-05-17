@@ -1,8 +1,6 @@
 package com.dasoops.dasqr.plugin.ylynews
 
 import cn.hutool.cache.impl.LRUCache
-import cn.hutool.cache.impl.TimedCache
-import cn.hutool.http.HttpUtil
 import com.dasoops.common.core.util.getOrNullAndSet
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.runner.Runner
@@ -53,7 +51,7 @@ object NewsPublic : Runner, ScheduleTask {
         cache.clear()
     }
 
-    override fun init() {
+    override suspend fun init() {
         val isInit = ScheduleDao.INSTANCE.anyMatched {
             it.`class` eq NewsPublic::class.java.name
         }

@@ -16,7 +16,7 @@ object ScheduleRunner : Runner {
     private val log = LoggerFactory.getLogger(javaClass)
     val scheduleList = mutableListOf<Schedule>()
 
-    override fun init() {
+    override suspend fun init() {
         //重新启动
         CronUtil.restart()
         CronUtil.setMatchSecond(true)

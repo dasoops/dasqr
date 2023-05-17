@@ -9,8 +9,10 @@ import com.dasoops.common.core.util.resources.IgnoreResourcesScan
  * @see [Runner]
  */
 @IgnoreResourcesScan
-interface Runner {
+interface Runner : IRunner
 
-    fun init()
+interface SystemRunner : IRunner
 
+interface IRunner {
+    suspend fun init()
 }

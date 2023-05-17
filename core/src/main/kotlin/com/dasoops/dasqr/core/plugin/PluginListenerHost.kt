@@ -1,7 +1,7 @@
-package com.dasoops.dasqr.plugin
+package com.dasoops.dasqr.core.plugin
 
-import com.dasoops.dasqr.core.MyLauncher
 import com.dasoops.dasqr.core.listener.DslListenerHost
+import com.dasoops.dasqr.core.loader.DasqrRunner
 
 /**
  * 插件Listenerhost
@@ -12,8 +12,8 @@ import com.dasoops.dasqr.core.listener.DslListenerHost
 open class PluginListenerHost : DslListenerHost({
     group("load plugin jar") {
         case(it) quoteReply {
-            if (MyLauncher.fromLauncher) {
-                MyLauncher.loadPluginList.joinToString(separator = System.lineSeparator())
+            if (DasqrRunner.load) {
+                DasqrRunner.loadPluginList.joinToString(separator = System.lineSeparator())
             } else {
                 "unload from launcher"
             }

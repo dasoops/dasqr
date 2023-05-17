@@ -1,17 +1,15 @@
 package com.dasoops.dasqr.core.runner
 
-import com.dasoops.common.core.util.resources.Resources
+import com.dasoops.common.core.util.resources.IgnoreResourcesScan
 import com.dasoops.dasqr.core.Finder
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
 import com.dasoops.dasqr.core.plugin.PluginPool
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import net.mamoe.mirai.utils.LoggerAdapters
 import org.slf4j.LoggerFactory
-import org.springframework.boot.ApplicationArguments
-import org.springframework.boot.ApplicationRunner
-import org.springframework.stereotype.Component
 import kotlin.system.exitProcess
 
 /**
@@ -19,11 +17,11 @@ import kotlin.system.exitProcess
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-@Component
-class InitRunner : ApplicationRunner {
+@IgnoreResourcesScan
+object InitRunner : SystemRunner {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    override fun run(args: ApplicationArguments): Unit = runBlocking {
+    override suspend fun init() = runBlocking {
         try {
             //初始化配置项
             log.info("init config")
@@ -61,7 +59,9 @@ class InitRunner : ApplicationRunner {
             ExceptionHandlerPool.INSTANCE = exceptionHandlerPool
 
             log.info("run custom runner")
-            Finder.getAll<Runner>(config.dasqr.init.scanPath, config.dasqr.init.excludeClass).forEach { it.init() }
+            Finder.getAll<Runner>(config.dasqr.init.scanPath, config.dasqr.init.excludeClass).forEach {
+                launch { it.init() }
+            }
         } catch (e: Throwable) {
             log.error("initRunner throw Exception: ", e)
             exitProcess(0)
