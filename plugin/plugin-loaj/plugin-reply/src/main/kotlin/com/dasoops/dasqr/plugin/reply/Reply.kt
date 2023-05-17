@@ -1,5 +1,6 @@
 package com.dasoops.dasqr.plugin.reply
 
+import com.dasoops.common.db.ktorm.BaseDao
 import com.dasoops.common.db.ktorm.DasEntity
 import com.dasoops.common.db.ktorm.DasTable
 import com.dasoops.common.db.ktorm.dataEnum
@@ -7,6 +8,13 @@ import org.ktorm.schema.boolean
 import org.ktorm.schema.int
 import org.ktorm.schema.long
 import org.ktorm.schema.varchar
+
+/**
+ * 消息日志Dao
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023-05-08
+ */
+object ReplyDao : BaseDao<Reply, Replys>(Replys)
 
 /**
  * 异常日志

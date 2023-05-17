@@ -52,7 +52,7 @@ object NewsPublic : Runner, ScheduleTask {
     }
 
     override suspend fun init() {
-        val isInit = ScheduleDao.INSTANCE.anyMatched {
+        val isInit = ScheduleDao.anyMatched {
             it.`class` eq NewsPublic::class.java.name
         }
         if (isInit) {
@@ -60,7 +60,7 @@ object NewsPublic : Runner, ScheduleTask {
         }
 
 
-        ScheduleDao.INSTANCE.add(ScheduleDo {
+        ScheduleDao.add(ScheduleDo {
             //每天
             this.cron = "0 0 * * *"
             this.`class` = NewsPublic::class.java.name

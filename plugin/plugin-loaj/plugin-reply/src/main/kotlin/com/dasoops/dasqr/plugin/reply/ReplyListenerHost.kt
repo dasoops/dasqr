@@ -23,11 +23,9 @@ object ReplyPublic {
     val replyCache: TimedCache<KClass<out ReplyPublic>, Collection<Reply>> =
         Cache.newTimedCache(this::class, 1000 * 60 * 10)
 
-    private val replyDao = ReplyDao.INSTANCE
-
     fun getReply() =
         replyCache.getOrNullAndSet(this::class) {
-            replyDao.findAll().filter { it.enable }.sortedBy { it.order }
+            ReplyDao.findAll().filter { it.enable }.sortedBy { it.order }
         }!!
 
     fun clear() = replyCache.clear()
@@ -99,14 +97,14 @@ open class DslReplyListenerHost : DslListenerHost({
         val matchType = MatchType.getOrNull(stringOrNull("matchType")!!)
             ?: return@tag "matchType无法识别,可选值:[equals,contain,prefix,suffix]"
 
-        if (ReplyDao.INSTANCE.anyMatched { reply ->
+        if (ReplyDao.anyMatched { reply ->
                 reply.keyword eq string("keyword")
                 reply.matchType eq matchType
             }) {
             return@tag it.message.quote() + "已经有这个回复了呢"
         }
 
-        ReplyDao.INSTANCE.add(Reply {
+        ReplyDao.add(Reply {
             keyword = string("keyword")
             replyMessage = string("reply")
             this.matchType = matchType
@@ -120,13 +118,13 @@ open class DslReplyListenerHost : DslListenerHost({
 
     group("enable/disable reply") {
         startsWith("enableReply") quoteReply { keyword ->
-            val reply = ReplyDao.INSTANCE.findOne {
+            val reply = ReplyDao.findOne {
                 it.keyword eq keyword
             } ?: return@quoteReply "没有这个回复捏"
 
             if (reply.enable) return@quoteReply "这不本来就开的嘛"
 
-            ReplyDao.INSTANCE.update(Reply {
+            ReplyDao.update(Reply {
                 rowId = reply.rowId
                 enable = true
             })
@@ -138,7 +136,7 @@ open class DslReplyListenerHost : DslListenerHost({
             val reply = ReplyPublic.getReply().firstOrNull { reply -> reply.keyword == it }
                 ?: return@quoteReply "没有这个回复捏"
 
-            ReplyDao.INSTANCE.update(Reply {
+            ReplyDao.update(Reply {
                 rowId = reply.rowId
                 enable = false
             })

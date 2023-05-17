@@ -25,7 +25,7 @@ object Finder {
             .filter {
                 T::class.java.isAssignableFrom(it)
             }.filter {
-                excludeClass?.contains(it.name) == null
+                excludeClass?.ifEmpty { null }?.contains(it.name) == null
             }.map {
                 getObjectInstacnce(it)
             }

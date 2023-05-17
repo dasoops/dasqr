@@ -9,11 +9,10 @@ import com.dasoops.dasqr.core.exception.ExceptionHandler
  * @date 2023-04-25
  */
 object SqlLogExceptionHandler : ExceptionHandler {
-    val dao: ExceptionLogDao = ExceptionLogDao.INSTANCE
 
     override fun handle(exception: Throwable) {
         val rootCause = ExceptionUtil.getRootCause(exception)
-        dao.add(
+        ExceptionLogDao.add(
             ExceptionLogDo {
                 stackInfo = exception.stackTraceToString()
                 topMessage = rootCause.message ?: "no message"

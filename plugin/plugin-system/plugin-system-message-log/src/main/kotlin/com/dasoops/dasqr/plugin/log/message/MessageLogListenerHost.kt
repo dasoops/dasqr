@@ -16,11 +16,10 @@ import org.slf4j.LoggerFactory
  */
 open class MessageLogListenerHost : DasqrSimpleListenerHost() {
     private val log = LoggerFactory.getLogger(javaClass)
-    private val messageLogDao = MessageLogDao.INSTANCE
 
     @EventHandler(EventPriority.HIGHEST)
     open fun handle(event: MessageEvent) {
-        messageLogDao.add(MessageLogDo {
+        MessageLogDao.add(MessageLogDo {
             messageType = MessageType.getOrNull(event) ?: return
             senderId = event.sender.id
             if (event.sender is Member) {

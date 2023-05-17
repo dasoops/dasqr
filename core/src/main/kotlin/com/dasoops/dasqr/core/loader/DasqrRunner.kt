@@ -5,8 +5,12 @@ import com.dasoops.dasqr.core.runner.SystemRunner
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.net.URL
-import java.util.jar.JarFile
 
+/**
+ * dasqr跑步
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/05/17
+ */
 @IgnoreResourcesScan
 object DasqrRunner : SystemRunner {
     private val log = LoggerFactory.getLogger(javaClass)

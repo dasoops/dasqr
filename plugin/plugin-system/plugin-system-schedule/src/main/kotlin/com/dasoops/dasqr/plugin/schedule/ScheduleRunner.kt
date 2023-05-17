@@ -22,7 +22,7 @@ object ScheduleRunner : Runner {
         CronUtil.setMatchSecond(true)
 
         //添加任务
-        ScheduleDao.INSTANCE.findList {
+        ScheduleDao.findList {
             it.enable eq true
         }.forEach {
             log.info(

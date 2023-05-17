@@ -11,6 +11,7 @@ import com.dasoops.common.core.util.resources.IgnoreResourcesScan
 @IgnoreResourcesScan
 interface Runner : IRunner
 
+@IgnoreResourcesScan
 interface SystemRunner : IRunner
 
 interface IRunner {
