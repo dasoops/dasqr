@@ -1,7 +1,7 @@
 package com.dasoops.dasqr.plugin.config
 
-import cn.hutool.extra.spring.SpringUtil
 import com.dasoops.dasqr.core.config.Config
+import org.flywaydb.core.Flyway
 import org.slf4j.LoggerFactory
 
 /**
@@ -15,23 +15,16 @@ object SqlConfig : Config {
     private val log = LoggerFactory.getLogger(javaClass)
 
     //Map<keyword,config>
-    lateinit var keywordToConfigMap: Map<String, com.dasoops.dasqr.plugin.config.ConfigDo>
-
-    val configDao = ConfigDao.INSTANCE
+    lateinit var keywordToConfigMap: Map<String, ConfigDo>
 
     override fun init() {
-        keywordToConfigMap = configDao.findAll().associateBy { it.keyword }
+        keywordToConfigMap = ConfigDao.findAll().associateBy { it.keyword }
         keywordToJsonConfigMap = keywordToConfigMap.mapValues { it.value.value }
-
-        log.info(
-            """
-            |load config form : ${SpringUtil.getProperty("spring.datasource.url")} -> core_config
-        """.trimMargin()
-        )
+        Flyway.configure()
     }
 
     override fun addAndInit(key: String, description: String, configStr: String) {
-        ConfigDao.INSTANCE.add(ConfigDo {
+        ConfigDao.add(ConfigDo {
             this.keyword = key
             this.value = configStr
             this.description = description

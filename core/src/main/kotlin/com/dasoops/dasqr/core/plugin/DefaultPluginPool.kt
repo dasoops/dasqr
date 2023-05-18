@@ -1,11 +1,10 @@
 package com.dasoops.dasqr.core.plugin
 
 import cn.hutool.core.util.ReflectUtil
-import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
+import com.dasoops.common.core.util.ClassUtil
 import com.dasoops.common.core.util.resources.Resources
 import com.dasoops.dasqr.core.DefaultImpl
 import com.dasoops.dasqr.core.IBot
-import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.PluginConfig
 import com.dasoops.dasqr.core.listener.*
 import com.dasoops.dasqr.core.runner.InitException
@@ -14,14 +13,11 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import net.mamoe.mirai.event.*
-import net.mamoe.mirai.spi.AudioToSilkService.Companion.priority
 import org.slf4j.LoggerFactory
-import org.springframework.util.ClassUtils
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.coroutines.coroutineContext
 
 /**
  * 插件加载程序
@@ -102,7 +98,7 @@ object DefaultPluginPool : PluginPool {
             jobOfListenerHost = null
             coroutineContext
         }
-        for (method in ClassUtils.getUserClass(host).declaredMethods) {
+        for (method in ClassUtil.getUserClass(host).declaredMethods) {
             //添加这一行,open suspend会生成一个supendImpl供java调用
             if (!Modifier.isStatic(method.modifiers)) {
                 method.getAnnotation(EventHandler::class.java)?.let {

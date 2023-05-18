@@ -1,8 +1,11 @@
 package com.dasoops.dasqr.core.exception
 
 import com.dasoops.common.core.util.resources.IgnoreResourcesScan
+import com.dasoops.dasqr.core.Finder
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.ExceptionConfig
+import com.dasoops.dasqr.core.runner.InitRunner
+import org.slf4j.LoggerFactory
 
 /**
  * 异常处理器池接口
@@ -24,6 +27,18 @@ interface ExceptionHandlerPool {
     fun init(config: ExceptionConfig)
 
     companion object {
+        private val log = LoggerFactory.getLogger(this::class.java)
+
         lateinit var INSTANCE: ExceptionHandlerPool
+
+        fun goInit() {
+            log.info("init exceptionHandlerPool")
+            val exceptionHandlerPool = Finder.get<ExceptionHandlerPool>(
+                Config.INSTANCE.dasqr.plugin.scanPath, Config.INSTANCE.dasqr.plugin.excludeClass
+            )
+            log.info("use exceptionHandlerPool: ${exceptionHandlerPool.javaClass.name}")
+            exceptionHandlerPool.init(Config.INSTANCE.dasqr.exception)
+            INSTANCE = exceptionHandlerPool
+        }
     }
 }

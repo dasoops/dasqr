@@ -1,3 +1,5 @@
+ext["noPlugin"] = true
+
 dependencies {
     api(project(":plugin:plugin-core"))
 }

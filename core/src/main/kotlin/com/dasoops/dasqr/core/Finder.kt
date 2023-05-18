@@ -21,11 +21,11 @@ annotation class DefaultImpl
 object Finder {
 
     inline fun <reified T> getAll(basePath: Collection<String>, excludeClass: Collection<String>?): Collection<T> {
-        return Resources.scan(this::class.java.classLoader, *basePath.toTypedArray())
+        return Resources.scan(Thread.currentThread().contextClassLoader, *basePath.toTypedArray())
             .filter {
                 T::class.java.isAssignableFrom(it)
             }.filter {
-                excludeClass?.contains(it.name) == null
+                excludeClass?.ifEmpty { null }?.contains(it.name) == null
             }.map {
                 getObjectInstacnce(it)
             }
@@ -36,7 +36,7 @@ object Finder {
      * @return [T]
      */
     inline fun <reified T> getOrNull(basePath: Collection<String>, excludeClass: Collection<String>?): T? {
-        val list = Resources.scan(this::class.java.classLoader, *basePath.toTypedArray())
+        val list = Resources.scan(Thread.currentThread().contextClassLoader, *basePath.toTypedArray())
             .filter {
                 T::class.java.isAssignableFrom(it)
             }.filter {
@@ -85,6 +85,6 @@ object Finder {
     }
 
     inline fun <reified T> getObjectInstacnce(className: String): T {
-        return getObjectInstacnce(Class.forName(className, false, this::class.java.classLoader))
+        return getObjectInstacnce(Class.forName(className, false, Thread.currentThread().contextClassLoader))
     }
 }

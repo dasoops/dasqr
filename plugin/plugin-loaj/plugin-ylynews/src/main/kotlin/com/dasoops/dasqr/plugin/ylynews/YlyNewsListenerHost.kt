@@ -1,8 +1,6 @@
 package com.dasoops.dasqr.plugin.ylynews
 
 import cn.hutool.cache.impl.LRUCache
-import cn.hutool.cache.impl.TimedCache
-import cn.hutool.http.HttpUtil
 import com.dasoops.common.core.util.getOrNullAndSet
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.runner.Runner
@@ -33,7 +31,7 @@ object NewsPublic : Runner, ScheduleTask {
             Request.Builder()
                 .url("https://daily.zhihu.com/#section_head")
                 .get().build()
-        ).execute().body!!.string()
+        ).execute().body.string()
         // 解析并获取标签为wrap的
         val parse = Jsoup.parse(info).getElementsByClass("wrap")
         // 创建返回消息
@@ -53,8 +51,8 @@ object NewsPublic : Runner, ScheduleTask {
         cache.clear()
     }
 
-    override fun init() {
-        val isInit = ScheduleDao.INSTANCE.anyMatched {
+    override suspend fun init() {
+        val isInit = ScheduleDao.anyMatched {
             it.`class` eq NewsPublic::class.java.name
         }
         if (isInit) {
@@ -62,7 +60,7 @@ object NewsPublic : Runner, ScheduleTask {
         }
 
 
-        ScheduleDao.INSTANCE.add(ScheduleDo {
+        ScheduleDao.add(ScheduleDo {
             //每天
             this.cron = "0 0 * * *"
             this.`class` = NewsPublic::class.java.name

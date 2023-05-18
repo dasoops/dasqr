@@ -69,7 +69,7 @@ object OkHttpRunner : Runner {
     lateinit var instance: OkHttpClient
     lateinit var noProxyInstance: OkHttpClient
 
-    override fun init() {
+    override suspend fun init() {
         val httpConfig = Config.INSTANCE.http
         if (httpConfig.enable) {
             instance = OkHttpClient.Builder().run {

@@ -5,8 +5,6 @@ import com.dasoops.common.db.ktorm.DasEntity
 import com.dasoops.common.db.ktorm.DasTable
 import org.ktorm.schema.boolean
 import org.ktorm.schema.varchar
-import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
 
 /**
  * 定时任务dao
@@ -14,18 +12,7 @@ import org.springframework.stereotype.Component
  * @date 2023/05/16
  * @see [ScheduleDao]
  */
-@Component
-class ScheduleDao : BaseDao<ScheduleDo, Schedules>(Schedules) {
-    private val log = LoggerFactory.getLogger(javaClass)
-
-    init {
-        INSTANCE = this
-    }
-
-    companion object {
-        lateinit var INSTANCE: ScheduleDao
-    }
-}
+object ScheduleDao : BaseDao<ScheduleDo, Schedules>(Schedules)
 
 object Schedules : DasTable<ScheduleDo>("plugin_system_schedule") {
     val cron = varchar("cron").bindTo { it.cron }

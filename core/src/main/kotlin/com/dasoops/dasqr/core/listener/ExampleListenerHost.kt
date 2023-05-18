@@ -1,6 +1,5 @@
 package com.dasoops.dasqr.core.listener
 
-import cn.hutool.core.collection.CollUtil.group
 import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.EventPriority
 import net.mamoe.mirai.event.events.MessageEvent

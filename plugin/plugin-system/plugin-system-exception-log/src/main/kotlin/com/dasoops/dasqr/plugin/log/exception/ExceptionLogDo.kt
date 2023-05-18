@@ -1,8 +1,11 @@
 package com.dasoops.dasqr.plugin.log.exception
 
+import com.dasoops.common.db.ktorm.BaseDao
 import com.dasoops.common.db.ktorm.DasEntity
 import com.dasoops.common.db.ktorm.DasTable
 import org.ktorm.schema.varchar
+
+object ExceptionLogDao : BaseDao<ExceptionLogDo, ExceptionLogs>(ExceptionLogs)
 
 /**
  * 异常日志

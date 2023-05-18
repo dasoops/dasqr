@@ -16,13 +16,13 @@ object ScheduleRunner : Runner {
     private val log = LoggerFactory.getLogger(javaClass)
     val scheduleList = mutableListOf<Schedule>()
 
-    override fun init() {
+    override suspend fun init() {
         //重新启动
         CronUtil.restart()
         CronUtil.setMatchSecond(true)
 
         //添加任务
-        ScheduleDao.INSTANCE.findList {
+        ScheduleDao.findList {
             it.enable eq true
         }.forEach {
             log.info(

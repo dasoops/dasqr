@@ -13,35 +13,13 @@ import net.mamoe.mirai.utils.BotConfiguration
 class MiraiConfig(
     bot: BotConfig? = null,
     file: FileConfig? = null,
-    log: LogConfig? = null,
 ) {
     val bot: BotConfig
     val file: FileConfig
-    val log: LogConfig
 
     init {
         this.bot = bot ?: BotConfig()
         this.file = file ?: FileConfig()
-        this.log = log ?: LogConfig()
-    }
-}
-
-/**
- * miraiLog配置项
- * @author DasoopsNicole@Gmail.com
- * @date 2023-04-24
- */
-class LogConfig(
-    useLog4j2: Boolean? = null
-) {
-
-    /**
-     * 是否使用log4j2接管mirai日志系统
-     */
-    val useLog4j2: Boolean
-
-    init {
-        this.useLog4j2 = useLog4j2 ?: true
     }
 }
 

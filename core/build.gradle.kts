@@ -1,49 +1,56 @@
-import org.springframework.boot.gradle.tasks.bundling.BootJar
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import java.io.ByteArrayOutputStream
+
+val miraiVersion: String by project
+val dasoopsCommonVersion: String by project
+val hutoolVersion: String by project
+val guavaVersion: String by project
+val logbackVersion: String by project
+val flywayVersion: String by project
+val ktormVersion: String by project
+val jsonpVersion: String by project
+val okhttpVersion: String by project
+val pgsqlVersion: String by project
 
 dependencies {
     //TODO(依赖打包加载)
     //mirai
-    api(platform("net.mamoe:mirai-bom:2.15.0-M1"))
+    api(platform("net.mamoe:mirai-bom:${miraiVersion}"))
     api("net.mamoe:mirai-core-api")
     runtimeOnly("net.mamoe:mirai-core") // 运行时使用
 
     //common
-    api("cn.hutool:hutool-all:5.8.18")
-    api("com.google.guava:guava:31.1-jre")
-    api(platform(("com.dasoops:common-bom:4.0.25")))
+    api("cn.hutool:hutool-all:${hutoolVersion}")
+    api("com.google.guava:guava:${guavaVersion}")
+    api(platform(("com.dasoops:common-bom:${dasoopsCommonVersion}")))
     api("com.dasoops:common-core")
-    api("com.dasoops:common-json-spring")
+    api("com.dasoops:common-json")
+    api("com.dasoops:common-db-ktorm")
+
+//    api("net.mamoe:mirai-logging-log4j2")
+    api("net.mamoe:mirai-logging-slf4j-logback")
+//    api("org.apache.logging.log4j:log4j-core:2.20.0")
+//    api("org.apache.logging.log4j:log4j-api:2.20.0")
+    api("ch.qos.logback:logback-classic:${logbackVersion}")
+//    api("ch.qos.logback:logback-core:${logbackVersion}")
 
     //db
-    runtimeOnly("org.postgresql:postgresql")
-    api("org.flywaydb:flyway-core:9.16.3")
+    runtimeOnly("org.postgresql:postgresql:${pgsqlVersion}")
+    api("org.flywaydb:flyway-core:${flywayVersion}")
 
     //orm
-    api("com.dasoops:common-db-ktorm-spring")
-    api("org.springframework:spring-jdbc")
+    api("org.ktorm:ktorm-jackson:${ktormVersion}")
+    api("org.ktorm:ktorm-core:${ktormVersion}")
 
     //爬虫框架
-    api("org.jsoup:jsoup:1.15.3")
+    api("org.jsoup:jsoup:${jsonpVersion}")
 
     //okHttp
-    api("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
+    api("com.squareup.okhttp3:okhttp:${okhttpVersion}")
 
     //kt
     api("org.jetbrains.kotlin:kotlin-reflect")
 
-    //spring
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    api("org.springframework.boot:spring-boot-starter")
-    api("org.springframework.boot:spring-boot-loader")
-
-    //schedule task
-//    implementation("org.springframework.boot:spring-boot-starter-quartz")
-
-    //test
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-
-    //dev
-    //developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 tasks.named("compileJava") {
@@ -52,37 +59,41 @@ tasks.named("compileJava") {
 tasks.named("compileKotlin") {
     inputs.files(tasks.named("processResources"))
 }
-tasks.named<BootJar>("bootJar") {
-    archiveFileName.set("dasqr.jar")
-    mainClass.set("com.dasoops.dasqr.core.CoreApplicationKt")
 
-    //反射替换Launcher
-    val supportField = BootJar::class.java.getDeclaredField("support")
-    supportField.isAccessible = true
-    val support = supportField.get(this)
-    val loadMainClassField = Class.forName("org.springframework.boot.gradle.tasks.bundling.BootArchiveSupport")
-        .getDeclaredField("loaderMainClass")
-    loadMainClassField.isAccessible = true
-    loadMainClassField.set(support, "com.dasoops.dasqr.core.MyLauncher")
-    //曲线救国,他排除我再添加回去
-    from(zipTree("spring-boot-loader-3.0.5.jar"))
-    exclude("META-INF/LICENSE.txt", "META-INF/NOTICE.txt")
+fun getGitHash(): String {
+    val out = ByteArrayOutputStream()
+    exec {
+        commandLine = arrayListOf("git", "rev-parse", "--short", "HEAD")
+        standardOutput = out
+    }
+    return out.toString().trim()
+}
+plugins {
+    id("com.github.johnrengelman.shadow") version "2.0.4"
 
-    //添加MyLauncher
-    from("build/classes/java/main")
 }
 
-tasks {
-    val launchTest by creating(JavaExec::class) {
-        val workingDir = rootProject.ext["dasqrWorkingDir"] as String
-        doFirst {
-            bootJar.get().outputs.files.singleFile.copyTo(File("$workingDir/dasqr.jar"), true)
+tasks{
+
+    named<ShadowJar>("shadowJar"){
+        val version = getGitHash()
+        archiveFileName.set("dasqr-$version.jar")
+        manifest {
+            attributes["Main-Class"] = "com.dasoops.dasqr.core.DasqrApplicationKt"
+            attributes["Version"] = version
         }
-        dependsOn(bootJar)
+    }
+
+    create<JavaExec>("launchTest"){
+        val workingDir = rootProject.ext["dasqrWorkingDir"] as String
+        val singleFile = shadowJar.get().outputs.files.singleFile
+        doFirst {
+            singleFile.copyTo(File("$workingDir/${singleFile.name}"), true)
+        }
+        dependsOn(shadowJar)
         mainClass.set("-jar")
 
-        args(bootJar.get().outputs.files.singleFile)
-        jvmArgs("-DSpring.profiles.active=master")
+        args(File("$workingDir/${singleFile.name}"))
         workingDir(workingDir)
     }
 }

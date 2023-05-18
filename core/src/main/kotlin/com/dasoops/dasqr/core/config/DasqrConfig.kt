@@ -28,18 +28,18 @@ class DasqrConfig(
  * @see [InitConfig]
  */
 class InitConfig(
-    scanPath: List<String>? = null,
-    excludeClass: List<String>? = null
+    scanPath: Collection<String>? = null,
+    excludeClass: Collection<String>? = null
 ) {
     /**
      * 扫描路径
      */
-    val scanPath: List<String>
+    val scanPath: Collection<String>
 
     /**
      * 排除类
      */
-    val excludeClass: List<String>?
+    val excludeClass: Collection<String>?
 
     init {
         this.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin")
@@ -53,19 +53,19 @@ class InitConfig(
  * @date 2023-04-24
  */
 class PluginConfig(
-    scanPath: List<String>? = null,
-    excludeClass: List<String>? = null
+    scanPath: Collection<String>? = null,
+    excludeClass: Collection<String>? = null
 ) {
 
     /**
      * 扫描路径
      */
-    val scanPath: List<String>
+    val scanPath: Collection<String>
 
     /**
      * 排除类
      */
-    val excludeClass: List<String>?
+    val excludeClass: Collection<String>?
 
     init {
         this.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin")
@@ -79,18 +79,18 @@ class PluginConfig(
  * @date 2023-04-24
  */
 class ExceptionConfig(
-    scanPath: List<String>? = null,
-    excludeClass: List<String>? = null
+    scanPath: Collection<String>? = null,
+    excludeClass: Collection<String>? = null
 ) {
     /**
      * 扫描路径
      */
-    val scanPath: List<String>
+    val scanPath: Collection<String>
 
     /**
      * 排除类
      */
-    val excludeClass: List<String>?
+    val excludeClass: Collection<String>?
 
     init {
         this.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core")
