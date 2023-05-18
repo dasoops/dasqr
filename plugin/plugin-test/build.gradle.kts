@@ -10,4 +10,5 @@ dependencies {
     api(project(":plugin:plugin-loaj:plugin-ylynews"))
     api(project(":plugin:plugin-loaj:plugin-openai"))
     api(project(":plugin:plugin-loaj:plugin-sao"))
+    api(project(":plugin:plugin-loaj:plugin-roll"))
 }

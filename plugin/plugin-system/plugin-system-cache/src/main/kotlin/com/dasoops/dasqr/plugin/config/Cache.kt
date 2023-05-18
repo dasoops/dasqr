@@ -13,7 +13,7 @@ import kotlin.reflect.KClass
  * @date 2023/05/15
  */
 object Cache {
-    val cacheMap = mutableMapOf<KClass<*>, Cache<*, *>>()
+    val cacheMap = mutableMapOf<Any, Cache<*, *>>()
 
     fun clear() {
         cacheMap.forEach {
@@ -21,30 +21,30 @@ object Cache {
         }
     }
 
-    fun <K, V> newFIFOCache(key: KClass<*>, capacity: Int, timeout: Long): FIFOCache<K, V> =
+    fun <K, V> newFIFOCache(key: Any, capacity: Int, timeout: Long): FIFOCache<K, V> =
         FIFOCache<K, V>(capacity, timeout).also { cacheMap[key] = it }
 
-    fun <K, V> newFIFOCache(key: KClass<*>, capacity: Int): FIFOCache<K, V> =
+    fun <K, V> newFIFOCache(key: Any, capacity: Int): FIFOCache<K, V> =
         FIFOCache<K, V>(capacity).also { cacheMap[key] = it }
 
-    fun <K, V> newLFUCache(key: KClass<*>, capacity: Int, timeout: Long): LFUCache<K, V> =
+    fun <K, V> newLFUCache(key: Any, capacity: Int, timeout: Long): LFUCache<K, V> =
         LFUCache<K, V>(capacity, timeout).also { cacheMap[key] = it }
 
-    fun <K, V> newLFUCache(key: KClass<*>, capacity: Int): LFUCache<K, V> =
+    fun <K, V> newLFUCache(key: Any, capacity: Int): LFUCache<K, V> =
         LFUCache<K, V>(capacity).also { cacheMap[key] = it }
 
-    fun <K, V> newLRUCache(key: KClass<*>, capacity: Int, timeout: Long): LRUCache<K, V> =
+    fun <K, V> newLRUCache(key: Any, capacity: Int, timeout: Long): LRUCache<K, V> =
         LRUCache<K, V>(capacity, timeout).also { cacheMap[key] = it }
 
-    fun <K, V> newLRUCache(key: KClass<*>, capacity: Int): LRUCache<K, V> =
+    fun <K, V> newLRUCache(key: Any, capacity: Int): LRUCache<K, V> =
         LRUCache<K, V>(capacity).also { cacheMap[key] = it }
 
-    fun <K, V> newTimedCache(key: KClass<*>, timeout: Long): TimedCache<K, V> =
+    fun <K, V> newTimedCache(key: Any, timeout: Long): TimedCache<K, V> =
         TimedCache<K, V>(timeout).also { cacheMap[key] = it }
 
-    fun <K, V> newWeakCache(key: KClass<*>, timeout: Long): WeakCache<K, V> =
+    fun <K, V> newWeakCache(key: Any, timeout: Long): WeakCache<K, V> =
         WeakCache<K, V>(timeout).also { cacheMap[key] = it }
 
-    fun <K, V> newNoCache(key: KClass<*>): NoCache<K, V> =
+    fun <K, V> newNoCache(key: Any): NoCache<K, V> =
         NoCache<K, V>().also { cacheMap[key] = it }
 }
