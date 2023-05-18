@@ -17,4 +17,5 @@ include(
     ":plugin:plugin-loaj:plugin-ylynews",
     ":plugin:plugin-loaj:plugin-openai",
     ":plugin:plugin-loaj:plugin-sao",
+    ":plugin:plugin-loaj:plugin-roll",
 )
