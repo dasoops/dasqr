@@ -26,12 +26,8 @@ allprojects {
     }
 }
 apply(from = (file("config.gradle")))
-if (rootProject.ext.get("dasqrWorkingDir") == null) {
-    rootProject.ext.set("dasqrWorkingDir","./launchTest")
-}
 
 subprojects {
-
    apply {
         plugin("io.spring.dependency-management")
         plugin("org.jetbrains.kotlin.jvm")

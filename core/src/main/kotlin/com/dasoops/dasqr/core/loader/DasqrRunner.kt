@@ -32,10 +32,17 @@ object DasqrRunner : SystemRunner {
         loadUrl = loadAllUrl().toTypedArray()
         initLoadPluginList()
         createAndInitClassLoader()
+        log()
     }
 
     private fun initLoadPluginList() {
         loadPluginList = pluginJarList.map { DasqrPlugin(it) }
+    }
+
+    fun log(){
+        log.info("\n" + loadPluginList.joinToString(
+            separator = "\n"
+        ))
     }
 
     /**

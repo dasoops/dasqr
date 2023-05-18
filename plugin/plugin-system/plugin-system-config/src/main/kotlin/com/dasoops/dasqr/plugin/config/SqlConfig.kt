@@ -1,6 +1,5 @@
 package com.dasoops.dasqr.plugin.config
 
-import cn.hutool.extra.spring.SpringUtil
 import com.dasoops.dasqr.core.config.Config
 import org.flywaydb.core.Flyway
 import org.slf4j.LoggerFactory

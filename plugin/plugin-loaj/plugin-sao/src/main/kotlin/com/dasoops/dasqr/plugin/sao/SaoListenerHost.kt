@@ -20,7 +20,7 @@ object SaoPublic {
                 Request.Builder()
                     .url("https://api.uomg.com/api/rand.qinghua")
                     .get().build()
-            ).execute().body!!.string()
+            ).execute().body.string()
         ).get("content").asText()
     }
 }

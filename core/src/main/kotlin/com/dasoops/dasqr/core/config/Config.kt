@@ -3,6 +3,8 @@ package com.dasoops.dasqr.core.config
 import com.dasoops.common.core.util.resources.IgnoreResourcesScan
 import com.dasoops.common.json.parse
 import com.dasoops.common.json.toJsonStr
+import com.dasoops.dasqr.core.Finder
+import com.dasoops.dasqr.core.runner.InitRunner
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -44,6 +46,16 @@ interface Config {
     fun addAndInit(key: String, description: String, configStr: String)
 
     companion object {
+        private val log = LoggerFactory.getLogger(this::class.java)
+        fun goInit() {
+            //初始化配置项
+            log.info("init config")
+            val config = Finder.get<Config>(listOf("com.dasoops.dasqr"), null)
+            config.init()
+            INSTANCE = config
+            log.info("use config: ${config.javaClass.name}")
+        }
+
         lateinit var INSTANCE: Config
     }
 }

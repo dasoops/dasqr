@@ -53,7 +53,7 @@ class DasqrPlugin(file: File) {
 
     override fun toString(): String {
         return """
-            $path
+            path: $path
                 name : $name
                 author : $author
                 version : $version

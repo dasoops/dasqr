@@ -10,13 +10,19 @@ subprojects {
         manifest.attributes["Plugin-Version"] = "No Version"
         manifest.attributes["Plugin-Description"] = "No Description"
     }
-    this.ext.set("aoe",true)
     tasks.withType<Jar> {
-        this@subprojects.name
         this.archiveFileName.set("${this@subprojects.name}.jar")
         this.doLast {
-            outputs.files.forEach {
-                it.copyTo(File("$workingDir/plugin/${it.name}"), true)
+            try {
+                if (ext.get("noPlugin") != true) {
+                    outputs.files.forEach {
+                        it.copyTo(File("$workingDir/plugin/${it.name}"), true)
+                    }
+                }
+            } catch (e: ExtraPropertiesExtension.UnknownPropertyException) {
+                outputs.files.forEach {
+                    it.copyTo(File("$workingDir/plugin/${it.name}"), true)
+                }
             }
         }
     }

@@ -31,7 +31,7 @@ object NewsPublic : Runner, ScheduleTask {
             Request.Builder()
                 .url("https://daily.zhihu.com/#section_head")
                 .get().build()
-        ).execute().body!!.string()
+        ).execute().body.string()
         // 解析并获取标签为wrap的
         val parse = Jsoup.parse(info).getElementsByClass("wrap")
         // 创建返回消息

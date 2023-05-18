@@ -63,7 +63,7 @@ open class OpenAiListenerHost : DslListenerHost({
                 )
                 .build()
             val response = client.newCall(request).execute()
-            val jsonResult = response.body!!.string()
+            val jsonResult = response.body.string()
             log.debug(jsonResult)
             val message = Json.parseNode(jsonResult)
                 .get("choices")[0].get("message").get("content").asText()

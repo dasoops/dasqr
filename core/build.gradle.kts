@@ -1,5 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 import java.io.ByteArrayOutputStream
 
 val miraiVersion: String by project
@@ -74,60 +73,27 @@ plugins {
 
 }
 
+tasks{
 
-//tasks.named<ShadowJar>("shadowJar") {
-//
-//}
-tasks.named<ShadowJar>("shadowJar") {
-
-    val version = project.version.toString() + "-" + getGitHash()
-    archiveFileName.set("dasqr-$version.jar")
-    manifest {
-        attributes["Main-Class"] = "com.dasoops.dasqr.core.DasqrApplicationKt"
-        attributes["Version"] = version
-    }
-}
-
-val fatJar = tasks.create("fatJar", Jar::class) {
-    val writer = File("/temp/aoe.txt").writer()
-    from(sourceSets.main.get().output)
-    from(configurations.runtimeClasspath.get().map {
-        if (it.isDirectory) it else zipTree(it)
-    })
-    exclude(
-        "META-INF/LICENSE.txt",
-        "META-INF/NOTICE.txt",
-        "META-INF/NOTICE-tools.txt",
-        "**/LICENSE",
-        "**/NOTICE",
-        "**/module-info.class"
-    )
-
-    val version = project.version.toString() + "-" + getGitHash()
-    archiveClassifier.set("all")
-    archiveFileName.set("dasqr-$version.jar")
-
-    manifest {
-        attributes["Main-Class"] = "com.dasoops.dasqr.core.DasqrApplicationKt"
-        attributes["Version"] = version
-    }
-//
-//    copySpec {
-//        duplicatesStrategy = DuplicatesStrategy.INCLUDE
-//    }
-}
-
-tasks {
-    val launchTest by creating(JavaExec::class) {
-        val workingDir = rootProject.ext["dasqrWorkingDir"] as String
-        doFirst {
-            fatJar.outputs.files.singleFile.copyTo(File("$workingDir/dasqr.jar"), true)
+    named<ShadowJar>("shadowJar"){
+        val version = getGitHash()
+        archiveFileName.set("dasqr-$version.jar")
+        manifest {
+            attributes["Main-Class"] = "com.dasoops.dasqr.core.DasqrApplicationKt"
+            attributes["Version"] = version
         }
-        dependsOn(fatJar)
+    }
+
+    create<JavaExec>("launchTest"){
+        val workingDir = rootProject.ext["dasqrWorkingDir"] as String
+        val singleFile = shadowJar.get().outputs.files.singleFile
+        doFirst {
+            singleFile.copyTo(File("$workingDir/${singleFile.name}"), true)
+        }
+        dependsOn(shadowJar)
         mainClass.set("-jar")
 
-        args(fatJar.outputs.files.singleFile)
-        jvmArgs("-DSpring.profiles.active=master")
+        args(File("$workingDir/${singleFile.name}"))
         workingDir(workingDir)
     }
 }
