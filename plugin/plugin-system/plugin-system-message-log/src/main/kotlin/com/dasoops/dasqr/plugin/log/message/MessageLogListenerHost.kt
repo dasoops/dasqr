@@ -5,6 +5,7 @@ import net.mamoe.mirai.contact.Member
 import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.EventPriority
 import net.mamoe.mirai.event.events.MessageEvent
+import net.mamoe.mirai.message.data.Image
 import net.mamoe.mirai.message.data.internalId
 import org.slf4j.LoggerFactory
 

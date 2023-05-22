@@ -1,6 +1,8 @@
 dependencies {
     api(project(":plugin:plugin-core"))
     api(project(":plugin:plugin-system:plugin-system-config"))
+    api(project(":plugin:plugin-system:plugin-system-http-client"))
+
 }
 
 tasks.named<Jar>("jar") {

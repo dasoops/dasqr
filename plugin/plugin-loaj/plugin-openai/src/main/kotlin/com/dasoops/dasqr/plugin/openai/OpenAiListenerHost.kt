@@ -5,6 +5,7 @@ import com.dasoops.common.json.toJsonStr
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.getOrNull
 import com.dasoops.dasqr.core.listener.DslListenerHost
+import com.dasoops.dasqr.plugin.OkHttpRunner.INSTANCE
 import com.dasoops.dasqr.plugin.openai.OpenAiPublic.openAi
 import net.mamoe.mirai.message.data.MessageSource.Key.quote
 import okhttp3.OkHttpClient
@@ -41,15 +42,6 @@ open class OpenAiListenerHost : DslListenerHost({
 
     group("openAi") {
         startsWith("openAi") {
-            val client = OkHttpClient.Builder()
-                .run {
-                    config.proxy?.run {
-                        proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress(hostName, port)))
-                    }
-                    build()
-                }
-
-
             val request = Request.Builder()
                 .url("https://api.openai.com/v1/chat/completions")
                 .addHeader("Authorization", "Bearer ${config.token}")
@@ -62,7 +54,7 @@ open class OpenAiListenerHost : DslListenerHost({
                     |}""".trimMargin().toRequestBody()
                 )
                 .build()
-            val response = client.newCall(request).execute()
+            val response = OkHttpClient.INSTANCE.newCall(request).execute()
             val jsonResult = response.body.string()
             log.debug(jsonResult)
             val message = Json.parseNode(jsonResult)

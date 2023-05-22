@@ -77,7 +77,7 @@ class UserDslEventHandlerMetaData(
 ) : DslEventHandlerMetaData(name, priority, ignoreCancelled, concurrency)
 
 class ListenerHostDslBuilder {
-    public val metaDataList = mutableSetOf<DslEventHandlerMetaData>()
+    val metaDataList = mutableSetOf<DslEventHandlerMetaData>()
 
     fun group(
         name: String,

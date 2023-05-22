@@ -1,7 +1,6 @@
 package com.dasoops.dasqr.plugin.reply
 
 import cn.hutool.cache.impl.TimedCache
-import cn.hutool.http.HttpUtil
 import com.dasoops.common.core.util.getOrNullAndSet
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.listener.DasqrSimpleListenerHost
@@ -9,12 +8,12 @@ import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.listener.group
 import com.dasoops.dasqr.plugin.config.Cache
 import net.mamoe.mirai.event.EventHandler
+import net.mamoe.mirai.event.EventPriority
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.message.data.At
 import net.mamoe.mirai.message.data.MessageChain
 import net.mamoe.mirai.message.data.MessageSource.Key.quote
 import net.mamoe.mirai.message.data.toMessageChain
-import org.jsoup.Jsoup
 import org.ktorm.dsl.eq
 import kotlin.reflect.KClass
 
@@ -75,26 +74,29 @@ open class DslReplyListenerHost : DslListenerHost({
     /**
      * 添加reply
      */
-    group("addReply", keywordList = arrayListOf("addReply"), option = {
-        "keyword" {
-            order = 1
-            desc = "关键词"
-            require = true
-        }
-        "reply" {
-            order = 2
-            desc = "回复内容"
-        }
-        "type" {
-            order = 3
-            desc = "匹配类型"
-        }
-        "mustAt" {
-            order = 4
-            desc = "是否必须at"
-        }
-    }) tag@{
-        val matchType = MatchType.getOrNull(stringOrNull("matchType")!!)
+    group("addReply",
+        keywordList = arrayListOf("addReply"),
+        priority = EventPriority.HIGHEST,
+        option = {
+            "keyword" {
+                order = 1
+                desc = "关键词"
+                require = true
+            }
+            "reply" {
+                order = 2
+                desc = "回复内容"
+            }
+            "type" {
+                order = 3
+                desc = "匹配类型"
+            }
+            "mustAt" {
+                order = 4
+                desc = "是否必须at"
+            }
+        }) tag@{
+        val matchType = MatchType.getOrNull(string("matchType"))
             ?: return@tag "matchType无法识别,可选值:[equals,contain,prefix,suffix]"
 
         if (ReplyDao.anyMatched { reply ->

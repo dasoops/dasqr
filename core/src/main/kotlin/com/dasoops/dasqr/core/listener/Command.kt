@@ -1,6 +1,7 @@
 package com.dasoops.dasqr.core.listener
 
 import com.dasoops.common.core.entity.dataenum.DataEnum
+import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.core.util.DataEnumUtil
 import net.mamoe.mirai.event.ConcurrencyKind
 import net.mamoe.mirai.event.EventPriority
@@ -9,18 +10,7 @@ import net.mamoe.mirai.event.MessageSubscribersBuilder
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.event.events.MessageEvent
 import net.mamoe.mirai.event.events.UserMessageEvent
-import net.mamoe.mirai.message.data.MessageSource.Key.quote
-import net.mamoe.mirai.message.data.plus
-
-/**
- * 匹配模式
- * @author DasoopsNicole@Gmail.com
- * @date 2023/05/16
- * @see [Match]
- */
-enum class Match {
-    PREFIX, SUFFIX, EQUALS, CONTAIN;
-}
+import kotlin.jvm.Throws
 
 /**
  * 关键词
@@ -48,8 +38,9 @@ class Keyword(
         this.desc = desc
         this.require = true
     }
-
 }
+
+class CommandResloveException(message: String) : SimpleProjectExceptionEntity(message)
 
 /**
  * 指令
@@ -58,15 +49,120 @@ class Keyword(
  * @see [Command]
  */
 class Command(
-    val match: Match,
     val keyword: String,
     optionFunc: CommandKeywordBuilder.() -> Unit
 ) {
-    private val keywordList = CommandKeywordBuilder().apply(optionFunc).keywordList
+    val keywordList = CommandKeywordBuilder().apply(optionFunc).keywordList
 
-    fun handle(string: String): CommandResult {
+    @Throws(CommandResloveException::class)
+    fun handle(command: String): CommandResult {
         return CommandResult(this).apply {
-            println(string)
+            //addReply --keyword "help" --reply "help个屁,妹写" --metch "prefix"
+            //addReply -k "help" -r "help个屁,妹写" -m "prefix"
+            //addReply "help" "help个屁,妹写" "prefix"
+
+            var i = 0
+            val length = command.length
+
+            fun string(end: Char): String {
+                var value = ""
+                while (true) {
+                    when (val it = command[i++]) {
+                        end -> return value
+                        else -> value += it
+                    }
+                }
+            }
+
+            fun char(): Char {
+                return command[i++]
+            }
+
+            fun `throw`(message: String) {
+                throw CommandResloveException(message)
+            }
+
+            fun skip(string: String) {
+                string.forEach {
+                    val c = command[i++]
+                    if (c != it) `throw`("[${--i}]期待一个'$it',实际一个'${command[i]}'")
+                }
+            }
+
+            fun end(): Boolean {
+                return i == length
+            }
+
+            fun skip(char: Char) {
+                if (end()) `throw`("[${--i}]期待一个'$char',实际结束")
+                if (command[i++] != char) `throw`("[${--i}]期待一个'$char',实际一个'${command[i]}'")
+            }
+
+            fun space(): Boolean {
+                if (end()) return true
+                if (command[i] != ' ') return false
+                while (
+                    run {
+                        if (end()) return true
+                        command[i++] == ' '
+                    }) {
+                    //
+                }
+                i--
+                return false
+            }
+
+            when (command[i]) {
+                '-' -> {
+                    when (command[++i]) {
+                        '-' -> {
+                            i++
+                            while (!space()) {
+                                if (i != 2) skip("--")
+                                val key = string(' ')
+                                space()
+                                skip('"')
+                                val value = string('"')
+                                put(key, value)
+                            }
+                        }
+
+                        else -> {
+                            val keywordMap = keywordList.associateBy { it.simple }
+                            while (!space()) {
+                                if (i != 1) skip('-')
+                                val key = char()
+                                space()
+                                skip('"')
+                                val value = string('"')
+                                put(
+                                    keywordMap[key]?.keyword ?: throw CommandResloveException("未定义的参数名 $key"),
+                                    value
+                                )
+                            }
+                        }
+                    }
+                }
+
+                '"' -> {
+                    val keywordMap = keywordList.associateBy { it.order }
+                    var order = 0
+                    while (true) {
+                        skip('"')
+                        val value = string('"')
+                        put(
+                            keywordMap[order++]?.keyword ?: throw CommandResloveException("参数数量超出限制"),
+                            value
+                        )
+                        if (space()) return@apply
+                    }
+                }
+
+                else -> {
+                    `throw`("头部错误")
+                }
+            }
+
         }
     }
 }
@@ -79,7 +175,7 @@ class Command(
  */
 class CommandResult(
     val command: Command
-) : Map<String, Any?> by mutableMapOf() {
+) : MutableMap<String, Any?> by mutableMapOf() {
     fun string(key: String): String {
         return stringOrNull(key)!!
     }
@@ -165,7 +261,6 @@ fun ListenerHostDslBuilder.group(
     option: CommandKeywordBuilder.() -> Unit,
     keywordList: List<String> = mutableListOf(name),
     quote: Boolean = true,
-    match: Match = Match.PREFIX,
     priority: EventPriority = EventPriority.NORMAL,
     ignoreCancelled: Boolean = true,
     concurrency: ConcurrencyKind = ConcurrencyKind.CONCURRENT,
@@ -176,19 +271,14 @@ fun ListenerHostDslBuilder.group(
             name = name,
             priority = priority,
             ignoreCancelled = ignoreCancelled,
-            concurrency = concurrency,
-            func = {
-                suspend {
-                    checkAndRun(match, keywordList, quote, option, func)
-                }
-            },
-        )
-    )
+            concurrency = concurrency
+        ) {
+            checkAndRun(keywordList, quote, option, func)
+        })
 }
 
 fun ListenerHostDslBuilder.user(
     name: String,
-    match: Match = Match.PREFIX,
     keywordList: Collection<String> = mutableSetOf(name),
     quote: Boolean = true,
     priority: EventPriority = EventPriority.NORMAL,
@@ -204,69 +294,27 @@ fun ListenerHostDslBuilder.user(
             ignoreCancelled = ignoreCancelled,
             concurrency = concurrency,
         ) {
-            suspend {
-                checkAndRun(match, keywordList, quote, option, func)
-            }
-        }
-    )
+            checkAndRun(keywordList, quote, option, func)
+        })
 }
 
-private suspend fun <T : MessageEvent> MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.checkAndRun(
-    match: Match,
+private fun <T : MessageEvent> MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.checkAndRun(
     keywordList: Collection<String>,
     quote: Boolean,
     option: CommandKeywordBuilder.() -> Unit,
     func: CommandResult.(event: T) -> Any?
 ) {
-
-    when (match) {
-        Match.PREFIX -> run(keywordList, match, quote, option, func) { keyword ->
-            startsWith(keyword)
-        }
-
-        Match.SUFFIX -> run(keywordList, match, quote, option, func) { keyword ->
-            endsWith(keyword)
-        }
-
-        Match.EQUALS -> run(keywordList, match, quote, option, func) { keyword ->
-            case(keyword)
-        }
-
-        Match.CONTAIN -> run(keywordList, match, quote, option, func) { keyword ->
-            contains(keyword)
-        }
-    }
-}
-
-private suspend fun <T : MessageEvent> MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.run(
-    keywordList: Collection<String>,
-    match: Match,
-    quote: Boolean,
-    option: CommandKeywordBuilder.() -> Unit,
-    func: suspend CommandResult.(event: T) -> Any?,
-    runFunc: suspend MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.(keyword: String) -> MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.ListeningFilter
-) {
     keywordList.forEach { keyword ->
-        val filter = runFunc(this, keyword)
+        val ireply: MessageSubscribersBuilder<T, Listener<T>, Unit, Unit>.ListeningFilter.(it: T.(String) -> Any?) -> Any? =
+            { if (quote) quoteReply(it) else reply(it) }
 
-        if (quote) {
-            filter quoteReply {
-                val commandResult = Command(
-                    match = match,
-                    keyword = keyword,
-                    optionFunc = option,
-                ).handle(it)
-                func(commandResult, this)
-            }
-        } else {
-            filter reply {
-                val commandResult = Command(
-                    match = match,
-                    keyword = keyword,
-                    optionFunc = option,
-                ).handle(it)
-                func(commandResult, this)
-            }
+        //TODO(支持图片)
+        startsWith(keyword).ireply {
+            val commandResult = Command(
+                keyword = keyword,
+                optionFunc = option,
+            ).handle(it.substringAfter(keyword).trim())
+            func(commandResult, this)
         }
     }
 }
