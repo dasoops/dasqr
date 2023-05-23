@@ -12,6 +12,6 @@ object ExampleLogExceptionHandler : ExceptionHandler {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun handle(exception: Throwable) {
-        log.error("coroutine exception handler catch exception: ${ExceptionUtil.getRootCause(exception)}")
+        log.error("coroutine exception handler catch exception: ", exception)
     }
 }

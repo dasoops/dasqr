@@ -46,7 +46,7 @@ open class RollListenerHost : DslListenerHost({
                 subject.sendMessage("还没有人roll点哦")
                 return@tag
             }
-            val sortedList = cache.entries.sortedBy { it.value }
+            val sortedList = cache.entries.sortedByDescending { it.value }
             val maxUserEntry = sortedList.first()
             subject.sendMessage(maxUserEntry.key.at() + "恭喜这个B摇到了最高点数: ${maxUserEntry.value}")
             if (cache.size == 1) {

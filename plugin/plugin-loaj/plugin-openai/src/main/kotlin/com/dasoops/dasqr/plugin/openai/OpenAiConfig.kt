@@ -10,6 +10,7 @@ package com.dasoops.dasqr.plugin.openai
 class OpenAiConfig(
     token: String,
     model: String? = null,
+    `miao~`: Boolean? = null
 ) {
 
     /**
@@ -23,8 +24,14 @@ class OpenAiConfig(
      */
     val model: String
 
+    /**
+     * 是否默认添加 喵~ 的设定
+     */
+    val `miao~`: Boolean
+
     init {
         this.token = token
         this.model = model ?: "gpt-3.5-turbo"
+        this.`miao~` = `miao~` ?: false
     }
 }
