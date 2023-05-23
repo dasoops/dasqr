@@ -5,7 +5,7 @@ import com.dasoops.common.json.toJsonStr
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.getOrNull
 import com.dasoops.dasqr.core.listener.DslListenerHost
-import com.dasoops.dasqr.plugin.OkHttpRunner.INSTANCE
+import com.dasoops.dasqr.plugin.http.client.OkHttpRunner.INSTANCE
 import com.dasoops.dasqr.plugin.openai.OpenAiPublic.openAi
 import net.mamoe.mirai.message.data.MessageSource.Key.quote
 import okhttp3.OkHttpClient
@@ -13,8 +13,6 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.net.InetSocketAddress
-import java.net.Proxy
 
 object OpenAiPublic {
     val log: Logger = LoggerFactory.getLogger(javaClass)

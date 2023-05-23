@@ -4,7 +4,7 @@ import cn.hutool.cache.impl.LRUCache
 import com.dasoops.common.core.util.getOrNullAndSet
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.runner.Runner
-import com.dasoops.dasqr.plugin.OkHttpRunner.NO_PROXY_INSTANCE
+import com.dasoops.dasqr.plugin.http.client.OkHttpRunner.NO_PROXY_INSTANCE
 import com.dasoops.dasqr.plugin.config.Cache
 import com.dasoops.dasqr.plugin.schedule.*
 import okhttp3.OkHttpClient

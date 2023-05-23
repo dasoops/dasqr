@@ -2,7 +2,7 @@ package com.dasoops.dasqr.plugin.sao
 
 import com.dasoops.common.json.Json
 import com.dasoops.dasqr.core.listener.DslListenerHost
-import com.dasoops.dasqr.plugin.OkHttpRunner.NO_PROXY_INSTANCE
+import com.dasoops.dasqr.plugin.http.client.OkHttpRunner.NO_PROXY_INSTANCE
 import net.mamoe.mirai.message.data.at
 import okhttp3.OkHttpClient
 import okhttp3.Request

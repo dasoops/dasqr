@@ -1,4 +1,4 @@
-package com.dasoops.dasqr.plugin
+package com.dasoops.dasqr.plugin.http.client
 
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.json.toJsonStr
@@ -17,7 +17,7 @@ val Config.http: HttpProxyConfig
         }
         //初始化
         addAndInit("httpProxy", "http代理配置项", HttpProxyConfig(false).toJsonStr())
-        return getOrNull<HttpProxyConfig>("auth")!!
+        return getOrNull<HttpProxyConfig>("httpProxy")!!
     }
 
 /**
