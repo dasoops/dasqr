@@ -3,10 +3,12 @@ package com.dasoops.dasqr.plugin.reply
 import cn.hutool.cache.impl.TimedCache
 import com.dasoops.common.core.util.getOrNullAndSet
 import com.dasoops.dasqr.core.IBot
+import com.dasoops.dasqr.core.listener.CommandResult
 import com.dasoops.dasqr.core.listener.DasqrSimpleListenerHost
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.listener.group
 import com.dasoops.dasqr.plugin.config.Cache
+import com.dasoops.dasqr.plugin.reply.Replys.keyword
 import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.EventPriority
 import net.mamoe.mirai.event.events.GroupMessageEvent
@@ -14,6 +16,7 @@ import net.mamoe.mirai.message.data.At
 import net.mamoe.mirai.message.data.MessageChain
 import net.mamoe.mirai.message.data.MessageSource.Key.quote
 import net.mamoe.mirai.message.data.toMessageChain
+import org.apache.commons.lang3.StringUtils.startsWith
 import org.ktorm.dsl.eq
 import kotlin.reflect.KClass
 
@@ -52,7 +55,8 @@ open class ReplyListenerHost : DasqrSimpleListenerHost() {
         }
 
         ReplyPublic.getReply().firstOrNull {
-            if (it.mustAt && at != null) {
+            if (it.mustAt) {
+                if (at == null) return@firstOrNull false
                 it.matchType.match(it.keyword, removeAtMessage!!)
             } else {
                 it.matchType.match(it.keyword, event.message)
@@ -76,27 +80,26 @@ open class DslReplyListenerHost : DslListenerHost({
      */
     group("addReply",
         keywordList = arrayListOf("addReply"),
-        priority = EventPriority.HIGHEST,
         option = {
             "keyword" {
-                order = 1
+                order = 0
                 desc = "关键词"
                 require = true
             }
             "reply" {
-                order = 2
+                order = 1
                 desc = "回复内容"
             }
             "type" {
-                order = 3
+                order = 2
                 desc = "匹配类型"
             }
             "mustAt" {
-                order = 4
+                order = 3
                 desc = "是否必须at"
             }
         }) tag@{
-        val matchType = MatchType.getOrNull(string("matchType"))
+        val matchType = MatchType.getOrNull(stringOrDefault("matchType", "equals"))
             ?: return@tag "matchType无法识别,可选值:[equals,contain,prefix,suffix]"
 
         if (ReplyDao.anyMatched { reply ->
@@ -111,39 +114,42 @@ open class DslReplyListenerHost : DslListenerHost({
             replyMessage = string("reply")
             this.matchType = matchType
             enable = true
-            mustAt = booleanOrDefault("mustAt", true)
+            mustAt = booleanOrDefault("mustAt", false)
             order = Int.MAX_VALUE
         })
 
         return@tag it.message.quote() + "ok"
     }
 
-    group("enable/disable reply") {
-        startsWith("enableReply") quoteReply { keyword ->
-            val reply = ReplyDao.findOne {
-                it.keyword eq keyword
-            } ?: return@quoteReply "没有这个回复捏"
+    group("enable reply", keywordList = listOf("enable reply", "disable reply"), option = {
+        "keyword" {
+            desc = "关键词"
+            require = true
+        }
+        "matchType" {
+            desc = "匹配条件"
+        }
+    }) tag@{
+        val matchType = MatchType.getOrNull(stringOrDefault("matchType", "equals"))
+            ?: return@tag "matchType无法识别,可选值:[equals,contain,prefix,suffix]"
+        val reply = ReplyDao.findOne {
+            it.keyword eq string("keyword")
+            it.matchType eq matchType
+        } ?: return@tag "没有这个回复捏"
 
-            if (reply.enable) return@quoteReply "这不本来就开的嘛"
-
-            ReplyDao.update(Reply {
-                rowId = reply.rowId
-                enable = true
-            })
-
-            "ok"
+        val isEnable = this.command.keyword == "enable reply"
+        if (isEnable) {
+            if (reply.enable) return@tag "这不本来就开的嘛"
+        } else {
+            if (!reply.enable) return@tag "这不本来就关的嘛"
         }
 
-        startsWith("disableReply") quoteReply {
-            val reply = ReplyPublic.getReply().firstOrNull { reply -> reply.keyword == it }
-                ?: return@quoteReply "没有这个回复捏"
+        ReplyDao.update(Reply {
+            rowId = reply.rowId
+            enable = isEnable
+        })
+        ReplyPublic.clear()
 
-            ReplyDao.update(Reply {
-                rowId = reply.rowId
-                enable = false
-            })
-
-            "ok"
-        }
+        "ok"
     }
 })

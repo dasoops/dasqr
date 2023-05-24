@@ -1,33 +1,28 @@
 package com.dasoops.dasqr.core.loader
 
-import com.dasoops.common.core.util.resources.IgnoreResourcesScan
-import com.dasoops.dasqr.core.runner.SystemRunner
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.net.URL
 
 /**
- * dasqr跑步
+ * dasqr启动器
  * @author DasoopsNicole@Gmail.com
  * @date 2023/05/17
  */
-@IgnoreResourcesScan
-object DasqrRunner : SystemRunner {
+object DasqrRunner {
     private val log = LoggerFactory.getLogger(javaClass)
 
     var load = false
     const val PLUGIN_DIR = "./plugin"
     const val PLUGIN_LIB_DIR = "./plugin/lib"
-//    const val RESOURCES_DIR = "./resources"
 
     var loadPluginList: List<DasqrPlugin> = emptyList()
     val pluginJarList = mutableListOf<File>()
     val pluginLibJarList = mutableListOf<File>()
-//    val resourceList = mutableListOf<File>()
 
     lateinit var loadUrl: Array<URL>
 
-    override suspend fun init() {
+    suspend fun init() {
         load = true
         loadUrl = loadAllUrl().toTypedArray()
         initLoadPluginList()

@@ -64,9 +64,14 @@ class Command(
             var i = 0
             val length = command.length
 
+            fun end(): Boolean {
+                return i == length
+            }
+
             fun string(end: Char): String {
                 var value = ""
                 while (true) {
+                    if (end()) return value
                     when (val it = command[i++]) {
                         end -> return value
                         else -> value += it
@@ -87,10 +92,6 @@ class Command(
                     val c = command[i++]
                     if (c != it) `throw`("[${--i}]期待一个'$it',实际一个'${command[i]}'")
                 }
-            }
-
-            fun end(): Boolean {
-                return i == length
             }
 
             fun skip(char: Char) {
@@ -147,22 +148,28 @@ class Command(
                 '"' -> {
                     val keywordMap = keywordList.associateBy { it.order }
                     var order = 0
-                    while (true) {
+                    while (!space()) {
                         skip('"')
                         val value = string('"')
                         put(
                             keywordMap[order++]?.keyword ?: throw CommandResloveException("参数数量超出限制"),
                             value
                         )
-                        if (space()) return@apply
                     }
                 }
 
                 else -> {
-                    `throw`("头部错误")
+                    val keywordMap = keywordList.associateBy { it.order }
+                    var order = 0
+                    while (!space()) {
+                        val value = string(' ')
+                        put(
+                            keywordMap[order++]?.keyword ?: throw CommandResloveException("参数数量超出限制"),
+                            value
+                        )
+                    }
                 }
             }
-
         }
     }
 }
@@ -231,11 +238,19 @@ class CommandKeywordBuilder {
     val keywordList = mutableListOf<Keyword>()
 
     operator fun String.invoke(func: KeywordBuilder.() -> Unit) {
-        keywordList.add(KeywordBuilder().apply(func).build(this))
+        val builder = KeywordBuilder().apply(func)
+        if (builder.order == null) {
+            builder.order = keywordList.size
+        }
+        keywordList.add(builder.build(this))
     }
 
     fun new(keyword: String, func: KeywordBuilder.() -> Unit) {
-        keywordList.add(KeywordBuilder().apply(func).build(keyword))
+        val builder = KeywordBuilder().apply(func)
+        if (builder.order == null) {
+            builder.order = keywordList.size
+        }
+        keywordList.add(builder.build(keyword))
     }
 }
 
@@ -277,7 +292,7 @@ fun ListenerHostDslBuilder.group(
         })
 }
 
-fun ListenerHostDslBuilder.user(
+fun ListenerHostDslBuilder.friend(
     name: String,
     keywordList: Collection<String> = mutableSetOf(name),
     quote: Boolean = true,
@@ -288,7 +303,7 @@ fun ListenerHostDslBuilder.user(
     func: CommandResult.(event: UserMessageEvent) -> Any?
 ) {
     metaDataList.add(
-        UserDslEventHandlerMetaData(
+        FriendDslEventHandlerMetaData(
             name = name,
             priority = priority,
             ignoreCancelled = ignoreCancelled,

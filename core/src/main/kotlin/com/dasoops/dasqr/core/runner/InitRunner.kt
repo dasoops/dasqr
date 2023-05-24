@@ -20,30 +20,33 @@ import kotlin.system.exitProcess
  * @date 2023-04-24
  */
 @IgnoreResourcesScan
-object InitRunner : SystemRunner {
+object InitRunner : Runner {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    override suspend fun init() =
+    override suspend fun init() {
         try {
             printBanner()
-            SystemRunner.goInit()
+            Runner.runBeforeAll()
             Config.goInit()
 
+            Runner.runBeforeBotInit()
             //加载bot
             log.info("init IBot")
-            IBot
+            IBot.login()
+            Runner.runAfterBotInit()
 
             PluginPool.goInit()
             ExceptionHandlerPool.goInit()
-            Runner.goInit()
+            Runner.runLast()
         } catch (e: Throwable) {
             log.error("initRunner throw Exception: ", e)
             exitProcess(0)
         }
+    }
 
     private fun printBanner() {
         Resources.get("banner.txt").apply {
-            if (exists()){
+            if (exists()) {
                 println(readText())
             }
         }

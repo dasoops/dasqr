@@ -14,7 +14,7 @@ enum class MatchType(val match: (String, MessageChain) -> Boolean) : DataEnum {
      * 全文匹配
      */
     EQUALS(match = { keyword, message ->
-        message.contentEquals(keyword)
+        message.contentToString().trim() == keyword
     }),
 
     /**
@@ -28,14 +28,14 @@ enum class MatchType(val match: (String, MessageChain) -> Boolean) : DataEnum {
      * 前缀匹配
      */
     PREFIX(match = { keyword, message ->
-        message.contentToString().startsWith(keyword)
+        message.contentToString().trim().startsWith(keyword)
     }),
 
     /**
      * 后缀匹配
      */
     SUFFIX(match = { keyword, message ->
-        message.contentToString().endsWith(keyword)
+        message.contentToString().trim().endsWith(keyword)
     }),
     ;
 

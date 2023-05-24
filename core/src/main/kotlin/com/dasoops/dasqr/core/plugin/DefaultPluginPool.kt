@@ -51,8 +51,7 @@ object DefaultPluginPool : PluginPool {
                                 listeners = metaData.func
                             )
 
-
-                        is UserDslEventHandlerMetaData -> IBot.eventChannel.subscribeUserMessages(
+                        is FriendDslEventHandlerMetaData -> IBot.eventChannel.subscribeFriendMessages(
                             concurrencyKind = metaData.concurrency,
                             priority = metaData.priority,
                             listeners = metaData.func

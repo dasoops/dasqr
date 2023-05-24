@@ -1,4 +1,4 @@
-package com.dasoops.dasqr.plugin.auth
+package com.dasoops.dasqr.plugin.pluginManager.auth
 
 import com.dasoops.common.json.toJsonStr
 import com.dasoops.dasqr.core.config.Config
@@ -10,7 +10,7 @@ val Config.auth: AuthConfig
             return this
         }
         //初始化
-        addAndInit("auth","权限过滤插件[plugin-system-auth]配置项",AuthConfig().toJsonStr())
+        addAndInit("auth","权限过滤插件[plugin-system-plugin-manager]配置项", AuthConfig().toJsonStr())
         return getOrNull<AuthConfig>("auth")!!
     }
 

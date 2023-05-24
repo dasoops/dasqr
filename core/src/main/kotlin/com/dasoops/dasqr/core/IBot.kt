@@ -3,6 +3,7 @@ package com.dasoops.dasqr.core
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.MiraiLoginType
 import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.BotFactory
@@ -47,10 +48,6 @@ object IBot : Bot by run({
         BotFactory.newBot(botProperties.qq, BotAuthorization.byQRCode(), botConfiguration.apply {
             loginSolver = StandardCharImageLoginSolver()
         })
-    }.apply {
-        launch {
-            IBot.login()
-        }
     }
 }) {
     override val eventChannel: EventChannel<BotEvent>

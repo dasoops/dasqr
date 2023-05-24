@@ -3,10 +3,7 @@ package com.dasoops.dasqr.core.listener
 import com.dasoops.common.core.util.resources.IgnoreResourcesScan
 import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
 import net.mamoe.mirai.event.*
-import org.ktorm.dsl.eq
-import org.slf4j.LoggerFactory
 import kotlin.coroutines.CoroutineContext
-import kotlin.reflect.jvm.reflect
 
 @IgnoreResourcesScan
 sealed interface DasqrListenerHost
@@ -42,7 +39,7 @@ abstract class DasqrSimpleListenerHost : SimpleListenerHost(), DasqrListenerHost
  */
 @IgnoreResourcesScan
 abstract class DslListenerHost(val builder: suspend ListenerHostDslBuilder.() -> Unit) : DasqrListenerHost {
-    suspend fun initAndGetMetaList() =
+     suspend fun initAndGetMetaList() =
         ListenerHostDslBuilder().run {
             builder()
             metaDataList
@@ -68,23 +65,23 @@ class GroupDslEventHandlerMetaData(
     val func: GroupMessageSubscribersBuilder.() -> Unit
 ) : DslEventHandlerMetaData(name, priority, ignoreCancelled, concurrency)
 
-class UserDslEventHandlerMetaData(
+class FriendDslEventHandlerMetaData(
     name: String,
     priority: EventPriority,
     ignoreCancelled: Boolean,
     concurrency: ConcurrencyKind,
-    val func: UserMessageSubscribersBuilder.() -> Unit
+    val func: FriendMessageSubscribersBuilder.() -> Unit
 ) : DslEventHandlerMetaData(name, priority, ignoreCancelled, concurrency)
 
 class ListenerHostDslBuilder {
     val metaDataList = mutableSetOf<DslEventHandlerMetaData>()
 
-    fun group(
+    inline fun group(
         name: String,
         priority: EventPriority = EventPriority.NORMAL,
         ignoreCancelled: Boolean = true,
         concurrency: ConcurrencyKind = ConcurrencyKind.CONCURRENT,
-        func: GroupMessageSubscribersBuilder.(name: String) -> Unit
+        crossinline func: GroupMessageSubscribersBuilder.(name: String) -> Unit
     ) {
         metaDataList.add(
             GroupDslEventHandlerMetaData(
@@ -99,15 +96,15 @@ class ListenerHostDslBuilder {
         )
     }
 
-    fun user(
+    inline fun friend(
         name: String,
         priority: EventPriority = EventPriority.NORMAL,
         ignoreCancelled: Boolean = true,
         concurrency: ConcurrencyKind = ConcurrencyKind.CONCURRENT,
-        func: UserMessageSubscribersBuilder.(name: String) -> Unit
+        crossinline func: FriendMessageSubscribersBuilder.(name: String) -> Unit
     ) {
         metaDataList.add(
-            UserDslEventHandlerMetaData(
+            FriendDslEventHandlerMetaData(
                 name = name,
                 priority = priority,
                 ignoreCancelled = ignoreCancelled,

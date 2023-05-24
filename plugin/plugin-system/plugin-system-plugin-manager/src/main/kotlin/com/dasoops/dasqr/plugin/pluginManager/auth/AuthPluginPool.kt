@@ -1,16 +1,12 @@
-package com.dasoops.dasqr.plugin.auth
+package com.dasoops.dasqr.plugin.pluginManager.auth
 
-import cn.hutool.aop.ProxyUtil
-import cn.hutool.aop.aspects.SimpleAspect
-import cn.hutool.core.util.ReflectUtil
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.core.util.ClassUtil
 import com.dasoops.common.core.util.resources.Resources
-import com.dasoops.dasqr.core.listener.DasqrSimpleListenerHost
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.PluginConfig
-import com.dasoops.dasqr.core.plugin.DefaultPluginPool
+import com.dasoops.dasqr.core.listener.*
 import com.dasoops.dasqr.core.plugin.PluginPool
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -21,6 +17,7 @@ import java.lang.reflect.Method
 import java.lang.reflect.Modifier
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+
 
 /**
  * 身份验证插件池
@@ -34,54 +31,52 @@ object AuthPluginPool : PluginPool {
     override suspend fun init(pluginConfig: PluginConfig) {
         val scanPathList = pluginConfig.scanPath
         Resources.scan(*scanPathList.toTypedArray()).filter {
-            DasqrSimpleListenerHost::class.java.isAssignableFrom(it)
+            DasqrListenerHost::class.java.isAssignableFrom(it)
         }.forEach {
-            instanceFormClassOrNull(it as Class<DasqrSimpleListenerHost>)?.run {
-                register(this)
-            }
-            log.info("load auth listener host: ${it.name}")
-        }
-    }
-
-    fun register(listenerHost: DasqrSimpleListenerHost) {
-        IBot.eventChannel.registerListenerHost0(proxy(listenerHost))
-    }
-
-    fun proxy(listenerHost: DasqrSimpleListenerHost): DasqrSimpleListenerHost {
-        //import cn.hutool.aop.ProxyUtil
-        //cglib动态代理
-        return ProxyUtil.proxy(listenerHost, object : SimpleAspect() {
-            override fun before(target: Any?, method: Method?, args: Array<out Any>?): Boolean {
-                return super.before(target, method, args)
-            }
-        })
-    }
-
-    fun instanceFormClassOrNull(clazz: Class<DasqrSimpleListenerHost>): DasqrSimpleListenerHost? {
-        return if (clazz.kotlin.isOpen && !clazz.kotlin.isAbstract) {
-            ReflectUtil.getConstructor(clazz).newInstance() as DasqrSimpleListenerHost
-        } else if (clazz.kotlin.objectInstance != null) {
-            //跳过object实例
-            if (Config.INSTANCE.auth.skipRegisterError) {
-                log.warn(
-                    """
-                    |${clazz.name}被声明为object,该插件将跳过权限验证直接执行
-                    |如果这在您的预期外,请检查配置项[auth.skipRegisterError]
-                    """.trimMargin()
-                )
-                return DefaultPluginPool.instanceFormClass(clazz)
+            if (DasqrSimpleListenerHost::class.java.isAssignableFrom(it)) {
+                val status = InstanceStatus.forClass(it as Class<DasqrSimpleListenerHost>)
+                if (status == InstanceStatus.IS_OBJECT_SKIP_AUTH) {
+                    registerObjectClassNoAuth(status.instance(it)!!)
+                    log.warn("load simple listener host: ${it.name}")
+                } else {
+                    status.check(it)
+                    register(it)
+                    log.info("load auth simple listener host: ${it.name}")
+                }
             } else {
-                throw SimpleProjectExceptionEntity(
-                    """
-                    |[plugin-system-auth]插件无法处理一个object类型的ListenerHost
-                    |- 将其声明为open class,并保持一个无参构造,插件会生成该类的实例并为其提供权限校验
-                    |- 将配置项[auth.skipRegisterError]设置为true可以忽略这个错误,但插件无法再为其提供权限校验
-                """.trimMargin()
-                )
+                instanceFormClassOrNull(it as Class<DslListenerHost>)?.run {
+                    initAndGetMetaList().forEach { metaData ->
+                        when (metaData) {
+                            is GroupDslEventHandlerMetaData ->
+                                IBot.eventChannel.subscribeGroupMessages(
+                                    concurrencyKind = metaData.concurrency,
+                                    priority = metaData.priority,
+                                    listeners = AuthProxy.proxyFunc(it, metaData, metaData.func)
+                                )
+
+                            is FriendDslEventHandlerMetaData -> IBot.eventChannel.subscribeFriendMessages(
+                                concurrencyKind = metaData.concurrency,
+                                priority = metaData.priority,
+                                listeners = AuthProxy.proxyFunc(it, metaData, metaData.func)
+                            )
+                        }
+                    }
+                }
+                log.info("load auth dsl listener host: ${it.name}")
             }
-        } else {
-            null
         }
+    }
+
+    fun register(clazz: Class<DasqrSimpleListenerHost>) {
+        IBot.eventChannel.registerListenerHost0(AuthProxy.proxyInstance(clazz))
+    }
+
+    fun registerObjectClassNoAuth(listenerHost: DasqrSimpleListenerHost) {
+        IBot.eventChannel.registerListenerHost0(listenerHost)
+    }
+
+    fun <T : DasqrListenerHost> instanceFormClassOrNull(clazz: Class<T>): T? {
+        return InstanceStatus.forClass(clazz).instance(clazz)
     }
 
     fun EventChannel<*>.registerListenerHost0(
@@ -124,17 +119,17 @@ object AuthPluginPool : PluginPool {
                         if (Config.INSTANCE.auth.skipRegisterError) {
                             log.warn(
                                 """
-                            |${host.javaClass.name}.(${method.name})被声明为final,该方法将跳过权限验证直接执行
-                            |如果这在您的预期外,请检查配置项[auth.skipRegisterError]
+                                |${host.javaClass.name}.(${method.name})被声明为final,该方法将跳过权限验证直接执行
+                                |如果这在您的预期外,请检查配置项[auth.skipRegisterError]
                             """.trimMargin()
                             )
                         } else {
                             throw SimpleProjectExceptionEntity(
                                 """
-                            |[plugin-system-auth]插件无法处理一个被声明为final的方法:
-                            |  ${host.javaClass.name}.${method.name}()
-                            |- 将其声明为open method
-                            |- 将配置项[auth.skipRegisterError]设置为true可以忽略这个错误,但插件无法再为其提供权限校验
+                                |[plugin-system-plugin-manager]插件无法处理一个被声明为final的方法:
+                                |  ${host.javaClass.name}.${method.name}()
+                                |- 将其声明为open method
+                                |- 将配置项[auth.skipRegisterError]设置为true可以忽略这个错误,但插件无法再为其提供权限校验
                             """.trimMargin()
                             )
                         }

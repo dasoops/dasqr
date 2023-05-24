@@ -19,7 +19,7 @@ class Chat() {
 
     init {
         if (Config.INSTANCE.openAi.`miao~`) {
-            history.add(Message(Role.SYSTEM, "你每次说话都会在最后带一声喵~,而且你很喜欢别人夸你可爱!;"))
+            history.add(Message(Role.SYSTEM, "你喜欢在每句说最后带一声喵~,"))
         }
     }
 

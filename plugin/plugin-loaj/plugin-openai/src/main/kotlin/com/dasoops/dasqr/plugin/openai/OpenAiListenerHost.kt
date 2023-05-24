@@ -51,6 +51,9 @@ object OpenAiPublic : cn.hutool.cache.Cache<Member, Chat> by Cache.newTimedCache
             val bodyString = OkHttpClient.INSTANCE.newCall(request).execute().body.string()
             val jsonNode = Json.parseNode(bodyString)
             if (jsonNode.get("error") != null) {
+                if (jsonNode.get("error").get("message").asText().contains("Please try again in 20s")){
+                    throw SimpleProjectExceptionEntity("openAi api达到了每分钟请求限制,一会再试吧")
+                }
                 log.warn(bodyString)
                 chat.history.remove(buildMessage)
                 throw SimpleProjectExceptionEntity("openAi Api响应为server_error, 要不要给他来一jio?")
@@ -63,6 +66,7 @@ object OpenAiPublic : cn.hutool.cache.Cache<Member, Chat> by Cache.newTimedCache
             }
             return responseMsg
         } catch (e: SocketTimeoutException) {
+            log.error("api响应超时")
             throw SimpleProjectExceptionEntity("api响应超时了捏, 要不给他一拳?")
         }
     }

@@ -5,7 +5,8 @@ import com.dasoops.common.core.util.resources.Resources
 import com.dasoops.common.db.ktorm.KtormRunner
 import com.dasoops.common.json.parse
 import com.dasoops.dasqr.core.loader.get
-import com.dasoops.dasqr.core.runner.SystemRunner
+import com.dasoops.dasqr.core.runner.Runner
+import com.dasoops.dasqr.core.runner.RunnerLevel
 import org.ktorm.database.detectDialectImplementation
 import org.ktorm.logging.Slf4jLoggerAdapter
 
@@ -14,7 +15,9 @@ import org.ktorm.logging.Slf4jLoggerAdapter
  * @author DasoopsNicole@Gmail.com
  * @date 2023/05/17
  */
-object DasqrKtormRunner : KtormRunner(), SystemRunner {
+object DasqrKtormRunner : KtormRunner(), Runner {
+    override val level = RunnerLevel.BEFORE_ALL
+
     override suspend fun init() {
         super.init(
             dialect = detectDialectImplementation(),

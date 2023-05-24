@@ -11,6 +11,7 @@ val ktormVersion: String by project
 val jsonpVersion: String by project
 val okhttpVersion: String by project
 val pgsqlVersion: String by project
+val cglibVersion: String by project
 
 dependencies {
     //TODO(依赖打包加载)
@@ -51,6 +52,10 @@ dependencies {
     //kt
     api("org.jetbrains.kotlin:kotlin-reflect")
 
+    //cglib
+//    api("cglib:cglib:${cglibVersion}")
+    api("net.bytebuddy:byte-buddy:1.14.4")
+
 }
 
 tasks.named("compileJava") {
@@ -68,14 +73,14 @@ fun getGitHash(): String {
     }
     return out.toString().trim()
 }
+
 plugins {
     id("com.github.johnrengelman.shadow") version "2.0.4"
-
 }
 
-tasks{
+tasks {
 
-    named<ShadowJar>("shadowJar"){
+    named<ShadowJar>("shadowJar") {
         val version = getGitHash()
         archiveFileName.set("dasqr-$version.jar")
         manifest {
@@ -84,7 +89,7 @@ tasks{
         }
     }
 
-    create<JavaExec>("launchTest"){
+    create<JavaExec>("launchTest") {
         val workingDir = rootProject.ext["dasqrWorkingDir"] as String
         val singleFile = shadowJar.get().outputs.files.singleFile
         doFirst {
