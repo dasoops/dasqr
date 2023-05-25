@@ -44,7 +44,6 @@ open class MuteRollListenerHost : DslListenerHost({
 
             delay(3000)
             subject.sendMessage("真是精彩")
-
         }
     }
 })

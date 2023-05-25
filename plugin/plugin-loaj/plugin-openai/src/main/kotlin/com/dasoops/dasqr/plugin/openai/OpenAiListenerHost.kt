@@ -40,7 +40,7 @@ object OpenAiPublic : cn.hutool.cache.Cache<Member, Chat> by Cache.newTimedCache
         val config = Config.INSTANCE.openAi
         val requestBodyStr = chat.requestBodyStr()
 
-        log.debug("send openAi request: $requestBodyStr")
+        log.trace("send openAi request: $requestBodyStr")
         val request = Request.Builder()
             .url("https://api.openai.com/v1/chat/completions")
             .addHeader("Authorization", "Bearer ${config.token}")

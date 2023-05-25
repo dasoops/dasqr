@@ -34,7 +34,6 @@ subprojects {
         file("config.gradle")
     }
 
-
     java.sourceCompatibility = JavaVersion.VERSION_17
     configurations {
         compileOnly {

@@ -36,7 +36,7 @@ object DasqrRunner {
 
     fun log(){
         log.info("\n" + loadPluginList.joinToString(
-            separator = "\n"
+            separator = "\n----------------------------------------------\n"
         ))
     }
 
