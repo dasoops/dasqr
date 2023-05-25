@@ -27,7 +27,7 @@ object RollPublic {
  * @see [RollListenerHost]
  */
 open class RollListenerHost : DslListenerHost({
-    group("roll点") {
+    group("roll") {
         case("roll") quoteReply {
             intercept()
             val cache = RollPublic.cache[group] ?: run {
