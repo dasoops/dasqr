@@ -7,5 +7,5 @@ tasks.named<Jar>("jar") {
     manifest.attributes["Plugin-Name"] = "roll点插件"
     manifest.attributes["Plugin-Author"] = "DasoopsNicole@Gmail.com"
     manifest.attributes["Plugin-Version"] = "1.0.0"
-    manifest.attributes["Plugin-Description"] = "roll点插件"
+    manifest.attributes["Plugin-Description"] = "roll点插件,和你的群友一起体验体验吧"
 }
