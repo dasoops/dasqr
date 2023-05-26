@@ -1,10 +1,8 @@
 package com.dasoops.dasqr.core.config
 
-import com.dasoops.common.core.util.resources.IgnoreResourcesScan
 import com.dasoops.common.json.parse
 import com.dasoops.common.json.toJsonStr
-import com.dasoops.dasqr.core.Finder
-import com.dasoops.dasqr.core.runner.InitRunner
+import com.dasoops.dasqr.core.util.Loader
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory
  * @author DasoopsNicole@Gmail.com
  * @date 2023-05-08
  */
-@IgnoreResourcesScan
 interface Config {
     private val log: Logger
         get() = LoggerFactory.getLogger(javaClass)
@@ -50,7 +47,7 @@ interface Config {
         fun goInit() {
             //初始化配置项
             log.info("init config")
-            val config = Finder.get<Config>(listOf("com.dasoops.dasqr"), null)
+            val config = Loader.getOne<Config>(emptyList())
             config.init()
             INSTANCE = config
             log.info("use config: ${config.javaClass.name}")
@@ -62,24 +59,4 @@ interface Config {
 
 inline fun <reified T> Config.getOrNull(keyword: String): T? {
     return keywordToJsonConfigMap[keyword]?.parse(T::class.java)
-}
-
-/**
- * 配置类模型实现
- * @author DasoopsNicole@Gmail.com
- * @date 2023-05-08
- */
-@IgnoreResourcesScan
-internal class ConfigModelImpl(
-    override val mirai: MiraiConfig,
-    override val dasqr: DasqrConfig,
-    override val keywordToJsonConfigMap: Map<String, String>
-) : Config {
-    override fun init() {
-        //nothing
-    }
-
-    override fun addAndInit(key: String, description: String, configStr: String) {
-        //nothing
-    }
 }

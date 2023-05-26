@@ -8,7 +8,7 @@ import com.dasoops.dasqr.core.exception.ExceptionHandler
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-25
  */
-object SqlLogExceptionHandler : ExceptionHandler {
+open class SqlLogExceptionHandler : ExceptionHandler {
 
     override fun handle(exception: Throwable) {
         val rootCause = ExceptionUtil.getRootCause(exception)

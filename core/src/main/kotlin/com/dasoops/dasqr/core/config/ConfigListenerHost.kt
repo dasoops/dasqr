@@ -1,6 +1,6 @@
-package com.dasoops.dasqr.core.listener
+package com.dasoops.dasqr.core.config
 
-import com.dasoops.dasqr.core.config.Config
+import com.dasoops.dasqr.core.listener.DslListenerHost
 
 /**
  * 配置监听器主机

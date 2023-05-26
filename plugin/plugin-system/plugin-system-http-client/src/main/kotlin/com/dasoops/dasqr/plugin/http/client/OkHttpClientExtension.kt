@@ -9,7 +9,6 @@ import okhttp3.OkHttpClient
 import java.net.InetSocketAddress
 import java.net.Proxy
 
-
 val Config.http: HttpProxyConfig
     get() {
         getOrNull<HttpProxyConfig>("httpProxy")?.run {

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
  * @author DasoopsNicole@Gmail.com
  * @date 2023-05-08
  */
-object SqlConfig : Config {
+open class SqlConfig : Config {
     override lateinit var keywordToJsonConfigMap: Map<String, String>
 
     private val log = LoggerFactory.getLogger(javaClass)

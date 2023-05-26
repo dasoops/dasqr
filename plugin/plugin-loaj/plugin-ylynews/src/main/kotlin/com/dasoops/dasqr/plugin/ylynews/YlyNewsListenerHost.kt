@@ -67,7 +67,7 @@ object NewsPublic : Runner, ScheduleTask {
             this.description = "清除日报缓存"
             this.enable = true
         })
-        ScheduleRunner.init()
+        ScheduleRunner.INSTANCE.init()
     }
 }
 

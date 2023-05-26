@@ -1,16 +1,11 @@
 package com.dasoops.dasqr.core.runner
 
-import com.dasoops.common.core.util.resources.IgnoreResourcesScan
 import com.dasoops.common.core.util.resources.Resources
-import com.dasoops.dasqr.core.Finder
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
 import com.dasoops.dasqr.core.loader.get
 import com.dasoops.dasqr.core.plugin.PluginPool
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import kotlin.system.exitProcess
 
@@ -19,11 +14,10 @@ import kotlin.system.exitProcess
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-@IgnoreResourcesScan
-object InitRunner : Runner {
+object InitRunner {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    override suspend fun init() {
+    suspend fun init() {
         try {
             printBanner()
             Runner.runBeforeAll()
@@ -38,6 +32,7 @@ object InitRunner : Runner {
             PluginPool.goInit()
             ExceptionHandlerPool.goInit()
             Runner.runLast()
+            log.info("init success")
         } catch (e: Throwable) {
             log.error("initRunner throw Exception: ", e)
             exitProcess(0)

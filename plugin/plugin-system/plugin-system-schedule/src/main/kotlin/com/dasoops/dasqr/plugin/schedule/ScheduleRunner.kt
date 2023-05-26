@@ -2,8 +2,8 @@ package com.dasoops.dasqr.plugin.schedule
 
 import cn.hutool.cron.CronUtil
 import cn.hutool.cron.task.Task
-import com.dasoops.dasqr.core.Finder
 import com.dasoops.dasqr.core.runner.Runner
+import com.dasoops.dasqr.core.util.Finder
 import org.ktorm.dsl.eq
 import org.slf4j.LoggerFactory
 
@@ -12,11 +12,16 @@ import org.slf4j.LoggerFactory
  * @author DasoopsNicole@Gmail.com
  * @date 2023/05/16
  */
-object ScheduleRunner : Runner {
+open class ScheduleRunner : Runner {
     private val log = LoggerFactory.getLogger(javaClass)
     val scheduleList = mutableListOf<Schedule>()
 
+    companion object {
+        lateinit var INSTANCE: ScheduleRunner
+    }
+
     override suspend fun init() {
+        INSTANCE = this
         //重新启动
         CronUtil.restart()
         CronUtil.setMatchSecond(true)

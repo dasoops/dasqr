@@ -3,12 +3,12 @@ package com.dasoops.dasqr.core.plugin
 import cn.hutool.core.util.ReflectUtil
 import com.dasoops.common.core.util.ClassUtil
 import com.dasoops.common.core.util.resources.Resources
-import com.dasoops.dasqr.core.DefaultImpl
 import com.dasoops.dasqr.core.IBot
-import com.dasoops.dasqr.core.config.PluginConfig
+import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.listener.*
 import com.dasoops.dasqr.core.runner.InitException
 import com.dasoops.dasqr.core.runner.InitExceptionEntity
+import com.dasoops.dasqr.core.util.DefaultImpl
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
@@ -25,18 +25,23 @@ import kotlin.coroutines.EmptyCoroutineContext
  * @date 2023-05-04
  */
 @DefaultImpl
-object DefaultPluginPool : PluginPool {
+open class DefaultPluginPool : PluginPool {
 
     private val log = LoggerFactory.getLogger(javaClass)
 
     val loadList = mutableSetOf<DasqrSimpleListenerHost>()
 
     @Suppress("UNCHECKED_CAST")
-    override suspend fun init(pluginConfig: PluginConfig) {
-        val scanPathList = pluginConfig.scanPath
+    override suspend fun init() {
+        val excludeList = Config.INSTANCE.dasqr.plugin.excludeClass
+        val scanPathList = Config.INSTANCE.dasqr.plugin.scanPathList
+
         Resources.scan(*scanPathList.toTypedArray()).filter {
             DasqrListenerHost::class.java.isAssignableFrom(it)
         }.forEach {
+            if (excludeList.contains(it.name)) {
+                return@forEach
+            }
             if (DasqrSimpleListenerHost::class.java.isAssignableFrom(it)) {
                 IBot.eventChannel.registerListenerHost0(instanceFormClass(it as Class<DasqrSimpleListenerHost>))
                 log.info("load simple listener host: ${it.name}")

@@ -6,7 +6,6 @@ import com.dasoops.common.db.ktorm.baseSave
 import com.dasoops.common.db.ktorm.baseUpdate
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.runner.Runner
-import com.dasoops.dasqr.core.runner.RunnerLevel
 import com.dasoops.dasqr.plugin.pluginManager.mapping.*
 import net.mamoe.mirai.contact.Contact
 import net.mamoe.mirai.contact.ContactList
@@ -22,8 +21,8 @@ import org.ktorm.dsl.inList
  * @date 2023/05/24
  * @see [PluginDataInitRunner]
  */
-object PluginDataInitRunner : Runner {
-    override val level = RunnerLevel.AFTER_BOT_INIT
+open class PluginDataInitRunner : Runner {
+    override val level = Runner.Level.AFTER_BOT_INIT
 
     override suspend fun init() {
         val allRegister = RegisterDao.findList {

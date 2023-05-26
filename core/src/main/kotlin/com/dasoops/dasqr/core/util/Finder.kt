@@ -1,31 +1,23 @@
-package com.dasoops.dasqr.core
+package com.dasoops.dasqr.core.util
 
 import com.dasoops.common.core.util.resources.Resources
 import com.dasoops.dasqr.core.runner.InitException
 import com.dasoops.dasqr.core.runner.InitExceptionEntity
-import com.fasterxml.jackson.databind.util.ClassUtil
 import com.fasterxml.jackson.module.kotlin.isKotlinClass
 
 /**
- * 默认实现标记注解
- * @author DasoopsNicole@Gmail.com
- * @date 2023-05-08
- */
-annotation class DefaultImpl
-
-/**
- * 启动类查找器
+ * 类查找器(Resources)
  * @author DasoopsNicole@Gmail.com
  * @date 2023-05-08
  */
 object Finder {
 
-    inline fun <reified T> getAll(basePath: Collection<String>, excludeClass: Collection<String>?): Collection<T> {
+    inline fun <reified T> getAll(basePath: Collection<String>, excludeClass: Collection<String>): Collection<T> {
         return Resources.scan(Thread.currentThread().contextClassLoader, *basePath.toTypedArray())
             .filter {
                 T::class.java.isAssignableFrom(it)
             }.filter {
-                excludeClass?.ifEmpty { null }?.contains(it.name) == null
+                !excludeClass.contains(it.name)
             }.map {
                 getObjectInstacnce(it)
             }
@@ -35,12 +27,12 @@ object Finder {
      * 查找实体类
      * @return [T]
      */
-    inline fun <reified T> getOrNull(basePath: Collection<String>, excludeClass: Collection<String>?): T? {
+    inline fun <reified T> getOrNull(basePath: Collection<String>, excludeClass: Collection<String>): T? {
         val list = Resources.scan(Thread.currentThread().contextClassLoader, *basePath.toTypedArray())
             .filter {
                 T::class.java.isAssignableFrom(it)
             }.filter {
-                excludeClass?.contains(it.name) == null
+                !excludeClass.contains(it.name)
             }
 
         return if (list.size == 1) {
@@ -64,7 +56,7 @@ object Finder {
         }
     }
 
-    inline fun <reified T> get(basePath: Collection<String>, excludeClass: Collection<String>?): T {
+    inline fun <reified T> get(basePath: Collection<String>, excludeClass: Collection<String>): T {
         return getOrNull<T>(basePath, excludeClass) ?: throw InitException.NO_FIND_CLASS.get()
     }
 

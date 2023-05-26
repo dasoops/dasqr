@@ -2,9 +2,8 @@ package com.dasoops.dasqr.core.config
 
 import cn.hutool.core.io.FileUtil
 import com.dasoops.common.json.Json
-import com.dasoops.common.json.parse
 import com.dasoops.common.json.toJsonStr
-import com.dasoops.dasqr.core.DefaultImpl
+import com.dasoops.dasqr.core.util.DefaultImpl
 import org.slf4j.LoggerFactory
 import java.io.File
 
@@ -14,7 +13,7 @@ import java.io.File
  * @date 2023-05-08
  */
 @DefaultImpl
-object DefaultConfig : Config {
+open class DefaultConfig : Config {
 
     private val log = LoggerFactory.getLogger(javaClass)
     override lateinit var keywordToJsonConfigMap: Map<String, String>

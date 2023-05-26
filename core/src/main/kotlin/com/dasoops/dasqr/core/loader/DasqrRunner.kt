@@ -22,7 +22,7 @@ object DasqrRunner {
 
     lateinit var loadUrl: Array<URL>
 
-    suspend fun init() {
+    fun init() {
         load = true
         loadUrl = loadAllUrl().toTypedArray()
         initLoadPluginList()
@@ -34,10 +34,12 @@ object DasqrRunner {
         loadPluginList = pluginJarList.map { DasqrPlugin(it) }
     }
 
-    fun log(){
-        log.info("\n" + loadPluginList.joinToString(
-            separator = "\n----------------------------------------------\n"
-        ))
+    fun log() {
+        log.info(
+            "\n" + loadPluginList.joinToString(
+                separator = "\n----------------------------------------------\n"
+            )
+        )
     }
 
     /**

@@ -18,20 +18,22 @@ import java.lang.reflect.Modifier
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-
 /**
  * 身份验证插件池
  * @author DasoopsNicole@Gmail.com
  * @date 2023/05/09
  */
-object AuthPluginPool : PluginPool {
+open class AuthPluginPool : PluginPool {
     private val log = LoggerFactory.getLogger(javaClass)
 
     @Suppress("UNCHECKED_CAST")
-    override suspend fun init(pluginConfig: PluginConfig) {
-        val scanPathList = pluginConfig.scanPath
+    override suspend fun init() {
+        val scanPathList = Config.INSTANCE.dasqr.plugin.scanPathList
+        val excludeClass = Config.INSTANCE.dasqr.plugin.excludeClass
         Resources.scan(*scanPathList.toTypedArray()).filter {
             DasqrListenerHost::class.java.isAssignableFrom(it)
+        }.filter {
+            !excludeClass.contains(it.javaClass.name)
         }.forEach {
             if (DasqrSimpleListenerHost::class.java.isAssignableFrom(it)) {
                 val status = InstanceStatus.forClass(it as Class<DasqrSimpleListenerHost>)

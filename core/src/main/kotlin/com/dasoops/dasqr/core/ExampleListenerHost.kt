@@ -1,5 +1,6 @@
-package com.dasoops.dasqr.core.listener
+package com.dasoops.dasqr.core
 
+import com.dasoops.dasqr.core.listener.DasqrSimpleListenerHost
 import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.EventPriority
 import net.mamoe.mirai.event.events.MessageEvent

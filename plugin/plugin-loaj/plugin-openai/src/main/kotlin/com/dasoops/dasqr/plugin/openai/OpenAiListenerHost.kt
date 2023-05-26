@@ -1,5 +1,6 @@
 package com.dasoops.dasqr.plugin.openai
 
+import cn.hutool.core.util.ServiceLoaderUtil
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.json.Json
 import com.dasoops.common.json.toJsonStr

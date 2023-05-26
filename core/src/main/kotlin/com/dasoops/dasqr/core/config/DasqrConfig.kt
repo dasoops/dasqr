@@ -28,22 +28,15 @@ class DasqrConfig(
  * @see [InitConfig]
  */
 class InitConfig(
-    scanPath: Collection<String>? = null,
     excludeClass: Collection<String>? = null
 ) {
     /**
-     * 扫描路径
-     */
-    val scanPath: Collection<String>
-
-    /**
      * 排除类
      */
-    val excludeClass: Collection<String>?
+    val excludeClass: Collection<String>
 
     init {
-        this.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin")
-        this.excludeClass = excludeClass?.ifEmpty { null }
+        this.excludeClass = excludeClass ?: emptyList()
     }
 }
 
@@ -53,23 +46,19 @@ class InitConfig(
  * @date 2023-04-24
  */
 class PluginConfig(
-    scanPath: Collection<String>? = null,
-    excludeClass: Collection<String>? = null
+    excludeClass: Collection<String>? = null,
+    scanPathList: Collection<String>? = null
 ) {
-
-    /**
-     * 扫描路径
-     */
-    val scanPath: Collection<String>
 
     /**
      * 排除类
      */
-    val excludeClass: Collection<String>?
+    val excludeClass: Collection<String>
+    val scanPathList: Collection<String>
 
     init {
-        this.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core", "com.dasoops.dasqr.plugin")
-        this.excludeClass = excludeClass?.ifEmpty { null }
+        this.excludeClass = excludeClass ?: emptyList()
+        this.scanPathList = scanPathList ?: listOf("com.dasoops.dasqr")
     }
 }
 
@@ -79,21 +68,14 @@ class PluginConfig(
  * @date 2023-04-24
  */
 class ExceptionConfig(
-    scanPath: Collection<String>? = null,
     excludeClass: Collection<String>? = null
 ) {
     /**
-     * 扫描路径
-     */
-    val scanPath: Collection<String>
-
-    /**
      * 排除类
      */
-    val excludeClass: Collection<String>?
+    val excludeClass: Collection<String>
 
     init {
-        this.scanPath = scanPath?.ifEmpty { null } ?: listOf("com.dasoops.dasqr.core")
-        this.excludeClass = excludeClass?.ifEmpty { null }
+        this.excludeClass = excludeClass ?: emptyList()
     }
 }

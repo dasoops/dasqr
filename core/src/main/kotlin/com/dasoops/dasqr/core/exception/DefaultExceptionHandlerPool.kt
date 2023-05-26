@@ -1,9 +1,8 @@
 package com.dasoops.dasqr.core.exception
 
-import com.dasoops.common.core.util.resources.Resources
-import com.dasoops.dasqr.core.DefaultImpl
-import com.dasoops.dasqr.core.IBot
-import com.dasoops.dasqr.core.config.ExceptionConfig
+import com.dasoops.dasqr.core.config.Config
+import com.dasoops.dasqr.core.util.DefaultImpl
+import com.dasoops.dasqr.core.util.Loader
 import org.slf4j.LoggerFactory
 
 /**
@@ -12,7 +11,7 @@ import org.slf4j.LoggerFactory
  * @date 2023-04-24
  */
 @DefaultImpl
-object DefaultExceptionHandlerPool : ExceptionHandlerPool {
+open class DefaultExceptionHandlerPool : ExceptionHandlerPool {
     /**
      * 处理器集合
      */
@@ -20,13 +19,10 @@ object DefaultExceptionHandlerPool : ExceptionHandlerPool {
 
     private val log = LoggerFactory.getLogger(javaClass)
 
-    override fun init(config: ExceptionConfig) {
-        Resources.scan(Thread.currentThread().contextClassLoader, *config.scanPath.toTypedArray()).filter {
-            ExceptionHandler::class.java.isAssignableFrom(it) &&
-                    config.excludeClass?.contains(it.javaClass.name) != true
-        }.forEach { clazz ->
-            handleSet.add(clazz.kotlin.objectInstance as ExceptionHandler)
-            log.info("load exception handler: ${clazz.name}")
+    override fun init() {
+        Loader.getAll<ExceptionHandler>(Config.INSTANCE.dasqr.exception.excludeClass).forEach {
+            handleSet.add(it)
+            log.info("load exception handler: ${it::class.java.name}")
         }
     }
 

@@ -11,7 +11,7 @@ import com.dasoops.dasqr.core.listener.DslListenerHost
 open class ScheduleListenerHost : DslListenerHost({
     group("refresh schedule") {
         case("refresh schedule") quoteReply {
-            ScheduleRunner.init()
+            ScheduleRunner.INSTANCE.init()
             "ok"
         }
     }

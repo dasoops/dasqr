@@ -1,8 +1,7 @@
 package com.dasoops.dasqr.core.runner
 
-import com.dasoops.common.core.util.resources.IgnoreResourcesScan
-import com.dasoops.dasqr.core.Finder
 import com.dasoops.dasqr.core.config.Config
+import com.dasoops.dasqr.core.util.Loader
 import org.slf4j.LoggerFactory
 
 /**
@@ -11,18 +10,38 @@ import org.slf4j.LoggerFactory
  * @date 2023/05/16
  * @see [Runner]
  */
-@IgnoreResourcesScan
-interface Runner : IRunner {
-    val level: RunnerLevel
-        get() = RunnerLevel.LAST
+interface Runner {
+    val level: Level
+        get() = Level.LAST
+
+    suspend fun init()
+
+    enum class Level {
+        /**
+         * 最早(系统级,将在InitRunner开始执行后第一个加载)
+         * 该类无法被init.excludeClass排除,详情请查看Runner.runBeforeAll()
+         */
+        BEFORE_ALL,
+
+        //将在bot加载前执行
+        BEFORE_BOT_INIT,
+
+        //将在bot加载后执行
+        AFTER_BOT_INIT,
+
+        //最后(将在bot加载后执行)
+        LAST,
+        ;
+    }
 
     companion object {
         lateinit var runnerList: Collection<Runner>
         private val log = LoggerFactory.getLogger(this::class.java)
+
         suspend fun runBeforeAll() {
             log.info("go run custom runner (before all)")
-            Finder.getAll<Runner>(listOf("com.dasoops.dasqr"), null)
-                .filter { it.level == RunnerLevel.BEFORE_ALL }
+            runnerList = Loader.getAll<Runner>(emptyList())
+            runnerList.filter { it.level == Level.BEFORE_ALL }
                 .forEach {
                     log.info("runner: ${it::class.qualifiedName}")
                     it.init()
@@ -31,11 +50,11 @@ interface Runner : IRunner {
 
         suspend fun runBeforeBotInit() {
             log.info("go run custom runner (before bot init)")
-            runnerList = Finder.getAll<Runner>(
-                Config.INSTANCE.dasqr.init.scanPath,
-                Config.INSTANCE.dasqr.init.excludeClass
-            )
-            runnerList.filter { it.level == RunnerLevel.BEFORE_BOT_INIT }.forEach {
+            //排除加载类
+            runnerList = runnerList.filter {
+                !Config.INSTANCE.dasqr.init.excludeClass.contains(it::class.java.name)
+            }
+            runnerList.filter { it.level == Level.BEFORE_BOT_INIT }.forEach {
                 log.info("runner: ${it::class.qualifiedName}")
                 it.init()
             }
@@ -43,7 +62,7 @@ interface Runner : IRunner {
 
         suspend fun runAfterBotInit() {
             log.info("go run custom runner (after bot init)")
-            runnerList.filter { it.level == RunnerLevel.AFTER_BOT_INIT }.forEach {
+            runnerList.filter { it.level == Level.AFTER_BOT_INIT }.forEach {
                 log.info("runner: ${it::class.qualifiedName}")
                 it.init()
             }
@@ -51,29 +70,10 @@ interface Runner : IRunner {
 
         suspend fun runLast() {
             log.info("go run custom runner (last)")
-            runnerList.filter { it.level == RunnerLevel.LAST }.forEach {
+            runnerList.filter { it.level == Level.LAST }.forEach {
                 log.info("runner: ${it::class.qualifiedName}")
                 it.init()
             }
         }
     }
-}
-
-enum class RunnerLevel {
-    //最早(系统级,将在InitRunner开始执行后第一个加载)
-    BEFORE_ALL,
-
-    //将在bot加载前执行
-    BEFORE_BOT_INIT,
-
-    //将在bot加载后执行
-    AFTER_BOT_INIT,
-
-    //最后(将在bot加载后执行)
-    LAST,
-    ;
-}
-
-interface IRunner {
-    suspend fun init()
 }

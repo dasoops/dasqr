@@ -1,6 +1,5 @@
 package com.dasoops.dasqr.core.exception
 
-import cn.hutool.core.exceptions.ExceptionUtil
 import org.slf4j.LoggerFactory
 
 /**
@@ -8,7 +7,7 @@ import org.slf4j.LoggerFactory
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
-object ExampleLogExceptionHandler : ExceptionHandler {
+open class ExampleLogExceptionHandler : ExceptionHandler {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun handle(exception: Throwable) {
