@@ -3,6 +3,10 @@ package com.dasoops.dasqr.plugin.roll
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import kotlinx.coroutines.delay
 import net.mamoe.mirai.contact.isOperator
+import net.mamoe.mirai.message.data.At
+import net.mamoe.mirai.message.data.MessageSource.Key.quote
+import net.mamoe.mirai.message.data.at
+import net.mamoe.mirai.message.data.firstIsInstance
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -13,6 +17,56 @@ import kotlin.random.nextInt
  * @see [RollListenerHost]
  */
 open class MuteRollListenerHost : DslListenerHost({
+    group("solo"){
+        startsWith("solo"){
+            //子弹数
+            val num = (0..8).random()
+            //被决斗的人
+            val beSoloed = message.firstIsInstance<At>()
+            //决斗发起人
+            val soloer = sender.at()
+            val firstIsInstance = message.firstIsInstance<At>()
+            //判断是不是要自己决斗自己
+            if(firstIsInstance.target.equals(this.sender.id)){
+                subject.sendMessage(message.quote()+ soloer +"开启了决斗,Ta决斗的目标竟然是他自己！")
+                if(num==0){
+                    subject.sendMessage("只见他拿起一把枪,枪里却没有子弹,于是他吞枪自尽了,他可真是个傻狗")
+                }
+                else{
+                    subject.sendMessage("于是他自杀了,他可真是个傻狗")
+                }
+                sender.mute(Random.nextInt(10..200))
+            }
+            //不是决斗自己
+            else{
+                if(num==0){
+                    subject.sendMessage(soloer + "要和" +beSoloed + "决斗")
+                    delay(300)
+                    subject.sendMessage(beSoloed+"不和"+ soloer+ "决斗,于是" + soloer + "上一边哭去了")
+                    sender.mute(Random.nextInt(10..200))
+                }
+                else{
+                    subject.sendMessage(soloer + "要和" + beSoloed + "决斗")
+                    val senderRoll = Random.nextInt(-100..200)
+                    delay(300)
+                    subject.sendMessage("他们开始roll点,发起者先来,他roll了: "+senderRoll)
+                    val seconderRoll = Random.nextInt(-100..200)
+                    delay(300)
+                    subject.sendMessage("对方roll了: "+seconderRoll)
+                    if(senderRoll<seconderRoll){
+                        delay(300)
+                        subject.sendMessage(soloer +"噶了")
+//                        sender.mute(Random.nextInt(10..200))
+                    }else{
+                        delay(300)
+                        subject.sendMessage(beSoloed+"噶了")
+                        group.get(firstIsInstance.target)?.mute(Random.nextInt(10..200))
+                    }
+                }
+            }
+        }
+    }
+
     group("mute roll") {
         case("mute roll") {
             subject.sendMessage("一位勇士开启了一场血腥无比的.....Roll点!")
