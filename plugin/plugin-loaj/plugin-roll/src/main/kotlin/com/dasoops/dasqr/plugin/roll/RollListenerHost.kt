@@ -3,27 +3,15 @@ package com.dasoops.dasqr.plugin.roll
 import cn.hutool.core.util.RandomUtil
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.listener.DslListenerHost
-import com.dasoops.dasqr.core.listener.GroupDslEventHandlerMetaData
+import com.dasoops.dasqr.core.listener.ListenerHostDslBuilder
 import com.dasoops.dasqr.plugin.config.Cache
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.mamoe.mirai.contact.Group
 import net.mamoe.mirai.contact.Member
-import net.mamoe.mirai.event.GroupMessageSubscribersBuilder
-import net.mamoe.mirai.event.MessageSubscribersBuilder
-import net.mamoe.mirai.event.selectMessages
 import net.mamoe.mirai.message.data.at
-
-object RollPublic {
-    //第一次使用5分钟后清除
-    val cache =
-        Cache.newTimedCache<Group, MutableMap<Member, Int>>(this::class to "roll", 1000 * 60 * 5)
-
-    //历史记录保存60分钟
-    val historyCache =
-        Cache.newTimedCache<Group, List<MutableMap.MutableEntry<Member, Int>>>(
-            this::class to "rollHistory",
-            1000 * 60 * 60
-        )
-}
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 /**
  * 消息回复listenerHost
@@ -31,42 +19,108 @@ object RollPublic {
  * @date 2023/05/10
  * @see [RollListenerHost]
  */
-open class RollListenerHost : DslListenerHost({
-    group("roll") {
-        case("roll") quoteReply {
-            intercept()
-            val cache = RollPublic.cache[group] ?: run {
-                subject.sendMessage("开启了新的一轮roll点")
-                val cacheMap = mutableMapOf<Member, Int>()
-                RollPublic.cache.put(group, cacheMap)
-                cacheMap
+open class RollListenerHost : DslListenerHost() {
+
+    //第一次使用5分钟后清除
+    val cache =
+        Cache.newTimedCache<Group, RollInfo>(this::class to "roll", 1000 * 60 * 5).apply {
+            this.setListener { group, cachedObject ->
+                IBot.launch {
+                    group.sendMessage("5分钟了,roll点结束了捏")
+                    endRoll(group, cachedObject)
+                }
             }
-            val senderPoint = RandomUtil.randomInt(100)
-            cache[sender] = senderPoint
-            "你roll到了$senderPoint"
         }
-        case("endRoll") tag@{
-            intercept()
-            val cache: MutableMap<Member, Int> = RollPublic.cache[group] ?: run {
-                subject.sendMessage("还没有人roll点哦")
-                return@tag
+
+    //历史记录保存60分钟
+    val historyCache =
+        Cache.newTimedCache<Group, List<MutableMap.MutableEntry<Member, Int>>>(
+            this::class to "rollHistory",
+            1000 * 60 * 60
+        )
+
+    override fun create(): suspend ListenerHostDslBuilder.() -> Unit = {
+        group("roll") {
+            //roll
+            case("roll") quoteReply {
+                intercept()
+                val rollInfo = cache[group] ?: run {
+                    subject.sendMessage("开启了新的一轮roll点")
+                    RollInfo().apply {
+                        cache.put(group, this)
+                    }
+                }
+                if (rollInfo[sender] != null) {
+                    return@quoteReply "你已经roll过了呢,重复roll对别人可不公平"
+                }
+                val senderPoint = RandomUtil.randomInt(100)
+                rollInfo[sender] = senderPoint
+                "你roll到了$senderPoint"
             }
-            val sortedList = cache.entries.sortedByDescending { it.value }
-            val maxUserEntry = sortedList.first()
-            subject.sendMessage(maxUserEntry.key.at() + "恭喜这个B摇到了最高点数: ${maxUserEntry.value}")
-            if (cache.size == 1) {
-                subject.sendMessage("一个人玩roll点,乐")
+            //end roll
+            case("end roll") tag@{
+                intercept()
+                val senderCache = cache[group] ?: run {
+                    subject.sendMessage("还没有人roll点哦")
+                    return@tag
+                }
+                endRoll(subject, senderCache)
+                cache.remove(group)
             }
-            RollPublic.cache.remove(group)
-            RollPublic.historyCache.put(group, sortedList)
-        }
-        case("rollHistory") or case("historyRoll") quoteReply {
-            intercept()
-            RollPublic.historyCache[group]?.joinToString(separator = System.lineSeparator()) {
-                """
+            //roll history
+            case("roll history") or case("historyRoll") quoteReply {
+                intercept()
+                historyCache[group]?.joinToString(separator = System.lineSeparator()) {
+                    """
                     ${it.key.nick}: ${it.value}
                 """.trimIndent()
-            } ?: "没有查到历史roll点记录捏"
+                } ?: "没有查到历史roll点记录捏"
+            }
+
+            case("加注") {
+                intercept()
+                if (cache[group] == null) {
+                    subject.sendMessage("还没有进行中的roll点哦")
+                    return@case
+                }
+                subject.sendMessage("现在场上有${++cache[group].weight}块砝码")
+            }
         }
     }
-})
+
+    private suspend fun endRoll(group: Group, rollInfo: RollInfo) {
+        val sortByPointList = rollInfo.entries.sortedByDescending { it.value }
+        historyCache.put(group, sortByPointList)
+        val winUserEntry = sortByPointList.first()
+        group.sendMessage(winUserEntry.key.at() + "恭喜这个B摇到了最高点数: ${winUserEntry.value}")
+        if (rollInfo.size == 1) {
+            if (rollInfo.weight != 0) {
+                group.sendMessage("单人加注无效哦,找个人来一起吧")
+                return
+            }
+            group.sendMessage("一个人玩roll点,乐")
+            return
+        }
+        if (rollInfo.weight == 0) return
+        //确定系数(砝码*每块砝码对应40-60秒)
+        val coefficient = Random.nextInt(40 * rollInfo.weight..40 * rollInfo.weight + 20)
+        //规则
+        val rule = WeightRule.byCoefficient(coefficient)
+        //排名信息
+        val ruleResult = rule.getResult(coefficient, sortByPointList)
+        group.sendMessage(
+            """
+            |让我们开始加注结算
+            |参与人数: ${rollInfo.size}
+            |系数: $coefficient
+            |本局规则: ${rule.chinese}
+            |win: """ + winUserEntry.key.at() + """ - ${winUserEntry.value}
+            |${ruleResult.info}
+        """.trimMargin()
+        )
+        delay(2000)
+        group.sendMessage("开始审判吧!")
+        delay(1000)
+        ruleResult.mute()
+    }
+}

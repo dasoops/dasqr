@@ -15,6 +15,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import net.mamoe.mirai.event.*
+import net.mamoe.mirai.event.events.GroupMessageEvent
 import org.slf4j.LoggerFactory
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
@@ -37,7 +38,7 @@ open class DefaultPluginPool : PluginPool {
         fun buildLoadPlugin(
             hostClass: Class<DasqrListenerHost>,
             registerMethodNameList: Collection<String>,
-            listenerHost: DasqrListenerHost
+            listenerHost: DasqrListenerHost,
         ): List<LoadPlugin> {
             //获取来源插件信息
             val dasqrPlugin = if (DasqrRunner.load) {
@@ -94,11 +95,12 @@ open class DefaultPluginPool : PluginPool {
                         listeners = metaData.func
                     )
 
-                is FriendDslEventHandlerMetaData -> IBot.eventChannel.subscribeFriendMessages(
-                    concurrencyKind = metaData.concurrency,
-                    priority = metaData.priority,
-                    listeners = metaData.func
-                )
+                is FriendDslEventHandlerMetaData ->
+                    IBot.eventChannel.subscribeFriendMessages(
+                        concurrencyKind = metaData.concurrency,
+                        priority = metaData.priority,
+                        listeners = metaData.func
+                    )
             }
             metaData.name
         }

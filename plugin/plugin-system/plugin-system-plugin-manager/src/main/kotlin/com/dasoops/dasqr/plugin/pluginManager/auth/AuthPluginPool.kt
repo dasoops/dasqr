@@ -58,6 +58,7 @@ open class AuthPluginPool : PluginPool {
                     listenerHost = AuthProxy.proxyInstance(it)
                     log.info("load auth simple listener host: ${it.name}")
                 }
+                //TODO(与dsl一样使用filter进行过滤)
                 IBot.eventChannel.registerListenerHost0(listenerHost)
             } else {
                 listenerHost = instanceFormClassOrNull(it as Class<DslListenerHost>)

@@ -2,7 +2,6 @@ package com.dasoops.dasqr.plugin.openai
 
 import com.dasoops.common.json.toJsonStr
 import com.dasoops.dasqr.core.config.Config
-import com.dasoops.dasqr.plugin.openai.OpenAiPublic.openAi
 import com.fasterxml.jackson.annotation.JsonValue
 
 /**

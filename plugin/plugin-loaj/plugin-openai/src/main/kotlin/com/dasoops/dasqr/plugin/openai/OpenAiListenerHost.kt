@@ -1,12 +1,12 @@
 package com.dasoops.dasqr.plugin.openai
 
-import cn.hutool.core.util.ServiceLoaderUtil
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.json.Json
 import com.dasoops.common.json.toJsonStr
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.getOrNull
 import com.dasoops.dasqr.core.listener.DslListenerHost
+import com.dasoops.dasqr.core.listener.ListenerHostDslBuilder
 import com.dasoops.dasqr.plugin.config.Cache
 import com.dasoops.dasqr.plugin.http.client.OkHttpRunner.INSTANCE
 import net.mamoe.mirai.contact.Member
@@ -17,19 +17,16 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.net.SocketTimeoutException
-import kotlin.jvm.Throws
 
-object OpenAiPublic : cn.hutool.cache.Cache<Member, Chat> by Cache.newTimedCache(OpenAiPublic::class, 10 * 60 * 1000) {
+/**
+ * openAi回复listenerHost
+ * @author DasoopsNicole@Gmail.com
+ * @date 2023/05/10
+ * @see [OpenAiListenerHost]
+ */
+open class OpenAiListenerHost : DslListenerHost(),
+    cn.hutool.cache.Cache<Member, Chat> by Cache.newTimedCache(OpenAiListenerHost::class, 10 * 60 * 1000) {
     val log: Logger = LoggerFactory.getLogger(javaClass)
-    val Config.openAi: OpenAiConfig
-        get() {
-            getOrNull<OpenAiConfig>("openAi")?.run {
-                return this
-            }
-            addAndInit("openAi", "openAi[plugin-openai]配置项", OpenAiConfig("no token").toJsonStr())
-            log.warn("未加载到openAi配置项,已初始化配置, 请填入openAi token后再使用")
-            return getOrNull<OpenAiConfig>("openAi")!!
-        }
 
     @Throws(SimpleProjectExceptionEntity::class)
     fun sendAndGet(sender: Member, message: String): String {
@@ -52,7 +49,7 @@ object OpenAiPublic : cn.hutool.cache.Cache<Member, Chat> by Cache.newTimedCache
             val bodyString = OkHttpClient.INSTANCE.newCall(request).execute().body.string()
             val jsonNode = Json.parseNode(bodyString)
             if (jsonNode.get("error") != null) {
-                if (jsonNode.get("error").get("message").asText().contains("Please try again in 20s")){
+                if (jsonNode.get("error").get("message").asText().contains("Please try again in 20s")) {
                     throw SimpleProjectExceptionEntity("openAi api达到了每分钟请求限制,一会再试吧")
                 }
                 log.warn(bodyString)
@@ -71,37 +68,30 @@ object OpenAiPublic : cn.hutool.cache.Cache<Member, Chat> by Cache.newTimedCache
             throw SimpleProjectExceptionEntity("api响应超时了捏, 要不给他一拳?")
         }
     }
-}
 
-/**
- * 消息回复listenerHost
- * @author DasoopsNicole@Gmail.com
- * @date 2023/05/10
- * @see [OpenAiListenerHost]
- */
-open class OpenAiListenerHost : DslListenerHost({
-
-    group("openAi") {
-        startsWith("openAi") {
-            try {
-                subject.sendMessage(this.message.quote() + OpenAiPublic.sendAndGet(sender, it))
-            } catch (e: SimpleProjectExceptionEntity) {
-                subject.sendMessage(this.message.quote() + e.message)
+    override fun create(): suspend ListenerHostDslBuilder.() -> Unit = {
+        group("openAi") {
+            startsWith("openAi") {
+                try {
+                    subject.sendMessage(this.message.quote() + sendAndGet(sender, it))
+                } catch (e: SimpleProjectExceptionEntity) {
+                    subject.sendMessage(this.message.quote() + e.message)
+                }
             }
-        }
 
-        startsWith("chat go") {
-            val chat = if (it.isBlank()) {
-                Chat()
-            } else {
-                Chat(it)
+            startsWith("chat go") {
+                val chat = if (it.isBlank()) {
+                    Chat()
+                } else {
+                    Chat(it)
+                }
+                put(sender, chat)
+                subject.sendMessage("ok")
             }
-            OpenAiPublic.put(sender, chat)
-            subject.sendMessage("ok")
-        }
 
-        case("end chat") {
-            OpenAiPublic.remove(sender)
+            case("end chat") {
+                remove(sender)
+            }
         }
     }
-})
+}

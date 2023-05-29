@@ -3,6 +3,7 @@ package com.dasoops.dasqr.plugin.ylynews
 import cn.hutool.cache.impl.LRUCache
 import com.dasoops.common.core.util.getOrNullAndSet
 import com.dasoops.dasqr.core.listener.DslListenerHost
+import com.dasoops.dasqr.core.listener.ListenerHostDslBuilder
 import com.dasoops.dasqr.core.runner.Runner
 import com.dasoops.dasqr.plugin.http.client.OkHttpRunner.NO_PROXY_INSTANCE
 import com.dasoops.dasqr.plugin.config.Cache
@@ -77,13 +78,15 @@ object NewsPublic : Runner, ScheduleTask {
  * @date 2023/05/10
  * @see [YlyNewsListenerHost]
  */
-open class YlyNewsListenerHost : DslListenerHost({
-    group("zhihu news") {
-        case("日报") quoteReply {
-            intercept()
-            NewsPublic.cache.getOrNullAndSet(News.ZHI_HU) {
-                NewsPublic.getZhihuNews()
+open class YlyNewsListenerHost : DslListenerHost() {
+    override fun create(): suspend ListenerHostDslBuilder.() -> Unit = {
+        group("zhihu news") {
+            case("日报") quoteReply {
+                intercept()
+                NewsPublic.cache.getOrNullAndSet(News.ZHI_HU) {
+                    NewsPublic.getZhihuNews()
+                }
             }
         }
     }
-})
+}

@@ -2,6 +2,7 @@ package com.dasoops.dasqr.plugin.sao
 
 import com.dasoops.common.json.Json
 import com.dasoops.dasqr.core.listener.DslListenerHost
+import com.dasoops.dasqr.core.listener.ListenerHostDslBuilder
 import com.dasoops.dasqr.plugin.http.client.OkHttpRunner.NO_PROXY_INSTANCE
 import net.mamoe.mirai.message.data.at
 import okhttp3.OkHttpClient
@@ -31,15 +32,17 @@ object SaoPublic {
  * @date 2023/05/10
  * @see [SaoListenerHost]
  */
-open class SaoListenerHost : DslListenerHost({
-    group("zhihu news") {
-        case("来句骚话") quoteReply {
-            intercept()
-            SaoPublic.getSao()
-        }
-        case("随机骚话") reply {
-            intercept()
-            subject.members.random().at() + SaoPublic.getSao()
+open class SaoListenerHost : DslListenerHost() {
+    override fun create(): suspend ListenerHostDslBuilder.() -> Unit = {
+        group("zhihu news") {
+            case("来句骚话") quoteReply {
+                intercept()
+                SaoPublic.getSao()
+            }
+            case("随机骚话") reply {
+                intercept()
+                subject.members.random().at() + SaoPublic.getSao()
+            }
         }
     }
-})
+}

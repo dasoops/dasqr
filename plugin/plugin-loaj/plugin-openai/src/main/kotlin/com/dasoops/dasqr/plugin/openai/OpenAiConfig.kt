@@ -1,5 +1,19 @@
 package com.dasoops.dasqr.plugin.openai
 
+import com.dasoops.common.json.toJsonStr
+import com.dasoops.dasqr.core.config.Config
+import com.dasoops.dasqr.core.config.getOrNull
+import org.slf4j.LoggerFactory
+
+val Config.openAi: OpenAiConfig
+    get() {
+        getOrNull<OpenAiConfig>("openAi")?.run {
+            return this
+        }
+        addAndInit("openAi", "openAi[plugin-openai]配置项", OpenAiConfig("no token").toJsonStr())
+        LoggerFactory.getLogger(this::class.java).warn("未加载到openAi配置项,已初始化配置, 请填入openAi token后再使用")
+        return getOrNull<OpenAiConfig>("openAi")!!
+    }
 
 /**
  * openAi配置
@@ -10,7 +24,7 @@ package com.dasoops.dasqr.plugin.openai
 class OpenAiConfig(
     token: String,
     model: String? = null,
-    `miao~`: Boolean? = null
+    `miao~`: Boolean? = null,
 ) {
 
     /**

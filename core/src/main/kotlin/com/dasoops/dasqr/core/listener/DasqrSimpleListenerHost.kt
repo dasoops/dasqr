@@ -24,24 +24,24 @@ abstract class DasqrSimpleListenerHost : SimpleListenerHost(), DasqrListenerHost
 /**
  * dsl example
  *  ```
- *  open class ExampleDslListenerHost : DslListenerHost({
- *      group("test") {
- *          "test" reply "group test ok"
+ *  open class ExampleDslListenerHost : DslListenerHost(){
+ *      override fun create(): suspend ListenerHostDslBuilder.() -> Unit = {
+ *          group("solo") {
+ *              "test" reply "group test ok"
+ *          }
  *      }
- *
- *      user("test") {
- *          "test" reply "user test ok"
- *      }
- *  })
+ *  }
  *  ```
  * @author DasoopsNicole@Gmail.com
  * @date 2023-04-24
  */
 @IgnoreResourcesScan
-abstract class DslListenerHost(val builder: suspend ListenerHostDslBuilder.() -> Unit) : DasqrListenerHost {
-     suspend fun initAndGetMetaList() =
+abstract class DslListenerHost : DasqrListenerHost {
+    abstract fun create(): suspend ListenerHostDslBuilder.() -> Unit
+
+    suspend fun initAndGetMetaList() =
         ListenerHostDslBuilder().run {
-            builder()
+            create().invoke(this)
             metaDataList
         }
 
@@ -62,7 +62,7 @@ class GroupDslEventHandlerMetaData(
     priority: EventPriority,
     ignoreCancelled: Boolean,
     concurrency: ConcurrencyKind,
-    val func: GroupMessageSubscribersBuilder.() -> Unit
+    val func: GroupMessageSubscribersBuilder.() -> Unit,
 ) : DslEventHandlerMetaData(name, priority, ignoreCancelled, concurrency)
 
 class FriendDslEventHandlerMetaData(
@@ -70,7 +70,7 @@ class FriendDslEventHandlerMetaData(
     priority: EventPriority,
     ignoreCancelled: Boolean,
     concurrency: ConcurrencyKind,
-    val func: FriendMessageSubscribersBuilder.() -> Unit
+    val func: FriendMessageSubscribersBuilder.() -> Unit,
 ) : DslEventHandlerMetaData(name, priority, ignoreCancelled, concurrency)
 
 class ListenerHostDslBuilder {
@@ -81,7 +81,7 @@ class ListenerHostDslBuilder {
         priority: EventPriority = EventPriority.NORMAL,
         ignoreCancelled: Boolean = true,
         concurrency: ConcurrencyKind = ConcurrencyKind.CONCURRENT,
-        crossinline func: GroupMessageSubscribersBuilder.(name: String) -> Unit
+        crossinline func: GroupMessageSubscribersBuilder.(name: String) -> Unit,
     ) {
         metaDataList.add(
             GroupDslEventHandlerMetaData(
@@ -101,7 +101,7 @@ class ListenerHostDslBuilder {
         priority: EventPriority = EventPriority.NORMAL,
         ignoreCancelled: Boolean = true,
         concurrency: ConcurrencyKind = ConcurrencyKind.CONCURRENT,
-        crossinline func: FriendMessageSubscribersBuilder.(name: String) -> Unit
+        crossinline func: FriendMessageSubscribersBuilder.(name: String) -> Unit,
     ) {
         metaDataList.add(
             FriendDslEventHandlerMetaData(
