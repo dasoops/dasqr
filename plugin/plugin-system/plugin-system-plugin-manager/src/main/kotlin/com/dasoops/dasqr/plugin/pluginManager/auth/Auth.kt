@@ -2,6 +2,7 @@ package com.dasoops.dasqr.plugin.pluginManager.auth
 
 import com.dasoops.common.core.util.ClassUtil
 import com.dasoops.common.core.util.getOrNullAndSet
+import com.dasoops.common.db.ktorm.KtormGlobal.default
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.IBot.id
 import com.dasoops.dasqr.core.listener.DslEventHandlerMetaData
@@ -9,16 +10,21 @@ import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.listener.GroupDslEventHandlerMetaData
 import com.dasoops.dasqr.plugin.config.Cache
 import com.dasoops.dasqr.plugin.pluginManager.mapping.PluginOtmRegisterDao
+import com.dasoops.dasqr.plugin.pluginManager.mapping.PluginOtmRegisterDos
 import com.dasoops.dasqr.plugin.pluginManager.mapping.RegisterDo
+import com.dasoops.dasqr.plugin.pluginManager.mapping.RegisterType
 import net.mamoe.mirai.contact.*
 import net.mamoe.mirai.event.ListenerHost
 import net.mamoe.mirai.event.events.FriendMessageEvent
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.event.events.MessageEvent
 import net.mamoe.mirai.event.events.UserMessageEvent
-import org.ktorm.dsl.and
-import org.ktorm.dsl.eq
-import org.ktorm.dsl.isNull
+import org.ktorm.database.Database
+import org.ktorm.dsl.*
+import org.ktorm.entity.filter
+import org.ktorm.entity.find
+import org.ktorm.entity.first
+import org.slf4j.LoggerFactory
 import java.lang.reflect.Method
 
 /**
@@ -27,6 +33,8 @@ import java.lang.reflect.Method
  * @date 2023/05/24
  */
 object Auth {
+
+    private val log = LoggerFactory.getLogger(javaClass)
 
     private inline fun Boolean.ifFalse(func: () -> Unit) {
         if (!this) func()
@@ -38,7 +46,7 @@ object Auth {
     fun auth(clazz: Class<DslListenerHost>, metaData: DslEventHandlerMetaData, messageEvent: MessageEvent): Boolean {
         //通用参数
         val isGroupMessage = metaData is GroupDslEventHandlerMetaData
-        val listenerHostClassName = ClassUtil.getUserClass(clazz, "$").name
+        val listenerHostClassName = ClassUtil.getUserClass(clazz, "$$").name
         val listenerHostMethodName = metaData.name
 
         return auth(isGroupMessage, messageEvent, listenerHostClassName, listenerHostMethodName)
@@ -51,9 +59,8 @@ object Auth {
         }
         //通用参数
         val isGroupMessage = messageEvent is GroupMessageEvent
-        val listenerHostClassName = ClassUtil.getUserClass(listenerHost::class.java, "$").name
+        val listenerHostClassName = ClassUtil.getUserClass(listenerHost::class.java, "$$").name
         val listenerHostMethodName = method.name
-
 
         return auth(isGroupMessage, messageEvent, listenerHostClassName, listenerHostMethodName)
     }
@@ -71,49 +78,78 @@ object Auth {
         2. [好友消息]   好友是否具有插件权限
         3. [群组消息]   群组内用户是否具有插件权限
          */
+
+
         if (isGroupMessage) {
             //step 1
             messageEvent as GroupMessageEvent
             authCache.getOrNullAndSet(messageEvent.group to pluginTag) {
-                PluginOtmRegisterDao.findOne {
-                    it.botId eq IBot.id
-                    it.listenerHostClassName eq listenerHostClassName
-                    it.listenerHostMethodName eq listenerHostMethodName
-                    it.groupId eq messageEvent.group.id
-                    it.userId.isNull()
-                }!!.pass
-            }.ifFalse { return false }
+                PluginOtmRegisterDao.sequenceOf()
+                    .filter { it.botId eq IBot.id }
+                    .filter { it.registerType eq RegisterType.GROUP }
+                    .filter { it.listenerHostClassName eq listenerHostClassName }
+                    .filter { it.listenerHostMethodName eq listenerHostMethodName }
+                    .filter { it.groupId eq messageEvent.group.id }
+                    .filter { it.userId.isNull() }
+                    .first().pass
+            }.ifFalse {
+                log.trace(
+                    """
+                    [auth_step_1] ${sender.nick} $pluginTag return false;
+                """.trimIndent()
+                )
+                return false
+            }
         } else {
             //step 2
             messageEvent as FriendMessageEvent
             authCache.getOrNullAndSet(messageEvent.sender to pluginTag) {
-                PluginOtmRegisterDao.findOne {
-                    it.botId eq IBot.id
-                    it.listenerHostClassName eq listenerHostClassName
-                    it.listenerHostMethodName eq listenerHostMethodName
-                    it.groupId.isNull()
-                    it.userId eq messageEvent.sender.id
-                }!!.pass
-            }.ifFalse { return false }
+                PluginOtmRegisterDao.sequenceOf()
+                    .filter { it.botId eq IBot.id }
+                    .filter { it.registerType eq RegisterType.FRIEND }
+                    .filter { it.listenerHostClassName eq listenerHostClassName }
+                    .filter { it.listenerHostMethodName eq listenerHostMethodName }
+                    .filter { it.userId eq messageEvent.user.id }
+                    .filter { it.groupId.isNull() }
+                    .first().pass
+            }.ifFalse {
+                log.trace(
+                    """
+                    [auth_step_2] ${sender.nick} $pluginTag return false;
+                """.trimIndent()
+                )
+                return false
+            }
         }
 
         //step 3
         if (isGroupMessage) {
             authCache.getOrNullAndSet(sender to pluginTag) {
-                PluginOtmRegisterDao.findOne {
-                    it.botId eq IBot.id
-                    it.listenerHostClassName eq listenerHostClassName
-                    it.listenerHostMethodName eq listenerHostMethodName
-                    it.userId eq sender.id
-                    if (sender is Member) {
-                        it.groupId eq sender.group.id
-                    } else {
-                        it.groupId.isNull()
+                PluginOtmRegisterDao.sequenceOf()
+                    .filter { it.botId eq IBot.id }
+                    .filter { it.registerType eq RegisterType.USER_IN_GROUP }
+                    .filter { it.listenerHostClassName eq listenerHostClassName }
+                    .filter { it.listenerHostMethodName eq listenerHostMethodName }
+                    .filter { it.userId eq sender.id }
+                    .apply {
+                        if (sender is Member) {
+                            filter { it.groupId eq sender.group.id }
+                        } else {
+                            filter { it.groupId.isNull() }
+                        }
                     }
-                }!!.pass
-            }.ifFalse { return false }
+                    .first().pass
+            }.ifFalse {
+                log.trace("""
+                    [auth_step_3] ${sender.nick} $pluginTag return false;
+                """.trimIndent())
+                return false
+            }
         }
 
+        log.trace("""
+            [auth] ${sender.nick} $pluginTag() return true;
+        """.trimIndent())
         return true
     }
 }

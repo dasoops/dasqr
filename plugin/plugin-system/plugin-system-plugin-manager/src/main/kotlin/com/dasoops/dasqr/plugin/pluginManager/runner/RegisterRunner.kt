@@ -1,44 +1,48 @@
-package com.dasoops.dasqr.plugin.pluginManager
+package com.dasoops.dasqr.plugin.pluginManager.runner
 
 import cn.hutool.core.collection.CollUtil
 import com.dasoops.common.db.ktorm.KtormGlobal.default
 import com.dasoops.common.db.ktorm.baseSave
 import com.dasoops.common.db.ktorm.baseUpdate
 import com.dasoops.dasqr.core.IBot
-import com.dasoops.dasqr.core.runner.Runner
 import com.dasoops.dasqr.plugin.pluginManager.mapping.*
-import net.mamoe.mirai.contact.Contact
-import net.mamoe.mirai.contact.ContactList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.ktorm.database.Database
-import org.ktorm.dsl.batchInsert
-import org.ktorm.dsl.batchUpdate
-import org.ktorm.dsl.eq
-import org.ktorm.dsl.inList
+import org.ktorm.dsl.*
 
 /**
  * 数据库数据初始化Runner
  * @author DasoopsNicole@Gmail.com
  * @date 2023/05/24
- * @see [PluginDataInitRunner]
+ * @see [RegisterRunner]
  */
-open class PluginDataInitRunner : Runner {
-    override val level = Runner.Level.AFTER_BOT_INIT
-
-    override suspend fun init() {
+object RegisterRunner {
+    suspend fun init() = withContext(Dispatchers.IO) {
         val allRegister = RegisterDao.findList {
             it.botId eq IBot.id
         }
 
-        //初始化好友
-        initFriend(allRegister.filter { it.type == RegisterType.FRIEND })
-        initGroup(allRegister.filter { it.type == RegisterType.GROUP })
-        initGroupUser(allRegister.filter { it.type == RegisterType.USER_IN_GROUP })
+        listOf(
+            launch(Dispatchers.IO) {
+                initGroupUser(allRegister.filter { it.type == RegisterType.USER_IN_GROUP })
+            },
+            launch(Dispatchers.IO) {
+                initGroup(allRegister.filter { it.type == RegisterType.GROUP })
+            },
+            launch(Dispatchers.IO) {
+                initFriend(allRegister.filter { it.type == RegisterType.FRIEND })
+            }
+        ).joinAll()
     }
 
     private fun initFriend(dbFriendList: List<RegisterDo>) {
         val botFriendList = IBot.friends
 
-        val (deleteFriendList, initFriendList) = calcList(dbFriendList, botFriendList)
+        val (deleteFriendList, initFriendList) =
+            calcList(dbFriendList.map { it.userId!! }, botFriendList.map { it.id })
 
         if (deleteFriendList.isNotEmpty()) {
             RegisterDao.deleteIf {
@@ -66,7 +70,8 @@ open class PluginDataInitRunner : Runner {
 
     private fun initGroup(dbList: List<RegisterDo>) {
         val botList = IBot.groups
-        val (deleteList, initFriendList) = calcList(dbList, botList)
+        val (deleteList, initList) =
+            calcList(dbList.map { it.groupId!! }, botList.map { it.id })
 
         if (deleteList.isNotEmpty()) {
             RegisterDao.deleteIf {
@@ -76,9 +81,9 @@ open class PluginDataInitRunner : Runner {
             }
         }
 
-        if (initFriendList.isNotEmpty()) {
+        if (initList.isNotEmpty()) {
             Database.default.batchInsert(RegisterDos) {
-                initFriendList.forEach { id ->
+                initList.forEach { id ->
                     item {
                         baseSave(it)
                         set(it.botId, IBot.id)
@@ -112,8 +117,16 @@ open class PluginDataInitRunner : Runner {
                             baseUpdate(it)
                             it.botId eq IBot.id
                             it.type eq RegisterType.USER_IN_GROUP
-                            it.groupId eq groupId
-                            it.userId eq userId
+                            if (groupId != null){
+                                it.groupId eq groupId
+                            }else{
+                                it.groupId.isNull()
+                            }
+                            if (userId != null){
+                                it.userId eq userId
+                            }else{
+                                it.userId.isNull()
+                            }
                         }
                     }
                 }
@@ -136,16 +149,14 @@ open class PluginDataInitRunner : Runner {
         }
     }
 
-    private fun <T : Contact> calcList(
-        dbList: List<RegisterDo>,
-        botList: ContactList<T>
+    private fun calcList(
+        dbList: Collection<Long>,
+        botList: Collection<Long>,
     ): Pair<MutableCollection<Long>, MutableCollection<Long>> {
-        val dbIdList = dbList.map { it.userId }
-        val botIdList = botList.map { it.id }
         //数据库包含,bot不包含,删除的群组,删除
-        val deleteList = CollUtil.subtract(dbIdList, botIdList)
+        val deleteList = CollUtil.subtract(dbList, botList)
         //bot包含,数据库不包含,新增加的群组,初始化
-        val initFriendList = CollUtil.subtract(botIdList, dbIdList)
+        val initFriendList = CollUtil.subtract(botList, dbList)
         return Pair(deleteList, initFriendList)
     }
 }

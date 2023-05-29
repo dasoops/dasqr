@@ -7,6 +7,7 @@ import net.bytebuddy.ByteBuddy
 import net.bytebuddy.implementation.MethodDelegation
 import net.bytebuddy.implementation.bind.annotation.*
 import net.mamoe.mirai.event.EventHandler
+import net.mamoe.mirai.event.GroupMessageSubscribersBuilder
 import net.mamoe.mirai.event.ListenerHost
 import net.mamoe.mirai.event.MessageSubscribersBuilder
 import net.mamoe.mirai.event.events.MessageEvent
@@ -20,12 +21,12 @@ import java.util.concurrent.Callable
  */
 object AuthProxy {
     open class AuthProxyAdvice {
-         companion object {
+        companion object {
             @JvmStatic
             @RuntimeType
             fun onMethodEnter(
                 @Origin method: Method,
-                @Super listenerHost: ListenerHost,
+                @This listenerHost: ListenerHost,
                 @AllArguments allArguments: Array<Any>,
                 @SuperCall zuper: Callable<*>,
             ): Any? {
@@ -33,20 +34,6 @@ object AuthProxy {
                     zuper.call()
                 } else {
                     null
-                }
-            }
-        }
-    }
-
-    inline fun <T : MessageSubscribersBuilder<*, *, *, Unit>> proxyFunc(
-        clazz: Class<DslListenerHost>,
-        metaData: DslEventHandlerMetaData,
-        crossinline func: T.() -> Unit
-    ): T.() -> Unit {
-        return {
-            always {
-                if (Auth.auth(clazz, metaData, this)) {
-                    func()
                 }
             }
         }

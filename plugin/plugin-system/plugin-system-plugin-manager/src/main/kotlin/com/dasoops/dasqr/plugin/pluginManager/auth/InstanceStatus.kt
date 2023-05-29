@@ -39,31 +39,22 @@ enum class InstanceStatus {
             )
         }
 
-        override fun <T : DasqrListenerHost> instance(clazz: Class<T>): T? {
+        override fun <T : DasqrListenerHost> instance(clazz: Class<T>): T {
             check(clazz)
             throw IllegalStateException()
         }
     },
     NORMAL {
-        override fun <T : DasqrListenerHost> instance(clazz: Class<T>): T? =
+        override fun <T : DasqrListenerHost> instance(clazz: Class<T>): T =
             clazz.getConstructor().newInstance()
 
-    },
-    UNDEFINED {
-        override fun <T : DasqrListenerHost> check(clazz: Class<T>) {
-            log.warn("undefined instance status")
-        }
-
-        override fun <T : DasqrListenerHost> instance(clazz: Class<T>): T? {
-            return null
-        }
     };
 
     open fun <T : DasqrListenerHost> check(clazz: Class<T>) {
 
     }
 
-    abstract fun <T : DasqrListenerHost> instance(clazz: Class<T>): T?
+    abstract fun <T : DasqrListenerHost> instance(clazz: Class<T>): T
 
     val log: Logger = LoggerFactory.getLogger(javaClass)
 
@@ -80,7 +71,7 @@ enum class InstanceStatus {
 
                 }
             } else {
-                UNDEFINED
+                throw SimpleProjectExceptionEntity("undefined instanceStatus")
             }
     }
 }

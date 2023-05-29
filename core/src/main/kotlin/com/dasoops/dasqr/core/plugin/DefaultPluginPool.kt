@@ -6,6 +6,8 @@ import com.dasoops.common.core.util.resources.Resources
 import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.listener.*
+import com.dasoops.dasqr.core.loader.DasqrRunner
+import com.dasoops.dasqr.core.loader.Development
 import com.dasoops.dasqr.core.runner.InitException
 import com.dasoops.dasqr.core.runner.InitExceptionEntity
 import com.dasoops.dasqr.core.util.DefaultImpl
@@ -29,50 +31,84 @@ open class DefaultPluginPool : PluginPool {
 
     private val log = LoggerFactory.getLogger(javaClass)
 
-    val loadList = mutableSetOf<DasqrSimpleListenerHost>()
+    override val loadList = mutableSetOf<LoadPlugin>()
+
+    companion object {
+        fun buildLoadPlugin(
+            hostClass: Class<DasqrListenerHost>,
+            registerMethodNameList: Collection<String>,
+            listenerHost: DasqrListenerHost
+        ): List<LoadPlugin> {
+            //获取来源插件信息
+            val dasqrPlugin = if (DasqrRunner.load) {
+                DasqrRunner.loadPluginList.first { dasqrPlugin ->
+                    dasqrPlugin.rawPath == hostClass.protectionDomain.codeSource.location.toURI()
+                }
+            } else {
+                Development
+            }
+            val loadPluginList = registerMethodNameList.map { name ->
+                LoadPlugin(
+                    from = dasqrPlugin,
+                    listenerHost = listenerHost,
+                    methodName = name
+                )
+            }
+            return loadPluginList
+        }
+    }
 
     @Suppress("UNCHECKED_CAST")
     override suspend fun init() {
         val excludeList = Config.INSTANCE.dasqr.plugin.excludeClass
         val scanPathList = Config.INSTANCE.dasqr.plugin.scanPathList
-
         Resources.scan(*scanPathList.toTypedArray()).filter {
             DasqrListenerHost::class.java.isAssignableFrom(it)
         }.forEach {
             if (excludeList.contains(it.name)) {
                 return@forEach
             }
-            if (DasqrSimpleListenerHost::class.java.isAssignableFrom(it)) {
-                IBot.eventChannel.registerListenerHost0(instanceFormClass(it as Class<DasqrSimpleListenerHost>))
+            val listenerHost: DasqrListenerHost
+            val registerMethodNameList = if (DasqrSimpleListenerHost::class.java.isAssignableFrom(it)) {
+                listenerHost = instanceFormClass(it as Class<DasqrSimpleListenerHost>)
                 log.info("load simple listener host: ${it.name}")
+                IBot.eventChannel.registerListenerHost0(listenerHost)
             } else {
-                val dslListenerHost = instanceFormClass(it as Class<DslListenerHost>)
-                dslListenerHost.initAndGetMetaList().forEach { metaData ->
-                    when (metaData) {
-                        is GroupDslEventHandlerMetaData ->
-                            IBot.eventChannel.subscribeGroupMessages(
-                                concurrencyKind = metaData.concurrency,
-                                priority = metaData.priority,
-                                listeners = metaData.func
-                            )
-
-                        is FriendDslEventHandlerMetaData -> IBot.eventChannel.subscribeFriendMessages(
-                            concurrencyKind = metaData.concurrency,
-                            priority = metaData.priority,
-                            listeners = metaData.func
-                        )
-                    }
-                }
+                listenerHost = instanceFormClass(it as Class<DslListenerHost>)
                 log.info("load dsl listener host: ${it.name}")
+                registerDsl(listenerHost)
+            }.ifEmpty { return@forEach }
+
+            val loadPluginList = buildLoadPlugin(it as Class<DasqrListenerHost>, registerMethodNameList, listenerHost)
+            loadList.addAll(loadPluginList)
+        }
+    }
+
+    private suspend fun registerDsl(dslListenerHost: DslListenerHost): Collection<String> {
+        return dslListenerHost.initAndGetMetaList().map { metaData ->
+            when (metaData) {
+                is GroupDslEventHandlerMetaData ->
+                    IBot.eventChannel.subscribeGroupMessages(
+                        concurrencyKind = metaData.concurrency,
+                        priority = metaData.priority,
+                        listeners = metaData.func
+                    )
+
+                is FriendDslEventHandlerMetaData -> IBot.eventChannel.subscribeFriendMessages(
+                    concurrencyKind = metaData.concurrency,
+                    priority = metaData.priority,
+                    listeners = metaData.func
+                )
             }
+            metaData.name
         }
     }
 
 
     fun EventChannel<*>.registerListenerHost0(
-        host: ListenerHost,
+        host: DasqrListenerHost,
         coroutineContext: CoroutineContext = EmptyCoroutineContext,
-    ) {
+    ): Collection<String> {
         val jobOfListenerHost: Job?
         val coroutineContext0 = if (host is SimpleListenerHost) {
             val listenerCoroutineContext = host.coroutineContext
@@ -102,32 +138,30 @@ open class DefaultPluginPool : PluginPool {
             jobOfListenerHost = null
             coroutineContext
         }
-        for (method in ClassUtil.getUserClass(host).declaredMethods) {
-            //添加这一行,open suspend会生成一个supendImpl供java调用
-            if (!Modifier.isStatic(method.modifiers)) {
-                method.getAnnotation(EventHandler::class.java)?.let {
-                    //通过反射获取执行
-                    val listener = Class.forName("net.mamoe.mirai.internal.event.JvmMethodListenersInternalKt")
-                        .getDeclaredMethod(
-                            "registerEventHandler",
-                            Method::class.java,
-                            Object::class.java,
-                            EventChannel::class.java,
-                            EventHandler::class.java,
-                            CoroutineContext::class.java
-                        )
-                        .invoke(method, method, host, this, it, coroutineContext0) as Listener<*>
-                    jobOfListenerHost?.invokeOnCompletion { exception ->
-                        listener.cancel(
-                            when (exception) {
-                                is CancellationException -> exception
-                                is Throwable -> CancellationException(null, exception)
-                                else -> null
-                            }
-                        )
+        return ClassUtil.getUserClass(host).declaredMethods.mapNotNull { method ->
+            if (Modifier.isStatic(method.modifiers)) return@mapNotNull null
+            val eventHandler = method.getAnnotation(EventHandler::class.java) ?: return@mapNotNull null
+            //通过反射执行
+            val listener = Class.forName("net.mamoe.mirai.internal.event.JvmMethodListenersInternalKt")
+                .getDeclaredMethod(
+                    "registerEventHandler",
+                    Method::class.java,
+                    Object::class.java,
+                    EventChannel::class.java,
+                    EventHandler::class.java,
+                    CoroutineContext::class.java
+                )
+                .invoke(method, method, host, this, eventHandler, coroutineContext0) as Listener<*>
+            jobOfListenerHost?.invokeOnCompletion { exception ->
+                listener.cancel(
+                    when (exception) {
+                        is CancellationException -> exception
+                        is Throwable -> CancellationException(null, exception)
+                        else -> null
                     }
-                }
+                )
             }
+            return@mapNotNull method.name
         }
     }
 

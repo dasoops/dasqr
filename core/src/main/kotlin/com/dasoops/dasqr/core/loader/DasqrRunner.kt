@@ -31,7 +31,10 @@ object DasqrRunner {
     }
 
     private fun initLoadPluginList() {
-        loadPluginList = pluginJarList.map { DasqrPlugin(it) }
+        loadPluginList = pluginJarList.map { DasqrPlugin(it) }.toMutableList().run {
+            add(CorePackage)
+            this
+        }
     }
 
     fun log() {

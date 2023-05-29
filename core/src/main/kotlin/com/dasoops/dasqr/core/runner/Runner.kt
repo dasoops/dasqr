@@ -29,6 +29,9 @@ interface Runner {
         //将在bot加载后执行
         AFTER_BOT_INIT,
 
+        //插件加载后执行
+        AFTER_PLUGIN_INIT,
+
         //最后(将在bot加载后执行)
         LAST,
         ;
@@ -63,6 +66,14 @@ interface Runner {
         suspend fun runAfterBotInit() {
             log.info("go run custom runner (after bot init)")
             runnerList.filter { it.level == Level.AFTER_BOT_INIT }.forEach {
+                log.info("runner: ${it::class.qualifiedName}")
+                it.init()
+            }
+        }
+
+        suspend fun runAfterPluginInit() {
+            log.info("go run custom runner (after plugin init)")
+            runnerList.filter { it.level == Level.AFTER_PLUGIN_INIT }.forEach {
                 log.info("runner: ${it::class.qualifiedName}")
                 it.init()
             }

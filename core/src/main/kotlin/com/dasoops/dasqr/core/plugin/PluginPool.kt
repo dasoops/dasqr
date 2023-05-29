@@ -1,8 +1,7 @@
 package com.dasoops.dasqr.core.plugin
 
-import com.dasoops.dasqr.core.util.Loader
 import com.dasoops.dasqr.core.config.Config
-import com.dasoops.dasqr.core.config.PluginConfig
+import com.dasoops.dasqr.core.util.Loader
 import org.slf4j.LoggerFactory
 
 /**
@@ -11,6 +10,8 @@ import org.slf4j.LoggerFactory
  * @date 2023-05-08
  */
 interface PluginPool {
+    val loadList: Collection<LoadPlugin>
+
     suspend fun init()
 
     companion object {

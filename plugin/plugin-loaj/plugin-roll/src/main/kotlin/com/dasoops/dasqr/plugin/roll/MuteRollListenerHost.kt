@@ -3,8 +3,13 @@ package com.dasoops.dasqr.plugin.roll
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import kotlinx.coroutines.delay
 import net.mamoe.mirai.contact.isOperator
+import org.slf4j.LoggerFactory
 import kotlin.random.Random
 import kotlin.random.nextInt
+
+object MuteRollPublic {
+    private val log = LoggerFactory.getLogger(javaClass)
+}
 
 /**
  * 消息回复listenerHost

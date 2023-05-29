@@ -1,10 +1,15 @@
 package com.dasoops.dasqr.plugin.roll
 
 import cn.hutool.core.util.RandomUtil
+import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.listener.DslListenerHost
+import com.dasoops.dasqr.core.listener.GroupDslEventHandlerMetaData
 import com.dasoops.dasqr.plugin.config.Cache
 import net.mamoe.mirai.contact.Group
 import net.mamoe.mirai.contact.Member
+import net.mamoe.mirai.event.GroupMessageSubscribersBuilder
+import net.mamoe.mirai.event.MessageSubscribersBuilder
+import net.mamoe.mirai.event.selectMessages
 import net.mamoe.mirai.message.data.at
 
 object RollPublic {

@@ -26,7 +26,8 @@
     <logger name="net.mamoe.mirai" level="INFO"/>
     <logger name="com.dasoops.dasqr" level="DEBUG"/>
     <logger name="com.dasoops.common" level="DEBUG"/>
-    <logger name="ktorm-log" level="TRACE"/>
+<!--    <logger name="com.dasoops.dasqr.plugin.pluginManager.auth.Auth" level="INFO"/>-->
+    <logger name="ktorm-log" level="INFO"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

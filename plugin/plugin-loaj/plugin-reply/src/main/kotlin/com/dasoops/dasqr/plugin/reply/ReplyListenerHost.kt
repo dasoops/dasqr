@@ -47,7 +47,7 @@ open class ReplyListenerHost : DasqrSimpleListenerHost() {
      */
     @EventHandler
     open suspend fun reply(event: GroupMessageEvent) {
-        var removeAtMessage: MessageChain? = null
+        lateinit var removeAtMessage: MessageChain
         val at = event.message.filterIsInstance<At>().firstOrNull { it.target == IBot.id }
         if (at != null) {
             //排除掉atBot的信息
@@ -57,7 +57,7 @@ open class ReplyListenerHost : DasqrSimpleListenerHost() {
         ReplyPublic.getReply().firstOrNull {
             if (it.mustAt) {
                 if (at == null) return@firstOrNull false
-                it.matchType.match(it.keyword, removeAtMessage!!)
+                it.matchType.match(it.keyword, removeAtMessage)
             } else {
                 it.matchType.match(it.keyword, event.message)
             }

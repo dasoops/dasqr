@@ -3,6 +3,8 @@ package com.dasoops.dasqr.plugin.pluginManager.mapping
 import com.dasoops.common.db.ktorm.BaseDao
 import com.dasoops.common.db.ktorm.DasEntity
 import com.dasoops.common.db.ktorm.DasTable
+import com.dasoops.common.db.ktorm.dataEnum
+import com.dasoops.dasqr.plugin.pluginManager.mapping.RegisterDos.bindTo
 import org.ktorm.schema.boolean
 import org.ktorm.schema.long
 import org.ktorm.schema.varchar
@@ -19,8 +21,9 @@ object PluginOtmRegisterDos : DasTable<PluginOtmRegisterDo>("plugin_system_plugi
     val botId = long("bot_id").bindTo { it.botId }
     val userId = long("user_id").bindTo { it.userId }
     val groupId = long("group_id").bindTo { it.groupId }
-    val listenerHostClassName = varchar("group_id").bindTo { it.listenerHostClassName }
-    val listenerHostMethodName = varchar("group_id").bindTo { it.listenerHostMethodName }
+    val listenerHostClassName = varchar("listener_host_class_name").bindTo { it.listenerHostClassName }
+    val listenerHostMethodName = varchar("listener_host_method_name").bindTo { it.listenerHostMethodName }
+    val registerType = dataEnum<RegisterType>("register_type").bindTo { it.registerType }
 }
 
 interface PluginOtmRegisterDo : DasEntity<PluginOtmRegisterDo> {
@@ -47,12 +50,12 @@ interface PluginOtmRegisterDo : DasEntity<PluginOtmRegisterDo> {
     /**
      * 注册对象主键id
      */
-    var userId: Long
+    var userId: Long?
 
     /**
      * 注册对象主键id
      */
-    var groupId: Long
+    var groupId: Long?
 
     /**
      * 注册对象主键id
@@ -63,6 +66,11 @@ interface PluginOtmRegisterDo : DasEntity<PluginOtmRegisterDo> {
      * 注册对象主键id
      */
     var listenerHostMethodName: String
+
+    /**
+     * 机器人id
+     */
+    var registerType: RegisterType
 
     companion object : DasEntity.Factory<PluginOtmRegisterDo>()
 }

@@ -29,12 +29,12 @@ interface RegisterDo : DasEntity<RegisterDo> {
     /**
      * 用户id
      */
-    var userId: Long
+    var userId: Long?
 
     /**
      * 群组id
      */
-    var groupId: Long
+    var groupId: Long?
 
     /**
      * 类型

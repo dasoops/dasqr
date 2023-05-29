@@ -30,6 +30,8 @@ object InitRunner {
             Runner.runAfterBotInit()
 
             PluginPool.goInit()
+            Runner.runAfterPluginInit()
+
             ExceptionHandlerPool.goInit()
             Runner.runLast()
             log.info("init success")
