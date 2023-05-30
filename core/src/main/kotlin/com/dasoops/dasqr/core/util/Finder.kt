@@ -67,6 +67,9 @@ object Finder {
                 return objectInstance as T
             }
         }
+        if (clazz.kotlin.isOpen && !clazz.kotlin.isAbstract) {
+            return clazz.getConstructor().newInstance() as T
+        }
         throw InitExceptionEntity(
             InitException.MUST_OBJECT_INSTANCE, """
             |${clazz.name}类必须为kotlin object/open class 对象

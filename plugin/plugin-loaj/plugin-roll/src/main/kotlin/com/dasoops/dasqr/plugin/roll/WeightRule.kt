@@ -1,7 +1,9 @@
 package com.dasoops.dasqr.plugin.roll
 
-import com.dasoops.dasqr.core.IBot
 import net.mamoe.mirai.contact.Member
+import net.mamoe.mirai.message.data.Message
+import net.mamoe.mirai.message.data.at
+import net.mamoe.mirai.message.data.toPlainText
 
 /**
  * roll点加注规则
@@ -24,14 +26,17 @@ enum class WeightRule(
             }
             //member,point,muteSeconds
             val muteList = loseList.map {
-                Triple(it.key, it.value, it.value * coefficient * size)
+                Triple(it.key, it.value, coefficient * size)
             }
 
-            val infoStr = muteList.joinToString {
-                """${it.first.nick} : ${it.second} * $coefficient * $size = ${it.third}s"""
+            val info = muteList.flatMap {
+                listOf(
+                    it.first.at(),
+                    """ : $coefficient * $size = ${it.third}s""".toPlainText(),
+                )
             }
 
-            return Result(infoStr) {
+            return Result(info) {
                 muteList.forEach {
                     it.first.mute(it.third)
                 }
@@ -49,14 +54,17 @@ enum class WeightRule(
 
             //member,point,muteSeconds
             val muteList = loseList.mapIndexed { index, it ->
-                Triple(it.key, it.value, it.value * coefficient * (index + 1))
+                Triple(it.key, it.value, coefficient * (index + 1))
             }
 
-            val infoStr = muteList.mapIndexed { index, it ->
-                """${it.first.nick}[${it.first.id}] : $coefficient * ${index + 1} = ${it.third}s"""
-            }.joinToString()
+            val info = muteList.flatMapIndexed { index, it ->
+                listOf(
+                    it.first.at(),
+                    """ : $coefficient * ${index + 1} = ${it.third}s""".toPlainText()
+                )
+            }
 
-            return Result(infoStr) {
+            return Result(info) {
                 muteList.forEach {
                     it.first.mute(it.third)
                 }
@@ -70,16 +78,17 @@ enum class WeightRule(
         ): Result {
             val first = sortByPointList.first()
             val second = first.value * sortByPointList.size
-            val infoStr = """${first.key.nick} : ${first.value} * ${sortByPointList.size} = $second"""
+            val info =
+                listOf("""${first.key.nick} : ${first.value} * ${sortByPointList.size} = $second""".toPlainText())
 
-            return Result(infoStr) {
+            return Result(info) {
                 first.key.mute(second)
             }
         }
     },
     ;
 
-    data class Result(val info: String, val mute: suspend () -> Unit)
+    data class Result(val info: List<Message>, val mute: suspend () -> Unit)
 
     abstract suspend fun getResult(
         coefficient: Int,

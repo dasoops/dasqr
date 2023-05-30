@@ -28,7 +28,7 @@ val Config.http: HttpProxyConfig
 class HttpProxyConfig(
     enable: Boolean,
     proxyHostName: String? = null,
-    proxyPort: Int? = null
+    proxyPort: Int? = null,
 ) {
 
     /**
@@ -64,11 +64,16 @@ class HttpProxyConfig(
  * @author DasoopsNicole@Gmail.com
  * @date 2023/05/16
  */
-object OkHttpRunner : Runner {
+open class OkHttpRunner : Runner {
     lateinit var instance: OkHttpClient
     lateinit var noProxyInstance: OkHttpClient
 
+    companion object {
+        lateinit var INSTANCE: OkHttpRunner
+    }
+
     override suspend fun init() {
+        INSTANCE = this
         val httpConfig = Config.INSTANCE.http
         if (httpConfig.enable) {
             instance = OkHttpClient.Builder().run {
@@ -81,16 +86,17 @@ object OkHttpRunner : Runner {
             noProxyInstance = instance
         }
     }
-
-    /**
-     * 实例
-     */
-    val OkHttpClient.Companion.INSTANCE: OkHttpClient
-        get() = instance
-
-    /**
-     * 无代理实例
-     */
-    val OkHttpClient.Companion.NO_PROXY_INSTANCE: OkHttpClient
-        get() = noProxyInstance
 }
+
+
+/**
+ * 实例
+ */
+val OkHttpClient.Companion.INSTANCE: OkHttpClient
+    get() = OkHttpRunner.INSTANCE.instance
+
+/**
+ * 无代理实例
+ */
+val OkHttpClient.Companion.NO_PROXY_INSTANCE: OkHttpClient
+    get() = OkHttpRunner.INSTANCE.noProxyInstance

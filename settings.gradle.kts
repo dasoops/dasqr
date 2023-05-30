@@ -18,4 +18,5 @@ include(
     ":plugin:plugin-loaj:plugin-openai",
     ":plugin:plugin-loaj:plugin-sao",
     ":plugin:plugin-loaj:plugin-roll",
+    ":plugin:plugin-loaj:plugin-bilibili",
 )

@@ -9,7 +9,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.mamoe.mirai.contact.Group
 import net.mamoe.mirai.contact.Member
+import net.mamoe.mirai.message.data.MessageChainBuilder
 import net.mamoe.mirai.message.data.at
+import net.mamoe.mirai.message.data.buildMessageChain
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -64,8 +66,8 @@ open class RollListenerHost : DslListenerHost() {
                     subject.sendMessage("还没有人roll点哦")
                     return@tag
                 }
-                endRoll(subject, senderCache)
                 cache.remove(group)
+                endRoll(subject, senderCache)
             }
             //roll history
             case("roll history") or case("historyRoll") quoteReply {
@@ -108,16 +110,21 @@ open class RollListenerHost : DslListenerHost() {
         val rule = WeightRule.byCoefficient(coefficient)
         //排名信息
         val ruleResult = rule.getResult(coefficient, sortByPointList)
-        group.sendMessage(
-            """
-            |让我们开始加注结算
-            |参与人数: ${rollInfo.size}
-            |系数: $coefficient
-            |本局规则: ${rule.chinese}
-            |win: """ + winUserEntry.key.at() + """ - ${winUserEntry.value}
-            |${ruleResult.info}
-        """.trimMargin()
-        )
+        group.sendMessage(buildMessageChain {
+            add(
+                """
+                |开始加注结算
+                |参与人数: ${rollInfo.size}
+                |砝码: ${rollInfo.weight}
+                |系数: $coefficient
+                |本局规则: ${rule.chinese}
+                |win: 
+                """.trimMargin()
+            )
+            add(winUserEntry.key.at())
+            add("- ${winUserEntry.value}")
+            addAll(ruleResult.info)
+        })
         delay(2000)
         group.sendMessage("开始审判吧!")
         delay(1000)

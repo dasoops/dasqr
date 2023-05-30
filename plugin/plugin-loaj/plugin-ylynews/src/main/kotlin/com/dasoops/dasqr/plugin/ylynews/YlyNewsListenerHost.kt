@@ -5,9 +5,12 @@ import com.dasoops.common.core.util.getOrNullAndSet
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.listener.ListenerHostDslBuilder
 import com.dasoops.dasqr.core.runner.Runner
-import com.dasoops.dasqr.plugin.http.client.OkHttpRunner.NO_PROXY_INSTANCE
 import com.dasoops.dasqr.plugin.config.Cache
-import com.dasoops.dasqr.plugin.schedule.*
+import com.dasoops.dasqr.plugin.http.client.NO_PROXY_INSTANCE
+import com.dasoops.dasqr.plugin.schedule.ScheduleDao
+import com.dasoops.dasqr.plugin.schedule.ScheduleDo
+import com.dasoops.dasqr.plugin.schedule.ScheduleRunner
+import com.dasoops.dasqr.plugin.schedule.ScheduleTask
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.jsoup.Jsoup
@@ -48,7 +51,7 @@ object NewsPublic : Runner, ScheduleTask {
         }
     }
 
-    override fun run(paramJson: String?) {
+    override suspend fun run(paramJson: String?) {
         cache.clear()
     }
 

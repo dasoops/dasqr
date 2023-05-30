@@ -2,13 +2,11 @@ package com.dasoops.dasqr.plugin.openai
 
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.json.Json
-import com.dasoops.common.json.toJsonStr
 import com.dasoops.dasqr.core.config.Config
-import com.dasoops.dasqr.core.config.getOrNull
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.listener.ListenerHostDslBuilder
 import com.dasoops.dasqr.plugin.config.Cache
-import com.dasoops.dasqr.plugin.http.client.OkHttpRunner.INSTANCE
+import com.dasoops.dasqr.plugin.http.client.INSTANCE
 import net.mamoe.mirai.contact.Member
 import net.mamoe.mirai.message.data.MessageSource.Key.quote
 import okhttp3.OkHttpClient
