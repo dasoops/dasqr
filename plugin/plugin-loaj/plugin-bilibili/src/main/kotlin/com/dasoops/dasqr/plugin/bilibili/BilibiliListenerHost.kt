@@ -99,12 +99,12 @@ open class BilibiliListenerHost : DslListenerHost(), Runner, ScheduleTask {
     }
 
     private suspend fun buildMessage(
-        it: BilibiliApi.Dynamic,
+        it: Dynamic,
         contact: Contact,
     ): ArrayList<Message> {
         val messageList = arrayListOf<Message>()
         when (it) {
-            is BilibiliApi.Message -> {
+            is com.dasoops.dasqr.plugin.bilibili.Message -> {
                 messageList.add(
                     "${it.authorName}发布了动态\n${it.time.toString("yyyy-MM-dd HH:mm:ss")}\n${it.description}".toPlainText()
                 )
@@ -113,14 +113,14 @@ open class BilibiliListenerHost : DslListenerHost(), Runner, ScheduleTask {
                 })
             }
 
-            is BilibiliApi.Share -> {
+            is Share -> {
                 messageList.add(
                     "${it.authorName}转发了动态\n${it.time.toString("yyyy-MM-dd HH:mm:ss")}\n${it.title}${it.link}".toPlainText()
                 )
                 messageList.add(uploadAndGetImage(it.imageLink, contact))
             }
 
-            is BilibiliApi.Video -> {
+            is Video -> {
                 messageList.add(
                     "${it.authorName}发布了视频\n${it.time.toString("yyyy-MM-dd HH:mm:ss")}\n${it.title}${"\n"}${it.description}\n${it.link}".toPlainText()
                 )

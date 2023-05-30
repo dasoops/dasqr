@@ -1,46 +1,16 @@
 package com.dasoops.dasqr.plugin.bilibili
 
-import cn.hutool.core.date.DateTime
 import cn.hutool.core.date.DateUtil
 import cn.hutool.core.util.EscapeUtil
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.json.Json
 import com.dasoops.dasqr.plugin.http.client.NO_PROXY_INSTANCE
 import com.fasterxml.jackson.databind.JsonNode
-import net.mamoe.mirai.data.UserProfile
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
 object BilibiliApi {
-    sealed interface Dynamic {
-        val authorName: String
-        val time: DateTime
-    }
-
-    data class Share(
-        val title: String,
-        val link: String,
-        val imageLink: String,
-        override val authorName: String,
-        override val time: DateTime,
-    ) : Dynamic
-
-    data class Message(
-        val description: String,
-        val imageLinkList: List<String>,
-        override val authorName: String,
-        override val time: DateTime,
-    ) : Dynamic
-
-    data class Video(
-        val title: String,
-        val description: String,
-        val link: String,
-        override val authorName: String,
-        override val time: DateTime,
-    ) : Dynamic
-
     /**
      * 获取动态
      * @return [JsonNode]
