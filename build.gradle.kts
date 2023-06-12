@@ -28,7 +28,7 @@ allprojects {
 apply(from = (file("config.gradle")))
 
 subprojects {
-   apply {
+    apply {
         plugin("io.spring.dependency-management")
         plugin("org.jetbrains.kotlin.jvm")
         file("config.gradle")
