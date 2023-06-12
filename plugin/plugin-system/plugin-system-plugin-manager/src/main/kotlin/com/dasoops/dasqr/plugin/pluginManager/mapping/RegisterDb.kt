@@ -1,10 +1,11 @@
 package com.dasoops.dasqr.plugin.pluginManager.mapping
 
-import com.dasoops.common.core.entity.dataenum.DataEnum
 import com.dasoops.common.db.ktorm.BaseDao
 import com.dasoops.common.db.ktorm.DasEntity
 import com.dasoops.common.db.ktorm.DasTable
 import com.dasoops.common.db.ktorm.dataEnum
+import com.dasoops.common.json.core.dataenum.DataEnum
+import com.dasoops.common.json.core.dataenum.IntDataEnum
 import org.ktorm.schema.long
 
 /**
@@ -60,7 +61,7 @@ interface RegisterDo : DasEntity<RegisterDo> {
  * @date 2023/05/24
  * @see [RegisterType]
  */
-enum class RegisterType : DataEnum {
+enum class RegisterType : IntDataEnum {
     FRIEND, USER_IN_GROUP, GROUP;
 
     override val data = ordinal

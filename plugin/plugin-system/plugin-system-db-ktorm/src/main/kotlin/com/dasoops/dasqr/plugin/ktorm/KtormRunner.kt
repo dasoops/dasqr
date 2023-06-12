@@ -3,7 +3,7 @@ package com.dasoops.dasqr.plugin.ktorm
 import cn.hutool.db.ds.pooled.DbConfig
 import com.dasoops.common.core.util.resources.Resources
 import com.dasoops.common.db.ktorm.KtormRunner
-import com.dasoops.common.json.parse
+import com.dasoops.common.json.core.parse
 import com.dasoops.dasqr.core.loader.get
 import com.dasoops.dasqr.core.runner.Runner
 import org.ktorm.database.detectDialectImplementation

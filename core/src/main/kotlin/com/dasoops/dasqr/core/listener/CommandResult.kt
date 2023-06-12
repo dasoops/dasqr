@@ -1,7 +1,8 @@
 package com.dasoops.dasqr.core.listener
 
-import com.dasoops.common.core.entity.dataenum.DataEnum
-import com.dasoops.common.core.util.DataEnumUtil
+import com.dasoops.common.json.core.dataenum.DataEnum
+import com.dasoops.common.json.core.dataenum.IntDataEnum
+
 
 /**
  * 指令处理结果
@@ -52,13 +53,13 @@ class CommandResult(
         return booleanOrNull(key) ?: default
     }
 
-    inline fun <reified T : DataEnum> dataEnumOrNull(key: String): T? {
+    inline fun <reified T : IntDataEnum> dataEnumOrNull(key: String): T? {
         return intOrNull(key)?.run {
-            DataEnumUtil.getBy(T::class.java, this)
+            DataEnum.getBy(T::class.java, this)
         }
     }
 
-    inline fun <reified T : DataEnum> dataEnumOrDefault(key: String, default: T): T? {
+    inline fun <reified T : IntDataEnum> dataEnumOrDefault(key: String, default: T): T? {
         return dataEnumOrNull(key) ?: default
     }
 }

@@ -1,6 +1,7 @@
 package com.dasoops.dasqr.plugin.sao
 
-import com.dasoops.common.json.Json
+import com.dasoops.common.json.core.Json
+import com.dasoops.common.json.jackson.parseNode
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.listener.ListenerHostDslBuilder
 import com.dasoops.dasqr.plugin.http.client.NO_PROXY_INSTANCE

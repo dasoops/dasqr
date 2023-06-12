@@ -1,6 +1,6 @@
 package com.dasoops.dasqr.plugin.openai
 
-import com.dasoops.common.json.toJsonStr
+import com.dasoops.common.json.core.toJsonStr
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.config.getOrNull
 import org.slf4j.LoggerFactory

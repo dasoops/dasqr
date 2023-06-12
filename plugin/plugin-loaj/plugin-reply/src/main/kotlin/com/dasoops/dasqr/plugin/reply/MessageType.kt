@@ -1,7 +1,6 @@
 package com.dasoops.dasqr.plugin.reply
 
-import com.dasoops.common.core.entity.dataenum.DataEnum
-import com.dasoops.dasqr.plugin.reply.Replys.keyword
+import com.dasoops.common.json.core.dataenum.IntDataEnum
 import net.mamoe.mirai.message.data.MessageChain
 
 /**
@@ -9,7 +8,7 @@ import net.mamoe.mirai.message.data.MessageChain
  * @author DasoopsNicole@Gmail.com
  * @date 2023-05-06
  */
-enum class MatchType(val match: (String, MessageChain) -> Boolean) : DataEnum {
+enum class MatchType(val match: (String, MessageChain) -> Boolean) : IntDataEnum {
     /**
      * 全文匹配
      */

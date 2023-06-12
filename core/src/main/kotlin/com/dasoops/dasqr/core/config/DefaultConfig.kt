@@ -1,9 +1,12 @@
 package com.dasoops.dasqr.core.config
 
 import cn.hutool.core.io.FileUtil
-import com.dasoops.common.json.Json
-import com.dasoops.common.json.toJsonStr
+import com.dasoops.common.json.core.Json
+import com.dasoops.common.json.core.toJsonStr
+import com.dasoops.common.json.jackson.Jackson
+import com.dasoops.common.json.jackson.parseNode
 import com.dasoops.dasqr.core.util.DefaultImpl
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.slf4j.LoggerFactory
 import java.io.File
 
@@ -22,20 +25,26 @@ open class DefaultConfig : Config {
 
     override fun init() {
         val configJson = configFile.readText()
-        val loadByPath = Json.parse(configJson)
+        val loadByPath = Json.parseNode(configJson)
         log.info(
             """
             |load config form : ${System.getProperty("user.dir")}${File.separator}config.json
             |$configJson
         """.trimMargin()
         )
-        keywordToJsonConfigMap = loadByPath.mapValues { it.value.toJsonStr() }
+        keywordToJsonConfigMap = loadByPath.fields().asSequence().map {
+            it.key to it.value.toJsonStr()
+        }.toMap()
     }
 
     override fun addAndInit(key: String, description: String, configStr: String) {
-        val configNode = Json.parse(configFile.readText())
-        configNode[key] = configStr
-        configFile.writeText(Json.toJsonStr(configNode))
+        val configNode = Json.parseNode(configFile.readText())
+        val jsonStr = configNode.fields().asSequence().map {
+            it.key to it.value.toJsonStr()
+        }.toMutableList().apply {
+            add(key to configStr)
+        }.associate { it }.toJsonStr()
+        configFile.writeText(jsonStr)
         init()
     }
 }

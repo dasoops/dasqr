@@ -1,10 +1,10 @@
 package com.dasoops.dasqr.plugin.bilibili
 
-import com.dasoops.common.core.entity.dataenum.DataEnum
 import com.dasoops.common.db.ktorm.BaseDao
 import com.dasoops.common.db.ktorm.DasEntity
 import com.dasoops.common.db.ktorm.DasTable
 import com.dasoops.common.db.ktorm.dataEnum
+import com.dasoops.common.json.core.dataenum.IntDataEnum
 import org.ktorm.schema.int
 import org.ktorm.schema.long
 
@@ -32,7 +32,7 @@ interface BilibiliSubscribeDo : DasEntity<BilibiliSubscribeDo> {
     companion object : DasEntity.Factory<BilibiliSubscribeDo>()
 }
 
-enum class DynamicType : DataEnum {
+enum class DynamicType : IntDataEnum {
     SHARE {
         override fun match(instance: Dynamic) = instance is Share
     },

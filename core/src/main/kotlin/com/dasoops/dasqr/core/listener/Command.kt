@@ -1,8 +1,6 @@
 package com.dasoops.dasqr.core.listener
 
-import com.dasoops.common.core.entity.dataenum.DataEnum
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
-import com.dasoops.common.core.util.DataEnumUtil
 import net.mamoe.mirai.event.ConcurrencyKind
 import net.mamoe.mirai.event.EventPriority
 import net.mamoe.mirai.event.Listener

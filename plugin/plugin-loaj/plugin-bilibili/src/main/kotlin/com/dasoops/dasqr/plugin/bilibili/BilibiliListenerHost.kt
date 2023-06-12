@@ -40,19 +40,18 @@ open class BilibiliListenerHost : DslListenerHost(), Runner, ScheduleTask {
 
     override suspend fun run(paramJson: String?) = withContext(Dispatchers.IO) {
         val now = DateUtil.date()
-        val begin = now.offsetNew(DateField.MINUTE, -10)
+        val begin = now.offsetNew(DateField.MINUTE, -1)
         val messageChain = BilibiliApi.getDynamic(31485472).filter {
             it.time.isIn(begin, now)
         }.ifEmpty { return@withContext }.map {
             async {
-                buildMessage(it, IBot.getFriend(776465218)!!).apply {
-                    add("\n".toPlainText())
-                    add("\n".toPlainText())
-                }
+                buildMessage(it, IBot.getFriend(776465218)!!).toMessageChain()
             }
-        }.awaitAll().flatten().toMessageChain()
-        IBot.getFriend(776465218)!!.sendMessage(messageChain)
-        IBot.getFriend(943952775)!!.sendMessage(messageChain)
+        }.awaitAll()
+        messageChain.forEach {
+            IBot.getFriend(776465218)!!.sendMessage(it)
+            IBot.getFriend(943952775)!!.sendMessage(it)
+        }
     }
 
     override suspend fun init() {
@@ -103,6 +102,7 @@ open class BilibiliListenerHost : DslListenerHost(), Runner, ScheduleTask {
         contact: Contact,
     ): ArrayList<Message> {
         val messageList = arrayListOf<Message>()
+        messageList.add("https://t.bilibili.com/${it.id}\n".toPlainText())
         when (it) {
             is com.dasoops.dasqr.plugin.bilibili.Message -> {
                 messageList.add(
@@ -117,12 +117,23 @@ open class BilibiliListenerHost : DslListenerHost(), Runner, ScheduleTask {
                 messageList.add(
                     "${it.authorName}转发了动态\n${it.time.toString("yyyy-MM-dd HH:mm:ss")}\n${it.title}${it.link}".toPlainText()
                 )
-                messageList.add(uploadAndGetImage(it.imageLink, contact))
+                if (it.imageLink.isNotEmpty()) messageList.add(uploadAndGetImage(it.imageLink, contact))
             }
 
             is Video -> {
                 messageList.add(
                     "${it.authorName}发布了视频\n${it.time.toString("yyyy-MM-dd HH:mm:ss")}\n${it.title}${"\n"}${it.description}\n${it.link}".toPlainText()
+                )
+            }
+
+            is Column -> {
+                messageList.add(
+                    "${it.authorName}发布了专栏\n${it.time.toString("yyyy-MM-dd HH:mm:ss")}\n${it.title}${"\n"}${it.description}".toPlainText()
+                )
+                messageList.addAll(
+                    it.imageLinkList.map { url ->
+                        uploadAndGetImage(url, contact)
+                    }
                 )
             }
         }

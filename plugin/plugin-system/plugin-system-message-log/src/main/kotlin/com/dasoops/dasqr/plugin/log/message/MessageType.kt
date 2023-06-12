@@ -1,20 +1,14 @@
 package com.dasoops.dasqr.plugin.log.message
 
-import com.dasoops.common.core.entity.dataenum.DataEnum
-import net.mamoe.mirai.event.events.FriendMessageEvent
-import net.mamoe.mirai.event.events.GroupMessageEvent
-import net.mamoe.mirai.event.events.GroupMessageSyncEvent
-import net.mamoe.mirai.event.events.GroupTempMessageEvent
-import net.mamoe.mirai.event.events.GroupTempMessageSyncEvent
-import net.mamoe.mirai.event.events.MessageEvent
-import net.mamoe.mirai.event.events.StrangerMessageEvent
+import com.dasoops.common.json.core.dataenum.IntDataEnum
+import net.mamoe.mirai.event.events.*
 
 /**
  * 消息类型
  * @author DasoopsNicole@Gmail.com
  * @date 2023-05-06
  */
-enum class MessageType : DataEnum {
+enum class MessageType : IntDataEnum {
     /**
      * 群组消息
      */

@@ -1,6 +1,6 @@
 package com.dasoops.dasqr.plugin.pluginManager.mapping;
 
-import com.dasoops.common.core.entity.dataenum.DataEnum
+import com.dasoops.common.json.core.dataenum.IntDataEnum
 
 /**
  * 身份验证级别
@@ -8,7 +8,7 @@ import com.dasoops.common.core.entity.dataenum.DataEnum
  * @date 2023/05/24
  * @see [AuthLevel]
  */
-enum class AuthLevel(override val data: Int) : DataEnum {
+enum class AuthLevel(override val data: Int) : IntDataEnum {
     /**
      * 系统级,不应该有该权限的用户/插件
      */

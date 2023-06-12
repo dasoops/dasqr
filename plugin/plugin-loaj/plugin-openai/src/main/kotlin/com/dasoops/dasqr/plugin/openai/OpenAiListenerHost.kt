@@ -1,7 +1,8 @@
 package com.dasoops.dasqr.plugin.openai
 
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
-import com.dasoops.common.json.Json
+import com.dasoops.common.json.core.Json
+import com.dasoops.common.json.jackson.parseNode
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.listener.DslListenerHost
 import com.dasoops.dasqr.core.listener.ListenerHostDslBuilder

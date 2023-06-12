@@ -1,7 +1,7 @@
 package com.dasoops.dasqr.core.config
 
-import com.dasoops.common.json.parse
-import com.dasoops.common.json.toJsonStr
+import com.dasoops.common.json.core.parse
+import com.dasoops.common.json.core.toJsonStr
 import com.dasoops.dasqr.core.util.Loader
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

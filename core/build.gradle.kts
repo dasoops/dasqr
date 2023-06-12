@@ -25,7 +25,8 @@ dependencies {
     api("com.google.guava:guava:${guavaVersion}")
     api(platform(("com.dasoops:common-bom:${dasoopsCommonVersion}")))
     api("com.dasoops:common-core")
-    api("com.dasoops:common-json")
+    api("com.dasoops:common-json-core")
+    api("com.dasoops:common-json-jackson")
     api("com.dasoops:common-db-ktorm")
 
 //    api("net.mamoe:mirai-logging-log4j2")
