@@ -26,7 +26,7 @@ open class RollListenerHost : DslListenerHost() {
     //第一次使用5分钟后清除
     val cache =
         Cache.newTimedCache<Group, RollInfo>(this::class to "roll", 1000 * 60 * 5).apply {
-            this.setListener { group, cachedObject ->
+            setListener { group, cachedObject ->
                 IBot.launch {
                     group.sendMessage("5分钟了,roll点结束了捏")
                     endRoll(group, cachedObject)
@@ -60,14 +60,13 @@ open class RollListenerHost : DslListenerHost() {
                 "你roll到了$senderPoint"
             }
             //end roll
-            case("end roll") tag@{
+            (case("end roll", ignoreCase = true) or case("endRoll", ignoreCase = true)) tag@{
                 intercept()
                 val senderCache = cache[group] ?: run {
                     subject.sendMessage("还没有人roll点哦")
                     return@tag
                 }
                 cache.remove(group)
-                endRoll(subject, senderCache)
             }
             //roll history
             case("roll history") or case("historyRoll") quoteReply {

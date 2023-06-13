@@ -32,6 +32,7 @@ object BilibiliApi {
                 val time = desc["timestamp"].asLong() * 1000
                 val id = desc["dynamic_id"].asLong()
                 when (val type = desc["type"].asInt()) {
+                    //转发
                     1 -> {
                         val node = Json.parseNode(Json.parseNode(it["card"].asText())["origin"].asText())
                         if (node.has("item")) {
@@ -67,6 +68,7 @@ object BilibiliApi {
                         )
                     }
 
+                    //消息
                     2 -> {
                         val node = Json.parseNode(it["card"].asText())["item"]
                         Message(
@@ -78,6 +80,19 @@ object BilibiliApi {
                         )
                     }
 
+                    //投稿视频
+                    4 -> {
+                        val node = Json.parseNode(it["card"].asText())["item"]
+                        Message(
+                            description = EscapeUtil.unescape(node["content"].asText()),
+                            imageLinkList = emptyList(),
+                            id = id,
+                            authorName = authorName,
+                            time = DateUtil.date(time)
+                        )
+                    }
+
+                    //投稿视频
                     8 -> {
                         val node = Json.parseNode(it["card"].asText())
                         Video(
@@ -90,6 +105,7 @@ object BilibiliApi {
                         )
                     }
 
+                    //专栏
                     64 -> {
                         val node = Json.parseNode(it["card"].asText())
                         Column(
@@ -103,7 +119,7 @@ object BilibiliApi {
                     }
 
                     else -> {
-                        throw SimpleProjectExceptionEntity("undefined api type: $type")
+                         throw SimpleProjectExceptionEntity("undefined api type: $type")
                     }
                 }
             }.onFailure {

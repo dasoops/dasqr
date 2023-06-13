@@ -80,7 +80,6 @@ plugins {
 }
 
 tasks {
-
     named<ShadowJar>("shadowJar") {
         val version = getGitHash()
         archiveFileName.set("dasqr-$version.jar")

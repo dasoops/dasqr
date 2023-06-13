@@ -32,7 +32,7 @@ object IBot : Bot by run({
             cacheDir = File(this)
         }
         fileConfig.workingDir?.run {
-            cacheDir = File(this)
+            workingDir = File(this)
         }
         fileConfig.deviceInfoPath?.run {
             fileBasedDeviceInfo(this)

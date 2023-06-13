@@ -51,6 +51,7 @@ open class BilibiliListenerHost : DslListenerHost(), Runner, ScheduleTask {
         messageChain.forEach {
             IBot.getFriend(776465218)!!.sendMessage(it)
             IBot.getFriend(943952775)!!.sendMessage(it)
+            IBot.getGroup(664607389)!!.sendMessage(it)
         }
     }
 
@@ -64,7 +65,7 @@ open class BilibiliListenerHost : DslListenerHost(), Runner, ScheduleTask {
 
         ScheduleDao.add(ScheduleDo {
             //10分钟一次
-            this.cron = "0 0/10 * * * ?"
+            this.cron = "0 0/1 * * * ?"
             this.`class` = BilibiliListenerHost::class.java.name
             this.description = "请求bilibili数据"
             this.enable = true
