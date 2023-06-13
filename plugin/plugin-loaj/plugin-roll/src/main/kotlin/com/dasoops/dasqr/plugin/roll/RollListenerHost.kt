@@ -27,9 +27,11 @@ open class RollListenerHost : DslListenerHost() {
     val cache =
         Cache.newTimedCache<Group, RollInfo>(this::class to "roll", 1000 * 60 * 5).apply {
             setListener { group, cachedObject ->
-                IBot.launch {
-                    group.sendMessage("5分钟了,roll点结束了捏")
-                    endRoll(group, cachedObject)
+                if (cachedObject.expire){
+                    IBot.launch {
+                        group.sendMessage("5分钟了,roll点结束了捏")
+                        endRoll(group, cachedObject)
+                    }
                 }
             }
         }
@@ -67,6 +69,8 @@ open class RollListenerHost : DslListenerHost() {
                     return@tag
                 }
                 cache.remove(group)
+                senderCache.expire = false
+                endRoll(group, senderCache)
             }
             //roll history
             case("roll history") or case("historyRoll") quoteReply {
