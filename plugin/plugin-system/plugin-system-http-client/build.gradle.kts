@@ -1,6 +1,9 @@
 dependencies {
     api(project(":plugin:plugin-core"))
     api(project(":plugin:plugin-system:plugin-system-cache"))
+
+    //okHttp
+    api("com.squareup.okhttp3:okhttp:5.0.0-SNAPSHOT")
 }
 
 tasks.named<Jar>("jar") {

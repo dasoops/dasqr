@@ -1,5 +1,6 @@
 package com.dasoops.dasqr.plugin.config
 
+import com.dasoops.common.json.core.toJsonStr
 import com.dasoops.dasqr.core.config.Config
 import org.flywaydb.core.Flyway
 import org.slf4j.LoggerFactory
@@ -21,6 +22,7 @@ open class SqlConfig : Config {
         keywordToConfigMap = ConfigDao.findAll().associateBy { it.keyword }
         keywordToJsonConfigMap = keywordToConfigMap.mapValues { it.value.value }
         Flyway.configure()
+        log.info("config init:${keywordToJsonConfigMap.toJsonStr()}")
     }
 
     override fun addAndInit(key: String, description: String, configStr: String) {

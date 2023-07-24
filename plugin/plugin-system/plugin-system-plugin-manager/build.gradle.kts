@@ -1,6 +1,7 @@
 dependencies {
     api(project(":plugin:plugin-core"))
     api(project(":plugin:plugin-system:plugin-system-cache"))
+    api(project(":plugin:plugin-system:plugin-system-db-ktorm"))
 }
 
 tasks.named<Jar>("jar") {

@@ -1,7 +1,7 @@
 package com.dasoops.dasqr.core.exception
 
 import com.dasoops.dasqr.core.config.Config
-import com.dasoops.dasqr.core.util.Loader
+import com.dasoops.dasqr.core.util.QuickServiceLoader
 import org.slf4j.LoggerFactory
 
 /**
@@ -29,7 +29,7 @@ interface ExceptionHandlerPool {
 
         fun goInit() {
             log.info("init exceptionHandlerPool")
-            val exceptionHandlerPool = Loader
+            val exceptionHandlerPool = QuickServiceLoader
                 .getOne<ExceptionHandlerPool>(Config.INSTANCE.dasqr.plugin.excludeClass)
             log.info("use exceptionHandlerPool: ${exceptionHandlerPool.javaClass.name}")
             exceptionHandlerPool.init()

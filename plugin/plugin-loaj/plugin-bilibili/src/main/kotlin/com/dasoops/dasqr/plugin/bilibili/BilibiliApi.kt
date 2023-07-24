@@ -5,8 +5,12 @@ import cn.hutool.core.util.EscapeUtil
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.json.core.Json
 import com.dasoops.common.json.jackson.parseNode
+import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.plugin.http.client.NO_PROXY_INSTANCE
 import com.fasterxml.jackson.databind.JsonNode
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -19,13 +23,13 @@ object BilibiliApi {
      * 获取动态
      * @return [JsonNode]
      */
-    fun getDynamic(userId: Long): List<Dynamic> {
+    suspend fun getDynamic(userId: Long): List<Dynamic> = withContext(Dispatchers.IO) {
         val resultJsonStr = OkHttpClient.NO_PROXY_INSTANCE
             .newCall(Request("https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?host_uid=$userId".toHttpUrl()))
-            .execute().body.string()
+            .run { async(Dispatchers.IO) { execute() }.await() }.body.string()
         OkHttpClient.NO_PROXY_INSTANCE
 
-        return Json.parseNode(resultJsonStr)["data"]["cards"].mapNotNull {
+        Json.parseNode(resultJsonStr)["data"]["cards"].mapNotNull {
             return@mapNotNull runCatching {
                 val desc = it["desc"]
                 val authorName = desc["user_profile"]["info"]["uname"].asText()
@@ -119,7 +123,7 @@ object BilibiliApi {
                     }
 
                     else -> {
-                         throw SimpleProjectExceptionEntity("undefined api type: $type")
+                        throw SimpleProjectExceptionEntity("undefined api type: $type")
                     }
                 }
             }.onFailure {

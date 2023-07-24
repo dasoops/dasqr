@@ -3,6 +3,8 @@ dependencies {
     api(project(":plugin:plugin-system:plugin-system-cache"))
     api(project(":plugin:plugin-system:plugin-system-schedule"))
     api(project(":plugin:plugin-system:plugin-system-http-client"))
+    //爬虫框架
+    api("org.jsoup:jsoup:1.15.3")
 }
 
 tasks.named<Jar>("jar") {

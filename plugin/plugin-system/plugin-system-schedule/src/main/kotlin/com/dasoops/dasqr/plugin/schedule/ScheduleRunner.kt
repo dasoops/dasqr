@@ -1,13 +1,10 @@
 package com.dasoops.dasqr.plugin.schedule
 
 import cn.hutool.cron.CronUtil
-import cn.hutool.cron.task.Task
+import com.dasoops.common.core.util.resources.Resources
 import com.dasoops.dasqr.core.runner.Runner
-import com.dasoops.dasqr.core.util.Finder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
+import com.dasoops.dasqr.core.util.getObjectInstacnce
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import org.ktorm.dsl.eq
 import org.slf4j.LoggerFactory
 
@@ -42,7 +39,7 @@ open class ScheduleRunner : Runner {
                 |    param: ${it.paramJson}
             """.trimMargin()
             )
-            val scheduleTask = Finder.getObjectInstacnce<ScheduleTask>(it.`class`)
+            val scheduleTask = Resources.getObjectInstacnce<ScheduleTask>(it.`class`)
 
             val id = CronUtil.schedule(it.cron, Runnable {
                 runBlocking { scheduleTask.run(it.paramJson) }

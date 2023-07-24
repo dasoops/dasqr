@@ -1,61 +1,29 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import java.io.ByteArrayOutputStream
 
-val miraiVersion: String by project
-val dasoopsCommonVersion: String by project
-val hutoolVersion: String by project
-val guavaVersion: String by project
-val logbackVersion: String by project
-val flywayVersion: String by project
-val ktormVersion: String by project
-val jsonpVersion: String by project
-val okhttpVersion: String by project
-val pgsqlVersion: String by project
-val cglibVersion: String by project
-
 dependencies {
-    //TODO(依赖打包加载)
     //mirai
-    api(platform("net.mamoe:mirai-bom:${miraiVersion}"))
+    api(platform("net.mamoe:mirai-bom:2.15.0-dev-98"))
     api("net.mamoe:mirai-core-api")
     runtimeOnly("net.mamoe:mirai-core") // 运行时使用
 
     //common
-    api("cn.hutool:hutool-all:${hutoolVersion}")
-    api("com.google.guava:guava:${guavaVersion}")
-    api(platform(("com.dasoops:common-bom:${dasoopsCommonVersion}")))
+    api("cn.hutool:hutool-all:5.8.18")
+    api("com.google.guava:guava:31.1-jre")
+    api(platform(("com.dasoops:common-bom:4.2.2")))
     api("com.dasoops:common-core")
     api("com.dasoops:common-json-core")
     api("com.dasoops:common-json-jackson")
-    api("com.dasoops:common-db-ktorm")
 
-//    api("net.mamoe:mirai-logging-log4j2")
     api("net.mamoe:mirai-logging-slf4j-logback")
-//    api("org.apache.logging.log4j:log4j-core:2.20.0")
-//    api("org.apache.logging.log4j:log4j-api:2.20.0")
-    api("ch.qos.logback:logback-classic:${logbackVersion}")
-//    api("ch.qos.logback:logback-core:${logbackVersion}")
-
-    //db
-    runtimeOnly("org.postgresql:postgresql:${pgsqlVersion}")
-    api("org.flywaydb:flyway-core:${flywayVersion}")
-
-    //orm
-    api("org.ktorm:ktorm-jackson:${ktormVersion}")
-    api("org.ktorm:ktorm-core:${ktormVersion}")
-
-    //爬虫框架
-    api("org.jsoup:jsoup:${jsonpVersion}")
-
-    //okHttp
-    api("com.squareup.okhttp3:okhttp:${okhttpVersion}")
+    api("ch.qos.logback:logback-classic:1.4.7")
 
     //kt
     api("org.jetbrains.kotlin:kotlin-reflect")
 
     //cglib
-//    api("cglib:cglib:${cglibVersion}")
     api("net.bytebuddy:byte-buddy:1.14.4")
+
 
 }
 
@@ -81,11 +49,10 @@ plugins {
 
 tasks {
     named<ShadowJar>("shadowJar") {
-        val version = getGitHash()
-        archiveFileName.set("dasqr-$version.jar")
+        archiveFileName.set("dasqr.jar")
         manifest {
             attributes["Main-Class"] = "com.dasoops.dasqr.core.DasqrApplicationKt"
-            attributes["Version"] = version
+            attributes["Version"] = getGitHash()
         }
     }
 

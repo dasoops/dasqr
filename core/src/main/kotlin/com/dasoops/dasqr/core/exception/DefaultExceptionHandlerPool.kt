@@ -2,7 +2,7 @@ package com.dasoops.dasqr.core.exception
 
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.util.DefaultImpl
-import com.dasoops.dasqr.core.util.Loader
+import com.dasoops.dasqr.core.util.QuickServiceLoader
 import org.slf4j.LoggerFactory
 
 /**
@@ -20,7 +20,7 @@ open class DefaultExceptionHandlerPool : ExceptionHandlerPool {
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun init() {
-        Loader.getAll<ExceptionHandler>(Config.INSTANCE.dasqr.exception.excludeClass).forEach {
+        QuickServiceLoader.getAll<ExceptionHandler>(Config.INSTANCE.dasqr.exception.excludeClass).forEach {
             handleSet.add(it)
             log.info("load exception handler: ${it::class.java.name}")
         }

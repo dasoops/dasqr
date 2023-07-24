@@ -14,7 +14,7 @@ object DasqrRunner {
 
     var load = false
     const val PLUGIN_DIR = "./plugin"
-    const val PLUGIN_LIB_DIR = "./plugin/lib"
+    const val PLUGIN_LIB_DIR = "./plugin/libs"
 
     var loadPluginList: List<DasqrPlugin> = emptyList()
     val pluginJarList = mutableListOf<File>()
@@ -25,13 +25,13 @@ object DasqrRunner {
     fun init() {
         load = true
         loadUrl = loadAllUrl().toTypedArray()
-        initLoadPluginList()
-        createAndInitClassLoader()
+        loadPluginList = initLoadPluginList()
+        createAndInitClassLoader(loadUrl)
         log()
     }
 
-    private fun initLoadPluginList() {
-        loadPluginList = pluginJarList.map { DasqrPlugin(it) }.toMutableList().run {
+    private fun initLoadPluginList(): List<DasqrPlugin> {
+        return pluginJarList.map { DasqrPlugin(it) }.toMutableList().run {
             add(CorePackage)
             this
         }
@@ -49,8 +49,8 @@ object DasqrRunner {
      * 创建和初始化类加载程序
      * @return [DasqrUrlClassLoader]
      */
-    fun createAndInitClassLoader(): DasqrUrlClassLoader {
-        return DasqrUrlClassLoader.apply {
+    fun createAndInitClassLoader(loadUrl: Array<URL>): DasqrUrlClassLoader {
+        return DasqrUrlClassLoader(url = loadUrl).apply {
             Thread.currentThread().contextClassLoader = this
         }
     }

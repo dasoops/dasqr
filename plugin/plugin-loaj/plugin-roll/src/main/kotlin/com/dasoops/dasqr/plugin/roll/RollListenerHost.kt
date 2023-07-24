@@ -68,8 +68,8 @@ open class RollListenerHost : DslListenerHost() {
                     subject.sendMessage("还没有人roll点哦")
                     return@tag
                 }
-                cache.remove(group)
                 senderCache.expire = false
+                cache.remove(group)
                 endRoll(group, senderCache)
             }
             //roll history

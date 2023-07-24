@@ -10,8 +10,8 @@ import kotlin.reflect.full.hasAnnotation
  * @author DasoopsNicole@Gmail.com
  * @date 2023/05/26
  */
-object Loader {
-    inline fun <reified T> getAll(excludeClass: Collection<String>): Collection<T> {
+object QuickServiceLoader {
+    inline fun <reified T> getAll(excludeClass: Collection<String> = emptyList()): Collection<T> {
         return ServiceLoader.load(T::class.java, Thread.currentThread().contextClassLoader)
             .filter { !excludeClass.contains(it!!::class.java.name) }
             .toList()

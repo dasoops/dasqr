@@ -1,6 +1,7 @@
 dependencies {
     api(project(":plugin:plugin-core"))
     api(project(":plugin:plugin-system:plugin-system-cache"))
+    api(project(":plugin:plugin-system:plugin-system-db-ktorm"))
     //爬虫框架
     implementation("org.jsoup:jsoup:1.15.3")
 }

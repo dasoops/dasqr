@@ -1,5 +1,10 @@
 dependencies {
     api(project(":plugin:plugin-core"))
+
+    api("com.dasoops:common-db-ktorm")
+    //db
+    runtimeOnly("org.postgresql:postgresql:42.6.0")
+    api("org.flywaydb:flyway-core:9.16.3")
 }
 
 tasks.named<Jar>("jar") {

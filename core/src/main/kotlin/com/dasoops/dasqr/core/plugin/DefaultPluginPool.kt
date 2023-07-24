@@ -63,7 +63,7 @@ open class DefaultPluginPool : PluginPool {
     override suspend fun init() {
         val excludeList = Config.INSTANCE.dasqr.plugin.excludeClass
         val scanPathList = Config.INSTANCE.dasqr.plugin.scanPathList
-        Resources.scan(*scanPathList.toTypedArray()).filter {
+        Resources.scan(scanPathList).filter {
             DasqrListenerHost::class.java.isAssignableFrom(it)
         }.forEach {
             if (excludeList.contains(it.name)) {

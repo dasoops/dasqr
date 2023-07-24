@@ -1,7 +1,7 @@
 package com.dasoops.dasqr.core.plugin
 
 import com.dasoops.dasqr.core.config.Config
-import com.dasoops.dasqr.core.util.Loader
+import com.dasoops.dasqr.core.util.QuickServiceLoader
 import org.slf4j.LoggerFactory
 
 /**
@@ -22,7 +22,7 @@ interface PluginPool {
         suspend fun goInit() {
             //加载插件
             log.info("init pluginPool")
-            val pluginPool = Loader.getOne<PluginPool>(Config.INSTANCE.dasqr.plugin.excludeClass)
+            val pluginPool = QuickServiceLoader.getOne<PluginPool>(Config.INSTANCE.dasqr.plugin.excludeClass)
             log.info("use pluginPool: ${pluginPool.javaClass.name}")
             pluginPool.init()
             INSTANCE = pluginPool

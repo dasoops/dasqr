@@ -11,10 +11,7 @@ import com.dasoops.dasqr.plugin.schedule.ScheduleDao
 import com.dasoops.dasqr.plugin.schedule.ScheduleDo
 import com.dasoops.dasqr.plugin.schedule.ScheduleRunner
 import com.dasoops.dasqr.plugin.schedule.ScheduleTask
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import net.mamoe.mirai.contact.Contact
 import net.mamoe.mirai.message.data.Image
 import net.mamoe.mirai.message.data.Message
@@ -43,15 +40,18 @@ open class BilibiliListenerHost : DslListenerHost(), Runner, ScheduleTask {
         val begin = now.offsetNew(DateField.MINUTE, -1)
         val messageChain = BilibiliApi.getDynamic(31485472).filter {
             it.time.isIn(begin, now)
-        }.ifEmpty { return@withContext }.map {
-            async {
-                buildMessage(it, IBot.getFriend(776465218)!!).toMessageChain()
+        }.ifEmpty { return@withContext }.mapNotNull {
+            IBot.getFriend(776465218)?.run {
+                val friend = this
+                async {
+                    buildMessage(it, friend).toMessageChain()
+                }
             }
         }.awaitAll()
         messageChain.forEach {
-            IBot.getFriend(776465218)!!.sendMessage(it)
-            IBot.getFriend(943952775)!!.sendMessage(it)
-            IBot.getGroup(664607389)!!.sendMessage(it)
+            IBot.getFriend(776465218)?.sendMessage(it)
+            IBot.getFriend(943952775)?.sendMessage(it)
+            IBot.getGroup(664607389)?.sendMessage(it)
         }
     }
 
@@ -95,7 +95,9 @@ open class BilibiliListenerHost : DslListenerHost(), Runner, ScheduleTask {
 
     private suspend fun uploadAndGetImage(url: String, contact: Contact): Image {
         val byteStream = OkHttpClient.NO_PROXY_INSTANCE.newCall(Request(url.toHttpUrl())).execute().body.byteStream()
-        return byteStream.toExternalResource().uploadAsImage(contact)
+        return byteStream.toExternalResource().use {
+            it.uploadAsImage(contact)
+        }
     }
 
     private suspend fun buildMessage(

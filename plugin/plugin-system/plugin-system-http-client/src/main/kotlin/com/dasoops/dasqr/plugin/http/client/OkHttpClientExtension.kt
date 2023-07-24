@@ -1,5 +1,6 @@
 package com.dasoops.dasqr.plugin.http.client
 
+import cn.hutool.core.img.ImgUtil
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.json.core.toJsonStr
 import com.dasoops.dasqr.core.config.Config
@@ -9,7 +10,7 @@ import okhttp3.OkHttpClient
 import java.net.InetSocketAddress
 import java.net.Proxy
 
-val Config.http: HttpProxyConfig
+val Config.httpClient: HttpProxyConfig
     get() {
         getOrNull<HttpProxyConfig>("httpProxy")?.run {
             return this
@@ -74,7 +75,7 @@ open class OkHttpRunner : Runner {
 
     override suspend fun init() {
         INSTANCE = this
-        val httpConfig = Config.INSTANCE.http
+        val httpConfig = Config.INSTANCE.httpClient
         if (httpConfig.enable) {
             instance = OkHttpClient.Builder().run {
                 proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress(httpConfig.proxyHostName!!, httpConfig.proxyPort!!)))

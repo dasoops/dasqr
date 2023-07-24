@@ -1,5 +1,6 @@
 package com.dasoops.dasqr.core.loader
 
+import java.net.URL
 import java.net.URLClassLoader
 
-object DasqrUrlClassLoader : URLClassLoader(DasqrRunner.loadUrl)
+open class DasqrUrlClassLoader(vararg url: URL) : URLClassLoader(url)

@@ -2,7 +2,7 @@ package com.dasoops.dasqr.core.config
 
 import com.dasoops.common.json.core.parse
 import com.dasoops.common.json.core.toJsonStr
-import com.dasoops.dasqr.core.util.Loader
+import com.dasoops.dasqr.core.util.QuickServiceLoader
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -47,7 +47,7 @@ interface Config {
         fun goInit() {
             //初始化配置项
             log.info("init config")
-            val config = Loader.getOne<Config>(emptyList())
+            val config = QuickServiceLoader.getOne<Config>(emptyList())
             config.init()
             INSTANCE = config
             log.info("use config: ${config.javaClass.name}")

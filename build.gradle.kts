@@ -12,6 +12,17 @@ allprojects {
         mavenLocal()
         mavenCentral()
         google()
+        maven("https://repo.mirai.mamoe.net/snapshots")
+    }
+    configurations.all {
+        resolutionStrategy {
+            force("io.netty:netty-buffer:4.1.90.Final")
+            force("io.netty:netty-codec:4.1.90.Final")
+            force("io.netty:netty-common:4.1.90.Final")
+            force("io.netty:netty-handler:4.1.90.Final")
+            force("io.netty:netty-resolver:4.1.90.Final")
+            force("io.netty:netty-transport:4.1.90.Final")
+        }
     }
 
     tasks.withType<KotlinCompile> {
@@ -25,6 +36,7 @@ allprojects {
         useJUnitPlatform()
     }
 }
+
 apply(from = (file("config.gradle")))
 
 subprojects {

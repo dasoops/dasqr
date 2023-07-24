@@ -1,7 +1,7 @@
 package com.dasoops.dasqr.core.runner
 
 import com.dasoops.dasqr.core.config.Config
-import com.dasoops.dasqr.core.util.Loader
+import com.dasoops.dasqr.core.util.QuickServiceLoader
 import org.slf4j.LoggerFactory
 
 /**
@@ -43,7 +43,7 @@ interface Runner {
 
         suspend fun runBeforeAll() {
             log.info("go run custom runner (before all)")
-            runnerList = Loader.getAll<Runner>(emptyList())
+            runnerList = QuickServiceLoader.getAll<Runner>()
             runnerList.filter { it.level == Level.BEFORE_ALL }
                 .forEach {
                     log.info("runner: ${it::class.qualifiedName}")

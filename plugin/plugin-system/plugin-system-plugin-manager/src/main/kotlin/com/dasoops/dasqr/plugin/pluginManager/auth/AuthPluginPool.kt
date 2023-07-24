@@ -15,7 +15,6 @@ import kotlinx.coroutines.Job
 import net.mamoe.mirai.event.*
 import net.mamoe.mirai.event.events.FriendMessageEvent
 import net.mamoe.mirai.event.events.GroupMessageEvent
-import net.mamoe.mirai.spi.AudioToSilkService.Companion.priority
 import org.slf4j.LoggerFactory
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
@@ -42,7 +41,7 @@ open class AuthPluginPool : PluginPool {
         INSTANCE = this
         val scanPathList = Config.INSTANCE.dasqr.plugin.scanPathList
         val excludeClass = Config.INSTANCE.dasqr.plugin.excludeClass
-        Resources.scan(*scanPathList.toTypedArray()).filter {
+        Resources.scan(scanPathList).filter {
             DasqrListenerHost::class.java.isAssignableFrom(it)
         }.filter {
             !excludeClass.contains(it.javaClass.name)

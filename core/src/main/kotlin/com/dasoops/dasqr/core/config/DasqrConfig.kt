@@ -10,9 +10,9 @@ class DasqrConfig(
     plugin: PluginConfig? = null,
     init: InitConfig? = null
 ) {
-    val exception: ExceptionConfig
-    val plugin: PluginConfig
-    val init: InitConfig
+    var exception: ExceptionConfig
+    var plugin: PluginConfig
+    var init: InitConfig
 
     init {
         this.exception = exception ?: ExceptionConfig()
@@ -33,7 +33,7 @@ class InitConfig(
     /**
      * 排除类
      */
-    val excludeClass: Collection<String>
+    var excludeClass: Collection<String>
 
     init {
         this.excludeClass = excludeClass ?: emptyList()
@@ -47,18 +47,18 @@ class InitConfig(
  */
 class PluginConfig(
     excludeClass: Collection<String>? = null,
-    scanPathList: Collection<String>? = null
+    scanPath: Collection<String>? = null
 ) {
 
     /**
      * 排除类
      */
-    val excludeClass: Collection<String>
-    val scanPathList: Collection<String>
+    var excludeClass: Collection<String>
+    var scanPathList: Collection<String>
 
     init {
         this.excludeClass = excludeClass ?: emptyList()
-        this.scanPathList = scanPathList ?: listOf("com.dasoops.dasqr")
+        this.scanPathList = scanPath ?: listOf("com.dasoops.dasqr")
     }
 }
 
@@ -73,7 +73,7 @@ class ExceptionConfig(
     /**
      * 排除类
      */
-    val excludeClass: Collection<String>
+    var excludeClass: Collection<String>
 
     init {
         this.excludeClass = excludeClass ?: emptyList()
