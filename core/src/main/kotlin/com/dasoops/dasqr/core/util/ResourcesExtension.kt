@@ -7,6 +7,9 @@ import com.dasoops.dasqr.core.runner.InitExceptionEntity
 import com.fasterxml.jackson.module.kotlin.isKotlinClass
 import java.io.File
 
+val Resources.resourcesDir: File
+    get() = File(System.getProperty("user.dir") + "/resources/")
+
 fun Resources.get(name: String) =
     File(System.getProperty("user.dir") + "/resources/" + name)
 

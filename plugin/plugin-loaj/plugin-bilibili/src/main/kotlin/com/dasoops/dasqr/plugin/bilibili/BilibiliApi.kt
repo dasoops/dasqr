@@ -1,11 +1,14 @@
 package com.dasoops.dasqr.plugin.bilibili
 
 import cn.hutool.core.date.DateUtil
+import cn.hutool.core.exceptions.ExceptionUtil
+import cn.hutool.core.math.BitStatusUtil.has
 import cn.hutool.core.util.EscapeUtil
 import com.dasoops.common.core.exception.SimpleProjectExceptionEntity
 import com.dasoops.common.json.core.Json
+import com.dasoops.common.json.core.toJsonStr
+import com.dasoops.common.json.jackson.Jackson
 import com.dasoops.common.json.jackson.parseNode
-import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.plugin.http.client.NO_PROXY_INSTANCE
 import com.fasterxml.jackson.databind.JsonNode
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +20,23 @@ import okhttp3.Request
 import org.slf4j.LoggerFactory
 
 object BilibiliApi {
-    private val log = LoggerFactory.getLogger(javaClass)
+    private val logger = LoggerFactory.getLogger(javaClass)
+
+    //string
+    private fun JsonNode?.s(fieldName: String): String {
+        this ?: return ""
+        return get(fieldName)?.asText() ?: return ""
+    }
+
+    //stringToNode
+    private fun JsonNode.sn(fieldName: String): JsonNode {
+        return Json.parseNode(get(fieldName)?.asText() ?: "")
+    }
+
+    //node
+    private fun JsonNode.n(fieldName: String): JsonNode {
+        return get(fieldName)
+    }
 
     /**
      * 获取动态
@@ -27,107 +46,120 @@ object BilibiliApi {
         val resultJsonStr = OkHttpClient.NO_PROXY_INSTANCE
             .newCall(Request("https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?host_uid=$userId".toHttpUrl()))
             .run { async(Dispatchers.IO) { execute() }.await() }.body.string()
-        OkHttpClient.NO_PROXY_INSTANCE
+        logger.trace("request dynamic for user[$userId], result: $resultJsonStr")
 
         Json.parseNode(resultJsonStr)["data"]["cards"].mapNotNull {
             return@mapNotNull runCatching {
-                val desc = it["desc"]
-                val authorName = desc["user_profile"]["info"]["uname"].asText()
-                val time = desc["timestamp"].asLong() * 1000
-                val id = desc["dynamic_id"].asLong()
-                when (val type = desc["type"].asInt()) {
+                val (authorName, time, id, type) = it["desc"].run {
+                    data class Temp(val authorName: String, val time: Long, val id: Long, val type: Int)
+                    Temp(
+                        n("user_profile").n("info").s("uname"),
+                        n("timestamp").asLong() * 1000,
+                        n("dynamic_id").asLong(),
+                        s("type").toInt()
+                    )
+                }
+
+                when (type) {
                     //转发
                     1 -> {
-                        val node = Json.parseNode(Json.parseNode(it["card"].asText())["origin"].asText())
-                        if (node.has("item")) {
-                            val item = node["item"]
-                            return@mapNotNull Share(
-                                title = if (item.has("title")) {
-                                    item["title"].asText("")
-                                } else if (item.has("content")) {
-                                    item["content"].asText("")
-                                } else {
-                                    ""
-                                },
-                                link = "",
-                                imageLink = if (item.has("pictures")) {
-                                    item["pictures"].firstOrNull()?.asText("") ?: ""
-                                } else if (item.has("pic")) {
-                                    item["pic"].asText("")
-                                } else {
-                                    ""
-                                },
+                        it.sn("card").sn("origin").run {
+                            if (has("item")) {
+                                sn("item").run {
+                                    Share(
+                                        title = if (has("title")) {
+                                            s("title")
+                                        } else if (has("content")) {
+                                            s("content")
+                                        } else {
+                                            ""
+                                        },
+                                        link = "",
+                                        imageLink = if (has("pictures")) {
+                                            sn("pictures").firstOrNull()?.asText("") ?: ""
+                                        } else if (has("pic")) {
+                                            s("pic")
+                                        } else {
+                                            ""
+                                        },
+                                        id = id,
+                                        authorName = authorName,
+                                        time = DateUtil.date(time)
+                                    )
+                                }
+                            } else {
+                                Share(
+                                    title = s("title"),
+                                    link = s("short_link_v2"),
+                                    imageLink = s("first_frame"),
+                                    id = id,
+                                    authorName = authorName,
+                                    time = DateUtil.date(time)
+                                )
+                            }
+                        }
+                    }
+
+                    //消息
+                    2 -> {
+                        it.sn("card").n("item").run {
+                            Message(
+                                description = EscapeUtil.unescape(s("description")),
+                                imageLinkList = n("pictures").map { imgNode -> imgNode.s("img_src") },
                                 id = id,
                                 authorName = authorName,
                                 time = DateUtil.date(time)
                             )
                         }
-                        Share(
-                            title = node["title"].asText(""),
-                            link = node["short_link_v2"].asText(),
-                            imageLink = node["first_frame"].asText(""),
-                            id = id,
-                            authorName = authorName,
-                            time = DateUtil.date(time)
-                        )
                     }
 
                     //消息
-                    2 -> {
-                        val node = Json.parseNode(it["card"].asText())["item"]
-                        Message(
-                            description = EscapeUtil.unescape(node["description"].asText()),
-                            imageLinkList = node["pictures"].map { imgNode -> imgNode["img_src"].asText() },
-                            id = id,
-                            authorName = authorName,
-                            time = DateUtil.date(time)
-                        )
-                    }
-
-                    //投稿视频
                     4 -> {
-                        val node = Json.parseNode(it["card"].asText())["item"]
-                        Message(
-                            description = EscapeUtil.unescape(node["content"].asText()),
-                            imageLinkList = emptyList(),
-                            id = id,
-                            authorName = authorName,
-                            time = DateUtil.date(time)
-                        )
+                        it.sn("card").sn("item").run {
+                            Message(
+                                description = EscapeUtil.unescape(s("content")),
+                                imageLinkList = emptyList(),
+                                id = id,
+                                authorName = authorName,
+                                time = DateUtil.date(time)
+                            )
+                        }
                     }
 
                     //投稿视频
                     8 -> {
-                        val node = Json.parseNode(it["card"].asText())
-                        Video(
-                            title = node["title"].asText(),
-                            description = node["dynamic"].asText(),
-                            link = node["short_link_v2"].asText(),
-                            id = id,
-                            authorName = authorName,
-                            time = DateUtil.date(time)
-                        )
+                        it.sn("card").run {
+                            Video(
+                                title = s("title"),
+                                description = s("dynamic"),
+                                link = s("short_link_v2"),
+                                id = id,
+                                authorName = authorName,
+                                time = DateUtil.date(time)
+                            )
+                        }
                     }
 
                     //专栏
                     64 -> {
-                        val node = Json.parseNode(it["card"].asText())
-                        Column(
-                            title = node["title"].asText(),
-                            description = node["summary"].asText(),
-                            imageLinkList = node["image_urls"].map { url -> url.asText() },
-                            id = id,
-                            authorName = authorName,
-                            time = DateUtil.date(time)
-                        )
+                        it.sn("card").run {
+                            Column(
+                                title = s("title"),
+                                description = s("summary"),
+                                imageLinkList = sn("image_urls").map { url -> url.asText() },
+                                id = id,
+                                authorName = authorName,
+                                time = DateUtil.date(time)
+                            )
+                        }
                     }
 
                     else -> {
                         throw SimpleProjectExceptionEntity("undefined api type: $type")
                     }
                 }
-            }.onFailure {
-                log.error("", it)
+            }.onFailure { t ->
+                logger.error("reslove ${it.toJsonStr()} throw error: ${ExceptionUtil.stacktraceToString(t)}")
                 return@onFailure
             }.getOrNull()
         }

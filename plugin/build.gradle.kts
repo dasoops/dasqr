@@ -24,9 +24,9 @@ subprojects {
                 from(project.configurations.runtimeClasspath)
                 exclude {
                     it.file.name.run {
-                        contains("dasqr-plugin") && !contains("system")
+                        contains("dasqr-plugin")
                     }.apply {
-                        if (this) log += "${it.file.name}\n"
+                        if (!this) log += "${it.file.name}\n"
                     }
                 }
                 into("$workingDir/plugin/libs")

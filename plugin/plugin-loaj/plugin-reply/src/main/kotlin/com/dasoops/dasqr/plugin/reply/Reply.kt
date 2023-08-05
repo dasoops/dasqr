@@ -6,7 +6,6 @@ import com.dasoops.common.db.ktorm.DasTable
 import com.dasoops.common.db.ktorm.dataEnum
 import org.ktorm.schema.boolean
 import org.ktorm.schema.int
-import org.ktorm.schema.long
 import org.ktorm.schema.varchar
 
 /**

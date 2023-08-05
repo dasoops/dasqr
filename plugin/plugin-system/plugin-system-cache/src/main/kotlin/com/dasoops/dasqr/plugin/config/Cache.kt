@@ -47,4 +47,5 @@ object Cache {
 
     fun <K, V> newNoCache(key: Any): NoCache<K, V> =
         NoCache<K, V>().also { cacheMap[key] = it }
+
 }

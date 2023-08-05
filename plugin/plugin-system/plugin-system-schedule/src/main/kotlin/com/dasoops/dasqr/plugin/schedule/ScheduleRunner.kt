@@ -42,7 +42,10 @@ open class ScheduleRunner : Runner {
             val scheduleTask = Resources.getObjectInstacnce<ScheduleTask>(it.`class`)
 
             val id = CronUtil.schedule(it.cron, Runnable {
-                runBlocking { scheduleTask.run(it.paramJson) }
+                runBlocking {
+                    log.trace("run scheduleTask: ${it.`class`}")
+                    scheduleTask.run(it.paramJson)
+                }
             })
 
             //留一份方便做拓展

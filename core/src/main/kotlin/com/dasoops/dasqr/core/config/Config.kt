@@ -12,31 +12,24 @@ import org.slf4j.LoggerFactory
  * @date 2023-05-08
  */
 interface Config {
-    private val log: Logger
+    val log: Logger
         get() = LoggerFactory.getLogger(javaClass)
     val keywordToJsonConfigMap: Map<String, String>
     val mirai: MiraiConfig
-        get() {
-            getOrNull<MiraiConfig>("mirai")?.run {
-                return this
-            }
-            addAndInit(
-                "mirai", "mirai配置项", MiraiConfig().toJsonStr()
-            )
-            log.warn("未加载到mirai配置项,已初始化配置,请手动填入相关信息后再使用")
-            return getOrNull<MiraiConfig>("mirai")!!
+        get() = getOrInit<MiraiConfig>(
+            keyword = "mirai",
+            description = "mirai配置项",
+        ) {
+            MiraiConfig().toJsonStr()
         }
     val dasqr: DasqrConfig
-        get() {
-            getOrNull<DasqrConfig>("dasqr")?.run {
-                return this
-            }
-            addAndInit(
-                "dasqr", "dasqr配置项", DasqrConfig().toJsonStr()
-            )
-            log.warn("未加载到dasqr配置项,已初始化配置,请手动填入相关信息后再使用")
-            return getOrNull<DasqrConfig>("dasqr")!!
+        get() = getOrInit<DasqrConfig>(
+            keyword = "dasqr",
+            description = "dasqr配置项",
+        ) {
+            DasqrConfig().toJsonStr()
         }
+
 
     fun init()
 
@@ -57,6 +50,23 @@ interface Config {
     }
 }
 
-inline fun <reified T> Config.getOrNull(keyword: String): T? {
-    return keywordToJsonConfigMap[keyword]?.parse(T::class.java)
+inline fun <reified T> Config.getOrInit(
+    keyword: String,
+    description: String,
+    default: () -> String,
+): T {
+    getOrNull<T>(keyword)?.run {
+        return this
+    }
+    addAndInit(keyword, description, default())
+    log.warn("已初始化[${keyword}]配置项")
+    return getOrNull<T>(keyword)!!
 }
+
+@JvmName("getOrNull_1")
+inline fun <reified T> Config.getOrNull(keyword: String): T? {
+    return getOrNull(keyword)?.parse(T::class.java)
+}
+
+@JvmName("getOrNull_0")
+fun Config.getOrNull(keyword: String): String? = keywordToJsonConfigMap[keyword]

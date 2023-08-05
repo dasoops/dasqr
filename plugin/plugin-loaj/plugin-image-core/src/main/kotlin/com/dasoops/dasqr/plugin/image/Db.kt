@@ -1,11 +1,8 @@
-package com.dasoops.dasqr.plugin.reply
+package com.dasoops.dasqr.plugin.image
 
 import com.dasoops.common.db.ktorm.BaseDao
 import com.dasoops.common.db.ktorm.DasEntity
 import com.dasoops.common.db.ktorm.DasTable
-import com.dasoops.common.db.ktorm.dataEnum
-import org.ktorm.schema.boolean
-import org.ktorm.schema.int
 import org.ktorm.schema.long
 import org.ktorm.schema.varchar
 

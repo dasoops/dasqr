@@ -1,10 +1,11 @@
 package com.dasoops.dasqr.core.runner
 
 import com.dasoops.common.core.util.resources.Resources
+import com.dasoops.dasqr.core.IBot
 import com.dasoops.dasqr.core.config.Config
 import com.dasoops.dasqr.core.exception.ExceptionHandlerPool
-import com.dasoops.dasqr.core.util.get
 import com.dasoops.dasqr.core.plugin.PluginPool
+import com.dasoops.dasqr.core.util.get
 import org.slf4j.LoggerFactory
 import kotlin.system.exitProcess
 
@@ -25,7 +26,7 @@ object InitRunner {
             Runner.runBeforeBotInit()
             //加载bot
             log.info("init IBot")
-            //IBot.login()
+            IBot.login()
             Runner.runAfterBotInit()
 
             PluginPool.goInit()

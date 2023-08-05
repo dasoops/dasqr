@@ -1,7 +1,6 @@
 dependencies {
     api(project(":plugin:plugin-core"))
-    api(project(":plugin:plugin-system:plugin-system-http-client"))
-    api(project(":plugin:plugin-system:plugin-system-db-ktorm"))
+    api(project(":plugin:plugin-loaj:plugin-image-core"))
 
     api("com.qcloud:cos_api:5.6.75")
 }

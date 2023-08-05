@@ -3,7 +3,6 @@ package com.dasoops.dasqr.plugin.config
 import com.dasoops.common.json.core.toJsonStr
 import com.dasoops.dasqr.core.config.Config
 import org.flywaydb.core.Flyway
-import org.slf4j.LoggerFactory
 
 /**
  * sql配置
@@ -12,8 +11,6 @@ import org.slf4j.LoggerFactory
  */
 open class SqlConfig : Config {
     override lateinit var keywordToJsonConfigMap: Map<String, String>
-
-    private val log = LoggerFactory.getLogger(javaClass)
 
     //Map<keyword,config>
     lateinit var keywordToConfigMap: Map<String, ConfigDo>

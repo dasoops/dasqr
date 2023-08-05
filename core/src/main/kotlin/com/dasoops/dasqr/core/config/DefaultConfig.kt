@@ -17,8 +17,6 @@ import java.io.File
  */
 @DefaultImpl
 open class DefaultConfig : Config {
-
-    private val log = LoggerFactory.getLogger(javaClass)
     override lateinit var keywordToJsonConfigMap: Map<String, String>
 
     private val configFile = FileUtil.file(System.getProperty("user.dir") + "/config.json")
@@ -28,7 +26,7 @@ open class DefaultConfig : Config {
         val loadByPath = Json.parseNode(configJson)
         log.info(
             """
-            |load config form : ${System.getProperty("user.dir")}${File.separator}config.json
+            |load config form : ${System.getProperty("user.dir")}/config.json
             |$configJson
         """.trimMargin()
         )

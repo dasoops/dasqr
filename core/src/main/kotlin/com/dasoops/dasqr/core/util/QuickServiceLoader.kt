@@ -17,7 +17,7 @@ object QuickServiceLoader {
             .toList()
     }
 
-    inline fun <reified T> getOne(excludeClass: Collection<String>): T {
+    inline fun <reified T> getOne(excludeClass: Collection<String> = emptyList()): T {
         val loadList = ServiceLoader.load(T::class.java, Thread.currentThread().contextClassLoader)
             .filter { !excludeClass.contains(it!!::class.java.name) }
             .toList()
